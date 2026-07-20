@@ -17,7 +17,7 @@
   var CONFIG = {
     title: "The Wheel of Reconnect",
     eyebrow: "Time to check back in with yourself",
-    intro: "You're here because you backed yourself enough to look at your life honestly, and that takes guts. Respect. This is where we get a real read on where you're at, across the areas that make up a full life. The ones you love, and the ones that have gone a bit quiet. Rate each one from 1 to 7. 1 is running on empty, 7 is exactly how you'd want it. No performing, no impressing anyone, just be honest with yourself. Rate all ten and your wheel will show you what's true right now.",
+    intro: "10 dimensions, honesty with yourself. First thought is the right one.",
     introFoot: "Takes about 5 minutes. Nothing is saved or sent, this stays between you and the screen.",
     maxScore: 7,
 

@@ -104,7 +104,7 @@
 
   /* ── 01 HERO ─────────────────────────────────────────────── */
   #px-hero{position:relative;height:100svh;min-height:640px;overflow:hidden;background:#04122A}
-  #px-glass{position:absolute;inset:0;width:100%;height:100%;display:block}
+  #px-glass{touch-action:pan-y;position:absolute;inset:0;width:100%;height:100%;display:block}
   /* THE FALLBACK — mobile, reduced-motion, and low-power machines.
      This is not a second-class path. There is no cursor on a phone, so
      there is no wipe -- which means without this the biggest half of the
@@ -1631,7 +1631,18 @@
 
     const reduce   = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
     const coarse   = window.matchMedia('(hover:none)').matches;
-    const lowPower = coarse || window.innerWidth < 900 || (navigator.hardwareConcurrency||8) <= 4;
+    /* THIS USED TO READ 'coarse || innerWidth < 900', which is not a power
+       test -- it is a "is this a phone" test, and it sent every phone ever
+       made to the CSS fallback. The fallback has no WIPE. It fades as the
+       hero scrolls away, so on mobile there was no act of cleaning at all,
+       and cleaning the glass is the entire gesture of this page.
+
+       A phone from the last several years runs a two-texture noise shader at
+       DPR 1.25 without noticing. So test the thing we actually care about --
+       cores and memory -- and let capable phones have the real hero. If the
+       context or the shader fails, makeGL returns null and the fallback
+       still catches it. */
+    const lowPower = (navigator.hardwareConcurrency||8) <= 4 || (navigator.deviceMemory||4) < 3;
 
     /* ══════════ SHARED GLASS TOOLKIT ══════════
        One noise/grime prelude, three shaders. No backticks inside any

@@ -1683,13 +1683,23 @@ class Component extends DCLogic {
            Same beat as the WebGL path (uProg), same payoff -- he scrolls,
            the fog lifts, a face is looking back at him.
            Reduced-motion users get it too; it's a scrub, not an animation. */
-        if(window.gsap && window.ScrollTrigger){
-          gsap.registerPlugin(ScrollTrigger);
-          gsap.to(fb,{ '--px-clear':1, ease:'none',
-            scrollTrigger:{ trigger:'#px-hero', start:'top top', end:'bottom top', scrub:.6 } });
-        } else {
-          fb.style.setProperty('--px-clear','1');   // no GSAP: just show him
-        }
+        const heroBox = document.getElementById('px-hero');
+        if(!heroBox){ fb.style.setProperty('--px-clear','1'); return; }
+        /* Cleared by 55% of the hero's exit, not 100%. If it finishes on the
+           last pixel the face is already off screen when it arrives, and the
+           payoff is spent on nothing. */
+        let ticking = false;
+        const draw = () => {
+          ticking = false;
+          const r = heroBox.getBoundingClientRect();
+          if(!r.height) return;
+          const p = Math.min(Math.max(-r.top / r.height, 0), 1);
+          fb.style.setProperty('--px-clear', String(Math.min(1, p / 0.55)));
+        };
+        const onScroll = () => { if(!ticking){ ticking = true; requestAnimationFrame(draw); } };
+        window.addEventListener('scroll', onScroll, {passive:true});
+        window.addEventListener('resize', onScroll, {passive:true});
+        draw();
       };
 
       if(reduce || lowPower || !canvas){ useFallback(); return; }
@@ -2256,7 +2266,7 @@ class Component extends DCLogic {
       // the armour comes down as he descends
       if(window.__pxHeroState){
         G.to(window.__pxHeroState,{prog:1,ease:'none',
-          scrollTrigger:{trigger:'#px-hero',start:'top top',end:'bottom top',scrub:0.7}});
+          scrollTrigger:{trigger:document.getElementById('px-hero'),start:'top top',end:'bottom top',scrub:0.7}});
       }
 
       // kinetic type

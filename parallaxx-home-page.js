@@ -130,7 +130,21 @@
                linear-gradient(0deg,rgba(4,18,42,.86) 0%,rgba(4,18,42,0) 52%)}
   #px-hero-copy{position:absolute;inset:0;display:flex;align-items:center;padding:0 clamp(20px,5vw,90px);pointer-events:none}
   #px-hero-copy .inner{max-width:min(720px,58vw);pointer-events:auto}
-  @media(max-width:900px){#px-hero-copy .inner{max-width:100%}}
+  /* ON A PHONE THE COPY SITS LOW, NOT CENTRED.
+     Centred is right on a 16:10 desktop frame, where the face is off to the
+     right and the type has its own column. On a 9:19 phone the image is
+     centre-cropped, so his face moves to the middle -- and centred type then
+     lands straight across his eyes. Eye contact is the whole reason this
+     frame exists, so the type gives way, not the face.
+
+     Sitting it low also spends the dead space that was sitting under the
+     copy, and it reads against the bottom of #px-hero-veil, which is the
+     darkest part of the overlay. */
+  @media(max-width:900px){
+    #px-hero-copy .inner{max-width:100%}
+    #px-hero-copy{align-items:flex-end;padding-bottom:clamp(26px,6vh,58px)}
+    #px-hero{min-height:560px}
+  }
 
   /* -- 02 MIRROR : the confessions ------------------------------
      They used to sit in a 6-up grid -- all on screen at once, so the eye

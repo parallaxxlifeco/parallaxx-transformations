@@ -341,6 +341,25 @@
   .px-rf-side{max-width:34ch}
   .px-rf-tag{display:inline-block;padding:7px 14px;border-radius:999px;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;margin-bottom:16px}
 
+  @media(max-width:700px){
+    /* The grid is align-items:CENTER, so each column centres on its own
+       height. The two sides carry different amounts of text, and once the
+       columns get narrow enough to wrap unevenly the two tags stop sitting
+       on the same line. Top-align them and they read as a pair again, which
+       is the whole point of a before and after. */
+    #px-rf-grid{align-items:start;gap:14px}
+    .px-rf-side{max-width:none}
+    .px-rf-tag{font-size:.55rem;letter-spacing:.09em;padding:6px 10px;margin-bottom:10px}
+    #px-rf-copy{padding:0 18px}
+  }
+  @media(max-width:560px){
+    /* Six names plus five separators ran to three lines at .85rem. At .72
+       with a tighter gap the run is about 600px against 700px of space over
+       two lines, so it holds two with room rather than only just. */
+    #px-creds{font-size:.72rem!important;gap:9px!important}
+    #px-stats{font-size:.78rem!important;gap:13px!important;margin-top:18px!important}
+  }
+
   /* -- 04 THE FIVE PANES ----------------------------------------
      v7 gave each archetype its own bespoke CSS "film" -- frost for the
      Fortress, rain-runs for the Defender, glare for the Idealist. Clever,
@@ -1533,7 +1552,7 @@
 <section style="background:#061938;border-top:1px solid rgba(241,236,225,.07);padding:54px clamp(20px,4vw,52px)">
   <div class="px-wrap">
     <p style="text-align:center;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:#46536E;font-weight:700;margin-bottom:26px">Seen in · Credentialled by</p>
-    <div style="display:flex;align-items:center;justify-content:center;gap:clamp(14px,3vw,38px);flex-wrap:wrap;font-size:.85rem;color:#5E6B85;font-weight:600">
+    <div id="px-creds" style="display:flex;align-items:center;justify-content:center;gap:clamp(14px,3vw,38px);flex-wrap:wrap;font-size:.85rem;color:#5E6B85;font-weight:600">
       <span>ABC News</span><span style="color:#2A3550">·</span>
       <span>Wanderlust Magazine</span><span style="color:#2A3550">·</span>
       <span>Brainz Magazine</span><span style="color:#2A3550">·</span>
@@ -1545,7 +1564,7 @@
          banner. Use his number, not a vaguer one I invented. And the countries
          are now NAMED by the testimonials above -- Sweden, Bulgaria, USA -- so
          "7 countries" stops being a claim and starts being a receipt. -->
-    <div style="display:flex;align-items:center;justify-content:center;gap:clamp(18px,3vw,40px);flex-wrap:wrap;margin-top:22px;font-size:.85rem;color:#5E6B85">
+    <div id="px-stats" style="display:flex;align-items:center;justify-content:center;gap:clamp(18px,3vw,40px);flex-wrap:wrap;margin-top:22px;font-size:.85rem;color:#5E6B85">
       <span><strong style="color:#B1BFD7">1000+</strong> lives changed</span>
       <span><strong style="color:#B1BFD7">7</strong> countries</span>
       <span><strong style="color:#B1BFD7">5+</strong> years facilitating</span>

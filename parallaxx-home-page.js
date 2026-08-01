@@ -106,7 +106,7 @@
   .px-ph.on-cream span{color:#8A5A47}.px-ph.on-cream em{color:#A6968A}
 
   /* ── 01 HERO ─────────────────────────────────────────────── */
-  #px-hero{position:relative;height:100svh;min-height:640px;overflow:hidden;background:#04122A}
+  #px-hero{touch-action:pan-y;position:relative;height:100svh;min-height:640px;overflow:hidden;background:#04122A}
   #px-glass{touch-action:pan-y;position:absolute;inset:0;width:100%;height:100%;display:block}
   /* THE FALLBACK — mobile, reduced-motion, and low-power machines.
      This is not a second-class path. There is no cursor on a phone, so
@@ -1643,18 +1643,21 @@
 
     const reduce   = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
     const coarse   = window.matchMedia('(hover:none)').matches;
-    /* THIS USED TO READ 'coarse || innerWidth < 900', which is not a power
-       test -- it is a "is this a phone" test, and it sent every phone ever
-       made to the CSS fallback. The fallback has no WIPE. It fades as the
-       hero scrolls away, so on mobile there was no act of cleaning at all,
-       and cleaning the glass is the entire gesture of this page.
+    /* NO DEVICE GATE ON THE HERO. This has now been wrong twice.
+       First it read 'coarse || innerWidth < 900', which is not a power test
+       but an "is this a phone" test, and it sent every phone to the CSS
+       fallback -- and the fallback has no WIPE, only a fade as the hero
+       scrolls away. Then it read hardwareConcurrency <= 4, which Safari on
+       iOS reports as exactly 4 on a great many iPhones, so it kept doing
+       the same thing under a better name.
 
-       A phone from the last several years runs a two-texture noise shader at
-       DPR 1.25 without noticing. So test the thing we actually care about --
-       cores and memory -- and let capable phones have the real hero. If the
-       context or the shader fails, makeGL returns null and the fallback
-       still catches it. */
-    const lowPower = (navigator.hardwareConcurrency||8) <= 4 || (navigator.deviceMemory||4) < 3;
+       The evidence was sitting in this file the whole time: the DIVIDER and
+       the SYSTEM PANES run their shaders on mobile with no gate at all, only
+       a reduced-motion check. If the phone renders those, it renders this.
+
+       So the only honest capability test is to try. makeGL returns null if
+       the context or the shader fails, and the guard below catches it. */
+    const lowPower = false;
 
     /* ══════════ SHARED GLASS TOOLKIT ══════════
        One noise/grime prelude, three shaders. No backticks inside any
@@ -1898,6 +1901,30 @@
         wipe(x,y);   // still works. no prompt, no ring, no meter. a secret.
       },{passive:true});
       window.addEventListener('pointerleave',()=>{ ppx=ppy=null; });
+
+      /* TOUCH. pointermove is not enough on its own: iOS stops sending it
+         the moment it decides the gesture is a scroll, so a finger dragged
+         down the hero produced two or three wipe samples and then nothing.
+         That is why this only ever scrolled.
+
+         A PASSIVE touchmove keeps firing for the entire scroll. Passive
+         means we never call preventDefault and never fight the page, so
+         both things happen at once: he scrolls, and the glass cleans under
+         his thumb on the way past. Combined with touch-action:pan-y a
+         purely horizontal drag does not scroll at all and reads as a
+         straight wipe. Either gesture cleans it, which is the only way this
+         gets discovered on a phone. */
+      const heroTouch = (e)=>{
+        const t = e.touches && e.touches[0]; if(!t) return;
+        const r = heroEl.getBoundingClientRect();
+        const x = (t.clientX-r.left)/r.width, y = (t.clientY-r.top)/r.height;
+        if(t.clientY < r.top || t.clientY > r.bottom || x < 0 || x > 1){ ppx=ppy=null; return; }
+        st.tmx=x; st.tmy=y;
+        wipe(x,y);
+      };
+      heroEl.addEventListener('touchstart', heroTouch, {passive:true});
+      heroEl.addEventListener('touchmove',  heroTouch, {passive:true});
+      heroEl.addEventListener('touchend',   ()=>{ ppx=ppy=null; }, {passive:true});
 
       addRenderer(canvas, ()=>{
         st.mx+=(st.tmx-st.mx)*0.18; st.my+=(st.tmy-st.my)*0.18;

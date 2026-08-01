@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+/* LUMIOS MARKER is not on Google Fonts -- upload the .woff2 to Wix Media and
+   drop the URL in below. Until then the stack falls through to Permanent
+   Marker, which is the closest free marker face, so nothing renders as a
+   system script by accident. */
+@font-face{font-family:'Lumios Marker';font-display:swap;
+  src:url('LUMIOS_MARKER_WOFF2_URL') format('woff2');}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://link.msgsndr.com/js/form_embed.js"></script>
+
+<style>
+/* ══════════════════════════════════════════════════════════════════════════
+   THE RECONNECTED MAN — rebuilt on the Parallaxx v4 system.
+
+   WHAT CHANGED FROM THE LIVE PAGE, and why:
+
+   · The live page was GIVE IT ALL–skinned: gold buttons, its own GIA header
+     bolted into the embed, Montserrat 800 at 116px, gold everywhere. Under
+     the new system gold is DANIEL'S VOICE and coral #FF501F is THE READER.
+     Every button on this page is now coral. Gold survives only where Daniel
+     is speaking — pull-quotes, handwriting, hairlines, section labels.
+
+   · Poppins is now the DISPLAY face at 300/400/500, not the body face.
+     Montserrat is body/UI. The 116px Montserrat-800 hero is retired; the
+     house H1 is a two-line Poppins sentence, roman then italic-300.
+
+   · Backgrounds alternate navy → cream → navy → cream. The live page was
+     nine navy sections in a row and read as one long slab.
+
+   · The page no longer carries its own nav. PtNav (active="experiences")
+     and PtFooter are placed as siblings in Wix. See the DEPLOYMENT note
+     at the bottom of this file.
+
+   · Ships as a Custom Element, not an HTML embed — so it renders at real
+     document height instead of inside a ~900px iframe with its own
+     scrollbar, which is what the live page currently does.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  #prm-root img{display:block;max-width:100%}
+  #prm-root h1,#prm-root h2,#prm-root h3,#prm-root h4{text-wrap:balance}
+  #prm-root p{text-wrap:pretty}
+  #prm-root ::selection{background:#FF501F;color:#fff}
+
+/* ── TYPE ROLES ───────────────────────────────────────────────
+   Poppins at 300 goes weak and spindly at 60px, so the display weight comes
+   UP to 400/500 and the tracking goes slightly negative only at large sizes. */
+  .px-serif{font-family:'Poppins','Montserrat',sans-serif;font-weight:400;letter-spacing:-.018em}
+  .px-hand{font-family:'Lumios Marker','Permanent Marker',cursive;font-weight:400}
+  .px-label{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:#5E6B85}
+
+/* ── LAYOUT ─────────────────────────────────────────────────── */
+  .px-wrap{max-width:1240px;margin:0 auto}
+  .px-head{max-width:min(1140px,94vw);margin-left:auto;margin-right:auto}
+  .px-sec{padding:clamp(52px,6.5vw,92px) clamp(20px,4vw,52px);position:relative}
+
+/* ── BUTTONS ────────────────────────────────────────────────── */
+  .px-btn{display:inline-flex;align-items:center;gap:.55em;background:#FF501F;color:#fff;font-family:'Montserrat',system-ui,sans-serif;font-weight:700;font-size:.98rem;padding:1.05em 2.2em;border:none;border-radius:999px;text-decoration:none;cursor:pointer;transition:background .3s,transform .3s,box-shadow .3s;box-shadow:0 10px 30px -12px rgba(255,80,31,.5)}
+  .px-btn:hover{background:#FF6A3D;transform:translateY(-2px)}
+  .px-btn.sm{font-size:.9rem;padding:.9em 1.7em}
+  .px-btn.full{display:flex;width:100%;justify-content:center}
+  .px-ghost{display:inline-flex;align-items:center;gap:.55em;color:#B1BFD7;border:1px solid rgba(232,198,95,.4);font-family:'Montserrat',system-ui,sans-serif;font-weight:600;font-size:.94rem;padding:1em 2em;border-radius:999px;text-decoration:none;transition:background .3s,border-color .3s,color .3s}
+  .px-ghost:hover{background:rgba(241,236,225,.08);border-color:#F1ECE1;color:#F1ECE1}
+  .px-ghost.on-cream{color:#8A5A47;border-color:rgba(255,80,31,.4)}
+  .px-ghost.on-cream:hover{background:rgba(255,80,31,.06);border-color:#FF501F;color:#FF501F}
+
+/* ── REVEAL PRIMITIVES ──────────────────────────────────────────
+   FAIL-SAFE BY DEFAULT. The hidden start state is gated behind #prm-root.anim,
+   which the JS adds as its FIRST act. If the script never runs — raw file
+   opened off disk, DC runtime absent, CSP blocks the CDN, JS error upstream —
+   the class is never added and the page renders fully visible instead of a
+   navy screen with nothing on it. Same if GSAP is still in flight when the
+   component mounts: no GSAP means no .anim, so a slow or blocked cdnjs costs
+   the animation, never the content.
+
+   Never put the hidden state in the ungated rule. This page is 100% reveal-
+   animated, so opacity:0 in the base stylesheet means one failed request
+   between the reader and a blank page. */
+  .px-line{display:block;overflow:hidden}
+  .px-line > span{display:block;padding-right:.08em}
+  #prm-root.anim .px-line > span{transform:translateY(110%);will-change:transform}
+  #prm-root.anim .px-fade{opacity:0;transform:translateY(22px);will-change:transform,opacity}
+  @media(prefers-reduced-motion:reduce){
+    #prm-root.anim .px-line > span{transform:none!important}
+    #prm-root.anim .px-fade{opacity:1!important;transform:none!important}
+    *{animation:none!important}
+  }
+
+/* ── CARDS ──────────────────────────────────────────────────── */
+  .px-card{background:#fff;border-radius:20px;padding:28px 30px;border-top:3px solid #A08A5E}
+  .px-card .n{font-family:'Poppins','Montserrat',sans-serif;font-size:1.9rem;line-height:1;color:rgba(160,138,94,.65);margin-bottom:14px;display:block}
+  .px-card p{font-size:.97rem;line-height:1.72;color:#5E5850}
+
+  /* Glass value pane — the archetype-pane silhouette without the film */
+  .px-vpane{position:relative;display:flex;flex-direction:column;justify-content:flex-start;
+    padding:30px 28px;border-radius:14px;overflow:hidden;background:#0A1D3C;
+    border:1px solid rgba(232,198,95,.14);
+    transition:border-color .35s ease,transform .35s ease,box-shadow .35s ease}
+  .px-vpane:hover{transform:translateY(-6px);border-color:rgba(255,80,31,.4);box-shadow:0 30px 60px -30px rgba(3,12,28,.9)}
+  .px-vpane h3{font-size:.72rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#E8C65F;margin:0 0 16px}
+  .px-vpane p{font-size:.95rem;line-height:1.7;color:#C4CEE0;margin:0}
+
+  /* Dark inset box on cream */
+  .px-darkbox{padding:26px 28px;background:#12233F;border-radius:18px}
+  .px-darkbox p{font-size:1rem;line-height:1.75;color:#B1BFD7}
+
+  /* Door / fork card */
+  .px-doors{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:760px;margin:34px auto 0}
+  .px-door{display:block;text-align:left;background:rgba(241,236,225,.04);border:1px solid rgba(241,236,225,.12);border-radius:18px;padding:26px 28px;text-decoration:none;transition:border-color .3s ease,background .3s ease,transform .3s ease}
+  .px-door:hover{border-color:rgba(255,80,31,.55);background:rgba(255,80,31,.07);transform:translateY(-3px)}
+  .px-door .eyebrow{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:#E8C65F;margin-bottom:10px}
+  .px-door h4{font-family:'Poppins','Montserrat',sans-serif;font-weight:300;font-size:clamp(21px,2.2vw,29px);color:#F1ECE1;margin-bottom:10px;line-height:1.2;letter-spacing:-.018em}
+  .px-door p{font-size:.9rem;line-height:1.7;color:#8E9BB2;margin-bottom:14px}
+  .px-door span.go{font-size:.82rem;font-weight:700;color:#FF6A3D}
+  .px-door.on-cream{background:#FBF8F2;border:1px solid #E2DACB;box-shadow:0 18px 40px -30px rgba(30,42,61,.45)}
+  .px-door.on-cream:hover{border-color:rgba(255,80,31,.5);background:#fff;box-shadow:0 24px 50px -28px rgba(30,42,61,.5)}
+  .px-door.on-cream .eyebrow{color:#A08A5E}
+  .px-door.on-cream h4{color:#1E2A3D}
+  .px-door.on-cream p{color:#5E5850}
+  .px-door.on-cream span.go{color:#FF501F}
+
+/* ── VIDEO FACADE ───────────────────────────────────────────────
+   Zero third-party requests until click. The play control is bottom-LEFT on
+   purpose — a 62px centred button lands squarely on the speaker's mouth.
+   Always state the runtime in .len. Under the new accent rule the play
+   control is CORAL: pressing play is a reader action, not Daniel's voice. */
+  .px-vid{position:relative;display:block;width:100%;padding:0;border:0;cursor:pointer;background:#04122A;border-radius:16px;overflow:hidden;aspect-ratio:16/9;
+    box-shadow:0 26px 60px -34px rgba(3,12,28,.95),0 0 0 1px rgba(232,198,95,.14);transition:transform .3s ease,box-shadow .3s ease}
+  .px-vid:hover{transform:translateY(-3px);box-shadow:0 30px 70px -32px rgba(3,12,28,1),0 0 0 1px rgba(232,198,95,.34)}
+  .px-vid.reel{aspect-ratio:9/16;border-radius:18px}
+  .px-vid > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.92) brightness(.86);transition:filter .3s ease}
+  .px-vid:hover > img{filter:saturate(1) brightness(1)}
+  .px-vid .play{position:absolute;left:20px;bottom:20px;width:58px;height:58px;border-radius:999px;background:rgba(255,80,31,.94);box-shadow:0 10px 30px -8px rgba(255,80,31,.6);transition:transform .3s ease}
+  .px-vid .play::after{content:'';position:absolute;top:50%;left:53%;transform:translate(-50%,-50%);border-style:solid;border-width:10px 0 10px 16px;border-color:transparent transparent transparent #fff}
+  .px-vid:hover .play{transform:scale(1.09)}
+  .px-vid .len{position:absolute;right:12px;bottom:12px;padding:5px 10px;border-radius:8px;background:rgba(4,18,42,.82);backdrop-filter:blur(6px);font-size:.68rem;font-weight:700;letter-spacing:.06em;color:#B1BFD7}
+  .px-vid iframe,.px-vid video.live{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
+
+/* ── FACES / VOICES ─────────────────────────────────────────────
+   THE WORDS ARE THE PROOF. THE FACE IS ONLY THE VERIFICATION. */
+  .px-face{width:64px;height:64px;flex:0 0 auto;object-fit:cover;border-radius:999px;display:block;filter:saturate(.9) contrast(1.02);box-shadow:0 0 0 1px rgba(232,198,95,.30),0 8px 18px -10px rgba(3,12,28,.9)}
+  .px-byline{display:flex;align-items:center;gap:14px}
+  .px-byline .who{font-size:.9rem;font-weight:700;color:#B1BFD7;line-height:1.45}
+  .px-byline .who span{display:block;font-size:.76rem;font-weight:500;color:#7C89A3;margin-top:2px}
+
+/* ── PRICING CARD ───────────────────────────────────────────────
+   Coral top rule, not gold: the price is the reader's move. */
+  .px-price{max-width:520px;margin:44px auto 0;background:#fff;border-radius:20px;overflow:hidden;
+    border-top:3px solid #FF501F;box-shadow:0 30px 70px -46px rgba(30,42,61,.6);text-align:left}
+  .px-price .amt{font-family:'Poppins','Montserrat',sans-serif;font-weight:400;font-size:76px;line-height:1;color:#1E2A3D;letter-spacing:-.03em}
+  .px-price .amt sup{font-size:28px;vertical-align:top;margin-top:12px;display:inline-block;color:#A08A5E;letter-spacing:0}
+  .px-price li{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid #EDE7DC;font-size:.97rem;line-height:1.6;color:#5E5850;list-style:none}
+  .px-price li:last-child{border-bottom:none}
+  /* Coral dot, not an em-dash. Drawn rather than typed so it sits on the
+     cap-height of the first line instead of the text baseline. */
+  .px-price li span.d{flex:0 0 auto;width:6px;height:6px;border-radius:999px;background:#FF501F;margin-top:.62em;font-size:0}
+
+/* ── FAQ ────────────────────────────────────────────────────────
+   Re-skinned off the legacy --trm-* palette. The + is coral (reader action);
+   the hairlines are cream at .12 like every other rule on the system. */
+  .faq-wrap{max-width:760px;margin:0 auto}
+  .faq-item{border-bottom:1px solid rgba(241,236,225,.12)}
+  .faq-item:first-of-type{border-top:1px solid rgba(241,236,225,.12)}
+  .faq-btn{width:100%;background:none;border:none;padding:20px 0;display:flex;justify-content:space-between;align-items:center;gap:24px;cursor:pointer;text-align:left;font-family:'Montserrat',system-ui,sans-serif}
+  .faq-q{font-size:1.02rem;font-weight:600;color:#F1ECE1;line-height:1.5}
+  .faq-ico{flex-shrink:0;width:28px;height:28px;border:1px solid rgba(255,80,31,.4);border-radius:999px;display:flex;align-items:center;justify-content:center;color:#FF501F;font-size:18px;line-height:1;transition:transform .3s ease,border-color .3s ease,background .3s ease}
+  .faq-item.open .faq-ico{transform:rotate(45deg);border-color:#FF501F;background:rgba(255,80,31,.12)}
+  .faq-body{overflow:hidden;max-height:0;transition:max-height .38s ease}
+  .faq-body-inner{padding:0 0 26px;font-size:.98rem;line-height:1.85;color:#C4CEE0;max-width:640px}
+
+/* ── APPLICATION MODAL ──────────────────────────────────────── */
+  #prm-modal{display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;padding:20px;font-family:'Montserrat',system-ui,sans-serif}
+  #prm-modal.is-open{display:flex}
+  #prm-modal .mb{position:absolute;inset:0;background:rgba(3,12,28,.88);backdrop-filter:blur(6px);cursor:pointer}
+  #prm-modal .box{position:relative;z-index:1;background:#0A1D3C;border:1px solid rgba(232,198,95,.18);border-top:2px solid #FF501F;border-radius:18px;width:100%;max-width:580px;max-height:90vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  #prm-modal .hd{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 26px;border-bottom:1px solid rgba(241,236,225,.12);position:sticky;top:0;background:#0A1D3C;z-index:2}
+  #prm-modal .ttl{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#5E6B85}
+  #prm-modal .x{background:none;border:1px solid rgba(241,236,225,.16);border-radius:999px;color:#B1BFD7;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;line-height:1;flex-shrink:0;transition:color .2s,border-color .2s}
+  #prm-modal .x:hover{color:#FF501F;border-color:rgba(255,80,31,.55)}
+  #prm-modal iframe{display:block;width:100%;border:none}
+
+/* ── LIGHTBOX ───────────────────────────────────────────────── */
+  #prm-lb{display:none;position:fixed;inset:0;z-index:9998;align-items:center;justify-content:center;padding:24px;background:rgba(3,12,28,.94);backdrop-filter:blur(8px)}
+  #prm-lb.is-open{display:flex}
+  #prm-lb img{max-width:min(420px,92vw);max-height:88vh;border-radius:12px;border:1px solid rgba(232,198,95,.2)}
+  #prm-lb .x{position:absolute;top:20px;right:22px;background:none;border:1px solid rgba(241,236,225,.2);border-radius:999px;color:#F1ECE1;width:38px;height:38px;font-size:22px;line-height:1;cursor:pointer}
+
+/* ── SHOTS MASONRY ──────────────────────────────────────────── */
+  .px-shots{columns:170px;column-gap:12px}
+  .px-shots > div{break-inside:avoid;margin-bottom:12px;border:1px solid rgba(232,198,95,.14);border-radius:10px;overflow:hidden;cursor:pointer;transition:transform .25s ease,border-color .25s ease}
+  .px-shots > div:hover{transform:translateY(-3px);border-color:rgba(255,80,31,.55)}
+
+/* ── CREDENTIAL CHIPS ───────────────────────────────────────── */
+  .px-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+  .px-chips span{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8A8073;border:1px solid rgba(160,138,94,.35);border-radius:999px;padding:.6em 1.1em}
+
+/* ── GRIDS ──────────────────────────────────────────────────── */
+  #prm-vals{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  #prm-who{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  #prm-reels{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:720px;margin:0 auto}
+  #prm-daniel{display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(36px,5vw,76px);align-items:start}
+
+/* ── MOBILE ─────────────────────────────────────────────────── */
+  @media(max-width:900px){
+    #prm-daniel > div:first-child{position:static!important}
+  }
+  @media(max-width:820px){
+    #prm-vals,#prm-who{grid-template-columns:1fr}
+  }
+  @media(max-width:680px){
+    .px-doors{grid-template-columns:1fr}
+    #prm-reels{grid-template-columns:1fr;max-width:340px}
+  }
+  @media(max-width:560px){
+    #prm-root h1.px-serif,#prm-root h2.px-serif,#prm-root h3.px-serif{font-size:clamp(21px,6.1vw,27px)!important;line-height:1.24!important}
+    #prm-root section,#prm-root .px-sec{padding-top:clamp(40px,10vw,52px)!important;padding-bottom:clamp(40px,10vw,52px)!important}
+    .px-hand{font-size:clamp(14px,4.6vw,21px)!important}
+    .px-price .amt{font-size:60px}
+  }
+</style>
+</helmet>
+
+<div id="prm-root" style="background:#04122A;color:#B1BFD7;font-family:'Montserrat',system-ui,sans-serif;font-size:16px;line-height:1.7;overflow-x:clip;position:relative">
+
+<!-- ══════════════ 01 · HERO ══════════════════════════════════════════════
+     ▸ TODO: drop a real hero photograph in behind the veil the way Home does
+       (hero-daniel-behind-glass.jpg is the obvious candidate — upload to Wix
+       Media and set PRM_HERO_SRC). Until then this is the gradient-only
+       fallback and it holds up fine.
+     The old hero was Montserrat-800 at 116px, which is GIA's voice, not ours.
+     ═══════════════════════════════════════════════════════════════════ -->
+<section style="position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;padding:130px clamp(20px,4vw,52px) 90px;overflow:hidden;background:radial-gradient(120% 90% at 50% 14%,#0A2148 0%,#061938 44%,#030C1E 100%)">
+  <div aria-hidden="true" style="position:absolute;inset:0;background-image:repeating-linear-gradient(-45deg,transparent,transparent 58px,rgba(232,198,95,.03) 58px,rgba(232,198,95,.03) 59px);pointer-events:none"></div>
+  <div aria-hidden="true" style="position:absolute;top:36%;left:50%;transform:translate(-50%,-50%);width:min(760px,110vw);height:min(760px,110vw);background:radial-gradient(circle,rgba(232,198,95,.10) 0%,rgba(232,198,95,.04) 38%,transparent 68%);pointer-events:none"></div>
+
+  <div style="position:relative;z-index:1;max-width:840px">
+    <p class="px-hand px-fade" style="font-size:1.6rem;color:#E8C65F;margin-bottom:18px">a give it all experience</p>
+
+    <h1 class="px-serif" style="font-size:clamp(38px,5.6vw,74px);line-height:1.1;color:#F1ECE1;margin-bottom:26px">
+      <span class="px-line"><span style="font-weight:500">The Reconnected Man</span></span>
+      <!-- Own clamp, not an em of the h1: the <560px !important override
+           resizes h1.px-serif, and an em-sized child would ride it down to
+           ~12px. Sized to hold ONE line from 360px to 1600px. -->
+      <span class="px-line"><span style="font-weight:300;font-style:italic;font-size:clamp(15px,2.35vw,31px);color:#B1BFD7;white-space:nowrap">for men done living in disconnection.</span></span>
+    </h1>
+
+    <p class="px-fade" style="font-size:clamp(17px,1.5vw,21px);line-height:1.65;color:#C4CEE0;max-width:30em;margin:0 auto 14px">Real connection, deep love, true intimacy. With women and every relationship that defines you.</p>
+
+    <p class="px-label px-fade" style="margin-bottom:38px">€59 a month · Application only · Online &amp; in person</p>
+
+    <button class="px-btn px-fade" data-prm-modal>Apply now <span aria-hidden="true">&#8594;</span></button>
+
+    <p class="px-fade" style="font-size:.82rem;line-height:1.7;color:#5E6B85;margin-top:16px">Applications are reviewed individually. Not everyone is accepted.</p>
+
+    <p class="px-label px-fade" style="margin-top:46px;padding-top:28px;border-top:1px solid rgba(232,198,95,.14);color:#5E6B85">Real Connection &nbsp;·&nbsp; Deep Love &nbsp;·&nbsp; True Intimacy</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 02 · WATCH THIS FIRST + the crisis ═══════════════════ -->
+<section class="px-sec" style="background:#0A1D3C">
+  <div class="px-head" style="max-width:860px">
+    <p class="px-label px-fade" style="margin-bottom:18px">01. Watch this first</p>
+
+    <button class="px-vid px-fade" data-mp4="https://video.wixstatic.com/video/111174_7af3a35d66374744965fbdaa2f9a3a9b/1080p/mp4/file.mp4" aria-label="Play: Daniel on why The Reconnected Man exists">
+      <img alt="" loading="lazy" src="https://static.wixstatic.com/media/111174_607c1b06261f47cf889c337ae45a20ed~mv2.png">
+      <span class="play" aria-hidden="true"></span>
+      <!-- ▸ TODO: confirm the real runtime and correct this chip. -->
+      <span class="len">3 min</span>
+    </button>
+
+    <blockquote class="px-fade" style="border-left:2px solid #E8C65F;padding-left:26px;margin-top:44px">
+      <p class="px-serif" style="font-size:clamp(19px,2vw,26px);line-height:1.45;color:#E8C65F;font-style:italic">We're living through a crisis of connection, and the consequences are everywhere. But standing for what truly matters takes immense courage.</p>
+      <cite class="px-hand" style="display:block;font-size:1.3rem;color:#7C89A3;margin-top:14px;font-style:normal">Daniel</cite>
+    </blockquote>
+
+    <p class="px-fade" style="font-size:1.05rem;line-height:1.75;color:#C4CEE0;margin-top:26px;max-width:52ch">We stand for real connection, love and intimacy. Not just with women, but in every relationship that defines us.</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 03 · WHO THIS IS FOR ═════════════════════════════════
+     Cream break. The live page ran nine navy sections back to back; the
+     system alternates so the eye gets a horizon line.
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="px-sec" style="background:#F1ECE1;color:#3A3630">
+  <div class="px-head">
+    <p class="px-label px-fade" style="color:#A08A5E;margin-bottom:16px">02. Who this is for</p>
+
+    <h2 class="px-serif" style="font-size:clamp(28px,3.9vw,50px);line-height:1.15;color:#1E2A3D;margin-bottom:14px">
+      <span class="px-line"><span>An initiation for men</span></span>
+      <span class="px-line"><span style="font-style:italic;color:#8A8073;font-size:.66em">who are intentionally becoming.</span></span>
+    </h2>
+
+    <div id="prm-who" style="margin-top:44px">
+      <div class="px-card px-fade">
+        <span class="n">01</span>
+        <p>The man who understands that the relationship he craves is a reflection of who he needs to become.</p>
+      </div>
+      <div class="px-card px-fade">
+        <span class="n">02</span>
+        <p>The man who can get out of his head and back into his heart.</p>
+      </div>
+      <div class="px-card px-fade">
+        <span class="n">03</span>
+        <p>The man who shows up as a human again.</p>
+      </div>
+    </div>
+
+    <div class="px-fade" style="display:flex;align-items:center;gap:16px;margin:44px 0 24px">
+      <span style="height:1px;flex:1;background:linear-gradient(90deg,rgba(160,138,94,.5),transparent)"></span>
+      <span class="px-hand" style="font-size:1.4rem;color:#A08A5E;white-space:nowrap">the relationship is the mirror</span>
+      <span style="height:1px;flex:1;background:linear-gradient(90deg,transparent,rgba(160,138,94,.5))"></span>
+    </div>
+
+    <div class="px-darkbox px-fade" style="max-width:820px;margin:0 auto">
+      <p class="px-serif" style="font-size:clamp(18px,1.9vw,25px);line-height:1.4;color:#F1ECE1;font-style:italic;margin-bottom:14px">This isn't about dating tips or relationship coaching.</p>
+      <p>This is about becoming the best version of yourself, <strong style="color:#F1ECE1;font-weight:600">for you</strong>, and as a model of demonstration for those around you.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ 04 · WHAT WE VALUE ═══════════════════════════════════ -->
+<section class="px-sec" style="background:#04122A">
+  <div class="px-head" style="max-width:1080px">
+    <p class="px-hand px-fade" style="font-size:1.6rem;color:#E8C65F;margin-bottom:14px">what we stand for</p>
+
+    <h2 class="px-serif" style="font-size:clamp(28px,3.6vw,46px);line-height:1.18;color:#F1ECE1;margin-bottom:40px">
+      <span class="px-line"><span>What we value.</span></span>
+    </h2>
+
+    <div id="prm-vals">
+      <div class="px-vpane px-fade">
+        <h3>Dedication</h3>
+        <p>We all commit to the process by showing up like this work matters, because it does.</p>
+      </div>
+      <div class="px-vpane px-fade">
+        <h3>Punctuality</h3>
+        <p>As a sign of respect to ourselves and each other. Time is a sacred resource here.</p>
+      </div>
+      <div class="px-vpane px-fade">
+        <h3>Raw Vulnerability</h3>
+        <p>Being the best with imperfection. Real, unfiltered, and fully present.</p>
+      </div>
+    </div>
+
+    <p class="px-fade" style="font-size:1.05rem;line-height:1.75;color:#C4CEE0;max-width:56ch;margin:34px 0 0">We all have skin in the game and play full out. We require the same from you upon entry.</p>
+    <p class="px-hand px-fade" style="font-size:1.75rem;color:#E8C65F;margin-top:14px">we become your newfound brotherhood</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 05 · THE INVESTMENT ══════════════════════════════════
+     sc-if so the whole offer can be pulled from the editor without deleting
+     markup — same pattern the old page used, kept.
+     ═══════════════════════════════════════════════════════════════════ -->
+<sc-if value="{{ showPricing }}" hint-placeholder-val="{{ true }}">
+<section class="px-sec" style="background:#F7F3EA;color:#3A3630">
+  <div class="px-head" style="max-width:1040px;text-align:center">
+    <p class="px-label px-fade" style="color:#A08A5E;margin-bottom:16px">03. The investment</p>
+
+    <h2 class="px-serif" style="font-size:clamp(28px,3.7vw,48px);line-height:1.18;color:#1E2A3D;margin-bottom:22px">
+      <span class="px-line"><span>A small entry fee.</span></span>
+      <span class="px-line"><span style="font-style:italic;color:#8A8073;font-size:.72em">An enormous return.</span></span>
+    </h2>
+
+    <!-- Sized to break as TWO lines, not three. Measure is set in px (not ch)
+         and the section head is widened to match, because this is a centred
+         billboard line, not a reading passage. -->
+    <p class="px-fade" style="font-size:1.02rem;line-height:1.72;color:#5E5850;max-width:1000px;margin:0 auto">The Reconnected Man is a small investment, but there is an application to be accepted. This is important work. We take it seriously, and we ask that you give it the respect it deserves. <strong style="color:#1E2A3D;font-weight:600">Not everyone will be accepted.</strong></p>
+
+    <div class="px-price px-fade">
+      <div style="padding:34px 38px 24px;border-bottom:1px solid #EDE7DC;text-align:center">
+        <div class="amt"><sup>€</sup>59</div>
+        <div style="font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:#A6968A;margin-top:12px;font-weight:700">Per month · Cancel anytime</div>
+      </div>
+      <ul style="padding:16px 38px">
+        <li><span class="d">·</span>Weekly group containers (4-week cycles)</li>
+        <li><span class="d">·</span>Live facilitation &amp; hot-seat coaching</li>
+        <li><span class="d">·</span>Brotherhood community access</li>
+        <li><span class="d">·</span>First access to new frameworks &amp; resources</li>
+        <li><span class="d">·</span>Flexible. Join at any point in the cycle</li>
+      </ul>
+      <div style="padding:6px 38px 34px">
+        <button class="px-btn full" data-prm-modal>Apply now <span aria-hidden="true">&#8594;</span></button>
+        <p style="font-size:.8rem;line-height:1.6;color:#A6968A;text-align:center;margin-top:14px">Monthly rollover. Join at any point in the cycle.</p>
+      </div>
+    </div>
+
+    <!-- ── Bonus ─────────────────────────────────────────────── -->
+    <sc-if value="{{ showBonus }}" hint-placeholder-val="{{ true }}">
+    <div class="px-fade" style="max-width:740px;margin:44px auto 0;text-align:left;background:#FBF8F2;border:1px solid #E2DACB;border-radius:18px;padding:28px 32px;box-shadow:0 18px 40px -30px rgba(30,42,61,.45)">
+      <p style="font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:#A08A5E;margin-bottom:10px">Included when you're accepted</p>
+      <h3 class="px-serif" style="font-size:clamp(21px,2.2vw,29px);font-weight:300;color:#1E2A3D;line-height:1.2;margin-bottom:10px">Your Identity 2.0</h3>
+      <p style="font-size:.95rem;line-height:1.7;color:#5E5850;margin-bottom:16px">A complete online program for successful entrepreneurs and salespeople ready to architect the next version of themselves.</p>
+      <p style="font-size:.86rem;color:#A6968A"><span style="text-decoration:line-through">Normally $597</span> &nbsp;·&nbsp; <strong style="color:#FF501F;font-weight:700">Yours free</strong></p>
+    </div>
+    </sc-if>
+  </div>
+</section>
+</sc-if>
+
+
+<!-- ══════════════ 06 · PROOF ═══════════════════════════════════════════
+     ▸ TODO — THE SINGLE BIGGEST FIX LEFT ON THIS PAGE:
+       The WhatsApp screenshots below are flattened PNGs. Google reads NONE of
+       it and a screen reader gets nothing — every one of these testimonials is
+       currently invisible to search. Home solved this by TRANSCRIBING the
+       quotes into real text (#px-voices, .px-face, .px-byline — the kit is
+       already in this file's <style>). Transcribe them, then either keep the
+       screenshots as secondary verification or drop them entirely.
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="px-sec" style="background:#0A1D3C">
+  <div class="px-head" style="max-width:1080px">
+    <p class="px-label px-fade" style="margin-bottom:16px">04. People who did it</p>
+
+    <h2 class="px-serif" style="font-size:clamp(26px,3.2vw,42px);line-height:1.2;color:#F1ECE1;margin-bottom:40px">
+      <span class="px-line"><span>Direct from</span></span>
+      <span class="px-line"><span style="font-style:italic;color:#8E9BB2">the brotherhood.</span></span>
+    </h2>
+
+    <div id="prm-reels">
+      <button class="px-vid reel px-fade" data-mp4="https://video.wixstatic.com/video/111174_59a18a858df34f798fbeb5ae8d5b19b8/1080p/mp4/file.mp4" aria-label="Play: a member on what changed for him">
+        <img alt="" loading="lazy" src="https://static.wixstatic.com/media/111174_a9a3ee79bb13414582e4f2390f945548~mv2.jpg">
+        <span class="play" aria-hidden="true"></span>
+        <span class="len">1 min</span>
+      </button>
+      <button class="px-vid reel px-fade" data-mp4="https://video.wixstatic.com/video/111174_a6961c80d0464fbe8437a38fa69071da/720p/mp4/file.mp4" aria-label="Play: a member on the circle">
+        <img alt="" loading="lazy" src="https://static.wixstatic.com/media/111174_113a5b75e82e4904bea5b4ffdfaad34e~mv2.jpg">
+        <span class="play" aria-hidden="true"></span>
+        <span class="len">1 min</span>
+      </button>
+    </div>
+
+    <div class="px-fade" style="display:flex;align-items:center;gap:16px;margin:56px 0 24px">
+      <span style="height:1px;flex:1;background:linear-gradient(90deg,rgba(232,198,95,.5),transparent)"></span>
+      <span class="px-hand" style="font-size:1.4rem;color:#E8C65F;white-space:nowrap">what they said afterwards</span>
+      <span style="height:1px;flex:1;background:linear-gradient(90deg,transparent,rgba(232,198,95,.5))"></span>
+    </div>
+
+    <div class="px-shots px-fade">
+      <div data-lb="https://static.wixstatic.com/media/111174_ae318f43a9d9450a9ae0806285100f2c~mv2.png"><img src="https://static.wixstatic.com/media/111174_ae318f43a9d9450a9ae0806285100f2c~mv2.png" alt="Member message" loading="lazy"></div>
+      <div data-lb="https://static.wixstatic.com/media/111174_2283c9d739b843ee8b0c1ab57a5ae2ea~mv2.jpg"><img src="https://static.wixstatic.com/media/111174_2283c9d739b843ee8b0c1ab57a5ae2ea~mv2.jpg" alt="Member message" loading="lazy"></div>
+      <div data-lb="https://static.wixstatic.com/media/111174_31841433a355493593556033672b9403~mv2.jpg"><img src="https://static.wixstatic.com/media/111174_31841433a355493593556033672b9403~mv2.jpg" alt="Member message" loading="lazy"></div>
+      <div data-lb="https://static.wixstatic.com/media/111174_62486f734c3144e296824e16df173d83~mv2.jpg"><img src="https://static.wixstatic.com/media/111174_62486f734c3144e296824e16df173d83~mv2.jpg" alt="Member message" loading="lazy"></div>
+      <div data-lb="https://static.wixstatic.com/media/111174_9ce3cda44fc94dd1bcb2fbd1d5c69721~mv2.jpg"><img src="https://static.wixstatic.com/media/111174_9ce3cda44fc94dd1bcb2fbd1d5c69721~mv2.jpg" alt="Member message" loading="lazy"></div>
+      <div data-lb="https://static.wixstatic.com/media/111174_9257e03b4d344d0b93e276ef36847e16~mv2.jpg"><img src="https://static.wixstatic.com/media/111174_9257e03b4d344d0b93e276ef36847e16~mv2.jpg" alt="Member message" loading="lazy"></div>
+      <div data-lb="https://static.wixstatic.com/media/111174_a475a5e5caa34053b1377af317e5d4fe~mv2.jpg"><img src="https://static.wixstatic.com/media/111174_a475a5e5caa34053b1377af317e5d4fe~mv2.jpg" alt="Member message" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ 07 · DANIEL ══════════════════════════════════════════ -->
+<section class="px-sec" style="background:#F7F3EA;color:#3A3630">
+  <div class="px-head" style="max-width:1140px">
+    <div id="prm-daniel">
+
+      <div>
+        <div style="position:sticky;top:96px">
+          <button class="px-vid reel px-fade" data-mp4="https://video.wixstatic.com/video/111174_4e1bcc7d4c634401adae988048a9cb1b/1080p/mp4/file.mp4" aria-label="Play: Daniel Lawson introduces himself" style="box-shadow:0 40px 80px -50px rgba(30,42,61,.6),0 0 0 1px rgba(160,138,94,.18)">
+            <img alt="Daniel Lawson" loading="lazy" src="https://static.wixstatic.com/media/111174_52bb7073da274289b13738d153e1334e~mv2.jpg">
+            <span class="play" aria-hidden="true"></span>
+            <span class="len">90 sec</span>
+          </button>
+          <p class="px-fade" style="font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:#C0AE92;margin-top:14px;text-align:center">No glass between us.</p>
+        </div>
+      </div>
+
+      <div>
+        <p class="px-hand px-fade" style="font-size:1.75rem;color:#A08A5E;margin-bottom:14px">and now me.</p>
+
+        <h2 class="px-serif" style="font-size:clamp(28px,3.7vw,48px);line-height:1.22;color:#1E2A3D;margin-bottom:26px">
+          <span class="px-line"><span>You're in good hands.</span></span>
+        </h2>
+
+        <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;max-width:66ch;margin-bottom:20px">I've been coaching personal connection and relationships for six years, accredited through the International Coach Guild at The Coaching Institute in Melbourne.</p>
+
+        <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;max-width:66ch;margin-bottom:20px">My flagship program, the <strong style="color:#1E2A3D;font-weight:600">Relational Connection System™</strong>, has taken graduates through the full arc, and hundreds more through retreats and facilitations worldwide.</p>
+
+        <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;max-width:66ch;margin-bottom:20px">I'm the recommended relationship coach inside the Bali Brotherhood ecosystem, and the founder and host of <strong style="color:#1E2A3D;font-weight:600">GIVE IT ALL</strong>, voted the best networking event in Medellín and run across Bulgaria and Bali.</p>
+
+        <blockquote class="px-fade" style="border-left:2px solid #A08A5E;padding-left:24px;margin:28px 0 0">
+          <p class="px-serif" style="font-size:1.3rem;line-height:1.45;color:#A08A5E;font-style:italic">This is space to create deep transformation inside yourself, fast.</p>
+          <cite class="px-hand" style="display:block;font-size:1.3rem;color:#C0AE92;margin-top:12px;font-style:normal">Daniel</cite>
+        </blockquote>
+
+        <div class="px-chips px-fade">
+          <span>ICG Accredited</span>
+          <span>6 Years Coaching</span>
+          <span>Global Facilitator</span>
+          <span>Bali Brotherhood</span>
+          <span>Relational Connection System™</span>
+        </div>
+
+        <div class="px-fade" style="margin-top:30px">
+          <a class="px-ghost on-cream" href="https://www.parallaxxtransformations.com/about-daniel-lawson">The full story <span aria-hidden="true">&#8594;</span></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ 08 · COMMON QUESTIONS ════════════════════════════════ -->
+<section class="px-sec" style="background:#04122A">
+  <div class="px-head" style="max-width:860px">
+    <p class="px-label px-fade" style="margin-bottom:16px">05. Before you apply</p>
+
+    <h2 class="px-serif" style="font-size:clamp(26px,3.2vw,42px);line-height:1.2;color:#F1ECE1;margin-bottom:38px">
+      <span class="px-line"><span>Common questions.</span></span>
+    </h2>
+
+    <div class="faq-wrap px-fade">
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false"><span class="faq-q">Do you offer a trial period first?</span><span class="faq-ico" aria-hidden="true">+</span></button>
+        <div class="faq-body" role="region"><div class="faq-body-inner">No, we don't offer a trial. We've found that the man who commits, who shows up and takes responsibility for extracting the value he's looking for, gets the best experience. If you can gamble money on dates but aren't willing to take a small risk investing in yourself, this probably isn't your crew.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false"><span class="faq-q">Is this online or in person?</span><span class="faq-ico" aria-hidden="true">+</span></button>
+        <div class="faq-body" role="region"><div class="faq-body-inner">Both, depending on community access and requirements. When you apply, select your preferred option and we'll discuss what's available to you.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false"><span class="faq-q">Do I need to attend every session?</span><span class="faq-ico" aria-hidden="true">+</span></button>
+        <div class="faq-body" role="region"><div class="faq-body-inner">The short answer is no. But if you're already expecting not to be committed to the process, the brothers, and the consistency real transformation requires, it may not be the best fit for you.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false"><span class="faq-q">How do I know when sessions are?</span><span class="faq-ico" aria-hidden="true">+</span></button>
+        <div class="faq-body" role="region"><div class="faq-body-inner">We're fluid with scheduling based on community requests. Currently two sessions are held at different times for the best global coverage. Apply, and if accepted, we'll find what fits your schedule.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false"><span class="faq-q">What does the entry fee actually include?</span><span class="faq-ico" aria-hidden="true">+</span></button>
+        <div class="faq-body" role="region"><div class="faq-body-inner">The entry fee is largely a pay-to-play filter for men willing to invest in themselves. The actual value is exponentially greater than €59: group facilitation, hot-seat coaching, resources, and the connections you'll make.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false"><span class="faq-q">Is this a sales funnel? Are there upsells coming?</span><span class="faq-ico" aria-hidden="true">+</span></button>
+        <div class="faq-body" role="region"><div class="faq-body-inner">No. This is a standalone experience with real, substantial value. There is an option to go deeper through 1:1 coaching within the Reconnect Program. If you choose that path, your total time in the circle is deducted from the program cost, with free access carried over.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ 09 · THE CLOSE ═══════════════════════════════════════
+     Ends on cream, same as Home, so PtFooter's navy CTA block lands as a
+     change of key rather than more of the same.
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="px-sec" style="background:#F1ECE1;color:#3A3630">
+  <div class="px-head" style="max-width:760px">
+    <p class="px-hand px-fade" style="font-size:1.6rem;color:#A08A5E;margin-bottom:14px">a note about this circle</p>
+
+    <h2 class="px-serif" style="font-size:clamp(26px,3.4vw,42px);line-height:1.2;color:#1E2A3D;margin-bottom:24px">
+      <span class="px-line"><span>Reconnect is</span></span>
+      <span class="px-line"><span style="font-style:italic;color:#8A8073">emotional leadership.</span></span>
+    </h2>
+
+    <p class="px-fade" style="font-size:1.04rem;line-height:1.72;color:#5E5850;margin-bottom:18px">The Reconnected Man requires skin in the game to join a community where we explore what it means to show up fully, in our relationships and in our lives.</p>
+
+    <p class="px-fade" style="font-size:1.04rem;line-height:1.72;color:#5E5850;margin-bottom:30px">This is also where I develop and test new frameworks and content. You'll have first access to emerging resources, tools and programs as they arrive, both free and paid.</p>
+
+    <p class="px-hand px-fade" style="font-size:1.75rem;color:#A08A5E;margin-bottom:44px">you're joining a living conversation</p>
+
+    <div class="px-fade" style="height:1px;background:linear-gradient(90deg,rgba(160,138,94,.5),transparent);margin-bottom:44px"></div>
+
+    <h3 class="px-serif" style="font-size:clamp(24px,2.8vw,38px);font-weight:500;line-height:1.25;color:#1E2A3D;margin-bottom:16px">
+      <span class="px-line"><span>The brotherhood is waiting.</span></span>
+    </h3>
+
+    <p class="px-fade" style="font-size:1.02rem;line-height:1.7;color:#5E5850;margin-bottom:28px;max-width:52ch">Applications are reviewed individually. Not everyone is accepted. If this resonates, don't wait.</p>
+
+    <button class="px-btn px-fade" data-prm-modal>Apply now <span aria-hidden="true">&#8594;</span></button>
+
+    <!-- ▸ PARKED: the two-door fork (Reconnected Woman / Reconnect 1:1) used to
+         sit here. Removed on request. The .px-doors and .px-door class kit is
+         still in the stylesheet above, so dropping it back in is markup only,
+         no CSS. The house pattern for "this or the other thing" is:
+
+         <div class="px-doors">
+           <a class="px-door on-cream px-fade" href="...">
+             <p class="eyebrow">Not for you?</p>
+             <h4>The Reconnected Woman</h4>
+             <p>The same circle, the same work, held for women.</p>
+             <span class="go">Take a look &#8594;</span>
+           </a>
+           ... second door ...
+         </div>
+    -->
+  </div>
+</section>
+
+
+<!-- ══════════════ APPLICATION MODAL ════════════════════════════════════ -->
+<div id="prm-modal" role="dialog" aria-modal="true" aria-label="The Reconnected Man application">
+  <div class="mb" data-prm-close></div>
+  <div class="box">
+    <div class="hd">
+      <span class="ttl">The Reconnected Man Application</span>
+      <button class="x" data-prm-close aria-label="Close form">&times;</button>
+    </div>
+    <iframe src="https://api.leadconnectorhq.com/widget/form/UxzzQRv0AbKKQZ0P9bau"
+            height="1439" title="The Reconnected Man Application Form"
+            id="form-UxzzQRv0AbKKQZ0P9bau" data-form-id="UxzzQRv0AbKKQZ0P9bau"
+            data-form-name="The Reconnected Man Application Form"></iframe>
+  </div>
+</div>
+
+<!-- ══════════════ LIGHTBOX ═════════════════════════════════════════════ -->
+<div id="prm-lb" role="dialog" aria-modal="true" aria-label="Member message">
+  <button class="x" data-prm-lb-close aria-label="Close">&times;</button>
+  <img alt="Member message" src="">
+</div>
+
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1360,&quot;height&quot;:6400},&quot;showPricing&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;showBonus&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  componentDidMount(){
+    const root = document.getElementById('prm-root');
+    if(!root) return;
+
+    /* ROOT vs STAGE. These are the same node under the DC runtime and two
+       different nodes in the deployed bundle, so the difference is invisible
+       until it breaks in production only.
+
+       The build script strips the line above and hands boot() the SHADOW ROOT
+       as root. A shadow root is a DocumentFragment: querySelectorAll works
+       on it, classList does NOT exist on it. So anything that queries uses
+       root, and anything that touches classes or styles uses stage, which
+       resolves to the #prm-root element in both runtimes. */
+    const stage = (root.getElementById && root.getElementById('prm-root')) || root;
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hasGSAP = !!(window.gsap && window.ScrollTrigger);
+
+    /* ── REVEAL ───────────────────────────────────────────────────────────
+       .anim is what hides things, so it goes on ONLY on the path that also
+       animates them back. Every other path — no GSAP (including GSAP still
+       in flight when we mount), reduced motion, or a throw partway through
+       the reveal loop — lands on reveal(), which strips .anim and force-sets
+       the end state. There is no branch that hides content without owning
+       the job of showing it again.
+
+       Anything already above the fold animates IMMEDIATELY with no
+       ScrollTrigger. A ScrollTrigger firing during layout settling once
+       stranded the hero headline half-clipped; this is that fix. */
+    const reveal = ()=>{
+      stage.classList.remove('anim');
+      root.querySelectorAll('.px-line > span').forEach(l=>{ l.style.transform = 'none'; });
+      root.querySelectorAll('.px-fade').forEach(el=>{ el.style.opacity = '1'; el.style.transform = 'none'; });
+    };
+
+    if(hasGSAP && !reduce){
+      stage.classList.add('anim');
+      try{
+      const G = window.gsap, ST = window.ScrollTrigger;
+      G.registerPlugin(ST);
+      const inView = (el)=>{ const r = el.getBoundingClientRect(); return r.top < window.innerHeight * 0.88; };
+
+      root.querySelectorAll('.px-line > span').forEach(l=>{
+        if(inView(l)) G.to(l,{y:'0%',duration:1.05,ease:'expo.out'});
+        else G.to(l,{y:'0%',duration:1.05,ease:'expo.out',scrollTrigger:{trigger:l,start:'top 88%',once:true}});
+      });
+      root.querySelectorAll('.px-fade').forEach(el=>{
+        if(inView(el)) G.to(el,{opacity:1,y:0,duration:.95,ease:'power3.out'});
+        else G.to(el,{opacity:1,y:0,duration:.95,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}});
+      });
+
+      if(window.Lenis){
+        const lenis = new window.Lenis({duration:1.15,smoothWheel:true,touchMultiplier:1.4});
+        const raf = (t)=>{ lenis.raf(t); requestAnimationFrame(raf); };
+        requestAnimationFrame(raf);
+        lenis.on('scroll', ST.update);
+      }
+      }catch(err){
+        /* Something in the animation path threw. Better an unanimated page
+           than a half-hidden one. */
+        console.warn('[prm] reveal failed, showing everything:', err);
+        reveal();
+      }
+    } else {
+      /* No GSAP, or reduced motion. Nothing stays hidden. */
+      reveal();
+    }
+
+    /* ── VIDEO FACADE ─────────────────────────────────────────────────────
+       No third-party request until the click. data-mp4 -> native <video>,
+       data-yt -> youtube-nocookie. data-live guards re-init. */
+    root.querySelectorAll('.px-vid').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        if(btn.dataset.live === '1') return;
+        btn.dataset.live = '1';
+        const mp4 = btn.getAttribute('data-mp4'), yt = btn.getAttribute('data-yt');
+        btn.querySelectorAll('.play,.len').forEach(n=>n.remove());
+        if(mp4){
+          const v = document.createElement('video');
+          v.className = 'live'; v.src = mp4; v.controls = true; v.autoplay = true;
+          v.playsInline = true; v.setAttribute('playsinline','');
+          btn.appendChild(v); v.play().catch(()=>{});
+        } else if(yt){
+          const f = document.createElement('iframe');
+          f.src = 'https://www.youtube-nocookie.com/embed/' + yt + '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+          f.allow = 'autoplay; encrypted-media; picture-in-picture';
+          f.setAttribute('allowfullscreen','');
+          btn.appendChild(f);
+        }
+      });
+    });
+
+    /* ── FAQ — single-open accordion ─────────────────────────────────── */
+    root.querySelectorAll('.faq-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const item = btn.closest('.faq-item');
+        const body = item.querySelector('.faq-body');
+        const isOpen = item.classList.contains('open');
+        root.querySelectorAll('.faq-item').forEach(i=>{
+          i.classList.remove('open');
+          i.querySelector('.faq-body').style.maxHeight = null;
+          i.querySelector('.faq-btn').setAttribute('aria-expanded','false');
+        });
+        if(!isOpen){
+          item.classList.add('open');
+          body.style.maxHeight = body.scrollHeight + 'px';
+          btn.setAttribute('aria-expanded','true');
+        }
+      });
+    });
+
+    /* ── APPLICATION MODAL ───────────────────────────────────────────── */
+    const modal = document.getElementById('prm-modal');
+    const openModal = ()=>{ modal.classList.add('is-open'); document.body.style.overflow = 'hidden';
+                            const x = modal.querySelector('.x'); if(x) x.focus(); };
+    const closeModal = ()=>{ modal.classList.remove('is-open'); document.body.style.overflow = ''; };
+    root.querySelectorAll('[data-prm-modal]').forEach(el=>el.addEventListener('click',openModal));
+    modal.querySelectorAll('[data-prm-close]').forEach(el=>el.addEventListener('click',closeModal));
+
+    /* ── LIGHTBOX ────────────────────────────────────────────────────── */
+    const lb = document.getElementById('prm-lb'), lbImg = lb.querySelector('img');
+    const closeLb = ()=>{ lb.classList.remove('is-open'); document.body.style.overflow = ''; lbImg.src = ''; };
+    root.querySelectorAll('[data-lb]').forEach(el=>{
+      el.addEventListener('click',()=>{
+        lbImg.src = el.getAttribute('data-lb');
+        lb.classList.add('is-open'); document.body.style.overflow = 'hidden';
+      });
+    });
+    lb.addEventListener('click',(e)=>{ if(e.target === lb || e.target.hasAttribute('data-prm-lb-close')) closeLb(); });
+
+    document.addEventListener('keydown',(e)=>{
+      if(e.key !== 'Escape') return;
+      if(modal.classList.contains('is-open')) closeModal();
+      if(lb.classList.contains('is-open')) closeLb();
+    });
+
+    /* ── RESPONSIVE COLLAPSE ──────────────────────────────────────────── */
+    const stacks = [['prm-daniel',900]];
+    stacks.forEach(([id])=>{ const g = document.getElementById(id); if(g) g.dataset.cols = g.style.gridTemplateColumns || getComputedStyle(g).gridTemplateColumns; });
+    const layout = ()=>stacks.forEach(([id,bp])=>{
+      const g = document.getElementById(id); if(!g) return;
+      g.style.gridTemplateColumns = window.innerWidth < bp ? '1fr' : '.82fr 1.18fr';
+    });
+    window.addEventListener('resize',layout,{passive:true});
+    layout();
+  }
+  renderVals(){ return {}; }
+}
+</script>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     DEPLOYMENT
+
+     Ship as a Wix CUSTOM ELEMENT, not an HTML embed:
+       Source URL = parallaxx-reconnected-man.js
+       Tag        = parallaxx-reconnected-man
+       Site header + footer = OFF
+       Place PtNav (active="experiences") and PtFooter as their own
+       custom elements above and below.
+
+       <parallaxx-reconnected-man></parallaxx-reconnected-man>
+       <script src="./parallaxx-reconnected-man.js?v=20260801a"></script>
+
+     Bump the ?v= query on every deploy — it busts the CDN and browser cache.
+
+     THIS IS THE STRUCTURAL FIX. The live page is a Wix HTML embed, which
+     means the whole thing renders inside a ~891px iframe with its own
+     scrollbar, the Parallaxx header and footer are collapsed by page code
+     ($w('#header1').collapse()), and none of the copy is in the parent
+     document for Google. A custom element renders inline at real document
+     height and keeps the site chrome.
+
+     SEO lives in Wix page settings, not in this component. Set:
+       Title       RECONNECTED MAN | Parallaxx Transformations
+       Description A brotherhood for men done living in disconnection and
+                   loneliness. Weekly group containers, live coaching, real
+                   connection. Facilitated by Daniel Lawson. €59/month.
+     ══════════════════════════════════════════════════════════════════════ -->
+</body>
+</html>

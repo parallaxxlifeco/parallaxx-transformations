@@ -1,5 +1,5 @@
-/* PARALLAXX TRANSFORMATIONS — Home page Wix Custom Element. Tag: parallaxx-home-page.
-   Converted from the dc design to a self-contained shadow-DOM element (same pattern as gia-home-page.js).
+/* PARALLAXX TRANSFORMATIONS - Home page Wix Custom Element. Tag: parallaxx-home-page.
+   GENERATED from "Parallaxx Home.dc.html" - edit the .dc.html, not this file.
    In the Wix editor: turn the site Header + Footer OFF for this page. */
 (function(){
   if (customElements.get('parallaxx-home-page')) return;
@@ -25,13 +25,13 @@
      08 CREDS     demoted. proof closes, it does not open.
 
    TOKENS shared with GIVE IT ALL:  navy #061938 gold #E8C65F Montserrat
-   TOKENS Parallaxx only:  coral #FF501F  Cormorant  Caveat  cream #F1ECE1
+   TOKENS Parallaxx only:  coral #FF501F  Poppins  Lumios Marker  cream #F1ECE1
 
    ===================================================================
    THE ACCENT RULE.  GOLD IS DANIEL. CORAL IS YOU.
    -------------------------------------------------------------------
    GOLD  #E8C65F -- Daniel's VOICE. Everything he says.
-                    His handwriting (Caveat). His emphasis inside prose.
+                    His handwriting (Lumios Marker). His emphasis inside prose.
                     His pull-quotes. Section labels. Hairlines.
                     Shared with GIVE IT ALL -- it is the family colour.
 
@@ -55,16 +55,21 @@
   img{display:block;max-width:100%}
 
   #px-root{background:#04122A;color:#B1BFD7;font-family:'Montserrat',system-ui,sans-serif;font-size:16px;line-height:1.7;overflow-x:clip;position:relative}
-  .px-serif{font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;letter-spacing:-.005em}
-  .px-hand{font-family:'Caveat',cursive}
+  /* DISPLAY FACE. Was Cormorant Garamond at weight 300 with negative tracking --
+     settings that flatter a high-contrast serif and gut a geometric sans.
+     Poppins at 300 goes weak and spindly at 60px, so the display weight comes
+     UP to 400/500 and the tracking goes slightly negative only at large sizes,
+     which is where Poppins' generous default spacing actually needs reining in. */
+  .px-serif{font-family:'Poppins','Montserrat',sans-serif;font-weight:400;letter-spacing:-.018em}
+  .px-hand{font-family:'Lumios Marker','Permanent Marker',cursive}
   .px-wrap{max-width:1240px;margin:0 auto}
   .px-sec{padding:clamp(52px,6.5vw,92px) clamp(20px,4vw,52px);position:relative}
   .px-label{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:#5E6B85}
 
   .px-btn{display:inline-flex;align-items:center;gap:.55em;background:#FF501F;color:#fff;font-weight:700;font-size:.98rem;padding:1.05em 2.2em;border-radius:999px;text-decoration:none;transition:background .3s,transform .3s,box-shadow .3s;box-shadow:0 10px 30px -12px rgba(255,80,31,.5)}
   .px-btn:hover{background:#FF6A3D;transform:translateY(-2px)}
-  .px-ghost{display:inline-flex;align-items:center;gap:.55em;color:#E8C65F;border:1px solid rgba(232,198,95,.4);font-weight:600;font-size:.94rem;padding:1em 2em;border-radius:999px;text-decoration:none;transition:background .3s,border-color .3s}
-  .px-ghost:hover{background:rgba(232,198,95,.1);border-color:#E8C65F}
+  .px-ghost{display:inline-flex;align-items:center;gap:.55em;color:#B1BFD7;border:1px solid rgba(232,198,95,.4);font-weight:600;font-size:.94rem;padding:1em 2em;border-radius:999px;text-decoration:none;transition:background .3s,border-color .3s}
+  .px-ghost:hover{background:rgba(241,236,225,.08);border-color:#F1ECE1;color:#F1ECE1}
 
   /* KINETIC TYPE.
      Each .px-line is ONE line, masked and slid up. Which means each one must
@@ -79,11 +84,13 @@
      So: headline containers get their own width, in px, sized for DISPLAY
      type -- never the body measure. And each line refuses to wrap. */
   .px-line{display:block;overflow:hidden}
-  .px-line > span{display:block;transform:translateY(110%);will-change:transform;white-space:nowrap}
+  /* NO NOWRAP. Each line is its own span already, so nowrap only ever meant
+     "clip me if the box is narrower than the text" -- which is what shaved the
+     f off "yourself". Wrapping is the safe failure. */
+  .px-line > span{display:block;transform:translateY(110%);will-change:transform;padding-right:.08em}
   @media(max-width:820px){
-    .px-line > span{white-space:normal}   /* let it wrap on small screens rather than overflow */
   }
-  .px-head{max-width:min(1020px,92vw);margin-left:auto;margin-right:auto}
+  .px-head{max-width:min(1140px,94vw);margin-left:auto;margin-right:auto}
   .px-fade{opacity:0;transform:translateY(22px);will-change:transform,opacity}
 
   .px-ph{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:11px;padding:30px;
@@ -118,7 +125,7 @@
     background:linear-gradient(90deg,rgba(4,18,42,.90) 0%,rgba(4,18,42,.58) 44%,rgba(4,18,42,.04) 78%),
                linear-gradient(0deg,rgba(4,18,42,.86) 0%,rgba(4,18,42,0) 52%)}
   #px-hero-copy{position:absolute;inset:0;display:flex;align-items:center;padding:0 clamp(20px,5vw,90px);pointer-events:none}
-  #px-hero-copy .inner{max-width:min(640px,54vw);pointer-events:auto}
+  #px-hero-copy .inner{max-width:min(720px,58vw);pointer-events:auto}
   @media(max-width:900px){#px-hero-copy .inner{max-width:100%}}
 
   /* -- 02 MIRROR : the confessions ------------------------------
@@ -158,10 +165,16 @@
      CENTRE the text against the phone: the leftover height splits into two
      even margins instead of pooling at the bottom as a gap. */
   #px-mirror-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(30px,4.5vw,72px);
-    align-items:center;max-width:1180px;margin:0 auto}
-  #px-sticky{position:relative}
+    align-items:stretch;max-width:1180px;margin:0 auto}
+  /* The column runs the FULL height of the phone and distributes into it:
+     copy at the top, the dark box sitting underneath it, bottom edges level
+     with the screen. align-items was centre, which left the box floating and
+     the two columns ending at different heights. */
+  #px-sticky{position:relative;display:flex;flex-direction:column}
+  #px-mirror-grid > .px-fade:first-child{display:flex;align-items:flex-start}
+  #px-sticky > .px-darkbox{margin-top:auto}
 
-  .px-phone{width:min(340px,100%);margin:0 auto;aspect-ratio:9/19.4;position:relative;
+  .px-phone{width:min(360px,100%);aspect-ratio:9/19.4;margin:0 auto;position:relative;
     background:#1A1A1E;border-radius:42px;padding:11px;
     box-shadow:0 40px 90px -40px rgba(30,42,61,.55), 0 0 0 1px rgba(160,138,94,.22)}
   .px-screen{position:relative;height:100%;background:#FBF8F2;border-radius:32px;overflow:hidden;
@@ -178,25 +191,85 @@
      v10 translated a tape inside a masked window and you had to chase the
      top message. Nobody should have to work to read the thing that's meant
      to describe their life. Smaller type, one screen, done. */
-  #px-window{position:relative;flex:1;padding:10px 13px 0;display:flex;flex-direction:column;justify-content:center}
-  #px-tape{padding:0}
+  /* TOP DOWN. It reads as a conversation being written rather than one you
+     have scrolled back through, and the eye starts where it naturally starts.
+     Still stable: appending at the bottom moves nothing above it, which was
+     the whole reason for leaving justify-content:CENTER behind. */
+  #px-window{position:relative;flex:1;padding:14px 13px 0;display:flex;flex-direction:column;
+    justify-content:flex-start;overflow-y:auto;overscroll-behavior:contain;
+    scrollbar-width:none;-ms-overflow-style:none}
+  #px-window::-webkit-scrollbar{display:none}
+  /* Bottom gap lives on the tape, not the window. padding-bottom on an
+     overflowing flex container is dropped by most engines. */
+  #px-tape{padding:0 0 22px}
 
-  /* INCOMING -- the honest self. fogged until it climbs the screen. */
-  .px-in{display:flex;justify-content:flex-start;margin-bottom:5px}
-  .px-in > div{max-width:90%;position:relative;overflow:hidden;border-radius:15px 15px 15px 4px}
-  .px-bub{background:#1E2A3D;color:#F1ECE1;padding:9px 13px;font-size:11.5px;line-height:1.42}
+  /* IT TYPES ITSELF, LIVE. The fog-wipe is gone.
+     A fogged bubble that clears is a REVEAL -- it says "here is a thing that
+     was already written, now legible." That reads as a component, and worse,
+     as him texting himself.
+     Typing reads as a thought ARRIVING. Nothing exists until it surfaces.
+
+     And the two sides are deliberately timed differently, which is the whole
+     characterisation:
+       the THOUGHT takes ~700ms of typing dots to form. It's effortful.
+       the ANSWER fires back in ~180ms with no dots at all. Reflexive. He's
+       said it a thousand times and it needs no thinking.
+     He never has to work that hard to talk himself out of it. */
+  .px-in,.px-out{display:none}
+  .px-in.shown,.px-out.shown{display:flex;opacity:0;transform:translateY(7px);filter:blur(5px);
+    transition:opacity .46s ease, transform .52s cubic-bezier(.22,.61,.36,1), filter .46s ease}
+  /* HIS BELIEF is reflexive, so it lands fast and shallow. */
+  .px-out.shown{transform:translateY(4px);filter:blur(3px);
+    transition:opacity .34s ease, transform .38s ease, filter .34s ease}
+  /* THE REPLY SURFACES. Slow, out of focus, rising further. It is the voice
+     that already knows the answer, so it should arrive like something coming
+     into view rather than something interrupting. */
+  .px-in.shown{transform:translateY(6px);filter:blur(3px);
+    transition:opacity .34s ease, transform .38s ease, filter .34s ease}
+  .px-in.on,.px-out.on{opacity:1;transform:none;filter:blur(0)}
+  @media(prefers-reduced-motion:reduce){
+    .px-in.shown,.px-out.shown{transform:none;filter:none;transition:opacity .3s ease}
+  }
+
+  /* INCOMING -- the thought. */
+  .px-in{justify-content:flex-start;margin-bottom:5px}   /* no display here -- .shown owns it */
+  .px-in > div{max-width:90%;position:relative;border-radius:15px 15px 15px 4px}
+  .px-bub{background:#25344A;color:#EDE9E0;padding:9px 13px;font-size:11px;line-height:1.45;
+    border-radius:15px 15px 15px 4px}
   .px-in.last > div{border:1px solid rgba(232,198,95,.6);box-shadow:0 0 0 3px rgba(232,198,95,.1)}
-  .px-fog{position:absolute;top:-2px;bottom:-2px;left:-4%;width:112%;pointer-events:none;
-    transform:translateX(0);transition:transform 1.7s cubic-bezier(.5,0,.15,1);
-    background:linear-gradient(96deg,rgba(198,175,132,0) 0%,rgba(206,186,148,.6) 6%,
-      rgba(198,175,132,.97) 14%,rgba(212,195,163,.97) 60%,rgba(198,175,132,.98) 100%)}
-  .px-in.wiped .px-fog{transform:translateX(104%)}
+  /* The caret is a pseudo-element, so setting textContent on the bubble does
+     not disturb it. steps(1,end) gives a hard blink rather than a pulse. */
+  .px-bub.typing::after{content:'';display:inline-block;width:1.5px;height:.92em;
+    margin-left:2px;vertical-align:-1px;background:#E8C65F;
+    animation:px-caret .68s steps(1,end) infinite}
+  @keyframes px-caret{0%,50%{opacity:1}50.01%,100%{opacity:0}}
+  @media(prefers-reduced-motion:reduce){ .px-bub.typing::after{display:none} }
+
+  /* THE TYPING INDICATOR. One node, moved down the thread and re-skinned as
+     it goes, so there is only ever one and it can't be left behind. */
+  /* THE DOTS NEVER MOVE. v1 re-inserted this node before each message, which
+     is a DOM move plus a reflow on every beat. It just lives at the end of the
+     thread -- which, bottom-anchored, is exactly where the next message lands. */
+  /* FIXED HEIGHT, opacity only. Animating the height bounced the entire
+     bottom-anchored stack up and down on every single beat. */
+  #px-typing{display:flex;margin-bottom:5px;height:34px;opacity:0;pointer-events:none;
+    transition:opacity .22s ease}
+  #px-typing.on{opacity:1}
+  #px-typing.gone{display:none}
+  #px-typing .d{background:#1E2A3D;padding:11px 13px;border-radius:15px 15px 15px 4px;
+    display:flex;gap:4px;align-items:center}
+  #px-typing i{width:5px;height:5px;border-radius:50%;background:#8A9AB5;display:block;
+    animation:px-dot 1.05s infinite ease-in-out}
+  #px-typing i:nth-child(2){animation-delay:.16s}
+  #px-typing i:nth-child(3){animation-delay:.32s}
+  @keyframes px-dot{0%,60%,100%{opacity:.28;transform:translateY(0)}
+    30%{opacity:1;transform:translateY(-3px)}}
 
   /* OUTGOING -- his excuse. a brush-off. */
-  .px-out{display:flex;justify-content:flex-end;margin-bottom:12px}
+  .px-out{justify-content:flex-end;margin-bottom:12px}   /* no display here -- .shown owns it */
   .px-out > div{max-width:80%}
-  .px-out .b{background:#EDE7DC;color:#8A8073;padding:7px 12px;border-radius:15px 15px 4px 15px;
-    font-size:10.5px;line-height:1.38}
+  .px-out .b{background:#EDE7DC;color:#807869;padding:8px 12px;border-radius:15px 15px 4px 15px;
+    font-size:11px;line-height:1.45}
   .px-meta{text-align:right;font-size:8px;letter-spacing:.1em;text-transform:uppercase;
     font-weight:700;color:#C6BBAA;margin:3px 3px 0 0}
 
@@ -217,14 +290,17 @@
      v4 made it a card in a box -- a demo sitting in its own module.
      Now the glass is the section background and the copy lives INSIDE
      the two sides. Drag the handle and the argument moves with it. -- */
-  #px-reframe{position:relative;min-height:58svh;display:flex;align-items:center;overflow:hidden;background:#0A1D3C;cursor:ew-resize;user-select:none}
+  #px-reframe{position:relative;min-height:46svh;display:flex;align-items:center;overflow:hidden;background:#0A1D3C;cursor:ew-resize;user-select:none}
   #px-split{position:absolute;inset:0;width:100%;height:100%;display:block}
   #px-rf-veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(6,25,56,.94) 0%,rgba(6,25,56,.62) 45%,rgba(6,25,56,.72) 100%)}
   #px-handle{position:absolute;top:0;bottom:0;width:2px;background:#FF501F;box-shadow:0 0 30px rgba(255,80,31,.8);pointer-events:none;z-index:3}
   #px-handle::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;background:#FF501F;box-shadow:0 8px 30px rgba(255,80,31,.55)}
   #px-handle::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:20px;height:10px;z-index:1;
     background:linear-gradient(90deg,#fff 0 4px,transparent 4px 8px,#fff 8px 12px,transparent 12px 16px,#fff 16px 20px);opacity:.9}
-  #px-rf-copy{position:relative;z-index:2;width:100%;padding:0 clamp(20px,4vw,52px);pointer-events:none}
+  /* Both sides pulled in toward the middle. They were hard against the outer
+   edges of a 3:1 band, which put the two headlines about as far apart as
+   they can physically be and made the eye travel the whole width twice. */
+  #px-rf-copy{position:relative;z-index:2;width:100%;padding:0 clamp(28px,8vw,140px);pointer-events:none}
   .px-rf-side{max-width:34ch}
   .px-rf-tag{display:inline-block;padding:7px 14px;border-radius:999px;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;margin-bottom:16px}
 
@@ -368,21 +444,21 @@
      the bottom -- a navy gradient sitting on top of them is just dirt on a
      subtitle. */
   .px-pane.on::after{opacity:.14}
-  .px-pane.on{border-color:rgba(255,80,31,.55);transform:translateY(-3px)}
+  .px-pane.on{border-color:rgba(255,80,31,.6);box-shadow:0 30px 60px -30px rgba(3,12,28,.95), 0 0 0 1px rgba(255,80,31,.25)}
 
   /* THE WORDS.
      Number + NAME live at the TOP. They stay put, always, so he never loses
      track of which pane he's looking at.
      The DESCRIPTION lives at the bottom -- and gets out of the way the
      instant the clip runs, because that's where the captions are. */
-  /* DO NOT put a blanket \`.px-pane > *{position:relative}\` here.
-     It has the same specificity as \`.px-film\` (one class each) and sits
+  /* DO NOT put a blanket '.px-pane > *{position:relative}' here.
+     It has the same specificity as '.px-film' (one class each) and sits
      later in the sheet, so it WINS -- and quietly turns the film container
      into a zero-height static div. Every brick, curtain and dust sheet then
      lays itself out inside nothing and renders as nothing. No error, no
      warning, just five empty cards. Target the text directly instead. */
   .px-pane > .n{position:absolute;top:18px;left:18px;z-index:3;
-    font-family:'Cormorant Garamond',serif;font-size:1.9rem;
+    font-family:'Poppins','Montserrat',sans-serif;font-size:1.9rem;
     color:rgba(232,198,95,.6);line-height:1}
   .px-pane > h3, .px-pane > p{position:relative;z-index:3}
   /* THE WHOLE BOTTOM BLOCK CLEARS OUT WHEN THE CLIP RUNS.
@@ -402,9 +478,23 @@
   .px-pane.on h3, .px-pane.on p{opacity:0;pointer-events:none}
 
   /* the cue. only on the panes that actually have a clip. */
-  .px-pane .cue{position:absolute;top:20px;right:16px;z-index:4;font-size:.6rem;letter-spacing:.14em;
-    text-transform:uppercase;font-weight:800;color:rgba(232,198,95,.55);transition:opacity .35s ease}
+  /* A PLAY BUTTON, not the word WATCH. Tiny uppercase gold type is a caption;
+     a circle with a triangle in it is a thing you press. */
+  .px-pane .cue{position:absolute;top:14px;right:14px;z-index:4;
+    width:30px;height:30px;border-radius:999px;font-size:0;
+    background:rgba(4,18,42,.5);border:1px solid rgba(241,236,225,.28);
+    backdrop-filter:blur(6px);
+    transition:opacity .35s ease,background .35s ease,border-color .35s ease,transform .35s ease}
+  .px-pane .cue::after{content:'';position:absolute;top:50%;left:54%;transform:translate(-50%,-50%);
+    border-style:solid;border-width:5px 0 5px 8px;border-color:transparent transparent transparent #F1ECE1}
+  .px-pane:hover .cue{background:#FF501F;border-color:#FF501F;transform:scale(1.12)}
   .px-pane.on .cue{opacity:0}
+
+  /* FOCUS. Hovering one card dims the other four, so the row stops being a
+     grid of equals and becomes a thing he is choosing between. */
+  #px-panes:hover .px-pane:not(:hover){opacity:.45;filter:saturate(.7)}
+  .px-pane{transition:border-color .35s ease,transform .35s ease,opacity .35s ease,filter .35s ease,box-shadow .35s ease}
+  .px-pane:hover{transform:translateY(-8px);box-shadow:0 30px 60px -30px rgba(3,12,28,.9)}
   @media(prefers-reduced-motion:reduce){
     .px-brick,.px-grid,.px-bloom,.px-curtain,.px-sheet{transition:opacity .3s ease !important}
     .px-pane.on .px-brick,.px-pane.on .px-grid,.px-pane.on .px-bloom,
@@ -415,6 +505,14 @@
   /* 360px cap is load-bearing: it puts the 720px-wide clip at exactly 2x. */
   @media(max-width:560px){#px-panes{grid-template-columns:1fr;justify-items:center}
     .px-pane{width:100%;max-width:360px}}
+
+  /* THE PORTRAIT TRAVELS WITH THE STORY. It is 4:5 against 285 words, so the
+     left column used to finish a third of the way down and leave a column of
+     dead cream. Sticky beats two columns here: a personal story set in two
+     columns reads like a newspaper, and this one has to feel like being
+     talked to. */
+  #px-daniel > div:first-child{position:sticky;top:96px}
+  @media(max-width:900px){#px-daniel > div:first-child{position:static}}
 
   /* ── 05 SYSTEM : three panes ──────────────────────────────── */
   /* SQUARE, not 4:3. The reveal behind this glass is a vertical photograph of
@@ -473,7 +571,7 @@
     border-radius:18px;padding:26px 28px;text-decoration:none;transition:border-color .3s ease,background .3s ease,transform .3s ease}
   .px-door:hover{border-color:rgba(255,80,31,.55);background:rgba(255,80,31,.07);transform:translateY(-3px)}
   .px-door .eyebrow{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:#E8C65F;margin-bottom:10px}
-  .px-door h4{font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;font-size:clamp(21px,2.2vw,29px);color:#F1ECE1;margin-bottom:10px;line-height:1.2}
+  .px-door h4{font-family:'Poppins','Montserrat',sans-serif;font-weight:300;font-size:clamp(21px,2.2vw,29px);color:#F1ECE1;margin-bottom:10px;line-height:1.2}
   .px-door p{font-size:.9rem;line-height:1.7;color:#8E9BB2;margin-bottom:14px}
   .px-door span.go{font-size:.82rem;font-weight:700;color:#FF6A3D}
 
@@ -515,7 +613,7 @@
     box-shadow:0 0 0 1px rgba(232,198,95,.30), 0 8px 18px -10px rgba(3,12,28,.9)}
   .px-face.lg{width:78px;height:78px}
   .px-byline{display:flex;align-items:center;gap:14px}
-  .px-byline .who{font-size:.9rem;font-weight:700;color:#E8C65F;line-height:1.45}
+  .px-byline .who{font-size:.9rem;font-weight:700;color:#B1BFD7;line-height:1.45}
   .px-byline .who span{display:block;font-size:.76rem;font-weight:500;color:#7C89A3;margin-top:2px}
 
   /* ── VIDEO FACADE ─────────────────────────────────────────────────
@@ -556,7 +654,7 @@
   #px-voices{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,2.8vw,38px);
     padding-top:32px;border-top:1px solid rgba(241,236,225,.1)}
   .px-voice{margin:0;display:flex;flex-direction:column}
-  .px-voice blockquote{margin:0 0 18px;font-family:'Cormorant Garamond',Georgia,serif;
+  .px-voice blockquote{margin:0 0 18px;font-family:'Poppins','Montserrat',sans-serif;
     font-style:italic;font-size:clamp(18px,1.6vw,22px);line-height:1.4;color:#F1ECE1;flex:1}
   @media(max-width:820px){#px-voices{grid-template-columns:1fr;gap:28px}
     .px-voice blockquote{flex:none}}
@@ -568,7 +666,6 @@
   @media(prefers-reduced-motion:reduce){
     .px-line > span{transform:none!important}
     .px-fade{opacity:1!important;transform:none!important}
-    .px-in .px-fog{transform:translateX(104%)!important}
   }`;
 
   var HTML = `<div id="px-root">
@@ -593,72 +690,103 @@
 
   <div id="px-hero-copy">
     <div class="inner">
-      <p class="px-hand px-fade" style="font-size:1.7rem;color:#E8C65F;margin-bottom:14px">it takes courage to admit you want love</p>
+      <!-- THE HOOK — HIS DOORWAY IS DOUBT, NOT LONGING.
+           This is the single biggest change the archive forced.
 
-      <!-- THE HOOK.
-           v6 said "No one gets close to you. And you can't work out why."
-           That is a DIAGNOSIS. He nods and scrolls.
+           Every previous hero was aimed at what he WANTS: "what made you
+           successful is what's keeping you alone." That's a longing hook,
+           and longing is what he finds LATER, in the work.
 
-           Daniel's actual hook form, from every post that has ever worked
-           for him, is a provocative flat statement that sounds wrong until
-           it doesn't:
-             "Fixing her feelings is selfish."
-             "Productivity is my favourite place to hide."
-             "Your checklist is keeping you alone."
-             "The loudest guy is the most insecure."
+           A real client (05 Part A, [CLIENT]) didn't arrive because he ached.
+           He arrived because his WIFE named something wrong with him -- around
+           emotions -- and when he checked it against himself he couldn't
+           argue. The question that actually made him spend money:
+             "Is there something I need to fix, or am I that balanced person
+              I think I am?"
 
-           So the hero is the whole thesis, weaponised. He can't argue with
-           it and he can't ignore it, because it flatters him and cuts him
-           in the same breath. -->
-      <h1 class="px-serif" style="font-size:clamp(34px,5.4vw,72px);line-height:1.1;color:#F1ECE1;margin-bottom:26px">
-        <span class="px-line"><span>What made you successful</span></span>
-        <span class="px-line"><span style="font-style:italic;color:#E8C65F">is what's keeping you</span></span>
-        <span class="px-line"><span style="font-style:italic;color:#E8C65F">alone.</span></span>
+           That's a competent man's doubt about his own self-assessment,
+           triggered from outside. It's hook #1 in the archive's revised order
+           and the highest-confidence sentence Daniel owns. Doubt is what makes
+           him click. -->
+      <!-- WHY THIS HOOK AND NOT "SHE'S TOLD YOU SOMETHING'S MISSING IN YOU."
+           That one is [CLIENT] and it's hot -- but it's from ONE transcript,
+           and it needs his wife to have actually had that conversation. Plenty
+           haven't, and those men bounce off the first line.
+
+           This is hook #2: client-confirmed, applies to all of them, and it
+           FLATTERS BEFORE IT CUTS -- the first sentence is the most decent
+           thing about him, the second is what it cost. The archive names it
+           the safest opener for a cold audience for exactly that reason.
+
+           AND THERE IS NO BLEEDING NECK TO PRESS ON. He is not in a crisis,
+           he's in a slow disappearance -- nothing has gone wrong enough to
+           justify getting help. So the hero buys RECOGNITION, not urgency.
+           The urgency belongs in the footer, where "nothing happens, that's
+           the problem" is the honest version of it. -->
+      <h1 class="px-serif" style="font-size:clamp(30px,3.9vw,52px);line-height:1.14;color:#F1ECE1;margin-bottom:20px">
+        <span class="px-line"><span style="font-weight:500">You handled it all yourself.</span></span>
+        <span class="px-line"><span style="font-style:italic;font-weight:300;font-size:.84em;color:#B1BFD7">That's the distance.</span></span>
       </h1>
-      <!-- 63 words was too heavy for a hero. But this line stays, tightened:
-           the headline makes a CLAIM (your strengths are the problem), and an
-           unsupported claim from a stranger gets dismissed. This is the proof,
-           and it lands in a second because it's a list.
+      <!-- ONE LINE OF PROOF, NOT FIVE.
+           The old hero ran a four-item list of what he does, then a separate
+           promise line, then a qualifier -- 64 words in four blocks before he
+           reached a button. This is the same idea in one sentence, and it puts
+           the two halves of his life next to each other in a way he can't
+           argue with. -->
+      <!-- "RUNS THE HOUSE" WAS WRONG TWICE.
+           The house is HER domain in this marriage -- he's the income, the
+           fixing, the outside-world logistics. Handing him the house is
+           inaccurate and reads as taking her territory off her.
 
-           The single/married line is a QUALIFIER, not a hook. It exists only
-           so a married man doesn't bounce at the word "alone". Nine words. -->
-      <p class="px-fade" style="font-size:clamp(16px,1.35vw,20px);line-height:1.8;max-width:48ch;margin-bottom:12px;color:#C4CEE0">
-        The discipline. The standards. The self&#8209;sufficiency. They built the life. Now everybody's looking at you through it.
-      </p>
-      <!-- THE SOLUTION. One line, and it does three jobs at once.
+           And "she's got a husband who..." makes her the one who HAS things
+           and isn't appreciating them. That's the blame trapdoor: copy that
+           frames the wife as ungrateful loses him in one line, because he
+           loves her and he's protective of her.
 
-           1. It answers the headline. The hook makes a brutal claim about
-              him ("your strengths are the problem") and then leaves him
-              holding it. Nobody stays on a page that only accuses.
-           2. It carries the WHOLE promise: keep every bit of it, we're just
-              making you reachable. That is the offer, in nine words.
-           3. It makes the CURSOR WIPE legible without a single line of UI.
-              No prompt, no ring, no "drag to clean" tutorial -- the copy
-              says "we clean the glass," the hero IS glass, and anyone who
-              moves the mouse discovers what that sentence means. The
-              mechanic explains itself, and nothing is gated behind it for
-              the people who never touch it.
+           Drop her as the POSSESSOR and both problems go. She comes back as
+           the one who's missing something -- which is her loss, not her fault,
+           and it's the only posture for her that doesn't cost us him.
 
-           GOLD on "clean the glass" -- gold is Daniel's voice. This is him
-           making the promise. Coral would be wrong here: coral is the
-           reader's colour, reserved for controls, and every coral word in
-           prose devalues the coral BUTTON sitting right underneath. -->
-      <p class="px-fade" style="font-size:clamp(16px,1.35vw,20px);line-height:1.75;max-width:48ch;margin-bottom:32px;color:#F1ECE1;font-weight:500">
-        We <strong style="color:#E8C65F;font-weight:600">clean the glass</strong>. You keep every bit of what you built.
+           "FEELS", not hears or sees. It's about presence, not communication.
+           It's also the archive's pattern 3 in four words: she has a competent
+           household manager and no man reaching for her.
+           And it sits right on the line between emotional and physical without
+           landing on either -- which is exactly where intimacy belongs on this
+           page. Present, never named as the problem. -->
+      <p class="px-fade" style="font-size:clamp(17px,1.5vw,22px);line-height:1.65;max-width:44ch;margin-bottom:18px;color:#C4CEE0">
+        A husband who sorts everything.<br>And a man she never feels.
       </p>
 
-      <div class="px-fade" style="display:flex;gap:14px;flex-wrap:wrap">
-        <a class="px-btn" href="https://www.parallaxxtransformations.com/reconnect">Find your pattern <span>→</span></a>
-        <a class="px-ghost" href="#px-mirror">Is this me? <span>↓</span></a>
+      <!-- THE PROMISE, AND IT HAS TO CARRY THE METAPHOR.
+           "We get the man back" named an outcome and connected to nothing on
+           screen -- and it promised a restoration he has no memory of.
+           This does three jobs in one line: it says what the film IS (the
+           thing between him and his own life), what taking it off gives HIM
+           (he feels it), and what it gives THEM (they can reach him). And it
+           makes the wipe he is about to discover mean something.
+           NOT "reach". Nobody says "she can't reach me" in a pub. It reads as
+           coach language the moment he notices it.
+           "They feel you" answers the line directly above -- "a man she never
+           feels" -- with its own verb. Problem, then answer, same word. -->
+      <p class="px-fade" style="font-size:clamp(17px,1.5vw,22px);line-height:1.6;margin-bottom:30px;color:#F1ECE1;font-weight:600">
+        Clean the film. Feel your life. They feel you.
+      </p>
+
+      <!-- ONE ACTION. "Find your pattern" sent him to the quiz before the page
+           had told him patterns existed, and off-site before it had done any
+           work on him. The hero's only job is to buy the next scroll. -->
+      <div class="px-fade" style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+        <a class="px-btn" href="#px-mirror">Is this me? <span>&#8595;</span></a>
       </div>
 
-      <!-- The single/married qualifier is NOT a beat -- it's a footnote. It
-           exists for one reason: so a married man doesn't bounce off the word
-           "alone" in the headline. Sitting in the main stack it read like a
-           third argument and cost the hero a whole line of weight. Under the
-           buttons it does the same job at a fraction of the price. -->
-      <p class="px-fade" style="font-size:.8rem;line-height:1.6;color:#7C89A3;margin-top:18px;max-width:48ch">
-        Single or married. Makes less difference than you'd think.
+      <!-- THE FILTER. Was "single or married -- makes less difference than
+           you'd think," which was written to stop a married man bouncing off
+           the word "alone." That hedge is now backwards: this page speaks to
+           one man and he has to know inside five seconds that it's him.
+           A qualifier that filters PEOPLE OUT is what makes the ones left
+           feel found. -->
+      <p class="px-fade" style="font-size:.78rem;line-height:1.6;color:#7C89A3;margin-top:16px;max-width:48ch">
+        Married. Years in. Still care about her.
       </p>
     </div>
   </div>
@@ -675,34 +803,55 @@
         <div class="px-phone">
           <div class="px-notch"></div>
           <div class="px-screen">
+          <!-- 11.40pm, not 2.14am. "The 11pm kitchen" is one of the archive's
+               own scenarios: everyone's asleep, he's standing there with a
+               glass of water, and it's the only hour of the day he isn't
+               performing something. That's his time, and it's specific. -->
+          <!-- NOT A CONTACT CARD. An avatar and a name made this look like an
+               SMS thread with a person called "You," which is a confusing
+               object. There's no contact, because there's nobody on the other
+               end -- it's his own head at the only hour it gets a word in. -->
           <div class="px-thread-hd">
-            <div class="px-av">YOU</div>
             <div>
-              <div style="font-size:12px;font-weight:700;color:#1E2A3D">You</div>
-              <div style="font-size:9.5px;color:#A79C8C">2:14 am · same as every night</div>
+              <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#A08A5E">11:40 pm</div>
+              <div style="font-size:9.5px;color:#A79C8C;margin-top:2px">the part of you that's started answering back</div>
             </div>
           </div>
 
+          <!-- THE THREAD, RE-SOURCED.
+               Incoming = the archive's own scenarios: the doorway pause, the
+               pre-emptive edit, the text that never gets sent, "she's a great
+               mum" (his words), and the [CLIENT] line about not burdening
+               anyone.
+               Outgoing = "what he tells himself," near-verbatim. Every excuse
+               is TRUE, which is exactly why it works on him. -->
           <div id="px-window">
           <div id="px-tape">
-          <div class="px-in"><div><div class="px-bub">I don't know how to let anyone all the way in.</div><div class="px-fog"></div></div></div>
-          <div class="px-out"><div><div class="b">You're just selective.</div></div></div>
+          <!-- HIS BELIEF first (outgoing, muted), then the part of him that
+               never bought it answering back (incoming, navy).
+               It never argues. It hands him things he already knows. And the
+               last reply is the disillusion: he has never been refused, he has
+               only ever made the question too small to answer. -->
+          <div class="px-out"><div><div class="b">I'm just not emotional like her.</div></div></div>
+          <div class="px-in"><div><div class="px-bub">When was the last time you felt anything?</div></div></div>
 
-          <div class="px-in"><div><div class="px-bub">Everyone gets the curated version of me.</div><div class="px-fog"></div></div></div>
-          <div class="px-out"><div><div class="b">That's called being professional.</div></div></div>
+          <div class="px-out"><div><div class="b">I'm fine. Emotionally stable.</div></div></div>
+          <div class="px-in"><div><div class="px-bub">Emotionally stable, or emotionally numb?</div></div></div>
 
-          <div class="px-in"><div><div class="px-bub">I pull away right when it starts to matter.</div><div class="px-fog"></div></div></div>
-          <div class="px-out"><div><div class="b">You have standards.</div></div></div>
+          <div class="px-out"><div><div class="b">Everyone gets boring after fifteen years.</div></div></div>
+          <div class="px-in"><div><div class="px-bub">Boring men don't lie awake about it.</div></div></div>
 
-          <div class="px-in"><div><div class="px-bub">I'm lying next to someone and I still feel alone in it.</div><div class="px-fog"></div></div></div>
-          <div class="px-out"><div><div class="b">Everyone feels like that sometimes.</div></div></div>
+          <div class="px-out"><div><div class="b">I am not weak or needy.</div></div></div>
+          <div class="px-in"><div><div class="px-bub">That's your story. She's never had a chance to decide.</div></div></div>
 
-          <div class="px-in"><div><div class="px-bub">I can be alone and fine. But it's lonely.</div><div class="px-fog"></div></div></div>
-          <div class="px-out"><div><div class="b">You're fine. You're busy.</div></div></div>
+          <div class="px-out"><div><div class="b">Besides, I don't need anything. I'm not desperate.</div></div></div>
+          <div class="px-in"><div><div class="px-bub">You've wanted things your whole life. You've just never asked for them.</div></div></div>
 
-          <div class="px-in last"><div><div class="px-bub">Maybe this just isn't for people like me.</div><div class="px-fog"></div></div></div>
-          <!-- THE SILENCE. There is no answer to this one, so he never gave one. -->
-          <div class="px-out px-none"><div><div class="b">no reply</div><div class="px-meta" style="color:#C6BBAA">you never had one</div></div></div>
+          <div class="px-out"><div><div class="b">Better to wait for her than risk direct rejection.</div></div></div>
+          <div class="px-in"><div><div class="px-bub">So instead spend your life with someone you never let in, right?</div></div></div>
+
+          <div class="px-out"><div><div class="b">Right. So I don't ask.</div></div></div>
+          <div class="px-in last"><div><div class="px-bub">So you've never been turned down. Just become nothing.</div></div></div>
           </div>
           </div>
           </div>
@@ -718,55 +867,61 @@
            reading the thread, and it saves the section a full-width block
            of ~500px underneath. -->
       <div id="px-sticky">
-        <p class="px-label px-fade" style="color:#A08A5E;margin-bottom:14px">01 — The mirror</p>
+        <p class="px-label px-fade" style="color:#A08A5E;margin-bottom:14px">01. The mirror</p>
         <h2 class="px-serif" style="font-size:clamp(25px,3vw,40px);line-height:1.15;color:#1E2A3D;margin-bottom:16px">
-          The conversation you keep <span style="font-style:italic">having with yourself.</span>
+          The truth is surfacing. And your bullshit radar <span style="font-style:italic">is turning within.</span>
         </h2>
         <p class="px-fade" style="font-size:1.06rem;line-height:1.7;color:#5E5850;margin-bottom:10px">
-          He messages you at 2am. You've got an answer for everything he says.
+          Your stories are plausible, commendable, they've kept the peace and never been a burden. But the years of self censorship and silenced requests are catching up. At home, and in you.
         </p>
         <p class="px-fade" style="font-size:1.06rem;line-height:1.7;color:#8A8073;margin-bottom:26px">
-          Every one of them, you talked him out of.
+          It is the first useful thing that you're initiating in a while.
         </p>
 
         <div class="px-fade" style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
           <span style="height:1px;flex:1;background:linear-gradient(90deg,rgba(160,138,94,.5),transparent)"></span>
-          <span class="px-hand" style="font-size:1.4rem;color:#A08A5E;white-space:nowrap">so where did they come from?</span>
+          <span class="px-hand" style="font-size:1.4rem;color:#A08A5E;white-space:nowrap">stories perfected from young</span>
           <span style="height:1px;flex:1;background:linear-gradient(90deg,transparent,rgba(160,138,94,.5))"></span>
         </div>
 
-        <p class="px-fade" style="font-size:1.02rem;line-height:1.72;color:#5E5850;margin-bottom:14px">
-          <strong style="color:#1E2A3D">Every one of them came from somewhere.</strong> A younger version of you worked out that opening up cost something, and found a way to stay safe. Smart kid.
+        <!-- THE TURN, RE-SOURCED.
+             Was: a younger version of you learned opening up cost something.
+             That's a childhood-defence story built for the old avatar, and
+             nobody said it.
+
+             The archive's turn is [CLIENT], near-verbatim, and better: he
+             handles everything himself so as not to burden anyone, and what
+             he hadn't realised was that the self-management WAS the problem.
+
+             Craft note from 03: name the mechanism, never the motive. His
+             motive is genuinely good -- he is not hiding, he is sparing
+             people. So flatter, then cut. Contempt loses him in one line. -->
+        <p class="px-fade" style="font-size:1rem;line-height:1.68;color:#5E5850;margin-bottom:11px">
+          Stories written by you. A boy works out what gets his needs met. Yours worked then, so you never replaced them.
         </p>
-        <p class="px-fade" style="font-size:1.02rem;line-height:1.72;color:#5E5850;margin-bottom:14px">
-          And it worked. That's what gets us — it worked so well we built whole lives on it.
+        <p class="px-fade" style="font-size:1rem;line-height:1.68;color:#5E5850;margin-bottom:11px">
+          You're no longer a boy. And this is your wife and home, not the school yard. Your life doesn't need them now. That is why they turn up at eleven at night.
         </p>
         <p class="px-fade" style="font-size:1.02rem;line-height:1.72;color:#5E5850">
-          Now the same film that kept the pain out is keeping <strong style="color:#1E2A3D">them</strong> out too. Whether they're still out there, or right beside you. <strong style="color:#1E2A3D">No judgment.</strong> Most of us do this until we know better.
+          They surface so you can rewrite them.
         </p>
+        <div class="px-fade px-darkbox" style="margin:28px 0 0;padding:22px 24px;background:#12233F;border-radius:18px">
+      <p class="px-serif" style="font-size:clamp(18px,1.9vw,25px);line-height:1.4;color:#F1ECE1;font-style:italic;margin-bottom:14px">
+        “How’re you doing?”
+      </p>
+      <p style="font-size:.97rem;line-height:1.7;color:#B1BFD7;margin-bottom:12px">
+        Always the same. Good. Fine. Yeah, not too bad. Because that is all that's left.
+      </p>
+      <p style="font-size:.97rem;line-height:1.7;color:#B1BFD7;margin-bottom:12px">
+        People tell you to stop bottling it up. It's fucking annoying, because you're not. It's simpler than that. Nobody ever sat down with you and worked out what feeling anything actually means, or how to do it.
+      </p>
+      <p style="font-size:1.02rem;line-height:1.75;color:#E8C65F">
+        And if reading that did nothing to you, <strong>there it is.</strong>
+      </p>
+    </div>
       </div>
     </div>
 
-    <!-- THE BRIDGE: from his head into his body.
-         He is analytical and probably numb. Go straight at feeling and he
-         calls it woo. Stay analytical and nothing moves.
-         So: something he can OBSERVE (the pause), located in the BODY
-         (the chest), and only then NAMED (loneliness). Every rung is
-         verifiable. He can check the first one right now. -->
-    <div class="px-fade" style="max-width:68ch;margin:62px auto 0;padding:34px 36px;background:#12233F;border-radius:20px">
-      <p class="px-serif" style="font-size:clamp(20px,2.2vw,29px);line-height:1.45;color:#F1ECE1;font-style:italic;margin-bottom:18px">
-        You know the half&#8209;second before you answer "how are you"?
-      </p>
-      <p style="font-size:1.02rem;line-height:1.75;color:#B1BFD7;margin-bottom:16px">
-        That tiny gap where you decide how much to give. It's so quick now you don't notice it. But it's there, and it's in your body — a small tightening, up behind the breastbone, and then it's gone and you've said "yeah, good."
-      </p>
-      <p style="font-size:1.02rem;line-height:1.75;color:#B1BFD7;margin-bottom:16px">
-        That gap is a muscle. You've been holding it for twenty years, and the holding stopped feeling like anything at all.
-      </p>
-      <p style="font-size:1.02rem;line-height:1.75;color:#E8C65F">
-        And if reading this left you flat — <strong>that's the muscle. You're feeling it right now.</strong>
-      </p>
-    </div>
   </div>
 </section>
 
@@ -778,32 +933,32 @@
 <section id="px-reframe">
   <canvas id="px-split"></canvas>
   <div id="px-rf-veil"></div>
-  <div id="px-handle" style="left:50%"></div>
+  <div id="px-handle" style="left:55%"></div>
 
   <div id="px-rf-copy">
-    <div class="px-wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,90px);align-items:center" id="px-rf-grid">
+    <div class="px-wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,60px);align-items:center;max-width:1500px;margin:0 auto" id="px-rf-grid">
 
       <!-- HER SIDE -->
       <div class="px-rf-side px-fade">
-        <span class="px-rf-tag" style="background:#E8C65F;color:#061938">From where they stand</span>
-        <h3 class="px-serif" style="font-size:clamp(24px,3vw,40px);line-height:1.2;color:#F1ECE1;margin-bottom:16px">Flawless.</h3>
+        <span class="px-rf-tag" style="background:#E8C65F;color:#061938">Current reality</span>
+        <h3 class="px-serif" style="font-size:clamp(24px,3vw,40px);line-height:1.2;color:#F1ECE1;margin-bottom:16px">Missing in action.</h3>
         <p style="font-size:1rem;line-height:1.72;color:#C4CEE0;pointer-events:auto">
-          Capable. Composed. The one everyone counts on. This is what they get, every time, for years. <strong style="color:#E8C65F">It's a beautiful picture. It's also the only thing they've ever been allowed to see.</strong>
+          Life experience flat. Missing the moments. Distracted.
         </p>
       </div>
 
       <!-- HIS SIDE -->
       <div class="px-rf-side px-fade" style="margin-left:auto;text-align:right">
-        <span class="px-rf-tag" style="background:#FF501F;color:#fff">From where you stand</span>
-        <h3 class="px-serif" style="font-size:clamp(24px,3vw,40px);line-height:1.2;color:#F1ECE1;margin-bottom:16px">And this is what it feels like.</h3>
+        <span class="px-rf-tag" style="background:#FF501F;color:#fff">Possible reality</span>
+        <h3 class="px-serif" style="font-size:clamp(24px,3vw,40px);line-height:1.2;color:#F1ECE1;margin-bottom:16px">Present in peace.</h3>
         <p style="font-size:1rem;line-height:1.72;color:#C4CEE0;pointer-events:auto">
-          Everyone at arm's length. Someone's face right in front of you and you're somewhere behind your own eyes, watching it happen. Everything works. You just can't get out, and nobody can get in.
+          Life with colour, expression, connected again.
         </p>
       </div>
     </div>
 
     <div class="px-wrap" style="text-align:center;margin-top:clamp(18px,2.5vw,32px)">
-      <p class="px-hand" style="font-size:1.6rem;color:#FF501F">same man. drag it across.</p>
+      <p class="px-hand" style="font-size:1.6rem;color:#FF501F">same man. upgraded experience.</p>
     </div>
   </div>
 </section>
@@ -812,29 +967,40 @@
 <section class="px-sec" style="background:#0A1D3C;padding-top:clamp(34px,4vw,52px)">
   <div class="px-wrap">
     <div class="px-head" style="margin:0 auto 40px;text-align:center">
-      <p class="px-label px-fade" style="margin-bottom:20px">02 — Why it keeps happening</p>
+      <p class="px-label px-fade" style="margin-bottom:20px">02. Where it came from</p>
+      <!-- THE REFRAME IS AGENCY, and it's the whole mechanism of this page.
+           03's first craft note: every pattern must hand him agency, because
+           that's what makes it hurt and give hope in the same breath.
+           Said plainly: if she built it, you're stuck. You built it, so you
+           can stop -- without her permission, starting tonight. -->
       <h2 class="px-serif" style="font-size:clamp(26px,3.6vw,46px);line-height:1.22;color:#F1ECE1">
-        <span class="px-line"><span>You don't get the relationship you want.</span></span>
-        <span class="px-line"><span style="font-style:italic;color:#E8C65F">You get the one that matches who you are.</span></span>
+        <span class="px-line"><span>The distance with her is the second one.</span></span>
       </h2>
     </div>
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px)" id="px-reframe-cols">
       <div>
         <p class="px-fade" style="font-size:1.05rem;line-height:1.75;color:#C4CEE0;margin-bottom:18px">
-          So it was never the apps, right? Never the city, never the timing. And if you're already with someone — it was never them either. We keep changing what's out there and walking the same person into it.
+          That tension in the air and the eggshells on the floor. An environment built on a decade of desires unasked, needs ignored, and opinions unexpressed. <strong style="color:#F1ECE1">Now you float like a ghost to keep the peace.</strong>
         </p>
         <p class="px-fade" style="font-size:1.05rem;line-height:1.75;color:#C4CEE0">
-          Look at that left-hand side again. It's immaculate. That's the trap. <strong style="color:#E8C65F">The polish is the film.</strong> The discipline, the standards, the self-sufficiency, the composure — every good thing about you. Flawless, and completely opaque.
+          There were good reasons every time. You're doing fine. Figure it out, don't be a burden. Don't rock the boat.
+        </p>
+        <p class="px-fade" style="font-size:1.05rem;line-height:1.75;color:#C4CEE0;margin-top:18px">
+          But you were never shown what you couldn't see. <strong style="color:#F1ECE1">That is the whole problem with doing anything alone.</strong>
         </p>
       </div>
       <div>
+        <!-- DROPPED OBJECTION -- NOTE FOR LATER.
+             The counsellor line is gone at Daniel's call. It was [CLIENT]
+             and it handled the I-have-already-tried-therapy objection, so if
+             that objection turns up in conversations it needs a home
+             somewhere else on the page. -->
         <p class="px-fade" style="font-size:1.05rem;line-height:1.75;color:#C4CEE0;margin-bottom:18px">
-          They keep meeting the impressive version, and it's standing in the doorway. <strong style="color:#E8C65F">You can't fix what you can't see. And you can't see it from in there.</strong> That's why ten years of books and podcasts changed nothing. It takes somebody standing on the outside.
         </p>
         <blockquote class="px-fade" style="border-left:2px solid #E8C65F;padding-left:24px;margin-top:18px">
-          <p class="px-serif" style="font-size:1.45rem;line-height:1.45;color:#E8C65F;font-style:italic">Keep every bit of it. The discipline, the standards, the drive. We're just making you reachable — and you'll know the day it lands, because someone asks how you are and the answer comes out unedited.</p>
-          <cite class="px-hand" style="display:block;font-size:1.3rem;color:#7C89A3;margin-top:12px;font-style:normal">— Daniel</cite>
+          <p class="px-serif" style="font-size:1.4rem;line-height:1.45;color:#E8C65F;font-style:italic">You've been waiting for it to ease off, or shift on its own. And when you have moved, you've done more of the same. More helping, more providing, more keeping the peace. Effort was never what was missing.</p>
+          <cite class="px-hand" style="display:block;font-size:1.3rem;color:#7C89A3;margin-top:12px;font-style:normal">Daniel</cite>
         </blockquote>
       </div>
     </div>
@@ -845,13 +1011,13 @@
 <section class="px-sec" style="background:#04122A">
   <div class="px-wrap">
     <div class="px-head" style="text-align:center;margin:0 auto 30px">
-      <p class="px-hand px-fade" style="font-size:1.75rem;color:#E8C65F;margin-bottom:14px">we all keep people out differently</p>
+      <p class="px-hand px-fade" style="font-size:1.75rem;color:#E8C65F;margin-bottom:14px">good reasons to keep it to yourself</p>
       <h2 class="px-serif" style="font-size:clamp(30px,4.4vw,56px);line-height:1.15;color:#F1ECE1;margin-bottom:22px">
-        <span class="px-line"><span>Five kinds of film.</span></span>
-        <span class="px-line"><span style="font-style:italic;color:#E8C65F">One of them is yours.</span></span>
+        <span class="px-line"><span>Five ways to handle it alone.</span></span>
+        <span class="px-line"><span style="font-size:.62em;font-style:italic;color:#8E9BB2">Which is yours?</span></span>
       </h2>
       <p class="px-fade" style="font-size:1.05rem;line-height:1.75;color:#C4CEE0;margin-bottom:14px">
-        Each of us does it differently. <strong style="color:#E8C65F">And it's hard to scrub off something you're still proud of.</strong>
+        Every one of them is a decent man's solution to a real problem.
       </p>
     </div>
 
@@ -865,46 +1031,43 @@
            data-clip="https://video.wixstatic.com/video/111174_495d92c709a74ae199756df31216a61e/480p/mp4/file.mp4">
         <div class="n">01</div>
         <h3>The Freedom Fortress</h3>
-        <p>Closeness starts to feel like being trapped.</p>
+        <p>The more she reaches, the more you find that needs doing.</p>
       </div>
 
       <div class="px-pane" data-film="defender"
            data-clip="https://video.wixstatic.com/video/111174_863af1d4805a4c24ad33cb35ff088881/480p/mp4/file.mp4">
         <div class="n">02</div>
         <h3>The Intellectual Defender</h3>
-        <p>You know the story of how you feel. Not the feeling.</p>
+        <p>You can explain how you feel. You've never actually felt it.</p>
       </div>
 
       <div class="px-pane" data-film="idealist"
            data-clip="https://video.wixstatic.com/video/111174_0c316e5ec9a44931a1f94fe8f9bac6a6/480p/mp4/file.mp4">
         <div class="n">03</div>
         <h3>The Idealist</h3>
-        <p>You only fully show up when it feels perfect.</p>
+        <p>You'll talk to her properly when things are better between you. They never quite are.</p>
       </div>
       <div class="px-pane" data-film="performer"
            data-clip="https://video.wixstatic.com/video/111174_2dd20e0c35d3467e8957b2e57cd6d9d9/480p/mp4/file.mp4">
         <div class="n">04</div>
         <h3>The Performer</h3>
-        <p>They love the energy. Nobody has ever met the truth.</p>
+        <p>You keep everyone's mood up. Nobody's asked about yours in years.</p>
       </div>
       <div class="px-pane" data-film="romantic"
            data-clip="https://video.wixstatic.com/video/111174_469a5c83d5ae49ddb30780eb2ca3a85d/480p/mp4/file.mp4">
         <div class="n">05</div>
         <h3>The Over-Controlled Romantic</h3>
-        <p>You live half a step behind your own impulse.</p>
+        <p>Everything gets softened before it leaves your mouth.</p>
       </div>
     </div>
 
     <!-- THE GATE. He can rub at it from out here. He can't get through it. -->
     <div style="max-width:68ch;margin:28px auto 0;text-align:center">
-      <p class="px-fade" style="font-size:1.08rem;line-height:1.75;color:#C4CEE0;margin-bottom:14px">
-        One of those made you shift in your seat.
-      </p>
-      <p class="px-fade" style="font-size:1.08rem;line-height:1.75;color:#C4CEE0;margin-bottom:30px">
-        That's as far as I can take you from out here. Two minutes and I'll tell you which one is yours — where it came from, what it's protecting, and what it's cost you.
+      <p class="px-fade" style="font-size:1.08rem;line-height:1.75;color:#C4CEE0;margin-bottom:30px;max-width:60ch;margin-left:auto;margin-right:auto">
+        You'll have a suspicion which one is yours. Confirm it, because the full profile goes further than you'd expect. Two minutes to find out which one you're running, where you learned it, and why things are the way they are at home.
       </p>
       <a class="px-btn px-fade" href="https://www.parallaxxtransformations.com/reconnect">Find out which one is yours <span>→</span></a>
-      <p class="px-fade" style="font-size:.84rem;color:#5E6B85;margin-top:14px">2 minutes. No email wall on the result.</p>
+      <p class="px-fade" style="font-size:.84rem;color:#5E6B85;margin-top:14px">2 minutes. Answer's on the screen. Nothing lands in your inbox.</p>
     </div>
 
   </div>
@@ -924,26 +1087,6 @@
 
      So the page now alternates properly: navy panes -> cream fork ->
      navy system -> cream Daniel. ══════════════════════════════════ -->
-<section class="px-sec" style="background:#F1ECE1;color:#3A3630">
-  <div class="px-wrap">
-    <p class="px-hand px-fade" style="text-align:center;font-size:1.6rem;color:#A08A5E;margin-bottom:26px">same glass. different room.</p>
-    <div class="px-doors">
-      <a class="px-door on-cream px-fade" href="https://www.parallaxxtransformations.com/the-reconnected-man">
-        <div class="eyebrow">For men</div>
-        <h4>The Reconnected Man</h4>
-        <p>You learned that needing someone was a risk. So you built a life that doesn't require anyone — and now nobody can get in.</p>
-        <span class="go">Step into the brotherhood →</span>
-      </a>
-      <a class="px-door on-cream px-fade" href="https://www.parallaxxtransformations.com/the-reconnected-woman">
-        <div class="eyebrow">For women</div>
-        <h4>The Reconnected Woman</h4>
-        <p>You've competed with men, led men, carried men. You've held it together for everyone. And nobody has ever held you.</p>
-        <span class="go">Put it down →</span>
-      </a>
-    </div>
-  </div>
-</section>
-
 <!-- ══════════════ 05 · THE SYSTEM — three panes of glass ══════════════
      Tightened to fit a 14" laptop in one screen. Three clicks only happen
      if the stage, the pills and the card are all visible at once.
@@ -952,15 +1095,21 @@
      a DARK ROOM and a LIT WINDOW. On cream the dirty state had nothing to
      be dark against, and the clean state had nowhere to arrive.
      ═══════════════════════════════════════════════════════════════ -->
-<section class="px-sec" style="background:#04122A;padding-top:clamp(38px,4.4vw,58px);padding-bottom:clamp(38px,4.4vw,58px)">
+<section class="px-sec" style="background:#0A1D3C;padding-top:clamp(38px,4.4vw,58px);padding-bottom:clamp(38px,4.4vw,58px)">
   <div class="px-wrap">
     <div class="px-head" style="text-align:center;margin:0 auto 22px">
-      <p class="px-label px-fade" style="margin-bottom:12px">03 — How the work actually works</p>
+      <p class="px-label px-fade" style="margin-bottom:12px">03. How the work works</p>
       <h2 class="px-serif" style="font-size:clamp(27px,3.4vw,42px);line-height:1.18;color:#F1ECE1;margin-bottom:14px">
         <span class="px-line"><span>The Relational Connection System™</span></span>
       </h2>
-      <p class="px-fade" style="font-size:1rem;line-height:1.65;color:#C4CEE0;margin-bottom:0;max-width:60ch;margin-left:auto;margin-right:auto">
-        Three panes between you and the people you love. Fit all three and they can reach you. <strong style="color:#E8C65F">Miss one and the glass stays dirty in a specific, predictable way</strong> — which is why the same thing keeps happening.
+      <!-- One sentence per line. inline-block spans break BETWEEN each other
+           first and only wrap internally when the screen is too narrow, so it
+           is three lines on desktop without hard <br> tags that would strand
+           orphans on a phone. 84ch fits the longest sentence. -->
+      <p class="px-fade" style="font-size:1rem;line-height:1.7;color:#C4CEE0;margin-bottom:0;max-width:84ch;margin-left:auto;margin-right:auto">
+        <span style="display:inline-block">Three dimensions between you and your experience of life with the people you love.</span>
+        <span style="display:inline-block">Clear all three, and you'll know what everyone else is on about.</span>
+        <span style="display:inline-block"><strong style="color:#F1ECE1">Each one clouded gives a predictable result</strong>, which is why the same thing keeps happening.</span>
       </p>
     </div>
 
@@ -987,7 +1136,8 @@
       </div>
 
       <div class="px-card px-fade" id="px-vv-card">
-        <div id="px-vv-label" style="font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:#A08A5E;margin-bottom:14px"></div>
+        <div id="px-vv-label" style="font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:#A08A5E;margin-bottom:5px"></div>
+        <div id="px-vv-ctx" style="font-size:.82rem;line-height:1.5;color:#8A8073;margin-bottom:15px"></div>
         <div id="px-vv-head" class="px-serif" style="font-size:1.6rem;line-height:1.3;color:#1E2A3D;margin-bottom:16px"></div>
         <div id="px-vv-body" style="font-size:.94rem;line-height:1.72;color:#5E5850"></div>
 
@@ -995,7 +1145,7 @@
           <div style="border-top:1px solid #E5DFD3;padding-top:20px">
             <p class="px-hand" style="font-size:1.5rem;color:#A08A5E;margin-bottom:10px">that's the whole model</p>
             <p style="font-size:.92rem;line-height:1.8;color:#5E5850;margin-bottom:18px">
-              Three clicks. It takes a bit longer in a life. Let's find out which one you're missing.
+              Reconnect with you. Reconnect with others. Reconnect with the experience of life you crave.
             </p>
             <a class="px-btn" style="font-size:.9rem;padding:.9em 1.7em" href="https://www.parallaxxtransformations.com/contact-daniel-lawson">Start with a conversation <span>&#8594;</span></a>
           </div>
@@ -1009,27 +1159,27 @@
           <button class="px-pill" data-k="values">Values</button>
           <button class="px-pill" data-k="velocity">Velocity</button>
         </div>
-        <p class="px-fade" style="font-size:.8rem;color:#8E9BB2;margin-top:10px">Click a pillar to fit that pane. Three, and they can see you.</p>
+        <p class="px-fade" style="font-size:.8rem;color:#8E9BB2;margin-top:10px">Clear each dimension to see the experience you've been missing.</p>
       </div>
     </div>
 
-    <p class="px-hand px-fade" style="text-align:center;font-size:1.5rem;color:#E8C65F;margin-top:20px">so it was never about finding "the one" - it's about connecting back with yourself</p>
+    <p class="px-hand px-fade" style="text-align:center;font-size:1.5rem;color:#E8C65F;margin-top:20px">it's your move. it always has been.</p>
   </div>
 </section>
 
 <!-- ══════════════ 06 · DANIEL — the only clear glass on the site ══════════════ -->
 <section class="px-sec" style="background:#F7F3EA;color:#3A3630">
-  <div class="px-wrap" id="px-daniel" style="display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(36px,5vw,76px);align-items:center">
+  <div class="px-wrap" id="px-daniel" style="display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(36px,5vw,76px);align-items:start">
 
     <div>
       <!-- Seated. A table. A cup. Looking straight at the person reading.
            The picture and the button under it say the same thing: start with
            a conversation.
 
-           It is NOT "the only clear image on the site" any more -- section 05
-           took that when its glass came off two people laughing. That's fine.
-           This one stopped being the REVEAL and became the INVITATION, which
-           is a better job for it.
+           Not "the only clear image on the site" any more -- section 05 took
+           that. This one is the INVITATION: seated, a table, a cup, looking
+           straight at whoever is reading. The picture and the button under it
+           say the same thing.
 
            Barely graded on purpose: blacks floored, 8% saturation off so the
            turquoise doesn't shout at the cream. Nothing else. It is captioned
@@ -1039,30 +1189,73 @@
            style="width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:20px;display:block;
                   box-shadow:0 40px 80px -50px rgba(30,42,61,.6), 0 0 0 1px rgba(160,138,94,.18)"
            src="https://static.wixstatic.com/media/111174_5104ff2da2e0456a80264bc62d635fa4~mv2.jpg/v1/fill/w_1200,h_1500,al_c,q_90,enc_auto/daniel-conversation.jpg">
-      <p class="px-fade" style="font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:#C0AE92;margin-top:14px;text-align:center">No film. No filter. No glass.</p>
+      <p class="px-fade" style="font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:#C0AE92;margin-top:14px;text-align:center">No glass between us.</p>
     </div>
 
     <div>
-      <p class="px-hand px-fade" style="font-size:1.75rem;color:#A08A5E;margin-bottom:16px">now — me</p>
+      <!-- THE CONFESSION, NOT THE CREDENTIAL.
+           This section used to be a single man's seven-year story, written for
+           an audience of single men. Wrong story, wrong reader.
+
+           And it dodged the obvious objection: Daniel isn't married. The
+           archive's answer is to turn the gap into the credibility itself
+           (02 Part 9) -- "I'm not married. But I know exactly what it is to
+           stop asking for what I want, and to call it something more
+           respectable." A room of men forgives him not being married the
+           second they work out he's confessing rather than diagnosing.
+
+           This is also where the HALF-ASK goes, [D-LIVED], the one 03 calls
+           the grenade. It only works in first person. Delivered as his own,
+           it earns him the right to the other five patterns. -->
+      <p class="px-hand px-fade" style="font-size:1.75rem;color:#A08A5E;margin-bottom:16px">and now me.</p>
       <h2 class="px-serif" style="font-size:clamp(28px,3.7vw,48px);line-height:1.22;color:#1E2A3D;margin-bottom:30px">
-        <span class="px-line"><span>I was the man behind the glass.</span></span>
-        <span class="px-line"><span style="font-style:italic;color:#8A5A47">I sat in there seven years.</span></span>
+        <span class="px-line"><span>Life became beige,</span></span>
+        <span class="px-line"><span style="font-style:italic">and I felt nothing.</span></span>
       </h2>
+      <div class="px-story">
       <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
-        A woman I loved told me the way I held back the truth — never lying, just never quite telling her — was still dishonesty. She was right. And it showed me something I couldn't outrun: I wasn't the man I needed to be for the relationship I wanted, and I had no idea how to become him.
+        I didn't know if something was wrong, but something must have been missing.
       </p>
       <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
-        So I waited. Seven years. Told myself someone would show up and it'd all click. Nobody was coming. The problem was never out there.
+        I haven't been married for 10 years+ (yet). But we're not too dissimilar.
       </p>
-      <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:22px;max-width:66ch">
-        What shifted it was admitting the thing underneath: <strong style="color:#1E2A3D">I was lonely, and it was mine to deal with.</strong> Most of us don't wreck intimacy by cheating or lying. We do it by hiding, and hoping it sorts itself out. It doesn't.
+      <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
+        It was in primary school I learnt that I wouldn't be chosen for just being me. So I made myself useful. And have done it ever since.
+      </p>
+      <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
+        I built stages, gathered audiences, recommended others so I could hide from making the request about what I wanted. I became a function of community value.
+      </p>
+      <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
+        The part I'd rather not admit; when I did need to ask I softened it, made a response optional, and expressed at about 40%. Then I'd take the vague and create a story for why it didn't happen.
+      </p>
+      <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
+        Never being turned down was great for my ego, but it's a slow disappointing experience of life never truly having my desires fulfilled.
+      </p>
+      <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
+        I'd suppressed my wants, needs and desires for so long I didn't know they existed. Became easy going instead. Since I didn't want anything, I had nothing to protect, and let others get whatever they wanted from me. More emptiness. It felt like shit, so I stopped feeling and numbed all experience.
+      </p>
+      </div>
+
+      <!-- THE BREAK. 285 words in one column reads as a wall, and this is the
+           hinge of the whole story, so it gets the full width and a rule to
+           itself. Everything above it is pattern; everything below is what
+           actually happened. -->
+      <p class="px-fade px-serif" style="font-size:clamp(24px,2.8vw,38px);line-height:1.25;color:#1E2A3D;
+                font-weight:500;margin:34px 0 22px;padding-top:26px;border-top:1px solid rgba(160,138,94,.35)">
+        Then the heartbreak.
+      </p>
+
+      <div class="px-story">
+      <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
+        That was the first thing in 30 years I couldn't numb my way past. And it was the first time I went looking for the missing pieces instead of building something else.
+      </p>
+      <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
+        So I started asking at 100%. No softening, nothing optional. Others learnt who I was, and more importantly, I finally discovered what I was made of. Which was only the beginning.
       </p>
       <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:34px;max-width:66ch">
-        The people I sit with now — some are single, some are lying next to someone they love and can't reach. Men and women. It's the same glass every time.
+        This was my whole life. I didn't know any different until I did. <strong style="color:#1E2A3D">And I know it will be the same for you.</strong>
       </p>
-      <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:34px;max-width:66ch">
-        I'll walk you out the way I came out. I know every wrong turn on that road — I took all of them.
-      </p>
+      </div>
       <div class="px-fade" style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
         <a class="px-btn" href="https://www.parallaxxtransformations.com/contact-daniel-lawson">Start with a conversation <span>→</span></a>
         <a class="px-ghost" style="color:#8A5A47;border-color:rgba(255,80,31,.4)" href="https://www.parallaxxtransformations.com/about-daniel-lawson">The full story <span>→</span></a>
@@ -1100,9 +1293,9 @@
      there is no re-upload and no shoot. ══════════════════════════════════ -->
 <section class="px-sec" style="background:#0A1D3C">
   <div class="px-wrap" style="max-width:1080px">
-    <p class="px-label px-fade" style="text-align:center;margin-bottom:14px">04 — People who did it</p>
-    <h2 class="px-serif px-fade" style="text-align:center;font-size:clamp(25px,3.2vw,40px);line-height:1.2;color:#F1ECE1;margin:0 auto 34px;max-width:20ch">
-      They all say the <span style="font-style:italic;color:#E8C65F">same thing.</span>
+    <p class="px-label px-fade" style="text-align:center;margin-bottom:14px">04. People who did it</p>
+    <h2 class="px-serif px-fade" style="text-align:center;font-size:clamp(24px,3vw,38px);line-height:1.2;color:#F1ECE1;margin:0 auto 34px;max-width:none">
+      They all say the <span style="font-style:italic">same thing.</span>
     </h2>
 
     <!-- ▸▸ THE LEAD IS A VIDEO, and it is the best asset on the entire site.
@@ -1149,17 +1342,16 @@
            whose entire job is being verifiably true, that is a small lie.
            This is verbatim, and it's stronger anyway: it's the HEADLINE, said
            back to the page by a stranger who has never read it. -->
-      <p class="px-serif" style="text-align:center;font-size:clamp(23px,2.8vw,38px);line-height:1.35;color:#F1ECE1;font-style:italic;margin:26px auto 12px;max-width:26ch">
-        “I kept it all internally. <span style="color:#E8C65F;font-style:normal;font-weight:600">I didn't realise that was what was causing the problems.</span>”
+      <p class="px-serif" style="text-align:center;font-size:clamp(22px,2.5vw,34px);line-height:1.35;color:#F1ECE1;font-style:italic;margin:26px auto 12px;max-width:44ch">
+        “I kept it all internally. <span style="color:#F1ECE1;font-style:normal;font-weight:600">I didn't realise that was what was causing the problems.</span>”
       </p>
       <!-- The clip is 49 seconds of the PROBLEM. It does not contain the turn,
            because this interview's turn is quiet and internal and takes ten more
            minutes to arrive. Rather than splice a Frankenstein arc, name the gap
            and let it BE the click. Nothing is implied that he doesn't claim. -->
       <p style="text-align:center;font-size:.92rem;color:#B1BFD7;margin:0 0 8px">
-        That's the problem. <a href="https://www.parallaxxtransformations.com/testimonials-daniel-lawson" style="color:#E8C65F;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(232,198,95,.4)">What changed is in the full conversation →</a>
+        That's the problem. <a href="https://www.parallaxxtransformations.com/testimonials-daniel-lawson" style="color:#F1ECE1;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(255,80,31,.45)">What changed is in the full conversation →</a>
       </p>
-      <p style="text-align:center;font-size:.8rem;color:#5E6B85;margin:0">One of five. All of them are on the testimonials page.</p>
     </div>
 
     <p class="px-hand px-fade" style="text-align:center;font-size:1.45rem;color:#E8C65F;margin:26px 0 8px">and the ones who wrote it down said the same thing</p>
@@ -1168,29 +1360,36 @@
          Brandon's UNIFORM was doing his credibility work when the photo was
          large. At 64px it can't -- so the WORDS do it instead: "US Navy". That
          is more honest anyway. The credential is the fact, not the picture. -->
+    <!-- THREE MEN. The live page carries eleven testimonials, not four -- the
+         rest sit in a carousel that does not render until you page through it.
+         Five are men: Brandon, Tobias, Alex, Dave and Sasa.
+
+         Brandon is out despite being the most dramatic. Addiction, PTSD, a
+         path to death -- it selects for a man in crisis, and this one is not
+         in crisis. That is the whole point of him. -->
     <div class="px-fade" id="px-voices">
+      <figure class="px-voice">
+        <blockquote>“I'd gone astray, prioritising things that didn't really matter.”</blockquote>
+        <div class="px-byline">
+          <img class="px-face" alt="Alex H, Denmark" style="object-position:58% 34%"
+               src="https://static.wixstatic.com/media/111174_7a60aa68544a411783b1bffd0d38cbaa~mv2.png/v1/crop/x_70,y_455,w_600,h_420,q_90,enc_auto/f.png">
+          <span class="who">Alex H · Denmark<span>Lives in his head · three sessions in</span></span>
+        </div>
+      </figure>
+      <figure class="px-voice">
+        <blockquote>“I was suppressing my true feelings. I thought I had to settle.”</blockquote>
+        <div class="px-byline">
+          <img class="px-face" alt="Dave M, United Kingdom" style="object-position:64% 30%"
+               src="https://static.wixstatic.com/media/111174_5cda9ea93a0040a091beb7caebdde4b7~mv2.png/v1/crop/x_60,y_30,w_600,h_420,q_90,enc_auto/f.png">
+          <span class="who">Dave M · United Kingdom<span>Lost · thought he had to settle</span></span>
+        </div>
+      </figure>
       <figure class="px-voice">
         <blockquote>“Daniel helped me see what I couldn't see myself.”</blockquote>
         <div class="px-byline">
           <img class="px-face" alt="Tobias M, Sweden" style="object-position:center 18%"
                src="https://static.wixstatic.com/media/111174_392b733e816548dcbfadab2fe214e05c~mv2.png/v1/crop/x_84,y_490,w_664,h_442,q_90,enc_auto/file.png">
-          <span class="who">Tobias M · Sweden<span>Founder · hit a plateau</span></span>
-        </div>
-      </figure>
-      <figure class="px-voice">
-        <blockquote>“I couldn't see where the actual problem was coming from.”</blockquote>
-        <div class="px-byline">
-          <img class="px-face" alt="Gena K, Bulgaria" style="object-position:72% 26%"
-               src="https://static.wixstatic.com/media/111174_40fcf9f37e654196b42fac9dc18e2761~mv2.png/v1/crop/x_72,y_46,w_666,h_474,q_90,enc_auto/file.png">
-          <span class="who">Gena K · Bulgaria<span>Self-sabotage · emotional overload</span></span>
-        </div>
-      </figure>
-      <figure class="px-voice">
-        <blockquote>“I was down a path to death. I didn't love myself. Now I feel reborn.”</blockquote>
-        <div class="px-byline">
-          <img class="px-face" alt="Brandon L, USA" style="object-position:center 22%"
-               src="https://static.wixstatic.com/media/111174_3db56c0e87c84875a9f6d059a2a768eb~mv2.png/v1/crop/x_60,y_0,w_692,h_470,q_90,enc_auto/file.png">
-          <span class="who">Brandon L · USA<span>US Navy · addiction, PTSD</span></span>
+          <span class="who">Tobias M · Sweden<span>Stuck · couldn't pivot on his own</span></span>
         </div>
       </figure>
     </div>
@@ -1199,11 +1398,32 @@
          theirs. Couldn't reach. Couldn't see. Blinded. Nobody fed them that
          vocabulary. The glass isn't a metaphor he invented to sell with; it's
          how the people he's actually helped describe the thing. -->
-    <p class="px-hand px-fade" style="text-align:center;font-size:1.5rem;color:#E8C65F;margin-top:30px">couldn't reach me. couldn't see it. blinded. — nobody gave them those words.</p>
+    <p class="px-hand px-fade" style="text-align:center;font-size:1.5rem;color:#E8C65F;margin-top:30px">couldn't see it. couldn't name it. nobody gave them those words.</p>
 
     <p class="px-fade" style="text-align:center;margin-top:22px">
-      <a href="https://www.parallaxxtransformations.com/testimonials-daniel-lawson" style="font-size:.92rem;font-weight:600;color:#E8C65F;text-decoration:none;border-bottom:1px solid rgba(232,198,95,.4);padding-bottom:2px">Read them in full →</a>
+      <a href="https://www.parallaxxtransformations.com/testimonials-daniel-lawson" style="font-size:.92rem;font-weight:600;color:#FF6A3D;text-decoration:none;border-bottom:1px solid rgba(255,80,31,.45);padding-bottom:2px">Read them in full →</a>
     </p>
+  </div>
+</section>
+
+<!-- ══════════════ THE CLOSE ══════════════
+     The page ran from Proof straight into a credentials strip and then the
+     footer, so the last thing after the testimonials was a list of logos.
+     One CTA, and it is the quiz rather than a conversation -- he has just
+     watched three men describe his own life, and the smallest next step is
+     two minutes on his own, not a message to a stranger. The conversation
+     ask lives in the footer, one scroll further on. ══════════════════ -->
+<section class="px-sec" style="background:#F1ECE1;color:#3A3630;padding-top:clamp(46px,5.5vw,72px);padding-bottom:clamp(46px,5.5vw,72px)">
+  <div class="px-wrap" style="max-width:680px;text-align:center">
+    <p class="px-hand px-fade" style="font-size:1.6rem;color:#A08A5E;margin-bottom:14px">so which one is yours?</p>
+    <h2 class="px-serif px-fade" style="font-size:clamp(26px,3.4vw,42px);line-height:1.2;color:#1E2A3D;margin:0 auto 18px">
+      Two minutes, and you'll know.
+    </h2>
+    <p class="px-fade" style="font-size:1.02rem;line-height:1.75;color:#5E5850;margin:0 auto 28px;max-width:52ch">
+      Which one you're running, where you learned it, and why things are the way they are at home.
+    </p>
+    <a class="px-btn px-fade" href="https://www.parallaxxtransformations.com/reconnect">Find out which one is yours <span>&#8594;</span></a>
+    <p class="px-fade" style="font-size:.84rem;color:#A6968A;margin-top:14px">2 minutes. Answer's on the screen.</p>
   </div>
 </section>
 
@@ -1237,7 +1457,16 @@
     if (document.getElementById('px-fonts')) return;
     var p1=document.createElement('link'); p1.rel='preconnect'; p1.href='https://fonts.googleapis.com'; document.head.appendChild(p1);
     var p2=document.createElement('link'); p2.rel='preconnect'; p2.href='https://fonts.gstatic.com'; p2.crossOrigin=''; document.head.appendChild(p2);
-    var l=document.createElement('link'); l.id='px-fonts'; l.rel='stylesheet'; l.href='https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Caveat:wght@500;600;700&display=swap'; document.head.appendChild(l);
+    var f0=document.createElement('link'); f0.rel='stylesheet'; f0.href='https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap'; document.head.appendChild(f0);
+    var f1=document.createElement('link'); f1.rel='stylesheet'; f1.href='https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap'; document.head.appendChild(f1);
+    /* @font-face has to live in the DOCUMENT, not the shadow root. Chrome
+       ignores font-face rules declared inside a shadow tree. */
+    var ff=document.createElement('style'); ff.id='px-fonts'; ff.textContent=`/* LUMIOS MARKER is not on Google Fonts -- upload the .woff2 to Wix Media and
+   drop the URL in below. Until then the stack falls through to Permanent
+   Marker, which is the closest free marker face, so nothing renders as a
+   system script by accident. */
+@font-face{font-family:'Lumios Marker';font-display:swap;
+  src:url('LUMIOS_MARKER_WOFF2_URL') format('woff2');}`; document.head.appendChild(ff);
   }
 
   function loadScript(src){
@@ -1266,9 +1495,8 @@
   }
 
   function boot(root){
-
     if(!root || !root.getElementById('px-root')) return;
-    root.querySelectorAll('a[href^="#"]').forEach(function(a){ a.addEventListener('click',function(e){ var id=a.getAttribute('href'); if(id && id.length>1){ var t=root.querySelector(id); if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); } } }); });
+
 
     /* ══ HERO IMAGE — DANIEL, BEHIND THE GLASS ══════════════════════════
        Shot from outside at blue hour. Him inside, close to the pane,
@@ -1291,41 +1519,24 @@
        and you get the fallback with no error in the console). */
     const PX_HERO_SRC = 'https://static.wixstatic.com/media/111174_05c7360ab71a442ca1d13ffc8340bb18~mv2.jpg/v1/fill/w_1800,h_1100,al_c,q_90,enc_auto/hero-daniel-behind-glass.jpg';
 
-    /* ══ THE DIVIDER — THE DREAM, AND THE DISTANCE ══════════════════════
-       Golden hour. Infinity pool, ocean, closed laptop. The life he was
-       told to want, and he built it. She's leaning on his shoulder with
-       her whole attention on him. He's staring at the horizon like it's
-       a wall.
+    /* ══ THE DIVIDER — TWO FRAMES, ONE MOMENT ══════════════════════════
+       Same sofa, same evening, same woman, same lamp, same clothes.
+       BEFORE: he is on his phone and her hand is out toward him, unheld.
+       AFTER : he has put it down and taken it.
 
-       THE SETTING IS THE ARGUMENT. The first pass at this was a dark
-       candlelit dining room, and the polished half had nothing to be loud
-       ABOUT -- two shades of beige, no gap between the sides. Give the
-       shader a sunlit villa and the same drag becomes: a travel advert on
-       the left, grey concrete and grey water on the right. Identical
-       frame. All the colour gone. "It's a beautiful picture" stops being
-       a metaphor and becomes literally true.
+       SHE IS IDENTICAL IN BOTH, and that is the whole integrity of this
+       section. Her hand is extended in both frames. If she softened or
+       leaned in, the page would be promising her response -- the one thing
+       the archive says you cannot guarantee, and the thing that makes a man
+       sit and wait for her instead of doing anything. She is constant. He
+       arrives. That is the offer, and it is the only version of it that is
+       honest.
 
-       BUILT FOR THE BAND, NOT CROPPED INTO IT. This section is ~3:1 at
-       every desktop size (3.07:1 at 1920x1080). Almost no photograph is
-       that shape, which is why the old portrait stand-in rendered as a
-       band of teeth -- a 3:1 slice through the middle of a head-shot IS
-       a mouth. So this frame is ENVIRONMENTAL: the people are small in
-       it, with air above and around them, and it survives the crop.
-
-       HIS FACE IS ON 50%, deliberately. The drag handle sits at 50%, so
-       if he were off-centre the handle would land in the GAP between them
-       -- left half him, right half her, reading as two different people.
-       The caption says SAME MAN. The handle has to bisect HIS FACE so the
-       polish drags across HIM.
-
-       SHE IS ON THE LEFT, deliberately. Left is "from where they stand" --
-       HER view. She belongs in the polished half, looking at a flawless
-       man. Put her in the murk and she's standing inside his interior,
-       which is the one place she has never been able to get to.
-
-       Black point floored, saturation eased 6% at source -- the shader
-       adds +62% on the left and the source has to leave it room. */
-    const PX_SPLIT_SRC = 'https://static.wixstatic.com/media/111174_c6bbbb5291ee46d09a35f835643b5569~mv2.jpg/v1/fill/w_2600,h_867,al_c,q_90,enc_auto/divider-villa-pool.jpg';
+       Prepared as a matched pair: identical crop, identical tone floor.
+       Near-black went 17-19% down to about 5% on both, because a 3:1 band
+       this dark leaves the grade nowhere to go. */
+    const PX_SPLIT_BEFORE = 'https://static.wixstatic.com/media/111174_a3f5997b71f849919d8289c75250784b~mv2.jpg/v1/fill/w_2600,h_867,al_c,q_90,enc_auto/divider-before.jpg';
+    const PX_SPLIT_AFTER  = 'https://static.wixstatic.com/media/111174_2dffbdbb5c39422fa780ca9042446a92~mv2.jpg/v1/fill/w_2600,h_867,al_c,q_90,enc_auto/divider-after.jpg';
 
     /* ══ SECTION 05 — WHAT'S BEHIND THE THREE PANES ═════════════════════
        Was PX_HERO_SRC. Which meant the reward for fitting all three panes
@@ -1491,7 +1702,7 @@
         if(window.gsap && window.ScrollTrigger){
           gsap.registerPlugin(ScrollTrigger);
           gsap.to(fb,{ '--px-clear':1, ease:'none',
-            scrollTrigger:{ trigger:root.getElementById('px-hero'), start:'top top', end:'bottom top', scrub:.6 } });
+            scrollTrigger:{ trigger:'#px-hero', start:'top top', end:'bottom top', scrub:.6 } });
         } else {
           fb.style.setProperty('--px-clear','1');   // no GSAP: just show him
         }
@@ -1600,11 +1811,22 @@
       window.__pxHeroState = st;   // the scroll spine drives st.prog
     })();
 
-    /* ══════════════ 03 · THE SPLIT — their side / your side ══════════════
-       Left of the handle  = FLAWLESS. What they get. Over-polished, glossy,
-                             a brochure photo. The polish IS the film.
-       Right of the handle = MURK. What it feels like from in there.
-       The handle bisects HIS FACE. Same man. Drag it across. */
+    /* ══════════════ 03 · THE SPLIT — before and after ══════════════
+       TWO PHOTOGRAPHS NOW, not one image graded two ways.
+
+       Same sofa, same evening, same woman, same clothes, same lamp. In one
+       he is on his phone and her hand is out, unheld. In the other he has
+       put the phone down and taken it. SHE IS IDENTICAL IN BOTH -- which is
+       the only reason this is honest. Nothing here promises she comes back;
+       it promises he turns up, and that is the one outcome you can guarantee.
+
+       LEFT of the handle  = BEFORE. Right now.
+       RIGHT of the handle = AFTER.  Same life, and he is in it.
+
+       THE HANDLE PARKS AT 55%, just past where their hands meet. On arrival
+       he sees the before state across most of the frame, and the joined hands
+       already sit on the after side, so the payoff is never cut in half.
+       Dragging left sweeps the connected version across both of them. */
     (function split(){
       const canvas=root.getElementById('px-split');
       const wrap=root.getElementById('px-reframe');
@@ -1619,81 +1841,31 @@
       }
 
       const R=makeGL(canvas, COVER + [
-        'uniform sampler2D uTex; uniform vec2 uRes,uImg; uniform float uSplit,uHas;',
+        'uniform sampler2D uA; uniform sampler2D uB;',
+        'uniform vec2 uRes,uImg; uniform float uSplit,uHas;',
         'void main(){ vec2 uv=v; vec2 s=cover(uv,uRes,uImg,vec2(0.50,0.50));',
-        /* The 0.62 zoom-out that used to live here is GONE. It existed to
-           rescue a portrait stand-in from a 3:1 band by shrinking it until
-           the teeth stopped being teeth. The real frame is shot 3:1, built
-           for this band, with his face on 50% -- so it wants a straight
-           cover and nothing else. Zooming out now would just smear it. */
-        /* INVERTED -- and this is the whole point.
+        ' vec3 before=texture2D(uA,s).rgb;',
+        ' vec3 after =texture2D(uB,s).rgb;',
 
-           LEFT  (their side)  = FLAWLESS. Sharp, bright, saturated, glossy.
-                                 A little TOO perfect. A brochure photo.
-                                 Because that is exactly what they get: the
-                                 capable one, the composed one, the one who
-                                 is fine. The clean image IS the film. That
-                                 is the horror -- it looks great, and nobody
-                                 has ever got past it.
+        /* The grade is now a WHISPER, because the photographs are doing the
+           work. Over-cook either side and it stops reading as one moment in
+           two states and starts reading as two different pictures. */
+        ' float lb=dot(before,vec3(0.299,0.587,0.114));',
+        ' before=mix(vec3(lb),before,0.42);',            // colour going out of it
+        ' before=(before-0.5)*0.94+0.5;',                // flat. no bite.
+        ' before*=vec3(0.96,0.98,1.06);',                // and turning cold
 
-           RIGHT (your side)   = MURK. Veiled, distant, the colour drained
-                                 out of it. Because that is what it actually
-                                 feels like from in there.
+        ' float la=dot(after,vec3(0.299,0.587,0.114));',
+        ' after=mix(vec3(la),after,1.16);',              // the colour comes back
+        ' after=(after-0.5)*1.06+0.5;',
+        ' after*=vec3(1.05,1.01,0.97);',                 // lamp-warm
 
-           v5 had these the wrong way round: "you look fine to yourself and
-           grubby to them." Backwards, and it made the MAN look like the
-           mess. He is not the mess. The polish is. */
-        /* THE AXIS OF THE SPLIT IS COLOUR, NOT VISIBILITY.
-           v6 hid his side behind grime, so the section read as "clear vs
-           obscured" -- and it made the polished half look merely normal by
-           comparison. Nothing was bold. Nothing was dead. It was just two
-           kinds of beige.
+        /* A 2px feather on the seam. A hard pixel edge reads as a rendering
+           fault; a soft one reads as a wipe. */
+        ' float m=smoothstep(uSplit-0.0012,uSplit+0.0012,uv.x);',
+        ' vec3 col=mix(before,after,m);',
+        ' if(uHas<0.5) col=vec3(0.05,0.12,0.24);',
 
-           The real contrast is LIFE vs NO LIFE:
-             LEFT  = bold, vibrant, glossy. Advert-grade. Too much.
-             RIGHT = draining to black-and-white. Soft. Flat. Still fully
-                     legible -- he can see everything, he just can't feel it.
-                     That is precisely the complaint. Hiding it would be
-                     the wrong metaphor entirely. */
-        ' float mine = step(uSplit, uv.x);',              // 1 on HIS side of the pane
-        ' float g = mine * clamp(0.20 + grimeAt(uv)*0.14, 0.0, 1.0);',   // barely a veil
-        ' vec2 e=vec2(0.0022,0.0);',
-        ' vec2 gr=vec2(grimeAt(uv+e.xy)-grimeAt(uv-e.xy), grimeAt(uv+e.yx)-grimeAt(uv-e.yx));',
-        ' vec2 duv=s+gr*0.005*mine;',                    // a hair of warp. not a smear.
-        ' vec3 col,scat;',
-        ' if(uHas>0.5){ col=texture2D(uTex,duv).rgb;',
-        /* BLUR IS THE WRONG INSTRUMENT AND I KEEP REACHING FOR IT.
-           Blur says "he can't see it." He can. He sees the pool, the ocean,
-           her face, all of it, in perfect focus. It just doesn't land. The
-           deadness is in the COLOUR and the CONTRAST -- the picture is
-           sharp and it is a corpse. So: almost no defocus at all. Enough to
-           take the sparkle off the water, nothing more. */
-        '  float r=0.0028*mine; scat=vec3(0.0);',
-        '  for(int i=0;i<6;i++){float a=float(i)*1.0472; vec2 d=vec2(cos(a),sin(a));',
-        '   scat+=texture2D(uTex,duv+d*r).rgb;}',
-        '  scat/=6.0;',
-        ' } else { col=vec3(0.05,0.12,0.24); scat=col; }',
-
-        /* THEIR SIDE — the brochure. Loud, warm, glossy, a touch too much.
-           It should look like it's selling something. That IS the joke. */
-        ' float lum0=dot(col,vec3(0.299,0.587,0.114));',
-        ' vec3 polished = mix(vec3(lum0), col, 1.62);',                      // saturation, hard
-        ' polished = (polished-0.5)*1.30 + 0.5;',                            // contrast, hard
-        ' polished *= vec3(1.09,1.05,0.99);',                                // golden, magazine-warm
-        ' polished += vec3(1.0,0.97,0.90)*pow(max(lum0-0.58,0.0),1.7)*0.95;', // a real sheen on the highlights
-        ' polished = clamp(polished,0.0,1.0);',
-
-        /* HIS SIDE — the colour going out of it. Near monochrome, softly out
-           of focus, flat. Nothing hidden. He can see it all. It just doesn't
-           reach him. */
-        ' vec3 murk = mix(col, scat, 0.25);',                                // sharp. he sees everything.
-        ' float lm = dot(murk,vec3(0.299,0.587,0.114));',
-        ' murk = mix(vec3(lm), murk, 0.16);',                                // 84% of the colour gone
-        ' murk = (murk-0.5)*0.88 + 0.5;',                                    // flat. no bite left.
-        ' murk *= vec3(0.96,0.98,1.04);',                                    // the last of it turning cold
-        ' murk = mix(murk, vec3(0.36,0.38,0.42), g*0.13);',                  // a breath of haze, that's all
-        ' col = mix(polished, murk, mine);',
-        // a hairline of light down the divider itself
         ' float edge=1.0-smoothstep(0.0,0.0035,abs(uv.x-uSplit));',
         ' col+=vec3(1.0,0.35,0.14)*edge*0.55;',
         ' col*=1.0-0.34*pow(distance(uv,vec2(0.5)),2.0);',
@@ -1702,27 +1874,29 @@
       if(!R){ return; }
 
       const gl=R.gl;
-      const u={tex:R.U('uTex'),res:R.U('uRes'),img:R.U('uImg'),split:R.U('uSplit'),has:R.U('uHas')};
-      const tex=makeTex(gl,0);
-      const st={split:0.5, target:0.5, has:0, iw:16, ih:9};
-      loadImg(gl,tex,0,PX_SPLIT_SRC,(w,h)=>{st.has=1;st.iw=w;st.ih=h;});
+      const u={A:R.U('uA'),B:R.U('uB'),res:R.U('uRes'),img:R.U('uImg'),split:R.U('uSplit'),has:R.U('uHas')};
+      const texA=makeTex(gl,0), texB=makeTex(gl,1);
+      const st={split:0.55, target:0.55, a:0, b:0, has:0, iw:3, ih:1};
+      const ready=()=>{ st.has = (st.a && st.b) ? 1 : 0; };
+      loadImg(gl,texA,0,PX_SPLIT_BEFORE,(w,h)=>{st.a=1;st.iw=w;st.ih=h;ready();});
+      loadImg(gl,texB,1,PX_SPLIT_AFTER ,(w,h)=>{st.b=1;ready();});
 
+      const HOME=0.55;
       let drag=false;
       const setFrom=(clientX)=>{ const r=wrap.getBoundingClientRect();
         st.target=Math.min(0.97,Math.max(0.03,(clientX-r.left)/r.width)); };
       wrap.addEventListener('pointerdown',e=>{drag=true; setFrom(e.clientX); wrap.setPointerCapture(e.pointerId);});
       wrap.addEventListener('pointermove',e=>{ if(drag||e.buttons===1) setFrom(e.clientX);
-        else { const r=wrap.getBoundingClientRect(); // gentle follow on hover too
-               st.target = Math.min(0.97,Math.max(0.03,(e.clientX-r.left)/r.width)); } });
+        else setFrom(e.clientX); });
       wrap.addEventListener('pointerup',()=>{drag=false;});
-      wrap.addEventListener('pointerleave',()=>{drag=false; st.target=0.5;});
+      wrap.addEventListener('pointerleave',()=>{drag=false; st.target=HOME;});
 
       addRenderer(canvas, ()=>{
         st.split += (st.target-st.split)*0.12;
         if(handle) handle.style.left=(st.split*100)+'%';
         gl.useProgram(R.prog);
-        gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D,tex);
-        gl.uniform1i(u.tex,0);
+        gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D,texA); gl.uniform1i(u.A,0);
+        gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D,texB); gl.uniform1i(u.B,1);
         gl.uniform2f(u.res,canvas.width,canvas.height); gl.uniform2f(u.img,st.iw,st.ih);
         gl.uniform1f(u.split,st.split); gl.uniform1f(u.has,st.has);
         R.draw();
@@ -1749,39 +1923,56 @@
          reads on dark, which is the whole reason it exists. */
       const COLOUR={vision:'#E8C65F',values:'#FF501F',velocity:'#B1BFD7'};
       const INK={vision:'#1E2A3D',values:'#fff',velocity:'#0A1D3C'};   // text ON the filled pill
+      /* RE-SOURCED FOR THE MARRIED MAN, AND THE PROMISE IS CALIBRATED DOWN.
+
+         The old table was dating copy -- apps, situationships, chasing
+         chemistry, "waiting to be found." None of that is a man fifteen years
+         into a marriage.
+
+         And the all-three state used to promise "They can reach you," which
+         is a promise about HER RESPONSE. The archive is explicit: you can't
+         guarantee what she does, and promising it makes him passive, waiting
+         on her. You guarantee the recovered capacity to want and to ask.
+         That's his either way, which is the only reason the guarantee is
+         honest.
+
+         Calibrated down, too. The one client who reported an outcome went
+         straight to "the difference is within myself" -- contentment, small
+         daily things, and he hedged on the word happy. Modest and true
+         converts this man; dramatic and vague loses him. */
       const S={
-        'vision,values,velocity':{l:'All three clear',b:'#E8C65F',
-          h:'They can reach you.',
-          t:"Clear on what you want. Grounded in who you are. Taking action that matches both. Connection stops being a guessing game. You stop chasing. You stop sabotaging. You start leading with clarity, and with love.",
-          o:'All three panes clear. A healthy, functional, romantic relationship.'},
-        'vision,values':{l:'Missing Velocity',b:'#1E2A3D',
-          h:'You know exactly who you need to be. You never became him.',
-          t:"A lot of journalling. A lot of reflecting. Not a lot different. You're stood on the shore knowing precisely where you want to swim, and you never get in the water. Ten years of podcasts, same relationship waiting at the end of it.",
-          o:'Standing on the shore. Never getting in.'},
-        'values,velocity':{l:'Missing Vision',b:'#E8C65F',
-          h:"You're moving. You've no idea where.",
-          t:"Out there, active, meeting people, and mostly the wrong ones. Situationships that don't match anything you actually want. Plenty of effort with nothing behind it. Chasing chemistry and reacting to whoever shows up.",
-          o:'Moving fast. Pointed nowhere.'},
-        'vision,velocity':{l:'Missing Values',b:'#FF501F',
-          h:'It starts strong. Then it comes apart.',
-          t:"You know what you want and you're going after it, and you haven't done the work on who you'd have to be to hold it. So you compromise without noticing. Go soft on what you need. Pretzel yourself to be liked. This one's worse than being alone. It erodes you.",
-          o:'Looks good early. Shaky underneath.'},
-        'vision':{l:'Vision only',b:'#E8C65F',
-          h:'A beautiful picture of a life you never walk into.',
-          t:"You can describe them. You can describe the life. And nothing in how you actually live is pointed at it.",
-          o:'A picture you never walk into.'},
-        'values':{l:'Values only',b:'#FF501F',
-          h:'Good man. Going nowhere.',
-          t:"Solid, decent, self-aware, and no direction and no momentum. Waiting to be found.",
-          o:'Waiting to be found.'},
-        'velocity':{l:'Velocity only',b:'#1E2A3D',
+        'vision,values,velocity':{l:'All three cleared',c:'A man back in life.',b:'#E8C65F',
+          h:'A man in his own house.',
+          t:"You know what you want. You know what you'll stand for. And you say it at the time, in the room you're standing in. You both have the man back, and she finally has the opportunity to choose the real you.",
+          o:'All three cleared. The man returns.'},
+        'vision,values':{l:'Missing Velocity',c:'Strong vision and values, missing velocity',b:'#1E2A3D',
+          h:'You know what needs to be expressed, but never do.',
+          t:"You know it all, in theory. But the thing that would actually change it never happens. Another night passes and nothing has changed. Years of knowing better and nothing to show.",
+          o:'You know. You never move.'},
+        'values,velocity':{l:'Missing Vision',c:'Strong values with velocity, missing vision',b:'#E8C65F',
+          h:"You're doing plenty. Moving without direction.",
+          t:"More date nights. More helping. More of everything except the one thing. Effort without aim wears a man out. How long can you keep up something you don't feel matters?",
+          o:'Effort with no aim.'},
+        'vision,velocity':{l:'Missing Values',c:'Strong vision with velocity, missing yourself',b:'#FF501F',
+          h:'It starts well. Then you fold.',
+          t:"You know what you want and you go for it, but you always reach the barrier. Hit resistance, soften the ask, let it go. Then talk yourself round to why it didn't matter that much anyway.",
+          o:'Starts well. Then folds.'},
+        'vision':{l:'Vision only',c:'Only a vision for your life',b:'#E8C65F',
+          h:'Imagination too good to exist.',
+          t:"You can describe how you'd like it to be. Unconsciously wishing, waiting, hoping that one day this life will appear. But nothing on a regular day looks anything like it.",
+          o:'A life that never arrives.'},
+        'values':{l:'Values only',c:'Awareness of who you need to become',b:'#FF501F',
+          h:'A good man, stuck in limbo.',
+          t:"Decent, consistent, self-aware. You're living the same life you were five years ago. Nothing has improved or grown.",
+          o:'Decent. Stuck.'},
+        'velocity':{l:'Velocity only',c:'High velocity in action',b:'#1E2A3D',
           h:'Busy. Very busy.',
-          t:"Dates, apps, gym, work. Motion mistaken for progress. None of it lands anywhere.",
+          t:"Work, kids, gym, the list. Motion mistaken for progress. Every day and night is full, and none of it gets near her, or near the life you thought this would be.",
           o:'Motion mistaken for progress.'},
-        '':{l:'Nothing',b:'#7C89A3',
-          h:'This is where most of us start.',
-          t:"No judgment. I was here for seven years. Everything's fine, nothing connects, and you can't put your finger on why.",
-          o:"Everything's fine. Nothing connects."}
+        '':{l:'Status quo',c:'No vision, no values, no velocity',b:'#7C89A3',
+          h:'Fine is far from what\'s possible.',
+          t:"When nothing is terrible, we become oblivious to potential. I lived this for years. Everything worked, nothing connected, and I had no idea why something always seemed missing.",
+          o:"Fine is far from what's possible."}
       };
 
       const R = makeGL(canvas, COVER + [
@@ -1863,6 +2054,7 @@
         const done = on.vision && on.values && on.velocity;
         if(cta) cta.classList.toggle('show', done);   // he ends on the promise
         root.getElementById('px-vv-label').textContent=s.l;
+        root.getElementById('px-vv-ctx').textContent=s.c;
         root.getElementById('px-vv-head').textContent=s.h;
         root.getElementById('px-vv-body').textContent=s.t;
         root.getElementById('px-vv-title').textContent=s.o;
@@ -2080,7 +2272,7 @@
       // the armour comes down as he descends
       if(window.__pxHeroState){
         G.to(window.__pxHeroState,{prog:1,ease:'none',
-          scrollTrigger:{trigger:root.getElementById('px-hero'),start:'top top',end:'bottom top',scrub:0.7}});
+          scrollTrigger:{trigger:'#px-hero',start:'top top',end:'bottom top',scrub:0.7}});
       }
 
       // kinetic type
@@ -2091,41 +2283,193 @@
         G.to(el,{opacity:1,y:0,duration:.95,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}});
       });
 
-      /* 02 - THE THREAD.
-         The whole conversation sits on one phone screen. No inner scroll,
-         no tape, nothing to chase.
-
-         As the phone enters view the messages wipe clear IN SEQUENCE --
-         each incoming line, then the excuse he gave it. It plays like a
-         conversation arriving, and he can't miss the last one, because
-         there's nothing to scroll past. */
-      const msgs=[...root.querySelectorAll('.px-in')];
-      const outs=[...root.querySelectorAll('.px-out')];
-      outs.forEach(o=>{ o.style.opacity='0'; o.style.transform='translateY(6px)';
-        o.style.transition='opacity .5s ease, transform .5s ease'; });
-
-      ST.create({
-        trigger:root.querySelector('.px-phone'), start:'top 72%', once:true,
-        onEnter:()=>{
-          msgs.forEach((m,i)=>{
-            setTimeout(()=>m.classList.add('wiped'), i*420);            // his honest thought clears
-            const o=outs[i];
-            if(o) setTimeout(()=>{ o.style.opacity='1'; o.style.transform='none'; }, i*420 + 700); // then his excuse
-          });
-        }
-      });
-
-      // fast scrollers / anyone who jumps past: nothing left fogged.
-      ST.create({ trigger:root.getElementById('px-mirror'), start:'bottom 88%', once:true,
-        onEnter:()=>{ msgs.forEach(m=>m.classList.add('wiped'));
-                      outs.forEach(o=>{ o.style.opacity='1'; o.style.transform='none'; }); } });
 
     } else {
       root.querySelectorAll('.px-line > span').forEach(l=>l.style.transform='none');
       root.querySelectorAll('.px-fade').forEach(e=>{e.style.opacity='1';e.style.transform='none';});
-      root.querySelectorAll('.px-in').forEach(c=>c.classList.add('wiped'));
-      root.querySelectorAll('.px-out').forEach(o=>{o.style.opacity='1';o.style.transform='none';});
+      /* NOT the thread. mirrorThread runs its own reveal below and does not
+         need GSAP -- force-showing here is what stopped a phone ever typing. */
     }
+
+    /* ══════════════ 02 · THE MIRROR THREAD ══════════════
+       OUTSIDE the GSAP branch on purpose. This used to live inside it, so a
+       phone with no GSAP fell through to the else and the whole thread was
+       simply present on arrival -- in the one section where the animation IS
+       the content. It only needs IntersectionObserver, which is everywhere. */
+    (function mirrorThread(){
+        /* 02 - THE THREAD.
+           The whole conversation sits on one phone screen. No inner scroll,
+           no tape, nothing to chase.
+
+           As the phone enters view the messages wipe clear IN SEQUENCE --
+           each incoming line, then the excuse he gave it. It plays like a
+           conversation arriving, and he can't miss the last one, because
+           there's nothing to scroll past. */
+        /* IT TYPES ITSELF.
+           Runs the thread in DOM order rather than pairing .px-in to .px-out by
+           index -- the last incoming has no partner, and index-pairing quietly
+           mis-sorts the moment anyone edits the markup.
+
+           THE TIMING IS THE CHARACTERISATION:
+             a thought takes ~640ms of dots to form. It's effortful.
+             the answer fires back in 190ms with no dots. He's said it a
+             thousand times; it costs him nothing.
+           Whole thread lands in about 7 seconds -- long enough to feel live,
+           short enough that nobody leaves before the last line, which is the
+           one the section exists for. */
+        const items = [...root.querySelectorAll('#px-tape > .px-in, #px-tape > .px-out')];
+        const tape  = root.querySelector('#px-tape');
+        if(!items.length || !tape) return;
+
+        /* The dots live at the END of the tape and never move. Because the
+           window is bottom-anchored, the end of the tape is exactly where the
+           next message is going to appear -- so the indicator is already in the
+           right place without a single DOM move or reflow per beat. */
+        const typing = document.createElement('div');
+        typing.id = 'px-typing';
+        typing.innerHTML = '<div class="d"><i></i><i></i><i></i></div>';
+        tape.appendChild(typing);
+
+        /* HIS BELIEFS APPEAR. THE REPLIES TYPE THEMSELVES.
+           That asymmetry is the whole point: his belief is reflexive, so it is
+           just suddenly there. The reply is a thought forming, so you watch it
+           form. It also kills the slap -- a navy block can no longer arrive
+           fully formed, because it starts as an empty pill and grows.
+           Nothing above a growing bubble ever moves; only the dots below it. */
+        const PRE  = 110;   // his belief lands, no ceremony
+        const READ = 430;   // and sits there long enough to be read
+        const DOTS = 260;   // the dots hand over to the typing, so they are short
+        const CH    = 15;   // ms per character
+        const STOP  = 170;  // extra pause on . ? !
+        const CLAUSE= 80;   // extra pause on a comma
+        const BEAT  = 200;  // finished reply sits before the next belief
+
+        let killed = false;
+        const wait  = (ms) => new Promise(r=>setTimeout(r, ms));
+        const frame = ()   => new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+
+        /* display:none -> flex is not transitionable, so the element gets its
+           box on one frame and its opacity on the next. Two rAFs, because one
+           is not reliably enough for the style to have been computed. */
+        const reveal = async (el) => {
+          el.classList.add('shown');
+          await frame();
+          el.classList.add('on');
+          nudge(true);
+        };
+
+        /* Cache every reply BEFORE anything is typed, so the fast-scroll net
+           and reduced-motion can put the text back verbatim. */
+        const FULL = new WeakMap();
+        items.forEach(el=>{
+          const b = el.querySelector('.px-bub');
+          if(b) FULL.set(el, b.textContent);
+        });
+
+        /* Smooth scrollTo re-targeted mid-flight retargets rather than jerks,
+           so this can be called freely while a bubble is growing. */
+        const win = root.querySelector('#px-window');
+        let lastN = 0;
+        const nudge = (force) => {
+          if(!win) return;
+          const t = performance.now();
+          if(!force && t - lastN < 120) return;
+          lastN = t;
+          win.scrollTo({ top: win.scrollHeight, behavior: 'smooth' });
+        };
+
+        const typeOut = (el) => new Promise(res=>{
+          const bub = el.querySelector('.px-bub');
+          const full = FULL.get(el);
+          if(!bub || !full || reduce) return res();
+          bub.textContent = '';
+          bub.classList.add('typing');
+          let i = 0;
+          const tick = () => {
+            if(killed){ bub.textContent = full; bub.classList.remove('typing'); return res(); }
+            const c = full[i++];
+            bub.textContent = full.slice(0, i);
+            nudge();
+            if(i >= full.length){ bub.classList.remove('typing'); nudge(true); return res(); }
+            let d = CH;
+            if(c==='.'||c==='?'||c==='!') d += STOP;
+            else if(c===',') d += CLAUSE;
+            setTimeout(tick, d);
+          };
+          setTimeout(tick, CH);
+        });
+
+        const showAll = () => {
+          killed = true;
+          items.forEach(el=>{
+            el.classList.add('shown'); el.classList.add('on');
+            const b = el.querySelector('.px-bub');
+            if(b && FULL.has(el)){ b.textContent = FULL.get(el); b.classList.remove('typing'); }
+          });
+          typing.classList.add('gone');
+          if(win) win.scrollTop = win.scrollHeight;
+        };
+
+        const run = async () => {
+          for(const el of items){
+            if(killed) return;
+            const isBelief = el.classList.contains('px-out');
+            if(isBelief){
+              await wait(PRE);
+              if(killed) return;
+              await reveal(el);
+              tape.appendChild(typing);
+              await wait(READ);                    // he takes it in
+            } else {
+              typing.classList.add('on');          // and it's already answering
+              await wait(DOTS);
+              if(killed) return;
+              typing.classList.remove('on');
+              await wait(60);
+              if(killed) return;
+              await reveal(el);                    // an empty pill, quietly
+              tape.appendChild(typing);
+              await typeOut(el);                   // which then fills itself
+              if(killed) return;
+              await wait(BEAT);
+            }
+          }
+          typing.classList.add('gone');
+        };
+
+        /* THE TRIGGER DOES NOT USE GSAP.
+           The whole phone sequence used to sit inside the ScrollTrigger branch,
+           which meant a phone with no GSAP fell through to the else and the
+           thread was simply THERE on arrival -- in the one section where the
+           animation is the content. IntersectionObserver has no dependency and
+           works everywhere. */
+        if('IntersectionObserver' in window){
+          const io=new IntersectionObserver((es)=>{
+            es.forEach(e=>{
+              if(e.isIntersecting){ io.disconnect(); run(); }
+            });
+          },{ rootMargin:'0px 0px -24% 0px' });
+          io.observe(root.querySelector('.px-phone'));
+        } else { run(); }
+
+        /* THE FAST-SCROLLER NET. If he's already past the section, stop the
+           sequence and show everything -- there's no point typing a thread at
+           somebody who has scrolled by, and the last line must never be the
+           one left unrendered. */
+        /* THE FAST-SCROLLER NET. Already past it: stop and show everything.
+           No point typing at somebody who has scrolled by, and the last line
+           must never be the one left unrendered. */
+        if('IntersectionObserver' in window){
+          const past=new IntersectionObserver((es)=>{
+            es.forEach(e=>{ if(!e.isIntersecting && e.boundingClientRect.top<0){ past.disconnect(); showAll(); } });
+          },{ threshold:0 });
+          past.observe(root.querySelector('#px-mirror'));
+        }
+
+        /* Reduced motion, or no GSAP: show the lot immediately. The words are
+           the section; the animation is only the delivery. */
+        if(reduce){ showAll(); }
+    })();
 
     /* ══════════════ RESPONSIVE COLLAPSE ══════════════ */
     /* px-vv-grid is NOT in here any more. It's a two-row grid with explicit

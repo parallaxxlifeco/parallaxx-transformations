@@ -121,11 +121,25 @@ OUT.write_text("""/* PARALLAXX TRANSFORMATIONS - Home page Wix Custom Element. T
     return Promise.all([ g.catch(function(){}), l.catch(function(){}) ]);
   }
 
+  /* This rewrites ancestor heights, which moves every scroll position on the
+     page. ScrollTrigger has already cached those positions, so without a
+     refresh afterwards its triggers fire at the wrong offsets. Returns
+     whether it actually changed anything so the caller can avoid refreshing
+     for nothing. */
   function collapseAncestors(host){
-    try{ var h=host.getBoundingClientRect().height; if(h<50) return;
+    var changed = false;
+    try{ var h=host.getBoundingClientRect().height; if(h<50) return false;
       var n=host.parentElement,guard=0;
-      while(n && n!==document.body && guard++<14){ if(n.getBoundingClientRect().height>h+600){ n.style.height='auto'; n.style.minHeight='0px'; } n=n.parentElement; }
+      while(n && n!==document.body && guard++<14){ if(n.getBoundingClientRect().height>h+600){ n.style.height='auto'; n.style.minHeight='0px'; changed = true; } n=n.parentElement; }
     }catch(e){}
+    return changed;
+  }
+
+  function collapseAndRefresh(host){
+    var changed = collapseAncestors(host);
+    if (changed && window.ScrollTrigger) {
+      try{ window.ScrollTrigger.refresh(); }catch(e){}
+    }
   }
 
   function boot(root){
@@ -142,9 +156,9 @@ OUT.write_text("""/* PARALLAXX TRANSFORMATIONS - Home page Wix Custom Element. T
       var host = this;
       loadLibs().then(function(){ try{ boot(shadow); }catch(e){ console.error('[px] boot failed:', e); } })
         .catch(function(){ try{ boot(shadow); }catch(e){} });
-      requestAnimationFrame(function(){ collapseAncestors(host); });
-      [400,1200,2500].forEach(function(t){ setTimeout(function(){ collapseAncestors(host); }, t); });
-      window.addEventListener('resize', function(){ collapseAncestors(host); }, {passive:true});
+      requestAnimationFrame(function(){ collapseAndRefresh(host); });
+      [400,1200,2500].forEach(function(t){ setTimeout(function(){ collapseAndRefresh(host); }, t); });
+      window.addEventListener('resize', function(){ collapseAndRefresh(host); }, {passive:true});
     }
   }
   customElements.define('parallaxx-home-page', ParallaxxHomePage);

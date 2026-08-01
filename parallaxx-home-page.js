@@ -291,7 +291,7 @@
      v4 made it a card in a box -- a demo sitting in its own module.
      Now the glass is the section background and the copy lives INSIDE
      the two sides. Drag the handle and the argument moves with it. -- */
-  #px-reframe{position:relative;min-height:46svh;display:flex;align-items:center;overflow:hidden;background:#0A1D3C;cursor:ew-resize;user-select:none}
+  #px-reframe{touch-action:pan-y;position:relative;min-height:46svh;display:flex;align-items:center;overflow:hidden;background:#0A1D3C;cursor:ew-resize;user-select:none}
   #px-split{position:absolute;inset:0;width:100%;height:100%;display:block}
   #px-rf-veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(6,25,56,.94) 0%,rgba(6,25,56,.62) 45%,rgba(6,25,56,.72) 100%)}
   #px-handle{position:absolute;top:0;bottom:0;width:2px;background:#FF501F;box-shadow:0 0 30px rgba(255,80,31,.8);pointer-events:none;z-index:3}
@@ -504,8 +504,33 @@
 
   @media(max-width:980px){#px-panes{grid-template-columns:repeat(2,1fr)}}
   /* 360px cap is load-bearing: it puts the 720px-wide clip at exactly 2x. */
-  @media(max-width:560px){#px-panes{grid-template-columns:1fr;justify-items:center}
-    .px-pane{width:100%;max-width:360px}}
+  /* MOBILE: A SWIPE RAIL, NOT A STACK.
+     Five 4:5 cards stacked one per row is roughly 2,250px of scrolling to
+     get past a section whose only job is "which of these is you". The rail
+     puts the question on one screen. Cards sit at 72% so the next one is
+     visibly cut off at the edge -- that peek is what tells him to swipe;
+     a rail whose last card ends flush at the viewport edge reads as a
+     single card and nobody ever swipes it.
+     scroll-padding-inline matches the rail padding so a snapped card lands
+     against the same margin as the text above it rather than the screen. */
+  @media(max-width:560px){
+    #px-panes{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:72%;
+      gap:12px;overflow-x:auto;overscroll-behavior-x:contain;
+      scroll-snap-type:x mandatory;scroll-padding-inline:20px;
+      padding:2px 20px 14px;margin-inline:-20px;
+      scrollbar-width:none;-ms-overflow-style:none}
+    #px-panes::-webkit-scrollbar{display:none}
+    .px-pane{width:auto;max-width:none;scroll-snap-align:start}
+    .px-pane h3{font-size:.9rem}
+    .px-pane p{font-size:.8rem}
+    /* The dots are a readout, not a control. Tapping a dot to move a rail
+       is a worse target than the rail itself, which is already swipeable. */
+    #px-panes-dots{display:flex;justify-content:center;gap:7px;margin-top:2px}
+    #px-panes-dots i{width:6px;height:6px;border-radius:50%;background:rgba(241,236,225,.26);
+      transition:background .25s ease,transform .25s ease}
+    #px-panes-dots i.on{background:#E8C65F;transform:scale(1.25)}
+  }
+  #px-panes-dots{display:none}
 
   /* THE PORTRAIT TRAVELS WITH THE STORY. It is 4:5 against 285 words, so the
      left column used to finish a third of the way down and leave a column of
@@ -546,7 +571,14 @@
      still reaches the corner. */
   #px-vv-overlay{position:absolute;left:0;right:0;bottom:0;padding:30px 26px 44px;pointer-events:none;
     background:linear-gradient(0deg,rgba(4,18,42,.95) 30%,rgba(4,18,42,.72) 62%,rgba(4,18,42,0))}
-  .px-pill{flex:1;padding:11px 8px;border-radius:12px;font-weight:800;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .25s ease;border-width:2px;border-style:solid}
+  /* align-items:center + a shared min-height so the three read as one row
+     even when a label wraps. letter-spacing on uppercase adds a trailing gap
+     on the last glyph, which throws optical centring -- the left padding
+     compensates so the text sits centred to the eye, not to the box. */
+  .px-pill{flex:1;min-height:46px;display:flex;align-items:center;justify-content:center;text-align:center;
+    padding:11px 7px 11px 8px;border-radius:12px;font-weight:800;font-size:.72rem;letter-spacing:.08em;
+    text-transform:uppercase;cursor:pointer;transition:all .25s ease;border-width:2px;border-style:solid}
+  @media(max-width:560px){ .px-pill{font-size:.66rem;letter-spacing:.05em;min-height:44px;padding:10px 5px} }
   .px-card{background:#fff;border-radius:20px;padding:28px 30px;border-top:3px solid #E8C65F;transition:border-color .3s ease}
 
   /* Row 1 = stage | card.  Row 2 = pills+caption | (nothing).
@@ -557,11 +589,11 @@
     grid-template-rows:auto auto;column-gap:clamp(24px,3vw,48px);row-gap:14px;
     max-width:1080px;margin:0 auto}
   #px-vv-card{grid-column:2;grid-row:1;align-self:center}
-  #px-vv-controls{grid-column:1;grid-row:2}
+  #px-vv-controls{grid-column:1;grid-row:2;padding-top:6px}
   @media(max-width:820px){
     #px-vv-grid{grid-template-columns:1fr}
     #px-vv-stage{grid-column:1;grid-row:1}
-    #px-vv-controls{grid-column:1;grid-row:2}
+    #px-vv-controls{grid-column:1;grid-row:2;padding-top:16px}
     #px-vv-card{grid-column:1;grid-row:3;align-self:auto;margin-top:8px}
   }
   /* THE FORK. Home carries the shared truth. The brutal, gendered pain
@@ -657,6 +689,27 @@
   .px-voice{margin:0;display:flex;flex-direction:column}
   .px-voice blockquote{margin:0 0 18px;font-family:'Poppins','Montserrat',sans-serif;
     font-style:italic;font-size:clamp(18px,1.6vw,22px);line-height:1.4;color:#F1ECE1;flex:1}
+  /* ══════════════ MOBILE TYPOGRAPHY ══════════════
+     text-wrap:balance evens the rag on a heading instead of letting the last
+     line fall to one orphaned word, which is most of what reads as "broken
+     lines" on a phone. pretty does the same for the last line of body copy.
+     Both degrade to normal wrapping where unsupported, so there is no
+     fallback to write.
+
+     The size override needs !important because every heading carries its
+     clamp as an INLINE style, and inline beats a media query at any
+     specificity. Scoped to h1/h2/h3.px-serif so the smaller serif pull
+     quotes, which are divs, keep their own scale and the hierarchy holds.
+
+     The clamps bottom out at 27-30px. On a 390px screen with 40px of
+     padding that is about eleven characters a line, which is what was
+     snapping headlines into ragged three-word stacks. */
+  h1,h2,h3,h4{text-wrap:balance}
+  p{text-wrap:pretty}
+  @media(max-width:560px){
+    h1.px-serif,h2.px-serif,h3.px-serif{font-size:clamp(21px,6.1vw,27px)!important;line-height:1.24!important}
+    section,.px-sec{padding-top:clamp(40px,10vw,52px)!important;padding-bottom:clamp(40px,10vw,52px)!important}
+  }
   @media(max-width:820px){#px-voices{grid-template-columns:1fr;gap:28px}
     .px-voice blockquote{flex:none}}
 
@@ -1061,6 +1114,7 @@
         <p>Everything gets softened before it leaves your mouth.</p>
       </div>
     </div>
+    <div id="px-panes-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
 
     <!-- THE GATE. He can rub at it from out here. He can't get through it. -->
     <div style="max-width:68ch;margin:28px auto 0;text-align:center">
@@ -1488,11 +1542,25 @@
     return Promise.all([ g.catch(function(){}), l.catch(function(){}) ]);
   }
 
+  /* This rewrites ancestor heights, which moves every scroll position on the
+     page. ScrollTrigger has already cached those positions, so without a
+     refresh afterwards its triggers fire at the wrong offsets. Returns
+     whether it actually changed anything so the caller can avoid refreshing
+     for nothing. */
   function collapseAncestors(host){
-    try{ var h=host.getBoundingClientRect().height; if(h<50) return;
+    var changed = false;
+    try{ var h=host.getBoundingClientRect().height; if(h<50) return false;
       var n=host.parentElement,guard=0;
-      while(n && n!==document.body && guard++<14){ if(n.getBoundingClientRect().height>h+600){ n.style.height='auto'; n.style.minHeight='0px'; } n=n.parentElement; }
+      while(n && n!==document.body && guard++<14){ if(n.getBoundingClientRect().height>h+600){ n.style.height='auto'; n.style.minHeight='0px'; changed = true; } n=n.parentElement; }
     }catch(e){}
+    return changed;
+  }
+
+  function collapseAndRefresh(host){
+    var changed = collapseAncestors(host);
+    if (changed && window.ScrollTrigger) {
+      try{ window.ScrollTrigger.refresh(); }catch(e){}
+    }
   }
 
   function boot(root){
@@ -1896,11 +1964,22 @@
       let drag=false;
       const setFrom=(clientX)=>{ const r=wrap.getBoundingClientRect();
         st.target=Math.min(0.97,Math.max(0.03,(clientX-r.left)/r.width)); };
-      wrap.addEventListener('pointerdown',e=>{drag=true; setFrom(e.clientX); wrap.setPointerCapture(e.pointerId);});
-      wrap.addEventListener('pointermove',e=>{ if(drag||e.buttons===1) setFrom(e.clientX);
-        else setFrom(e.clientX); });
-      wrap.addEventListener('pointerup',()=>{drag=false;});
-      wrap.addEventListener('pointerleave',()=>{drag=false; st.target=HOME;});
+      /* TOUCH. pointerleave fires the INSTANT a finger lifts, so the old
+         handler yanked the handle back to HOME after every single drag --
+         it was impossible to leave it anywhere, and impossible to reach the
+         right edge because the release snapped it back. Returning HOME is a
+         MOUSE behaviour (the cursor genuinely left the area); a finger
+         lifting means he has finished choosing, so the split stays put. */
+      wrap.addEventListener('pointerdown',e=>{ drag=true; setFrom(e.clientX);
+        try{ wrap.setPointerCapture(e.pointerId); }catch(_){} });
+      wrap.addEventListener('pointermove',e=>{
+        if(drag){ setFrom(e.clientX); }
+        else if(e.pointerType==='mouse'){ setFrom(e.clientX); }   // hover-scrub, mouse only
+      });
+      const release=()=>{ drag=false; };
+      wrap.addEventListener('pointerup',release);
+      wrap.addEventListener('pointercancel',release);
+      wrap.addEventListener('pointerleave',e=>{ drag=false; if(e.pointerType==='mouse') st.target=HOME; });
 
       addRenderer(canvas, ()=>{
         st.split += (st.target-st.split)*0.12;
@@ -2138,6 +2217,32 @@
       });
     })();
 
+    /* MOBILE RAIL READOUT. Only paints when #px-panes is actually
+       scrollable, so it is inert on desktop where it stays a grid. */
+    (function panesRail(){
+      const rail = root.getElementById('px-panes');
+      const dots = root.getElementById('px-panes-dots');
+      if(!rail || !dots) return;
+      const items = [...rail.querySelectorAll('.px-pane')];
+      const marks = [...dots.querySelectorAll('i')];
+      let ticking = false;
+      const paint = () => {
+        ticking = false;
+        if(rail.scrollWidth <= rail.clientWidth + 4) return;
+        const mid = rail.scrollLeft + rail.clientWidth/2;
+        let best = 0, bd = Infinity;
+        items.forEach((el,n)=>{
+          const c = el.offsetLeft + el.offsetWidth/2;
+          const d = Math.abs(c - mid);
+          if(d < bd){ bd = d; best = n; }
+        });
+        marks.forEach((m,n)=>m.classList.toggle('on', n === best));
+      };
+      rail.addEventListener('scroll', ()=>{ if(!ticking){ ticking=true; requestAnimationFrame(paint); } }, {passive:true});
+      window.addEventListener('resize', paint, {passive:true});
+      paint();
+    })();
+
     /* ══════════════ 04 · THE FIVE PANES ══════════════
        Films are CSS. Behind each pane (once its clip exists) is the first
        ten seconds of that archetype's video -- a face, fogged over, that
@@ -2286,12 +2391,22 @@
           scrollTrigger:{trigger:root.getElementById('px-hero'),start:'top top',end:'bottom top',scrub:0.7}});
       }
 
-      // kinetic type
+      /* KINETIC TYPE.
+         Anything already on screen at boot animates IMMEDIATELY, with no
+         ScrollTrigger at all. A ScrollTrigger that fires on the same frame
+         the layout is still settling can be reverted mid-tween by a refresh
+         and never resumes -- which stranded the hero headline partway out of
+         its overflow:hidden box, clipped through the glyphs. Above the fold
+         there is nothing to wait for anyway, so there is no reason to make
+         the reveal depend on a scroll position at all. */
+      const inView = (el)=>{ const r=el.getBoundingClientRect(); return r.top < window.innerHeight*0.88; };
       root.querySelectorAll('.px-line > span').forEach(l=>{
-        G.to(l,{y:'0%',duration:1.05,ease:'expo.out',scrollTrigger:{trigger:l,start:'top 88%',once:true}});
+        if(inView(l)) G.to(l,{y:'0%',duration:1.05,ease:'expo.out'});
+        else G.to(l,{y:'0%',duration:1.05,ease:'expo.out',scrollTrigger:{trigger:l,start:'top 88%',once:true}});
       });
       root.querySelectorAll('.px-fade').forEach(el=>{
-        G.to(el,{opacity:1,y:0,duration:.95,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}});
+        if(inView(el)) G.to(el,{opacity:1,y:0,duration:.95,ease:'power3.out'});
+        else G.to(el,{opacity:1,y:0,duration:.95,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}});
       });
 
 
@@ -2507,9 +2622,9 @@
       var host = this;
       loadLibs().then(function(){ try{ boot(shadow); }catch(e){ console.error('[px] boot failed:', e); } })
         .catch(function(){ try{ boot(shadow); }catch(e){} });
-      requestAnimationFrame(function(){ collapseAncestors(host); });
-      [400,1200,2500].forEach(function(t){ setTimeout(function(){ collapseAncestors(host); }, t); });
-      window.addEventListener('resize', function(){ collapseAncestors(host); }, {passive:true});
+      requestAnimationFrame(function(){ collapseAndRefresh(host); });
+      [400,1200,2500].forEach(function(t){ setTimeout(function(){ collapseAndRefresh(host); }, t); });
+      window.addEventListener('resize', function(){ collapseAndRefresh(host); }, {passive:true});
     }
   }
   customElements.define('parallaxx-home-page', ParallaxxHomePage);

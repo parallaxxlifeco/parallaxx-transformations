@@ -390,11 +390,19 @@
      brutal, and 90% of visitors never touch a single one. */
   .px-pane video, .px-pane .poster{position:absolute;inset:0;width:100%;height:100%;
     object-fit:cover;pointer-events:none}
-  .px-pane video{opacity:0;transition:opacity .9s ease}
-  .px-pane.on video{opacity:1}
+  /* AT REST THE CLIP IS VISIBLE, BUT DRAINED.
+     The card used to be a flat navy tile: the film had nothing to be film
+     OVER, so it read as decoration rather than obstruction. Now the frame
+     sits underneath at low saturation and low brightness, supplying FORM
+     only -- a shape that reads as a man. Colour still belongs to the
+     archetype film, which is what makes the five cards distinguishable at
+     a glance. On play both resolve to full. */
+  .px-pane video{opacity:1;filter:saturate(.16) brightness(.5) contrast(.92);
+    transition:opacity .9s ease, filter .9s ease}
+  .px-pane.on video{opacity:1;filter:saturate(1) brightness(1) contrast(1)}
   .px-pane .poster{background-size:cover;background-position:center 22%;
-    filter:saturate(.5) brightness(.62);transition:filter .9s ease}
-  .px-pane.on .poster{filter:saturate(1) brightness(1)}
+    filter:saturate(.16) brightness(.5) contrast(.92);transition:filter .9s ease}
+  .px-pane.on .poster{filter:saturate(1) brightness(1) contrast(1)}
 
   /* ═══ THE FILMS ═══════════════════════════════════════════════════
      Each archetype is a DIFFERENT PHYSICAL THING covering the glass, and
@@ -434,7 +442,10 @@
 
      dark -> mid -> bright -> dark -> pale. A real rhythm across the row,
      and coral is left alone to mean exactly one thing. ═══════════════ */
-  .px-film{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+  /* Not quite opaque. The cover stays a cover -- it still hides him -- but
+     there is now something behind it that you can just make out. */
+  .px-film{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;
+    opacity:.87;transition:opacity .5s ease}
 
   /* 01 — BRICKS. A fortress is a wall, so give him a wall. The heaviest,
      darkest thing in the row: this one should feel like WEIGHT.
@@ -2378,6 +2389,23 @@ class Component extends DCLogic {
         return v;
       };
 
+      /* PRIME. preload='metadata' pulls headers and a frame, not the clip.
+         A paused video at currentTime 0 paints BLACK in several browsers, so
+         we nudge it a fraction of a second in to force a real frame.
+         iOS Safari ignores preload outright and will stay dark until a tap --
+         that is why data-poster still wins where it exists, and why supplying
+         five stills is the only version of this that works on every device. */
+      const prime = (el) => {
+        if(el.getAttribute('data-poster')) return;      // a real still beats this
+        const v = build(el);
+        if(!v || v.__primed) return;
+        v.__primed = true;
+        if(v.preload === 'none') v.preload = 'metadata';
+        v.addEventListener('loadedmetadata', ()=>{
+          try{ v.currentTime = Math.min(0.6, (v.duration || 6) * 0.08); }catch(e){}
+        }, {once:true});
+      };
+
       const open = (el) => {
         panes.forEach(o=>{ if(o!==el){ o.classList.remove('on'); if(o.__v){ o.__v.pause(); } } });
         el.classList.add('on');
@@ -2388,6 +2416,16 @@ class Component extends DCLogic {
         el.classList.remove('on');
         if(el.__v) el.__v.pause();
       };
+
+      /* Prime on APPROACH, never on page load. Five clips pulling metadata
+         while four WebGL canvases are warming up is exactly the stall this
+         page has spent its whole life avoiding. */
+      if('IntersectionObserver' in window){
+        const primer = new IntersectionObserver((es)=>{
+          es.forEach(e=>{ if(e.isIntersecting){ primer.unobserve(e.target); prime(e.target); } });
+        },{ rootMargin:'300px 0px' });
+        panes.forEach(el=>{ if(el.getAttribute('data-clip')) primer.observe(el); });
+      }
 
       panes.forEach(el=>{
         if(el.getAttribute('data-clip')){

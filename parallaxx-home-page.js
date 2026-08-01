@@ -63,6 +63,9 @@
      which is where Poppins' generous default spacing actually needs reining in. */
   .px-serif{font-family:'Poppins','Montserrat',sans-serif;font-weight:400;letter-spacing:-.018em}
   .px-hand{font-family:'Lumios Marker','Permanent Marker',cursive}
+  @media(max-width:560px){
+    .px-hand{font-size:clamp(14px,4.6vw,21px)!important;white-space:nowrap}
+  }
   .px-wrap{max-width:1240px;margin:0 auto}
   .px-sec{padding:clamp(52px,6.5vw,92px) clamp(20px,4vw,52px);position:relative}
   .px-label{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:#5E6B85}
@@ -525,12 +528,21 @@
     .px-pane p{font-size:.8rem}
     /* The dots are a readout, not a control. Tapping a dot to move a rail
        is a worse target than the rail itself, which is already swipeable. */
-    #px-panes-dots{display:flex;justify-content:center;gap:7px;margin-top:2px}
+    #px-panes-dots{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:11px}
+    /* The peek tells him there is more; the arrow tells him what to DO about
+       it. It retires the moment he moves the rail, because an affordance
+       that outlives its own lesson is just clutter. */
+    #px-panes-nudge{display:block;margin-left:7px;color:#E8C65F;font-size:16px;line-height:1;
+      opacity:.95;transition:opacity .35s ease;animation:px-nudge 1.5s ease-in-out infinite}
+    #px-panes-dots.moved #px-panes-nudge{opacity:0;animation:none}
+    @keyframes px-nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+    @media(prefers-reduced-motion:reduce){ #px-panes-nudge{animation:none} }
     #px-panes-dots i{width:6px;height:6px;border-radius:50%;background:rgba(241,236,225,.26);
       transition:background .25s ease,transform .25s ease}
     #px-panes-dots i.on{background:#E8C65F;transform:scale(1.25)}
   }
   #px-panes-dots{display:none}
+  #px-panes-nudge{display:none}
 
   /* THE PORTRAIT TRAVELS WITH THE STORY. It is 4:5 against 285 words, so the
      left column used to finish a third of the way down and leave a column of
@@ -1114,7 +1126,7 @@
         <p>Everything gets softened before it leaves your mouth.</p>
       </div>
     </div>
-    <div id="px-panes-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    <div id="px-panes-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><span id="px-panes-nudge">&#8594;</span></div>
 
     <!-- THE GATE. He can rub at it from out here. He can't get through it. -->
     <div style="max-width:68ch;margin:28px auto 0;text-align:center">
@@ -2249,7 +2261,10 @@
         });
         marks.forEach((m,n)=>m.classList.toggle('on', n === best));
       };
-      rail.addEventListener('scroll', ()=>{ if(!ticking){ ticking=true; requestAnimationFrame(paint); } }, {passive:true});
+      rail.addEventListener('scroll', ()=>{
+        if(rail.scrollLeft > 8) dots.classList.add('moved');
+        if(!ticking){ ticking=true; requestAnimationFrame(paint); }
+      }, {passive:true});
       window.addEventListener('resize', paint, {passive:true});
       paint();
     })();

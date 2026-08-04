@@ -173,6 +173,14 @@ OUT.write_text("""/* PARALLAXX TRANSFORMATIONS - Home, the front door. Wix Custo
       var shadow = this.attachShadow({mode:'open'});
       shadow.innerHTML = '<style>'+CSS+'</style>'+HTML;
       var host = this;
+      /* THE HOST ITSELF, NOT JUST ITS ANCESTORS.
+         collapseAncestors only walks upward. If the Wix editor has given the
+         widget its own fixed height -- which it does by default, and which
+         is almost always taller than a 600-word routing page -- the element
+         keeps that height and the surplus renders as empty page background
+         under the content. Clearing it here is the difference between a
+         short page and a short page followed by a white cliff. */
+      try{ host.style.height='auto'; host.style.minHeight='0px'; }catch(e){}
       try{ boot(shadow); }catch(e){ console.error('[px] boot failed:', e); }
       requestAnimationFrame(function(){ collapseAncestors(host); });
       [400,1200,2500].forEach(function(t){ setTimeout(function(){ collapseAncestors(host); }, t); });

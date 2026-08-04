@@ -13,6 +13,30 @@ Never hand-edit a generated `.js` bundle; edit the source and rerun its build.
 | The Reconnected Man | `The Reconnected Man.dc.html` | `build-reconnected-man-bundle.py` | `parallaxx-reconnected-man.js` · `parallaxx-reconnected-man` | `reconnected-man.html` |
 | Home, women | `Parallaxx Home Women.dc.html` | `build-home-women-bundle.py` | `parallaxx-home-women.js` · `parallaxx-home-women` | `home-women.html` |
 
+## The Source URLs
+
+Everything is served by **GitHub Pages** off `main`. This was not written down
+anywhere until now, which cost an afternoon: the only host named in the repo was
+a jsDelivr example in `wheel-of-reconnect-README.md`, which serves the same files
+from a different cache and would silently drift out of sync on the next push.
+**GitHub Pages is the one to use. Do not mix the two.**
+
+Base: `https://parallaxxlifeco.github.io/parallaxx-transformations/`
+
+| Wix Custom Element | Source URL | Tag |
+|---|---|---|
+| Home, the front door | `…/parallaxx-home.js` | `parallaxx-home` |
+| Home, men | `…/parallaxx-home-men.js` | `parallaxx-home-men` |
+| The Reconnected Man | `…/parallaxx-reconnected-man.js` | `parallaxx-reconnected-man` |
+| Home, women | `…/parallaxx-home-women.js` | `parallaxx-home-women` |
+
+The preview harnesses render as real pages at the same base, so
+`…/home.html` is the front door as Wix will show it, without touching Wix.
+
+Pages rebuilds within a minute or so of a push and its CDN holds a file for
+about ten minutes. If a deploy looks stale, bump the `?v=` query and hard
+reload before assuming the build is wrong.
+
 Also here: `parallaxx-wheel-of-reconnect.js`, a standalone interactive element,
 and `support.js`, the local shim that lets a `.dc.html` open in a browser.
 

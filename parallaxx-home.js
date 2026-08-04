@@ -20,6 +20,7 @@
      04 DANIEL    the record, stated flat. no origin story.
      05 ELSE      one quiet row for everybody who is neither.
      06 CLOSE     the doors again. nothing new.
+     -- NAV       PtNav v3, built in rather than placed. See below.
      -- FOOTER    PtFooter v3, built in rather than placed. See below.
 
    ───────────────────────────────────────────────────────────────────
@@ -51,6 +52,21 @@
    THE ACCENT RULE. GOLD IS DANIEL. CORAL IS YOU.
    ═══════════════════════════════════════════════════════════════════ */
 
+  /* ══ THE HOST ═════════════════════════════════════════════════════
+     A custom element is display:inline by default. Inline means no block
+     box, a baseline to sit on, and a wrapper that is free to size itself
+     wrong -- which is what leaves a band of PAGE background under the
+     component. On a Wix page that band is white.
+
+     Both lines matter. display:block fixes the box. The background means
+     that if anything ever does leave a gap, the gap is navy and invisible
+     rather than a white cliff at the bottom of the site.
+
+     The preview harnesses set "parallaxx-home{display:block}" from outside,
+     which is why this never showed up locally: the harness was quietly
+     fixing it and Wix was not. It belongs in here, where it ships. */
+  :host{display:block;background:#061938}
+
   *{box-sizing:border-box}
   #px-root{background:#061938;color:#F1ECE1;
     font-family:'Montserrat',system-ui,-apple-system,sans-serif;
@@ -73,7 +89,9 @@
 /* Two columns on desktop, portrait first on mobile. The portrait is
    NOT decorative: 46% of credibility judgements are made on visual
    design alone, and the page it replaces had no human on it at all. */
-  #px-top{padding-top:clamp(40px,7vw,86px)}
+  /* Clears the fixed nav bar. #pt-bar is 16px of padding either side
+     of a 30px logo, so ~62px, plus breathing room. */
+  #px-top{padding-top:clamp(104px,10vw,150px)}
   #px-top .grid{display:grid;grid-template-columns:1.05fr .95fr;
     gap:clamp(26px,4vw,58px);align-items:center;max-width:1080px;margin:0 auto}
   @media(max-width:820px){#px-top .grid{grid-template-columns:1fr;gap:26px}}
@@ -259,6 +277,269 @@
   .px-mini span.line{font-family:'Poppins','Montserrat',sans-serif;font-weight:300;
     font-size:clamp(16px,1.55vw,19px);line-height:1.35;color:#F1ECE1;display:block}
   .px-mini .go{display:block;margin-top:14px;font-size:.84rem;font-weight:700;color:#FF6A3D}
+
+/*/* ══════════════════════════════════════════════════════════════════
+   SITE NAV, BUILT IN RATHER THAN PLACED
+   Same story as the footer below it. PtNav belongs in the Wix header
+   strip so it is editable in one place for every page; it would not
+   load there, so it ships inside this page.
+
+   PtNav v3.dc.html stays the source of record. If the strip starts
+   working, delete this block and the markup rather than maintaining
+   two copies.
+
+   ONE THING TO WATCH. The bar is position:fixed. Inside a shadow root
+   that still resolves against the viewport, but ANY ancestor carrying
+   transform, filter, perspective or will-change becomes its containing
+   block instead, and the nav would scroll away with the page. If that
+   happens in Wix, the culprit is a wrapper on Wix's side, not here.
+   ══════════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════════
+   PARALLAXX · PRIMARY NAVIGATION · v3
+   -------------------------------------------------------------------
+   STRUCTURE (this is the whole argument of the redesign)
+     LOGO          home. no "Home" text item — the mark does that job.
+     FOR MEN   ▾   → The Reconnected Man
+     FOR WOMEN ▾   → The Reconnected Woman
+     ABOUT
+     TESTIMONIALS
+     CONTACT       coral pill, far right.
+
+   WHY THE DOORS COME FIRST
+   The sorting page's entire premise is that a visitor must choose a
+   side before anything else can land. The nav has to agree with that.
+   "For Men" and "For Women" are therefore the first and largest thing
+   after the mark, and everything that is ABOUT DANIEL (About,
+   Testimonials) sits after the reader's own doors, not before them.
+
+   THE PARENTS ARE REAL LINKS
+   "For Men" goes to the men's page; the dropdown is an addition, not
+   the only way through. A nav item that can only be hovered is a dead
+   end on touch and a dead end for keyboards.
+
+   ───────────────────────────────────────────────────────────────────
+   TOKENS shared with GIVE IT ALL:  navy #061938  gold #E8C65F  Montserrat
+   TOKENS Parallaxx only:  coral #FF501F  Poppins  cream #F1ECE1
+
+   THE ACCENT RULE. GOLD IS DANIEL. CORAL IS YOU.
+   Gold marks where you ARE (the active item, the hovered child).
+   Coral marks the one thing you can DO (Contact). Nothing else in
+   this bar is allowed to be coral — the moment a second thing is,
+   the pill stops meaning anything.
+   ═══════════════════════════════════════════════════════════════════ */
+:root{
+  --px-navy:#061938;
+  --px-navy-deep:#04122A;
+  --px-navy-ink:#030C1C;
+  --px-gold:#E8C65F;
+  --px-gold-lift:#F3DD93;
+  --px-coral:#FF501F;
+  --px-coral-lift:#FF6A3D;
+  --px-cream:#F1ECE1;
+  --px-mist:#B1BFD7;
+  --px-slate:#7C89A3;
+}
+
+/* ═══ SHELL ═══════════════════════════════════════════════════════ */
+#pt-nav,#pt-nav *{box-sizing:border-box}
+#pt-nav{
+  position:fixed;top:0;left:0;right:0;z-index:90;
+  font-family:'Montserrat',system-ui,-apple-system,sans-serif;
+  border-bottom:1px solid transparent;
+  background:transparent;
+  transition:background .4s ease,border-color .4s ease,backdrop-filter .4s ease;
+  -webkit-font-smoothing:antialiased;
+}
+/* Navy on scroll. NEVER black. */
+#pt-nav.is-stuck{
+  background:rgba(6,25,56,.92);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom-color:rgba(232,198,95,.16);
+}
+#pt-bar{
+  max-width:1360px;margin:0 auto;
+  padding:16px clamp(20px,4vw,52px);
+  display:flex;align-items:center;gap:clamp(16px,2.2vw,28px);
+  position:relative;
+}
+
+/* ═══ LOGO ════════════════════════════════════════════════════════ */
+#pt-logo{flex:0 0 auto;display:flex;align-items:center;line-height:0;
+  border-radius:6px;text-decoration:none;transition:opacity .25s ease}
+#pt-logo:hover{opacity:.82}
+#pt-logo:focus-visible{outline:2px solid rgba(232,198,95,.7);outline-offset:6px}
+/* If the CDN ever fails, the alt text renders as ordinary cream wordmark
+   text rather than a giant blue underlined link. */
+#pt-logo img{height:30px;width:auto;display:block;
+  font-size:.82rem;font-weight:700;letter-spacing:.02em;color:#F1ECE1}
+@media(max-width:600px){#pt-logo img{height:26px}}
+
+/* ═══ LINK RAIL ═══════════════════════════════════════════════════ */
+#pt-links{
+  display:flex;align-items:center;gap:clamp(20px,2.4vw,34px);
+  margin-left:auto;
+}
+.pt-item{position:relative;display:flex;align-items:center}
+.pt-link{
+  display:inline-flex;align-items:center;gap:.35em;
+  font-size:.9rem;font-weight:600;letter-spacing:.005em;
+  color:#B1BFD7;white-space:nowrap;text-decoration:none;
+  padding:6px 0;border-radius:4px;
+  transition:color .2s ease;
+}
+.pt-link:hover,.pt-link:focus-visible{color:#F1ECE1;outline:none}
+.pt-link:focus-visible{outline:2px solid rgba(232,198,95,.7);outline-offset:4px}
+
+/* WHERE YOU ARE. Gold, plus a rule under it so it survives being
+   read by someone who cannot separate gold from mist. */
+.pt-item.is-active > .pt-link,
+.pt-link.is-active{color:#E8C65F}
+.pt-item.is-active > .pt-link::after,
+.pt-link.is-active::after{
+  content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;
+  background:rgba(232,198,95,.75);border-radius:2px;
+}
+.pt-link{position:relative}
+
+/* ═══ CARET + DROPDOWN ════════════════════════════════════════════ */
+.pt-caret{
+  background:none;border:none;padding:6px 2px;margin:0;
+  font-family:inherit;font-size:.72em;line-height:1;
+  color:inherit;cursor:pointer;
+  display:inline-flex;align-items:center;
+  transition:transform .25s ease,color .2s ease;
+  color:#7C89A3;
+}
+.pt-item:hover .pt-caret{color:#B1BFD7}
+.pt-caret:focus-visible{outline:2px solid rgba(232,198,95,.7);outline-offset:3px;border-radius:4px}
+.pt-item:hover .pt-caret,
+.pt-item.is-open .pt-caret{transform:rotate(180deg)}
+
+.pt-menu{
+  position:absolute;top:100%;left:50%;
+  transform:translateX(-50%);
+  min-width:252px;
+  display:none;flex-direction:column;gap:2px;
+  margin-top:14px;
+  background:rgba(4,18,42,.98);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(232,198,95,.18);
+  border-radius:14px;padding:10px;
+  box-shadow:0 30px 60px -20px rgba(3,12,28,.8);
+}
+/* The 14px gap between the item and the menu would break a hover
+   chain, so the bridge below keeps the pointer "inside" while it
+   crosses. Without it the menu flickers shut mid-travel. */
+.pt-menu::before{content:"";position:absolute;top:-16px;left:0;right:0;height:16px}
+
+/* Desktop opens on hover AND on keyboard focus. No JS involved. */
+@media(min-width:1024px){
+  .pt-item:hover .pt-menu,
+  .pt-item:focus-within .pt-menu,
+  .pt-item.is-open .pt-menu{display:flex}
+}
+.pt-menu a{
+  padding:11px 14px;border-radius:9px;
+  font-size:.88rem;font-weight:500;color:#D7DEEA;
+  white-space:nowrap;text-decoration:none;
+  transition:background .2s ease,color .2s ease;
+}
+.pt-menu a:hover,.pt-menu a:focus-visible{
+  background:rgba(232,198,95,.1);color:#E8C65F;outline:none}
+.pt-menu a:focus-visible{box-shadow:inset 0 0 0 1px rgba(232,198,95,.55)}
+.pt-menu .pt-sub{
+  display:block;font-size:.63rem;letter-spacing:.18em;text-transform:uppercase;
+  font-weight:800;color:#7C89A3;margin-bottom:3px}
+.pt-menu a:hover .pt-sub{color:rgba(232,198,95,.72)}
+
+/* ═══ CONTACT · THE ONLY CORAL IN THE BAR ═════════════════════════ */
+#pt-cta-wrap{display:flex;align-items:center;gap:14px;flex:0 0 auto;margin-left:clamp(8px,1.6vw,20px)}
+#pt-cta{
+  display:inline-flex;align-items:center;gap:.5em;
+  background:#FF501F;color:#FFFFFF;
+  font-weight:700;font-size:.86rem;
+  padding:.72em 1.45em;border-radius:999px;
+  white-space:nowrap;text-decoration:none;
+  transition:background .25s ease,transform .25s ease,box-shadow .25s ease;
+}
+#pt-cta:hover,#pt-cta:focus-visible{
+  background:#FF6A3D;transform:translateY(-1px);
+  box-shadow:0 10px 24px -10px rgba(255,80,31,.7);outline:none}
+#pt-cta:focus-visible{outline:2px solid #F3DD93;outline-offset:3px}
+#pt-cta .arrow{font-size:.9em;transition:transform .25s ease}
+#pt-cta:hover .arrow{transform:translateX(3px)}
+
+/* ═══ BURGER ══════════════════════════════════════════════════════ */
+#pt-burger{
+  display:none;background:none;border:none;cursor:pointer;
+  flex-direction:column;justify-content:center;gap:5px;
+  padding:8px;margin-right:-8px;border-radius:6px}
+#pt-burger:focus-visible{outline:2px solid rgba(232,198,95,.7);outline-offset:2px}
+#pt-burger span{display:block;width:24px;height:2px;background:#F1ECE1;border-radius:2px;
+  transition:transform .3s ease,opacity .2s ease}
+#pt-nav.menu-open #pt-burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+#pt-nav.menu-open #pt-burger span:nth-child(2){opacity:0}
+#pt-nav.menu-open #pt-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ═══ MOBILE ══════════════════════════════════════════════════════ */
+@media(max-width:1023px){
+  #pt-burger{display:flex}
+  #pt-nav{background:rgba(6,25,56,.92);backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px)}
+
+  #pt-links{
+    position:absolute;top:100%;left:0;right:0;
+    flex-direction:column;align-items:stretch;gap:2px;
+    margin-left:0;
+    /* SOLID, AND NO BACKDROP FILTER ON THIS ONE. The bar above keeps its
+       blur; this panel cannot have one. Nested backdrop-filters inside a
+       shadow root make Chromium composite this element against an already
+       filtered backdrop, and the page behind reads straight through a
+       background that is 98.5% opaque. On the built-in version of this nav
+       the hero headline was legible through the open menu. The bar's own
+       blur still gives the effect where it matters. */
+    background:#061938;
+    border-bottom:1px solid rgba(232,198,95,.16);
+    padding:10px clamp(16px,4vw,44px) 22px;
+    max-height:calc(100vh - 68px);overflow-y:auto;
+    display:none;
+  }
+  #pt-nav.menu-open #pt-links{display:flex}
+
+  .pt-item{flex-wrap:wrap;justify-content:space-between;
+    border-bottom:1px solid rgba(241,236,225,.07)}
+  .pt-item:last-child{border-bottom:none}
+  .pt-link{flex:1 1 auto;padding:15px 2px;font-size:1rem}
+  .pt-item.is-active > .pt-link::after,.pt-link.is-active::after{display:none}
+  .pt-caret{flex:0 0 auto;padding:15px 10px;font-size:.85em}
+
+  /* Child list is a plain indented block on mobile. A floating panel
+     inside a panel is a place to get lost. */
+  .pt-menu{
+    position:static;transform:none;min-width:0;width:100%;
+    margin:0 0 12px;padding:0 0 0 14px;
+    background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;
+    border:none;border-left:2px solid rgba(232,198,95,.28);
+    border-radius:0;box-shadow:none;
+    flex-basis:100%;
+  }
+  .pt-menu::before{display:none}
+  .pt-item.is-open .pt-menu{display:flex}
+  .pt-menu a{padding:12px 12px;font-size:.94rem}
+
+  #pt-cta-wrap{margin-left:auto}
+  #pt-cta{font-size:.8rem;padding:.68em 1.2em}
+  #pt-cta .cta-long{display:none}
+}
+@media(max-width:420px){
+  #pt-cta{padding:.66em 1.05em}
+  #pt-cta .arrow{display:none}
+}
+
+@media(prefers-reduced-motion:reduce){
+  #pt-nav,#pt-nav *{transition:none!important}
+}
 
 /*    SITE FOOTER, BUILT IN RATHER THAN PLACED
    PtFooter is its own custom element and is meant to sit once in the
@@ -460,6 +741,62 @@
 @media(prefers-reduced-motion:reduce){#pt-foot,#pt-foot *{transition:none!important}}`;
 
   var HTML = `<div id="px-root">
+
+<header id="pt-nav">
+  <div id="pt-bar">
+
+    <!-- ══ LOGO = HOME. No text "Home" item; the mark is the link. ══ -->
+    <a id="pt-logo" href="https://www.parallaxxtransformations.com" aria-label="Parallaxx Transformations — home">
+      <img src="https://static.wixstatic.com/media/e1784d_fe3c841c471f47d088f0cd631a89d883~mv2.png"
+           alt="Parallaxx Transformations">
+    </a>
+
+    <nav id="pt-links" aria-label="Primary">
+
+      <!-- ══ FOR MEN ══ parent is a real link to the men's page ══ -->
+      <div class="pt-item pt-has-drop" data-nav="men">
+        <a class="pt-link" href="https://www.parallaxxtransformations.com/men">For Men</a>
+        <button class="pt-caret" type="button" aria-label="Show For Men menu" aria-expanded="false" aria-controls="pt-menu-men">&#9662;</button>
+        <div class="pt-menu" id="pt-menu-men">
+          <a href="https://www.parallaxxtransformations.com/the-reconnected-man">
+            <span class="pt-sub">Programme</span>The Reconnected Man</a>
+        </div>
+      </div>
+
+      <!-- ══ FOR WOMEN ══ -->
+      <div class="pt-item pt-has-drop" data-nav="women">
+        <a class="pt-link" href="https://www.parallaxxtransformations.com/women">For Women</a>
+        <button class="pt-caret" type="button" aria-label="Show For Women menu" aria-expanded="false" aria-controls="pt-menu-women">&#9662;</button>
+        <div class="pt-menu" id="pt-menu-women">
+          <a href="https://www.parallaxxtransformations.com/the-reconnected-woman">
+            <span class="pt-sub">Programme</span>The Reconnected Woman</a>
+        </div>
+      </div>
+
+      <div class="pt-item" data-nav="about">
+        <a class="pt-link" href="https://www.parallaxxtransformations.com/about-daniel-lawson">About</a>
+      </div>
+
+      <div class="pt-item" data-nav="testimonials">
+        <a class="pt-link" href="https://www.parallaxxtransformations.com/testimonials-daniel-lawson">Testimonials</a>
+      </div>
+
+    </nav>
+
+    <div id="pt-cta-wrap">
+      <!-- CONTACT. Coral pill — Parallaxx-only accent. GIA uses a gold
+           pill in this exact position: same shape, different colour.
+           That is the whole family/identity trick. -->
+      <a id="pt-cta" data-nav="contact" href="https://www.parallaxxtransformations.com/contact-daniel-lawson">
+        Contact<span class="cta-long">&nbsp;</span><span class="arrow" aria-hidden="true">&#8594;</span>
+      </a>
+      <button id="pt-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="pt-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+</header>
 
 <!-- ══════════════ 01 · THE FRAME ══════════════
      PLAIN. It names the CATEGORY (coaching), who it is for, and who runs it,
@@ -831,6 +1168,133 @@
        cancel the entrance for anybody arriving already scrolled, so a deep
        link or a restored scroll position does not replay an animation the
        visitor has effectively already watched. */
+  /* ══════════════ SITE NAV ══════════════
+     PtNav is built into this page rather than placed in the Wix header
+     strip, for the same reason as the footer: the strip would not load it.
+     PtNav v3.dc.html stays the source of record and this copy will not
+     track it. Change one and the other does not move.
+
+     Two things had to change coming in. The active prop is gone, because
+     there is no Wix instance to set one, so the section is worked out from
+     the URL and nothing else. And every lookup goes through root, which is
+     the shadow root once this is bundled.
+
+     document.addEventListener is deliberately left alone below: the
+     outside-click and Escape handlers have to hear events that never reach
+     the shadow root. */
+  (function siteNav(){
+
+    const nav = root.getElementById('pt-nav');
+    if(!nav) return;
+    const links  = root.getElementById('pt-links');
+    const burger = root.getElementById('pt-burger');
+    const items  = [...nav.querySelectorAll('.pt-has-drop')];
+    const MOBILE = () => window.innerWidth < 1024;
+
+    /* ── WHERE YOU ARE ──────────────────────────────────────────────
+       Worked out from the URL, because this element lives ONCE in the
+       site's header strip and therefore serves every page from a single
+       instance. A per-page the active prop cannot do that: one instance
+       carries one value, so "For Women" would sit underlined on the
+       men's page too.
+
+       The prop still wins when it is set, for the Wix editor preview
+       and for any page whose path does not match the table below. */
+    const PATHS = [
+      [/^\/(men|the-reconnected-man|the-archetype-quiz)\b/,      'men'],
+      [/^\/(women|the-reconnected-woman|priority-audit)\b/,      'women'],
+      [/^\/about-daniel-lawson\b/,                              'about'],
+      [/^\/(daniel-lawson-speaking|facilitating)\b/,             'about'],
+      [/^\/testimonials-daniel-lawson\b/,                       'testimonials'],
+      [/^\/(contact-daniel-lawson|book-a-call)/,                 'contact']
+    ];
+    const fromPath = () => {
+      const p = (location.pathname || '').replace(/\/+$/, '').toLowerCase() || '/';
+      for(const [re, key] of PATHS) if(re.test(p)) return key;
+      return '';
+    };
+    const active = fromPath();
+    if(active){
+      const el = nav.querySelector('[data-nav="'+active+'"]');
+      if(el) el.classList.add('is-active');
+    }
+
+    /* ── NAVY ON SCROLL ─────────────────────────────────────────── */
+    let ticking = false;
+    const onScroll = () => {
+      if(ticking) return; ticking = true;
+      requestAnimationFrame(() => {
+        nav.classList.toggle('is-stuck', window.scrollY > 40);
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+
+    /* ── MOBILE PANEL ───────────────────────────────────────────── */
+    const closeMenu = () => {
+      nav.classList.remove('menu-open');
+      burger.setAttribute('aria-expanded','false');
+      items.forEach(closeDrop);
+    };
+    burger.addEventListener('click', () => {
+      const open = !nav.classList.contains('menu-open');
+      nav.classList.toggle('menu-open', open);
+      burger.setAttribute('aria-expanded', String(open));
+      if(!open) items.forEach(closeDrop);
+    });
+
+    /* ── SUBMENUS ───────────────────────────────────────────────────
+       Desktop hover and keyboard focus are pure CSS. The caret only
+       exists for pointers that cannot hover, and for anyone who would
+       rather tap the arrow than the word. */
+    function closeDrop(it){
+      it.classList.remove('is-open');
+      const c = it.querySelector('.pt-caret');
+      if(c) c.setAttribute('aria-expanded','false');
+    }
+    items.forEach(it => {
+      const caret = it.querySelector('.pt-caret');
+      caret.addEventListener('click', e => {
+        e.preventDefault(); e.stopPropagation();
+        const open = !it.classList.contains('is-open');
+        items.forEach(closeDrop);
+        it.classList.toggle('is-open', open);
+        caret.setAttribute('aria-expanded', String(open));
+      });
+    });
+
+    /* ── DISMISSAL ──────────────────────────────────────────────── */
+    links.querySelectorAll('a').forEach(a =>
+      a.addEventListener('click', () => { if(MOBILE()) closeMenu(); }));
+
+    /* composedPath, not e.target. A click inside a shadow root is RETARGETED
+       by the time it reaches the document: e.target becomes the host element,
+       so nav.contains(e.target) is false for a click on the burger itself and
+       this handler closed the panel in the same tick the burger opened it.
+       The menu looked completely dead. composedPath() reports the real path
+       through the shadow tree, and in the light DOM it still contains nav, so
+       one line covers both runtimes. */
+    document.addEventListener('click', e => {
+      const path = e.composedPath ? e.composedPath() : [e.target];
+      if(path.indexOf(nav) === -1){ items.forEach(closeDrop); if(MOBILE()) closeMenu(); }
+    });
+
+    document.addEventListener('keydown', e => {
+      if(e.key !== 'Escape') return;
+      items.forEach(closeDrop);
+      if(nav.classList.contains('menu-open')){ closeMenu(); burger.focus(); }
+    });
+
+    /* Crossing the breakpoint with the phone panel open would leave a
+       stranded overlay on the desktop layout. */
+    let wasMobile = MOBILE();
+    window.addEventListener('resize', () => {
+      const now = MOBILE();
+      if(now !== wasMobile){ wasMobile = now; closeMenu(); }
+    });
+  })();
+
     /* ══ FOOTER YEAR ══
        The footer is built into this page rather than placed as its own
        element, same as the women's page. This is the only line of script it
@@ -855,6 +1319,14 @@
       var shadow = this.attachShadow({mode:'open'});
       shadow.innerHTML = '<style>'+CSS+'</style>'+HTML;
       var host = this;
+      /* THE HOST ITSELF, NOT JUST ITS ANCESTORS.
+         collapseAncestors only walks upward. If the Wix editor has given the
+         widget its own fixed height -- which it does by default, and which
+         is almost always taller than a 600-word routing page -- the element
+         keeps that height and the surplus renders as empty page background
+         under the content. Clearing it here is the difference between a
+         short page and a short page followed by a white cliff. */
+      try{ host.style.height='auto'; host.style.minHeight='0px'; }catch(e){}
       try{ boot(shadow); }catch(e){ console.error('[px] boot failed:', e); }
       requestAnimationFrame(function(){ collapseAncestors(host); });
       [400,1200,2500].forEach(function(t){ setTimeout(function(){ collapseAncestors(host); }, t); });

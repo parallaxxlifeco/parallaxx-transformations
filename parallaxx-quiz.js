@@ -25,7 +25,7 @@
    rules and the selected state — never a second CTA.
    ═══════════════════════════════════════════════════════════════════ */
 
-:root{
+:host{
   --px-navy-deep:#04122A;
   --px-navy:#061938;
   --px-navy-ink:#030C1C;
@@ -45,7 +45,10 @@
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 ::selection{background:var(--px-coral);color:#fff}
-img{display:block;max-width:100%} :host{-webkit-text-size-adjust:100%;scroll-behavior:smooth} #pq-root{
+img{display:block;max-width:100%}
+:host{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+
+#pq-root{
   background:var(--px-navy-deep);
   color:var(--px-mist);
   font-family:'Montserrat',system-ui,sans-serif;

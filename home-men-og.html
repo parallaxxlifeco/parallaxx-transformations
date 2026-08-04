@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Home Men — OG Card 1200x630</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   OG CARD - HOME MEN - 1200 x 630
+
+   HOW TO EXPORT
+     1. Open in Chrome at 100% zoom. Wait for the photo to load.
+     2. DevTools > Cmd+Shift+P > "Capture node screenshot", pick <body>.
+     3. Save as og-home-men.jpg, quality 85. Keep it under 300KB.
+     4. Upload to Wix Media, select it in the page's Social Share tab.
+
+   THE FACE IS BEHIND THE FILM, AND THAT IS THE WHOLE POINT.
+   The hero photograph is Daniel behind dirty glass, and on the page it only
+   resolves once the visitor wipes it. A share card cannot be wiped, so the
+   job here is different: show enough of a man that the link has a pulse,
+   and not so much that it becomes a coach headshot. Every other coaching
+   link in the feed is a clean smiling portrait. A half-seen face is the one
+   thing in the row that looks like it is withholding something.
+
+   THE TREATMENT, AND WHY EACH PART IS THERE
+     blur(3px)                 he is present, not identifiable at a glance
+     saturate(.42) brightness(.66)  the film SCATTERS light, so colour goes
+                               first and the whole thing sits back
+     navy gradient from left   the type never has to fight the picture
+     vertical streaks          reads as glass rather than as a bad crop
+
+   FRAMING: the face sits around 68% across. That is deliberate. WhatsApp
+   and some feeds centre-crop a 1.91:1 card toward square, which keeps
+   roughly 24% to 76% of the width. At 68% he survives that crop. Any
+   further right and he gets cut in half on a phone.
+
+   TOKENS: navy #061938, gold #E8C65F, cream #F1ECE1, coral #FF501F.
+   The May-era women's card used gold #D4B84A, which predates v4. This one
+   uses current tokens so the pair do not drift.
+   ═══════════════════════════════════════════════════════════════════ */
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1200px;height:630px;overflow:hidden}
+  body{
+    font-family:'Poppins',system-ui,sans-serif;
+    background:#061938;color:#B1BFD7;position:relative;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ── THE PHOTOGRAPH ─────────────────────────────────────────────── */
+  .shot{
+    position:absolute;inset:0;z-index:0;
+    background-image:url('https://static.wixstatic.com/media/111174_05c7360ab71a442ca1d13ffc8340bb18~mv2.jpg/v1/fill/w_1600,h_900,al_c,q_90,enc_auto/hero.jpg');
+    background-size:cover;
+    background-position:68% 38%;
+    filter:saturate(.42) brightness(.66) contrast(.96) blur(3px);
+    transform:scale(1.04);           /* hides the blur's soft edge */
+  }
+
+  /* ── THE FILM ON THE GLASS ──────────────────────────────────────── */
+  /* Cold navy wash, heaviest on the left where the type lives, thinnest
+     across his face so he stays readable as a person. */
+  .wash{
+    position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      linear-gradient(90deg,
+        #061938 0%,
+        rgba(6,25,56,.96) 30%,
+        rgba(6,25,56,.72) 52%,
+        rgba(6,25,56,.34) 74%,
+        rgba(6,25,56,.62) 100%),
+      linear-gradient(0deg, rgba(4,18,42,.72) 0%, rgba(4,18,42,0) 46%);
+  }
+  /* Vertical streaks: the smear left by a cloth. Subtle, or it reads as UI. */
+  .streaks{
+    position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.5;
+    background:repeating-linear-gradient(96deg,
+      transparent 0 38px,
+      rgba(177,191,215,.05) 38px, rgba(177,191,215,.05) 41px,
+      transparent 41px 96px);
+  }
+  /* Gold haze, low and right, so the warm side is where the face is. */
+  .haze{
+    position:absolute;z-index:2;pointer-events:none;
+    top:52%;right:-160px;transform:translateY(-50%);
+    width:820px;height:820px;border-radius:50%;
+    background:radial-gradient(circle,rgba(232,198,95,.14) 0%,transparent 66%);
+  }
+
+  /* ── BRAND ──────────────────────────────────────────────────────── */
+  .brand{
+    position:absolute;top:40px;left:56px;z-index:6;
+    display:inline-flex;flex-direction:column;gap:4px;
+    padding:13px 18px 11px;line-height:1;
+    background:rgba(6,25,56,.62);border:1px solid rgba(232,198,95,.32);
+  }
+  .brand-name{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:700;
+    letter-spacing:.18em;text-transform:uppercase;color:#F1ECE1}
+  .brand-sub{font-size:9px;font-weight:600;letter-spacing:.32em;
+    text-transform:uppercase;color:#E8C65F}
+
+  /* ── TYPE ───────────────────────────────────────────────────────── */
+  .wrap{position:relative;z-index:5;width:100%;height:100%;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:0 0 24px 56px;max-width:660px}
+
+  .kicker{font-size:12px;font-weight:700;letter-spacing:.4em;
+    text-transform:uppercase;color:#E8C65F;margin-bottom:20px}
+
+  /* Poppins 300 is the page's display weight. 300 reads as composure;
+     800 reads as a shout, and this man does not respond to being shouted at.
+     66px rather than 74 now the column shares the frame with a face. */
+  h1{font-family:'Poppins',sans-serif;font-weight:300;
+    font-size:66px;line-height:1.05;letter-spacing:-.02em;
+    color:#F1ECE1;margin-bottom:22px;
+    text-shadow:0 2px 22px rgba(4,18,42,.55)}
+  h1 em{font-style:italic;font-weight:300;color:#94A9C8}
+
+  .sub{font-size:21px;font-weight:300;line-height:1.45;color:#B1BFD7;
+    max-width:31ch;text-shadow:0 1px 14px rgba(4,18,42,.6)}
+
+  .rule{position:absolute;left:56px;right:56px;bottom:104px;z-index:5;
+    border-top:1px solid rgba(241,236,225,.14)}
+
+  .foot{position:absolute;left:56px;right:56px;bottom:52px;z-index:5;
+    display:flex;align-items:center;justify-content:space-between;
+    font-size:14px;letter-spacing:.03em}
+  .foot .who{color:#8E9BB2}
+  .foot .who b{color:#E8C65F;font-weight:600}
+  .foot .cta{color:#FF6A3D;font-weight:700;letter-spacing:.02em}
+</style>
+</head>
+<body>
+
+  <div class="shot"></div>
+  <div class="wash"></div>
+  <div class="streaks"></div>
+  <div class="haze"></div>
+
+  <div class="brand">
+    <span class="brand-name">Parallaxx</span>
+    <span class="brand-sub">Transformations</span>
+  </div>
+
+  <div class="wrap">
+    <div class="kicker">For men</div>
+    <h1>You handled it all yourself. <em>That's the distance.</em></h1>
+    <p class="sub">A husband who sorts everything. And a man she never feels.</p>
+  </div>
+
+  <div class="rule"></div>
+  <div class="foot">
+    <span class="who">with <b>Daniel Lawson</b> &middot; accredited coach, six years facilitating</span>
+    <span class="cta">parallaxxtransformations.com</span>
+  </div>
+
+</body>
+</html>

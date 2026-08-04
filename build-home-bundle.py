@@ -2,38 +2,28 @@
 """
 Build parallaxx-home.js from "Parallaxx Home.dc.html".
 
-This is the FRONT DOOR: the routing page at /, which supersedes
-"Parallaxx Home Sort.dc.html". It sends the right person to /men or /women
-and gives them a reason to trust Daniel on the way past.
-  Bundle : parallaxx-home.js
-  Tag    : parallaxx-home
-  Preview: home.html
-Its two destinations are avatar pages with builds of their own:
+This is the SORTING PAGE at the root: the shared mechanism, the two doors,
+a voice per side, and two lines on Daniel. The avatar pages it routes to are
 "Parallaxx Home Men.dc.html" and "Parallaxx Home Women.dc.html".
 
-The .dc.html is the SOURCE OF RECORD. This script converts it into the
-self-contained shadow-DOM custom element that Wix loads. Never hand-edit
-parallaxx-home.js -- it is overwritten every run.
+  Bundle : parallaxx-home.js
+  Tag    : parallaxx-home
+  Page   : parallaxxtransformations.com/
 
-    python3 build-home-bundle.py
+It carries PtNav and PtFooter baked in, same as the men's page, so Wix needs
+ONE Custom Element widget with the site header and footer OFF.
 
-HOW THIS BUILD DIFFERS FROM THE OTHER TWO, AND WHY
-No GSAP and no Lenis. The avatar pages animate on scroll and need both; this
-page has one CSS entrance and nothing else, on purpose. A routing page cannot
-have content that depends on an animation completing, and the men's page lost
-its headline twice to tweens stranded by a ScrollTrigger refresh. So there is
-no loadLibs step and boot() runs immediately rather than waiting on a CDN.
-That is worth real milliseconds on the highest-traffic URL on the site.
+WHY A BUILD STEP AT ALL
+The .dc.html runs inside Wix's Design Code runtime, where the component is
+in the light DOM. The deployed bundle runs inside a shadow root. Three
+things differ, and all three fail SILENTLY rather than throwing:
 
-WHAT STILL HAS TO BE HANDLED, same as the others
   1. document.getElementById() returns null inside a shadow root.
-  2. @font-face declared inside a shadow tree is ignored by Chrome, so fonts
-     are injected into document.head separately.
-  3. Wix wraps the element in ancestors that keep their own height, so they
-     get collapsed after mount.
+  2. GSAP resolves STRING selectors against document, so any ScrollTrigger
+     keyed to a string gets a null trigger and never scrubs.
+  3. @font-face declared inside a shadow tree is ignored by Chrome.
 
-The guards below fail the build rather than shipping any of those, and rather
-than shipping a page whose two images are still placeholders.
+The guards below fail the build rather than shipping any of those.
 """
 import re, sys, pathlib
 
@@ -42,30 +32,9 @@ SRC  = HERE / "Parallaxx Home.dc.html"
 OUT  = HERE / "parallaxx-home.js"
 
 src = SRC.read_text(encoding="utf-8")
-lines = src.split("\n")
 
 # ---- guards on the SOURCE -------------------------------------------------
-
-# THE IMAGE GUARD, and it is specific to this page. The hero portrait and the
-# full-bleed plate behind the record are both Wix Media URLs that have to be
-# pasted in after upload. A bundle shipped with the placeholders still in it
-# renders a page with a broken portrait as the first thing a cold visitor
-# sees, which is the exact opposite of what this page is for.
-# LUMIOS_MARKER_WOFF2_URL is exempt and always has been: the stack falls
-# through to Permanent Marker on purpose, so the page is correct without it.
-# Every other placeholder is a hard stop.
-SOFT = {"LUMIOS_MARKER_WOFF2_URL"}
-found = set(re.findall(r"[A-Z][A-Z0-9_]*_URL", src))
-hard = sorted(found - SOFT)
-if hard:
-    sys.exit("FAIL: image placeholder(s) still in the source: " + ", ".join(hard)
-             + ".\n      Upload to Wix Media and paste the URLs in before building."
-               "\n        DANIEL_CLEAR_JPG_URL  -> daniel-clear.jpg, the hero portrait"
-               "\n        STAGE_ROOM_JPG_URL    -> home-plate-room.jpg, the plate "
-               "behind the record")
-if found & SOFT:
-    print("note: Lumios Marker not uploaded; the hand lines fall back to "
-          "Permanent Marker. Intentional, not a failure.")
+lines = src.split("\n")
 
 def style_block(open_line_idx):
     close = next(k for k in range(open_line_idx + 1, len(lines))
@@ -77,7 +46,8 @@ if len(opens) < 2:
     sys.exit("FAIL: expected a @font-face <style> and at least one page <style>.")
 # Block 0 is the @font-face, which has to go into document.head separately.
 # EVERY other block is page CSS and gets concatenated: the page sheet, then
-# the baked-in footer.
+# the baked-in site chrome. This used to read opens[1] only, which silently
+# dropped the chrome stylesheet the moment it was added.
 FONTFACE = style_block(opens[0])
 CSS = "\n\n".join(style_block(i) for i in opens[1:])
 
@@ -86,20 +56,19 @@ h1 = next(i for i, l in enumerate(lines) if l.rstrip() == "</x-dc>")
 HTML = "\n".join(lines[h0:h1]).rstrip()
 
 # Only CSS and HTML are embedded in template literals, so only they can be
-# broken by a backtick. The JS body is emitted as raw source, where a backtick
-# inside a comment is harmless.
+# broken by a backtick. The JS body is emitted as raw source, where a
+# backtick inside a comment is harmless. Checking the whole file rejected
+# this page the moment the nav was baked in, for the word `active` in one
+# of PtNav's explanatory comments.
 for _label, _chunk in (("CSS", CSS), ("HTML", HTML)):
     if "`" in _chunk:
         sys.exit(f"FAIL: backtick inside the {_label}. It would terminate the "
                  f"template literal and destroy the block.")
     if "${" in _chunk:
         sys.exit(f"FAIL: '${{' inside the {_label} would interpolate.")
-
-# This page ships no GSAP. If a ScrollTrigger ever appears here, something has
-# been pasted in from an avatar page and the no-JS-required rule is broken.
-if "ScrollTrigger" in src or "gsap" in src:
-    sys.exit("FAIL: GSAP on the routing page. Nothing on this page may depend "
-             "on an animation completing. See the header comment.")
+if re.search(r"trigger:\s*'#", src):
+    sys.exit("FAIL: GSAP ScrollTrigger keyed to a string selector. Inside a "
+             "shadow root that resolves to null and the tween never runs.")
 
 js = src[src.index('<script type="text/x-dc"'):]
 js = js[js.index(">") + 1:js.index("</script>")]
@@ -124,7 +93,7 @@ fonts = "\n".join(
     "document.head.appendChild(f%d);" % (i, i, i, u, i)
     for i, u in enumerate(font_links))
 
-OUT.write_text("""/* PARALLAXX TRANSFORMATIONS - Home, the front door. Wix Custom Element. Tag: parallaxx-home.
+OUT.write_text("""/* PARALLAXX TRANSFORMATIONS - Home page Wix Custom Element. Tag: parallaxx-home.
    GENERATED by build-home-bundle.py from "Parallaxx Home.dc.html".
    DO NOT EDIT THIS FILE - edit the .dc.html and rerun the build.
    In the Wix editor: turn the site Header + Footer OFF for this page. */
@@ -136,29 +105,83 @@ OUT.write_text("""/* PARALLAXX TRANSFORMATIONS - Home, the front door. Wix Custo
   var HTML = `%s`;
 
   function addFonts(){
-    if (document.getElementById('px-fonts-home')) return;
+    if (document.getElementById('px-fonts')) return;
     var p1=document.createElement('link'); p1.rel='preconnect'; p1.href='https://fonts.googleapis.com'; document.head.appendChild(p1);
     var p2=document.createElement('link'); p2.rel='preconnect'; p2.href='https://fonts.gstatic.com'; p2.crossOrigin=''; document.head.appendChild(p2);
 %s
     /* @font-face has to live in the DOCUMENT, not the shadow root. Chrome
        ignores font-face rules declared inside a shadow tree. */
-    var ff=document.createElement('style'); ff.id='px-fonts-home'; ff.textContent=`%s`; document.head.appendChild(ff);
+    var ff=document.createElement('style'); ff.id='px-fonts'; ff.textContent=`%s`; document.head.appendChild(ff);
   }
 
-  /* NO loadLibs(). This page ships no GSAP and no Lenis, so boot() runs
-     immediately instead of waiting on two CDN round trips. Every word is
-     already visible before any script runs. */
+  function loadScript(src){
+    return new Promise(function(res,rej){
+      var ex=document.querySelector('script[data-px="'+src+'"]');
+      if(ex){ if(ex.getAttribute('data-loaded')){res();} else { ex.addEventListener('load',function(){res();}); ex.addEventListener('error',rej);} return; }
+      var s=document.createElement('script'); s.src=src; s.async=false; s.setAttribute('data-px',src);
+      s.addEventListener('load',function(){ s.setAttribute('data-loaded','1'); res(); });
+      s.addEventListener('error',rej);
+      document.head.appendChild(s);
+    });
+  }
 
-  /* This rewrites ancestor heights, which moves every scroll position on the
-     page. Returns whether it actually changed anything so the caller can
-     avoid doing it for nothing. */
+  function loadLibs(){
+    var g=loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js')
+      .then(function(){ return loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js'); });
+    var l=loadScript('https://unpkg.com/lenis@1.1.13/dist/lenis.min.js');
+    return Promise.all([ g.catch(function(){}), l.catch(function(){}) ]);
+  }
+
+  /* ══════════════ ANCESTOR COLLAPSE ══════════════
+     Wix wraps a custom element in containers with fixed heights, so the page
+     renders inside a short box with its own scrollbar. This walks up and
+     releases them.
+
+     IT MUST ONLY EVER RUN ONCE PER ELEMENT. The first version re-ran on
+     every resize and called ScrollTrigger.refresh() whenever it changed
+     anything. If Wix re-applied its own height after we set auto -- which it
+     does -- "changed" was true on every pass, so:
+         resize -> collapse -> refresh -> layout mutates -> resize -> ...
+     That loop grew the document until Chrome clamped it at 2^24, which is
+     16,777,216px of empty scroll. A WeakSet makes each element a one-shot,
+     which is enough on its own to break the cycle.
+
+     Three further belts, because a runaway here is invisible in the editor
+     and catastrophic on the live page:
+       - resize is debounced, so a drag is one pass and not sixty
+       - refreshes are capped
+       - a sanity check bails out entirely if the document is already absurd,
+         so a loop that starts for some other reason cannot be fed by us
+     ══════════════════════════════════════════════ */
+  var PX_SANE_MAX = 200000;              // taller than any real page here
+  var pxCollapsed = new WeakSet();
+  var pxRefreshes = 0;
+
   function collapseAncestors(host){
     var changed = false;
-    try{ var h=host.getBoundingClientRect().height; if(h<50) return false;
-      var n=host.parentElement,guard=0;
-      while(n && n!==document.body && guard++<14){ if(n.getBoundingClientRect().height>h+600){ n.style.height='auto'; n.style.minHeight='0px'; changed = true; } n=n.parentElement; }
+    try{
+      if (document.documentElement.scrollHeight > PX_SANE_MAX) return false;
+      var h = host.getBoundingClientRect().height;
+      if (h < 50) return false;
+      var n = host.parentElement, guard = 0;
+      while(n && n !== document.body && guard++ < 14){
+        if(!pxCollapsed.has(n) && n.getBoundingClientRect().height > h + 600){
+          pxCollapsed.add(n);            // one shot, whatever Wix does next
+          n.style.height = 'auto';
+          n.style.minHeight = '0px';
+          changed = true;
+        }
+        n = n.parentElement;
+      }
     }catch(e){}
     return changed;
+  }
+
+  function collapseAndRefresh(host){
+    if (!collapseAncestors(host)) return;
+    if (pxRefreshes >= 4) return;
+    pxRefreshes++;
+    if (window.ScrollTrigger) { try{ window.ScrollTrigger.refresh(); }catch(e){} }
   }
 
   function boot(root){
@@ -174,17 +197,21 @@ OUT.write_text("""/* PARALLAXX TRANSFORMATIONS - Home, the front door. Wix Custo
       shadow.innerHTML = '<style>'+CSS+'</style>'+HTML;
       var host = this;
       /* THE HOST ITSELF, NOT JUST ITS ANCESTORS.
-         collapseAncestors only walks upward. If the Wix editor has given the
-         widget its own fixed height -- which it does by default, and which
-         is almost always taller than a 600-word routing page -- the element
-         keeps that height and the surplus renders as empty page background
+         collapseAndRefresh only walks upward. If the Wix editor has given
+         the widget its own fixed height -- which it does by default -- the
+         element keeps it and the surplus renders as empty page background
          under the content. Clearing it here is the difference between a
-         short page and a short page followed by a white cliff. */
+         page and a page followed by a white cliff. Added 4 Aug 2026. */
       try{ host.style.height='auto'; host.style.minHeight='0px'; }catch(e){}
-      try{ boot(shadow); }catch(e){ console.error('[px] boot failed:', e); }
-      requestAnimationFrame(function(){ collapseAncestors(host); });
-      [400,1200,2500].forEach(function(t){ setTimeout(function(){ collapseAncestors(host); }, t); });
-      window.addEventListener('resize', function(){ collapseAncestors(host); }, {passive:true});
+      loadLibs().then(function(){ try{ boot(shadow); }catch(e){ console.error('[px] boot failed:', e); } })
+        .catch(function(){ try{ boot(shadow); }catch(e){} });
+      requestAnimationFrame(function(){ collapseAndRefresh(host); });
+      [400,1200,2500].forEach(function(t){ setTimeout(function(){ collapseAndRefresh(host); }, t); });
+      var pxRT;
+      window.addEventListener('resize', function(){
+        clearTimeout(pxRT);
+        pxRT = setTimeout(function(){ collapseAndRefresh(host); }, 250);
+      }, {passive:true});
     }
   }
   customElements.define('parallaxx-home', ParallaxxHome);

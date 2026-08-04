@@ -1393,7 +1393,7 @@
            A qualifier that filters PEOPLE OUT is what makes the ones left
            feel found. -->
       <p class="px-fade" style="font-size:.78rem;line-height:1.6;color:#7C89A3;margin-top:16px;max-width:48ch">
-        Married. Years in. Still care about her.
+        Relationship. Years in. Care about her.
       </p>
     </div>
   </div>
@@ -1674,8 +1674,8 @@
       <p class="px-fade" style="font-size:1.08rem;line-height:1.75;color:#C4CEE0;margin-bottom:30px;max-width:60ch;margin-left:auto;margin-right:auto">
         You'll have a suspicion which one is yours. Confirm it, because the full profile goes further than you'd expect. Two minutes to find out which one you're running, where you learned it, and why things are the way they are at home.
       </p>
-      <a class="px-btn px-fade" href="https://www.parallaxxtransformations.com/reconnect">Find out which one is yours <span>→</span></a>
-      <p class="px-fade" style="font-size:.84rem;color:#5E6B85;margin-top:14px">2 minutes. Answer's on the screen. Nothing lands in your inbox.</p>
+      <a class="px-btn px-fade" href="https://www.parallaxxtransformations.com/the-archetype-quiz">Find out which one is yours <span>→</span></a>
+      <p class="px-fade" style="font-size:.84rem;color:#5E6B85;margin-top:14px">2 minutes. Your answer is on the screen at the end.</p>
     </div>
 
   </div>
@@ -2030,7 +2030,7 @@
     <p class="px-fade" style="font-size:1.02rem;line-height:1.75;color:#5E5850;margin:0 auto 28px;max-width:52ch">
       Which one you're running, where you learned it, and why things are the way they are at home.
     </p>
-    <a class="px-btn px-fade" href="https://www.parallaxxtransformations.com/reconnect">Find out which one is yours <span>&#8594;</span></a>
+    <a class="px-btn px-fade" href="https://www.parallaxxtransformations.com/the-archetype-quiz">Find out which one is yours <span>&#8594;</span></a>
     <p class="px-fade" style="font-size:.84rem;color:#6E655B;margin-top:14px">2 minutes. Answer's on the screen.</p>
   </div>
 </section>

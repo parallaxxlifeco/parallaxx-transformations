@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Protection Archetype Quiz — preview</title>
+<style>
+  html,body{margin:0;padding:0;background:#04122A}
+  /* Preview harness only. In Wix: ONE Custom Element widget on
+     /the-archetype-quiz, Source URL = parallaxx-quiz.js, Tag = parallaxx-quiz,
+     site header and footer OFF. The quiz carries its own stripped-back header
+     on purpose: a quiz page wants fewer exits, not more. */
+  parallaxx-quiz{display:block}
+</style>
+</head>
+<body>
+  <parallaxx-quiz></parallaxx-quiz>
+  <!-- Bump ?v= on every deploy. It busts the CDN and browser cache. -->
+  <script src="./parallaxx-quiz.js?v=20260804a"></script>
+</body>
+</html>

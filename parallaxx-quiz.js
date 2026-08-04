@@ -120,15 +120,15 @@ strong,b{color:var(--px-cream);font-weight:600}
 .px-progress-bar{height:3px;background:var(--px-line);border-radius:99px;overflow:hidden}
 .px-progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--px-gold-lift),var(--px-gold));border-radius:99px;transition:width .45s cubic-bezier(.16,1,.3,1)}
 
-.px-q{max-width:820px;margin:0 auto;width:100%}
-.px-q h2{font-size:clamp(1.35rem,3.1vw,2.05rem);margin-bottom:8px}
+.px-q{max-width:720px;margin:0 auto;width:100%}
+.px-q h2{font-size:clamp(1.2rem,2.4vw,1.6rem);margin-bottom:8px;line-height:1.25}
 .px-q .px-prompt{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--px-slate);font-weight:600;margin-bottom:34px}
 
-.px-options{display:flex;flex-direction:column;gap:10px;margin-top:30px}
-.px-opt{display:flex;align-items:center;gap:16px;width:100%;text-align:left;background:rgba(18,35,63,.42);border:1px solid var(--px-line);border-radius:14px;padding:17px 20px;color:var(--px-mist);font-family:inherit;font-size:1rem;font-weight:500;cursor:pointer;transition:border-color .22s,background .22s,transform .22s,color .22s}
+.px-options{display:flex;flex-direction:column;gap:9px;margin-top:22px}
+.px-opt{display:flex;align-items:center;gap:16px;width:100%;text-align:left;background:rgba(18,35,63,.42);border:1px solid var(--px-line);border-radius:12px;padding:13px 18px;color:var(--px-mist);font-family:inherit;font-size:.95rem;font-weight:500;cursor:pointer;transition:border-color .22s,background .22s,transform .22s,color .22s}
 .px-opt:hover{border-color:rgba(232,198,95,.55);background:rgba(18,35,63,.78);transform:translateX(3px);color:var(--px-cream)}
 .px-opt:focus-visible{outline:2px solid var(--px-gold);outline-offset:3px}
-.px-opt .n{flex:0 0 auto;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--px-line);font-family:'Poppins',sans-serif;font-size:.82rem;color:var(--px-slate);transition:all .22s}
+.px-opt .n{flex:0 0 auto;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--px-line);font-family:'Poppins',sans-serif;font-size:.78rem;color:var(--px-slate);transition:all .22s}
 .px-opt:hover .n{border-color:var(--px-gold);color:var(--px-gold)}
 .px-opt.is-picked{border-color:var(--px-gold);background:rgba(232,198,95,.09);color:var(--px-cream)}
 .px-opt.is-picked .n{background:var(--px-gold);border-color:var(--px-gold);color:var(--px-navy-ink);font-weight:700}

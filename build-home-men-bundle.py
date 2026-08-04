@@ -137,25 +137,56 @@ OUT.write_text("""/* PARALLAXX TRANSFORMATIONS - Home page Wix Custom Element. T
     return Promise.all([ g.catch(function(){}), l.catch(function(){}) ]);
   }
 
-  /* This rewrites ancestor heights, which moves every scroll position on the
-     page. ScrollTrigger has already cached those positions, so without a
-     refresh afterwards its triggers fire at the wrong offsets. Returns
-     whether it actually changed anything so the caller can avoid refreshing
-     for nothing. */
+  /* ══════════════ ANCESTOR COLLAPSE ══════════════
+     Wix wraps a custom element in containers with fixed heights, so the page
+     renders inside a short box with its own scrollbar. This walks up and
+     releases them.
+
+     IT MUST ONLY EVER RUN ONCE PER ELEMENT. The first version re-ran on
+     every resize and called ScrollTrigger.refresh() whenever it changed
+     anything. If Wix re-applied its own height after we set auto -- which it
+     does -- "changed" was true on every pass, so:
+         resize -> collapse -> refresh -> layout mutates -> resize -> ...
+     That loop grew the document until Chrome clamped it at 2^24, which is
+     16,777,216px of empty scroll. A WeakSet makes each element a one-shot,
+     which is enough on its own to break the cycle.
+
+     Three further belts, because a runaway here is invisible in the editor
+     and catastrophic on the live page:
+       - resize is debounced, so a drag is one pass and not sixty
+       - refreshes are capped
+       - a sanity check bails out entirely if the document is already absurd,
+         so a loop that starts for some other reason cannot be fed by us
+     ══════════════════════════════════════════════ */
+  var PX_SANE_MAX = 200000;              // taller than any real page here
+  var pxCollapsed = new WeakSet();
+  var pxRefreshes = 0;
+
   function collapseAncestors(host){
     var changed = false;
-    try{ var h=host.getBoundingClientRect().height; if(h<50) return false;
-      var n=host.parentElement,guard=0;
-      while(n && n!==document.body && guard++<14){ if(n.getBoundingClientRect().height>h+600){ n.style.height='auto'; n.style.minHeight='0px'; changed = true; } n=n.parentElement; }
+    try{
+      if (document.documentElement.scrollHeight > PX_SANE_MAX) return false;
+      var h = host.getBoundingClientRect().height;
+      if (h < 50) return false;
+      var n = host.parentElement, guard = 0;
+      while(n && n !== document.body && guard++ < 14){
+        if(!pxCollapsed.has(n) && n.getBoundingClientRect().height > h + 600){
+          pxCollapsed.add(n);            // one shot, whatever Wix does next
+          n.style.height = 'auto';
+          n.style.minHeight = '0px';
+          changed = true;
+        }
+        n = n.parentElement;
+      }
     }catch(e){}
     return changed;
   }
 
   function collapseAndRefresh(host){
-    var changed = collapseAncestors(host);
-    if (changed && window.ScrollTrigger) {
-      try{ window.ScrollTrigger.refresh(); }catch(e){}
-    }
+    if (!collapseAncestors(host)) return;
+    if (pxRefreshes >= 4) return;
+    pxRefreshes++;
+    if (window.ScrollTrigger) { try{ window.ScrollTrigger.refresh(); }catch(e){} }
   }
 
   function boot(root){
@@ -181,7 +212,11 @@ OUT.write_text("""/* PARALLAXX TRANSFORMATIONS - Home page Wix Custom Element. T
         .catch(function(){ try{ boot(shadow); }catch(e){} });
       requestAnimationFrame(function(){ collapseAndRefresh(host); });
       [400,1200,2500].forEach(function(t){ setTimeout(function(){ collapseAndRefresh(host); }, t); });
-      window.addEventListener('resize', function(){ collapseAndRefresh(host); }, {passive:true});
+      var pxRT;
+      window.addEventListener('resize', function(){
+        clearTimeout(pxRT);
+        pxRT = setTimeout(function(){ collapseAndRefresh(host); }, 250);
+      }, {passive:true});
     }
   }
   customElements.define('parallaxx-home-men', ParallaxxHomeMen);

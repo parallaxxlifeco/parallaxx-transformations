@@ -6,15 +6,20 @@
 <title>Parallaxx Transformations — Men (preview)</title>
 <style>
   html,body{margin:0;padding:0;background:#04122A}
-  /* Preview harness only. In Wix this element is placed via a Custom Element
-     widget (Source URL = parallaxx-home-men.js, Tag = parallaxx-home-men)
-     with the site Header + Footer turned OFF. */
-  parallaxx-home-men{display:block}
+  /* Preview harness only. In Wix each of these three is its own Custom
+     Element widget, stacked in this order, with the SITE header and footer
+     turned OFF for the page. The order matters: the nav is position:fixed
+     and the footer expects to sit directly under the last section. */
+  parallaxx-nav,parallaxx-home-men,parallaxx-footer{display:block}
 </style>
 </head>
 <body>
+  <parallaxx-nav></parallaxx-nav>
   <parallaxx-home-men></parallaxx-home-men>
+  <parallaxx-footer></parallaxx-footer>
   <!-- Version query busts the CDN and browser cache. Bump on every deploy. -->
-  <script src="./parallaxx-home-men.js?v=20260802a"></script>
+  <script src="./parallaxx-nav.js?v=20260804a"></script>
+  <script src="./parallaxx-home-men.js?v=20260804a"></script>
+  <script src="./parallaxx-footer.js?v=20260804a"></script>
 </body>
 </html>

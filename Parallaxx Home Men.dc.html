@@ -1574,11 +1574,17 @@
     <!-- "1000+ lives already changed" is the number he actually runs on his own
          banner. Use his number, not a vaguer one I invented. And the countries
          are now NAMED by the testimonials above -- Sweden, Bulgaria, USA -- so
-         "7 countries" stops being a claim and starts being a receipt. -->
+         the countries number stops being a claim and starts being a receipt.
+
+         NUMBERS CORRECTED 3 Aug 2026. This page carried 7 countries and 5+
+         years while the women's page carried 9 and 6+, so the same strip
+         contradicted itself across the site. Daniel ruled 6+ / 9. Do not
+         change one of these three without changing the other two: Parallaxx
+         Home Men, Parallaxx Home Women, Parallaxx Home. -->
     <div id="px-stats" style="display:flex;align-items:center;justify-content:center;gap:clamp(18px,3vw,40px);flex-wrap:wrap;margin-top:22px;font-size:.85rem;color:#5E6B85">
       <span><strong style="color:#B1BFD7">1000+</strong> lives changed</span>
-      <span><strong style="color:#B1BFD7">7</strong> countries</span>
-      <span><strong style="color:#B1BFD7">5+</strong> years facilitating</span>
+      <span><strong style="color:#B1BFD7">9</strong> countries</span>
+      <span><strong style="color:#B1BFD7">6+</strong> years facilitating</span>
     </div>
   </div>
 </section>
@@ -2708,5 +2714,34 @@ class Component extends DCLogic {
   renderVals(){ return {}; }
 }
 </script>
+<!-- ══════════════════════════════════════════════════════════════════════
+     DEPLOYMENT
+     Ship as a Wix CUSTOM ELEMENT, not an HTML embed:
+       Source URL = parallaxx-home-men.js
+       Tag        = parallaxx-home-men
+       Site header + footer = OFF
+
+     Place the chrome as its own custom elements, above and below:
+       PtNav v3     -> parallaxx-nav.js     tag: parallaxx-nav
+       PtFooter v3  -> parallaxx-footer.js  tag: parallaxx-footer
+
+       <parallaxx-nav></parallaxx-nav>
+       <parallaxx-home-men></parallaxx-home-men>
+       <parallaxx-footer></parallaxx-footer>
+
+     NO active PROP IS NEEDED. PtNav v3 works out where it is from the URL,
+     because the nav lives ONCE in the site header strip and serves every
+     page from a single instance. Its table maps /men and
+     /the-reconnected-man to the "men" item. The active attribute only
+     exists as a manual override for the Wix editor preview.
+
+     THE SEAM. This page closes on the credentials strip at #061938 and
+     PtFooter v3 opens at #030C1C, so the footer reads as a step DOWN into
+     darker navy rather than merging. Check this seam before publishing:
+     it is the one join no page preview could show until the chrome was
+     bundled, because the .dc.html files could only ever be placed in Wix.
+
+     Bump the ?v= query on every deploy -- it busts the CDN and browser cache.
+     ══════════════════════════════════════════════════════════════════════ -->
 </body>
 </html>

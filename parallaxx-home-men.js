@@ -1553,11 +1553,17 @@
     <!-- "1000+ lives already changed" is the number he actually runs on his own
          banner. Use his number, not a vaguer one I invented. And the countries
          are now NAMED by the testimonials above -- Sweden, Bulgaria, USA -- so
-         "7 countries" stops being a claim and starts being a receipt. -->
+         the countries number stops being a claim and starts being a receipt.
+
+         NUMBERS CORRECTED 3 Aug 2026. This page carried 7 countries and 5+
+         years while the women's page carried 9 and 6+, so the same strip
+         contradicted itself across the site. Daniel ruled 6+ / 9. Do not
+         change one of these three without changing the other two: Parallaxx
+         Home Men, Parallaxx Home Women, Parallaxx Home. -->
     <div id="px-stats" style="display:flex;align-items:center;justify-content:center;gap:clamp(18px,3vw,40px);flex-wrap:wrap;margin-top:22px;font-size:.85rem;color:#5E6B85">
       <span><strong style="color:#B1BFD7">1000+</strong> lives changed</span>
-      <span><strong style="color:#B1BFD7">7</strong> countries</span>
-      <span><strong style="color:#B1BFD7">5+</strong> years facilitating</span>
+      <span><strong style="color:#B1BFD7">9</strong> countries</span>
+      <span><strong style="color:#B1BFD7">6+</strong> years facilitating</span>
     </div>
   </div>
 </section>

@@ -39,18 +39,6 @@ OUT  = HERE / "parallaxx-home-men.js"
 src = SRC.read_text(encoding="utf-8")
 
 # ---- guards on the SOURCE -------------------------------------------------
-if "`" in src:
-    bad = [i + 1 for i, l in enumerate(src.split("\n")) if "`" in l]
-    sys.exit(f"FAIL: backtick in source (lines {bad}). CSS and HTML are embedded "
-             f"in template literals; a backtick terminates them and silently "
-             f"destroys the stylesheet. Use single quotes.")
-if "${" in src:
-    sys.exit("FAIL: '${' in source would interpolate inside the template literal.")
-if re.search(r"trigger:\s*'#", src):
-    sys.exit("FAIL: GSAP ScrollTrigger keyed to a string selector. Inside a "
-             "shadow root that resolves to null and the tween never runs. "
-             "Use document.getElementById('...') so the converter rewrites it.")
-
 lines = src.split("\n")
 
 def style_block(open_line_idx):
@@ -60,12 +48,32 @@ def style_block(open_line_idx):
 
 opens = [i for i, l in enumerate(lines) if l.strip() == "<style>"]
 if len(opens) < 2:
-    sys.exit("FAIL: expected a @font-face <style> and a main <style> in the helmet.")
-FONTFACE, CSS = style_block(opens[0]), style_block(opens[1])
+    sys.exit("FAIL: expected a @font-face <style> and at least one page <style>.")
+# Block 0 is the @font-face, which has to go into document.head separately.
+# EVERY other block is page CSS and gets concatenated: the page sheet, then
+# the baked-in site chrome. This used to read opens[1] only, which silently
+# dropped the chrome stylesheet the moment it was added.
+FONTFACE = style_block(opens[0])
+CSS = "\n\n".join(style_block(i) for i in opens[1:])
 
 h0 = next(i for i, l in enumerate(lines) if l.startswith('<div id="px-root">'))
 h1 = next(i for i, l in enumerate(lines) if l.rstrip() == "</x-dc>")
 HTML = "\n".join(lines[h0:h1]).rstrip()
+
+# Only CSS and HTML are embedded in template literals, so only they can be
+# broken by a backtick. The JS body is emitted as raw source, where a
+# backtick inside a comment is harmless. Checking the whole file rejected
+# this page the moment the nav was baked in, for the word `active` in one
+# of PtNav's explanatory comments.
+for _label, _chunk in (("CSS", CSS), ("HTML", HTML)):
+    if "`" in _chunk:
+        sys.exit(f"FAIL: backtick inside the {_label}. It would terminate the "
+                 f"template literal and destroy the block.")
+    if "${" in _chunk:
+        sys.exit(f"FAIL: '${{' inside the {_label} would interpolate.")
+if re.search(r"trigger:\s*'#", src):
+    sys.exit("FAIL: GSAP ScrollTrigger keyed to a string selector. Inside a "
+             "shadow root that resolves to null and the tween never runs.")
 
 js = src[src.index('<script type="text/x-dc"'):]
 js = js[js.index(">") + 1:js.index("</script>")]

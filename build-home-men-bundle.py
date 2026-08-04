@@ -170,6 +170,13 @@ OUT.write_text("""/* PARALLAXX TRANSFORMATIONS - Home page Wix Custom Element. T
       var shadow = this.attachShadow({mode:'open'});
       shadow.innerHTML = '<style>'+CSS+'</style>'+HTML;
       var host = this;
+      /* THE HOST ITSELF, NOT JUST ITS ANCESTORS.
+         collapseAndRefresh only walks upward. If the Wix editor has given
+         the widget its own fixed height -- which it does by default -- the
+         element keeps it and the surplus renders as empty page background
+         under the content. Clearing it here is the difference between a
+         page and a page followed by a white cliff. Added 4 Aug 2026. */
+      try{ host.style.height='auto'; host.style.minHeight='0px'; }catch(e){}
       loadLibs().then(function(){ try{ boot(shadow); }catch(e){ console.error('[px] boot failed:', e); } })
         .catch(function(){ try{ boot(shadow); }catch(e){} });
       requestAnimationFrame(function(){ collapseAndRefresh(host); });

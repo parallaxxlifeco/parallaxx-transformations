@@ -58,6 +58,23 @@
   ::selection{background:#FF501F;color:#fff}
   img{display:block;max-width:100%}
 
+  /* ══ THE HOST ═════════════════════════════════════════════════════
+     A custom element is display:inline by default. Inline means no block
+     box, a baseline to sit on, and a wrapper free to size itself wrong --
+     which is what leaves a band of PAGE background under the component.
+     On a Wix page that band is white.
+
+     Both declarations matter. display:block fixes the box. The background
+     means that if anything ever does leave a gap, the gap is navy and
+     invisible rather than a white cliff at the foot of the site.
+
+     This never showed up in preview because the harnesses set display on
+     the tag from OUTSIDE. The harness was quietly fixing it and Wix was
+     not, so it belongs in here, where it ships. Added 4 Aug 2026 to all
+     three pages at once. #04122A, matching #px-root on this page.
+     ══════════════════════════════════════════════════════════════════ */
+  :host{display:block;background:#04122A}
+
   #px-root{background:#04122A;color:#B1BFD7;font-family:'Montserrat',system-ui,sans-serif;font-size:16px;line-height:1.7;overflow-x:clip;position:relative}
   /* DISPLAY FACE. Was Cormorant Garamond at weight 300 with negative tracking --
      settings that flatter a high-contrast serif and gut a geometric sans.
@@ -4356,6 +4373,13 @@
       var shadow = this.attachShadow({mode:'open'});
       shadow.innerHTML = '<style>'+CSS+'</style>'+HTML;
       var host = this;
+      /* THE HOST ITSELF, NOT JUST ITS ANCESTORS.
+         collapseAndRefresh only walks upward. If the Wix editor has given
+         the widget its own fixed height -- which it does by default -- the
+         element keeps it and the surplus renders as empty page background
+         under the content. Clearing it here is the difference between a
+         page and a page followed by a white cliff. Added 4 Aug 2026. */
+      try{ host.style.height='auto'; host.style.minHeight='0px'; }catch(e){}
       loadLibs().then(function(){ try{ boot(shadow); }catch(e){ console.error('[px] boot failed:', e); } })
         .catch(function(){ try{ boot(shadow); }catch(e){} });
       requestAnimationFrame(function(){ collapseAndRefresh(host); });

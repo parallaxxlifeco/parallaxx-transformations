@@ -13,7 +13,7 @@
 (function(){
   if (customElements.get('parallaxx-quiz')) return;
 
-  var CSS = `
+  var CSS = `:host{display:block}
 /* ═══════════════════════════════════════════════════════════════════
    PARALLAXX TRANSFORMATIONS — PROTECTION ARCHETYPE QUIZ
    Design tokens lifted verbatim from the new home page (Parallaxx Home Men.dc.html).
@@ -45,10 +45,7 @@
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 ::selection{background:var(--px-coral);color:#fff}
-img{display:block;max-width:100%}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-
-body{
+img{display:block;max-width:100%} :host{-webkit-text-size-adjust:100%;scroll-behavior:smooth} #pq-root{
   background:var(--px-navy-deep);
   color:var(--px-mist);
   font-family:'Montserrat',system-ui,sans-serif;

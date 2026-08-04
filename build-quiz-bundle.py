@@ -56,6 +56,23 @@ for label, chunk in (("CSS", CSS), ("HTML", HTML)):
     if "${" in chunk:
         sys.exit(f"FAIL: '${{' inside the {label} would interpolate.")
 
+# ---- SHADOW ROOT: :root and body match NOTHING in here ---------------------
+# This is the fault that rendered the quiz as black text on navy. The source
+# defines fifteen custom properties on :root, but a shadow tree has no html
+# element, so :root matches nothing, every var() falls back to initial, and
+# every colour collapses to black. body{} and html{} are dead in there for
+# the same reason. :host IS the element, so the properties land there and
+# inherit down; the page background and type move onto the #pq-root wrapper.
+_css_before = CSS
+CSS = re.sub(r"(^|\})\s*:root\s*\{", r"\1 :host{", CSS)
+CSS = re.sub(r"(^|\})\s*html\s*,\s*body\s*\{", r"\1 :host,#pq-root{", CSS)
+CSS = re.sub(r"(^|\})\s*html\s*\{", r"\1 :host{", CSS)
+CSS = re.sub(r"(^|\})\s*body\s*\{", r"\1 #pq-root{", CSS)
+if CSS == _css_before:
+    sys.exit("FAIL: no :root/body/html rule was remapped.")
+if re.search(r"(^|\})\s*(:root|body|html)\s*[,{]", CSS):
+    sys.exit("FAIL: a :root, body or html selector survived the remap.")
+CSS = ":host{display:block}" + CSS
 # ---- enc_avif is banned across this project --------------------------------
 # AVIF can silently fail as a WebGL texture, and one encoder everywhere means
 # one less variable when an image does not appear. The logo carried it.

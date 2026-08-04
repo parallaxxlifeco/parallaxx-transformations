@@ -94,8 +94,13 @@ strong,b{color:var(--px-cream);font-weight:600}
 /* ── Intro ──────────────────────────────────────────────────────── */
 #view-intro{justify-content:center;padding:clamp(46px,8vw,96px) 0}
 .px-intro{text-align:center}
-.px-intro h1{font-size:clamp(1.8rem,3.9vw,2.85rem);margin:22px auto 0;max-width:24ch}
-.px-intro .px-word{display:block;color:var(--px-gold);font-weight:600;letter-spacing:.02em;font-size:clamp(2.2rem,6vw,4rem);margin-top:.18em}
+/* 24ch on an 88 character sentence is four or five lines of display type,
+   which reads as a wall before he has agreed to anything. Smaller face,
+   much wider measure: the same words land in two or three lines and the
+   gold PROTECTION underneath keeps the emphasis. balance evens the rag. */
+  .px-intro h1{font-size:clamp(1.3rem,2.4vw,1.9rem);margin:20px auto 0;
+    max-width:44ch;line-height:1.3;text-wrap:balance}
+.px-intro .px-word{display:block;color:var(--px-gold);font-weight:600;letter-spacing:.02em;font-size:clamp(1.9rem,4.6vw,3.1rem);margin-top:.3em}
 .px-intro p{margin:26px auto 0;max-width:60ch;font-size:1.02rem}
 .px-intro .px-cta-row{margin-top:40px;display:flex;flex-direction:column;align-items:center;gap:16px}
 .px-meta{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--px-slate);font-weight:600}

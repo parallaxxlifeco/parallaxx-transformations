@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parallaxx Transformations — Home (preview)</title>
+<style>
+  html,body{margin:0;padding:0;background:#061938}
+  /* Preview harness only. The footer is BAKED INTO the page bundle, same as
+     the two avatar pages, so Wix needs ONE Custom Element widget rather than
+     three. Site header and footer still go OFF. */
+  parallaxx-home{display:block}
+</style>
+</head>
+<body>
+  <parallaxx-home></parallaxx-home>
+  <!-- Version query busts the CDN and browser cache. Bump on every deploy. -->
+  <script src="./parallaxx-home.js?v=20260804a"></script>
+</body>
+</html>

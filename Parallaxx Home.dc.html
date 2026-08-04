@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+/* LUMIOS MARKER is not on Google Fonts. Upload the .woff2 to Wix Media and drop
+   the URL in below. Until then the stack falls through to Permanent Marker. */
+@font-face{font-family:'Lumios Marker';font-display:swap;
+  src:url('LUMIOS_MARKER_WOFF2_URL') format('woff2');}
+</style>
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   PARALLAXX - HOME
+   Supersedes Parallaxx Home Sort.dc.html
+   -------------------------------------------------------------------
+   ONE JOB: get the right person to /men or /women in under fifteen
+   seconds, and give them a reason to trust Daniel on the way past.
+   It is not a sales page and it must not behave like one.
+
+   SIX BLOCKS.
+     01 FRAME     what this is, who runs it, what to do. His face.
+     02 DOORS     situation is the heading. the tag is small.
+     03 SHARED    the deletion. the only general sentence allowed.
+     04 DANIEL    the record, stated flat. no origin story.
+     05 ELSE      one quiet row for everybody who is neither.
+     06 CLOSE     the doors again. nothing new.
+     -- FOOTER    PtFooter v3, built in rather than placed. See below.
+
+   ───────────────────────────────────────────────────────────────────
+   WHY THERE IS NO GLASS ON THIS PAGE
+   The glass metaphor needs to know whose life it is sitting in front
+   of. At second three we do not know. So this page is Daniel straight
+   on with nothing in the way, and the glass starts the moment they
+   walk through a door. The portrait carries NO CAPTION: "no glass
+   between us" belongs to the men's page and anything written to
+   replace it was decorating a photograph that already speaks.
+
+   ───────────────────────────────────────────────────────────────────
+   WHY ONLY ONE SENTENCE ON THIS PAGE IS ALLOWED TO BE GENERAL
+   Every other page is aimed at one person so hard that a blended
+   sentence would break it. Block 03 is the exception: the deletion is
+   the one mechanism with named sources on both sides. The COSTUME is
+   not, and it is deliberately absent. See HOME PAGE - Copy.md 01.
+
+   ───────────────────────────────────────────────────────────────────
+   NO JAVASCRIPT IS REQUIRED TO SEE ANY CONTENT.
+   A routing page cannot have content that depends on an animation
+   completing. Everything here is visible with scripting off; the
+   entrance is a CSS animation that starts from the visible state.
+
+   ───────────────────────────────────────────────────────────────────
+   TOKENS shared with GIVE IT ALL:  navy #061938 gold #E8C65F Montserrat
+   TOKENS Parallaxx only:  coral #FF501F  Poppins  Lumios Marker  cream #F1ECE1
+
+   THE ACCENT RULE. GOLD IS DANIEL. CORAL IS YOU.
+   ═══════════════════════════════════════════════════════════════════ */
+
+  *{box-sizing:border-box}
+  #px-root{background:#061938;color:#F1ECE1;
+    font-family:'Montserrat',system-ui,-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden}
+  #px-root h1,#px-root h2,#px-root h3,#px-root h4,#px-root p{margin:0}
+  #px-root h1,#px-root h2,#px-root h3{text-wrap:balance}
+  #px-root p{text-wrap:pretty}
+  .px-serif{font-family:'Poppins','Montserrat',sans-serif;font-weight:300;letter-spacing:-.018em}
+  .px-hand{font-family:'Lumios Marker','Permanent Marker',cursive;font-weight:400}
+  .px-sec{padding:clamp(44px,5.5vw,78px) clamp(20px,4vw,52px);position:relative}
+  .px-wrap{max-width:1080px;margin:0 auto}
+
+  @keyframes px-rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  .px-rise{animation:px-rise .7s cubic-bezier(.22,.61,.36,1) both}
+  .px-d1{animation-delay:.05s}.px-d2{animation-delay:.16s}
+  .px-d3{animation-delay:.27s}.px-d4{animation-delay:.38s}
+  @media(prefers-reduced-motion:reduce){.px-rise{animation:none}}
+
+/* ═══ 01 · THE FRAME ══════════════════════════════════════════════ */
+/* Two columns on desktop, portrait first on mobile. The portrait is
+   NOT decorative: 46% of credibility judgements are made on visual
+   design alone, and the page it replaces had no human on it at all. */
+  #px-top{padding-top:clamp(40px,7vw,86px)}
+  #px-top .grid{display:grid;grid-template-columns:1.05fr .95fr;
+    gap:clamp(26px,4vw,58px);align-items:center;max-width:1080px;margin:0 auto}
+  @media(max-width:820px){#px-top .grid{grid-template-columns:1fr;gap:26px}}
+  #px-top .eyebrow{font-size:clamp(15px,3.2vw,20px);color:#E8C65F;margin-bottom:16px;
+    display:block}
+  #px-top h1{font-size:clamp(31px,4.6vw,50px);line-height:1.12;color:#F1ECE1;
+    margin-bottom:22px;max-width:18ch}
+  #px-top .sub{font-size:clamp(16px,1.8vw,20px);line-height:1.65;color:#B1BFD7;
+    max-width:40ch}
+  .px-portrait{position:relative;border-radius:20px;overflow:hidden;
+    box-shadow:0 24px 60px rgba(0,0,0,.45)}
+  .px-portrait img{width:100%;height:100%;display:block;object-fit:cover;
+    aspect-ratio:4/5}
+  /* Shorter crop on a phone so the doors still break the fold. The portrait
+     is doing a credibility job, not a hero-image job, and it does not need
+     the height to do it. */
+  @media(max-width:820px){.px-portrait img{aspect-ratio:16/10;object-position:50% 26%}}
+  /* THE FALSE-FLOOR RULE. Screen one must never look finished, so the
+     top edge of the doors is pulled up into the fold. */
+  #px-top{padding-bottom:clamp(18px,2.4vw,30px)}
+
+/* ═══ 02 · THE DOORS ══════════════════════════════════════════════ */
+/* The SITUATION is the heading. "For men" is a tag, not a promise, and
+   it sits small above, so nobody is asked to pick a demographic before
+   they have recognised somebody in a sentence. That is also what lets a
+   WIFE use the men's door: "a man she never feels" is the most
+   recognisable line in the archive to her, and she never has to answer
+   a question about herself to get him to the right page. */
+  #px-doors{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,22px);
+    max-width:1080px;margin:0 auto}
+  @media(max-width:820px){#px-doors{grid-template-columns:1fr}}
+  .px-door{display:flex;flex-direction:column;background:rgba(241,236,225,.045);
+    border:1px solid rgba(241,236,225,.14);border-radius:20px;
+    padding:clamp(24px,3vw,36px);text-decoration:none;
+    transition:border-color .3s ease,background .3s ease,transform .3s ease}
+  .px-door:hover,.px-door:focus-visible{border-color:rgba(255,80,31,.6);
+    background:rgba(255,80,31,.075);transform:translateY(-3px);outline:none}
+  .px-door:focus-visible{outline:2px solid #FF8A5C;outline-offset:3px}
+  .px-door .tag{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;
+    font-weight:800;color:#E8C65F;margin-bottom:14px}
+  .px-door h2{font-family:'Poppins','Montserrat',sans-serif;font-weight:300;
+    font-size:clamp(21px,2.35vw,29px);line-height:1.22;color:#F1ECE1;margin-bottom:12px}
+  .px-door p{font-size:.96rem;line-height:1.7;color:#9DAAC0;margin-bottom:22px}
+  /* The qualifier strip is the filter. It sits apart from the body copy so it
+     reads as a spec rather than as another sentence. */
+  .px-door .qual{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;
+    font-weight:700;color:#7F8DA6;margin-bottom:24px;padding-top:16px;
+    border-top:1px solid rgba(241,236,225,.09)}
+  .px-door .go{margin-top:auto;font-size:.88rem;font-weight:700;color:#FF6A3D;
+    display:inline-flex;align-items:center;gap:.5em}
+  .px-door:hover .go{color:#FF804F}
+
+/* ═══ 03 · THE ONE THING BOTH OF THEM DO ══════════════════════════ */
+  #px-shared{border-top:1px solid rgba(241,236,225,.09);
+    border-bottom:1px solid rgba(241,236,225,.09);
+    background:rgba(241,236,225,.022)}
+  #px-shared .px-wrap{max-width:760px}
+  #px-shared .eyebrow{color:#E8C65F;font-size:clamp(15px,3.2vw,19px);
+    display:block;margin-bottom:14px}
+  #px-shared h2{font-size:clamp(23px,3.2vw,36px);line-height:1.18;
+    margin-bottom:22px;color:#F1ECE1}
+  #px-shared p{font-size:clamp(15px,1.65vw,18px);line-height:1.78;
+    color:#B1BFD7;margin-bottom:16px}
+  /* Daniel's own line, so it carries gold and sits apart. It is the
+     confession that stops the paragraph above reading as a man
+     diagnosing two groups of people from the outside. */
+  #px-shared .mine{border-left:2px solid #E8C65F;padding-left:18px;
+    color:#E4E9F2;margin-top:26px;margin-bottom:0}
+
+/* ═══ 04 · ME, AND THE RECORD ═════════════════════════════════════ */
+  /* ══ THE FULL-BLEED PLATE ══════════════════════════════════════
+     THE ONLY IMAGE ON THIS PAGE BESIDES THE PORTRAIT, and it sits under
+     the RECORD rather than anywhere else, because this is the one block
+     where a photograph is doing a job instead of decorating: "1000+ lives
+     changed, 9 countries" is a claim on flat navy and a receipt over a
+     room with people in it.
+
+     WHY A BACK-TO-CAMERA FRAME AND NOT A PORTRAIT-ON-STAGE.
+     A man addressing the reader from a platform is the fatal read on the
+     women's side (W04 3.6) and it makes Daniel the loudest thing on a page
+     whose whole job is to point at the reader. Back to camera inverts it:
+     the subject of the photograph is the ROOM, he is the smallest warm
+     shape in it, and half the faces are women who chose to be there.
+
+     NOT BEHIND BLOCK 03. That block is the interior one, and a stage
+     behind "I built things people needed so I'd never have to ask to be
+     included" argues with the sentence.
+
+     TREATMENT. 82% navy, plus a gradient that dissolves both edges into
+     the flat navy above and below, so it reads as depth rather than as a
+     photograph you stop and look at. Solid navy underneath, so nothing
+     here depends on the image loading. Lazy, because it is below the
+     fold, and 230KB at 2000px wide. */
+  #px-me{position:relative;isolation:isolate;overflow:hidden}
+  #px-me .px-plate{position:absolute;inset:0;z-index:-2;
+    background:#061938 center 38% / cover no-repeat}
+  #px-me .px-plate img{width:100%;height:100%;object-fit:cover;
+    object-position:center 46%;display:block;opacity:1}
+  /* THE SCRIM IS DARKEST IN THE MIDDLE, NOT AT THE EDGES, which is the
+     opposite of a vignette and is what makes this work. The copy is
+     centred and capped at 720px, so the middle band carries the text on
+     near-solid navy while the room stays legible left and right. A
+     uniform veil heavy enough to protect the type also flattened the
+     photograph into a smudge, which defeated the point of using it.
+     Vertical pass dissolves both edges into the flat navy sections above
+     and below so the block has no seams. */
+  #px-me .px-veil{position:absolute;inset:0;z-index:-1;
+    background:
+      linear-gradient(180deg,#061938 0%,rgba(6,25,56,.10) 14%,rgba(6,25,56,.10) 86%,#061938 100%),
+      linear-gradient(90deg,rgba(6,25,56,0) 0%,rgba(6,25,56,.62) 24%,rgba(6,25,56,.70) 50%,rgba(6,25,56,.62) 76%,rgba(6,25,56,0) 100%)}
+  /* The scrim came down from .95 to .70 in the centre so the room is
+     actually visible. Type keeps its contrast from a shadow instead of
+     from the veil, which is the cheaper way to buy legibility: it costs
+     nothing behind the letters and everything stays readable while the
+     photograph stays a photograph. */
+  #px-me .px-wrap{text-shadow:0 1px 3px rgba(6,25,56,.95),0 2px 18px rgba(6,25,56,.85)}
+  /* On a phone the copy fills the width, so the centre band covers the
+     frame and the room reads as tone rather than as a picture. Accepted:
+     legibility first, and the photograph is doing a supporting job. */
+  @media(max-width:820px){
+    #px-me .px-veil{background:
+      linear-gradient(180deg,#061938 0%,rgba(6,25,56,.74) 14%,rgba(6,25,56,.78) 86%,#061938 100%)}
+  }
+  #px-me{padding-top:clamp(66px,8vw,110px);padding-bottom:clamp(66px,8vw,110px)}
+  #px-me .px-wrap{max-width:900px;text-align:center;position:relative;z-index:1}
+  #px-me .hand{color:#E8C65F;font-size:clamp(21px,3vw,30px);display:block;
+    margin-bottom:20px}
+  #px-me p{font-size:clamp(15px,1.6vw,17.5px);line-height:1.78;color:#C3CDDC;
+    margin:0 auto 14px}
+  /* The credential sentence is set WIDER than the wrap so it lands on two
+     lines rather than three. At the 720px column it broke three ways and the
+     orphan line ("ALL world of experiences.") read as a mistake. The record
+     strip and the link stay on the narrower measure below it. */
+  #px-me p.cred{max-width:none;width:min(100%,900px)}
+  #px-me strong{color:#D8DFEA;font-weight:600}
+  /* THE RECORD. Billboards on highways: the credential strip currently lives
+     only in the footer and at the foot of the avatar pages, and the evidence
+     says it belongs high on a high-traffic page. It is also the only evidence
+     on this page, because it is about Daniel rather than about anybody's
+     result, so it needs nothing captured first. */
+  #px-me .px-record{display:flex;flex-wrap:wrap;justify-content:center;
+    gap:clamp(22px,4vw,54px);margin:30px 0 26px;padding:24px 0;
+    border-top:1px solid rgba(241,236,225,.16);
+    border-bottom:1px solid rgba(241,236,225,.16)}
+  #px-me .px-record div{text-align:center}
+  #px-me .px-record dt{font-family:'Poppins','Montserrat',sans-serif;font-weight:300;
+    font-size:clamp(26px,3.4vw,38px);line-height:1;color:#E8C65F;margin:0}
+  #px-me .px-record dd{margin:8px 0 0;font-size:.66rem;letter-spacing:.18em;
+    text-transform:uppercase;font-weight:700;color:#A4B0C4}
+  #px-me a.more{display:inline-block;margin-top:14px;color:#E8C65F;font-weight:700;
+    text-decoration:none;font-size:.92rem;
+    border-bottom:1px solid rgba(232,198,95,.45);padding-bottom:2px}
+  #px-me a.more:hover,#px-me a.more:focus-visible{color:#F1ECE1;border-bottom-color:#F1ECE1}
+
+/* ═══ 05 · NEITHER OF THOSE ═══════════════════════════════════════ */
+/* Deliberately the lowest-contrast thing on the page. A two-door page
+   bounces everybody who is not one of the two, and some of them book
+   the stages. One row, no persuasion. */
+  #px-else{border-top:1px solid rgba(241,236,225,.07);text-align:center;
+    padding-top:clamp(32px,4vw,52px);padding-bottom:clamp(32px,4vw,52px)}
+  #px-else .lab{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
+    font-weight:800;color:#7C89A3;display:block;margin-bottom:16px}
+  #px-else .row{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:center}
+  #px-else a{color:#9DAAC0;text-decoration:none;font-size:.94rem;
+    border-bottom:1px solid rgba(157,170,192,.28);padding-bottom:2px}
+  #px-else a:hover,#px-else a:focus-visible{color:#F1ECE1;border-bottom-color:#F1ECE1}
+
+/* ═══ 06 · THE CLOSE ══════════════════════════════════════════════ */
+  #px-close{text-align:center;padding-bottom:clamp(56px,7vw,96px)}
+  #px-close .hand{color:#E8C65F;font-size:clamp(20px,3vw,29px);display:block;
+    margin-bottom:26px}
+  #px-close .pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,1.8vw,18px);
+    max-width:900px;margin:0 auto;text-align:left}
+  @media(max-width:820px){#px-close .pair{grid-template-columns:1fr}}
+  .px-mini{display:block;background:rgba(241,236,225,.04);
+    border:1px solid rgba(241,236,225,.13);border-radius:16px;
+    padding:22px clamp(18px,2.2vw,26px);text-decoration:none;
+    transition:border-color .3s ease,background .3s ease}
+  .px-mini:hover,.px-mini:focus-visible{border-color:rgba(255,80,31,.55);
+    background:rgba(255,80,31,.07);outline:none}
+  .px-mini .tag{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
+    font-weight:800;color:#E8C65F;display:block;margin-bottom:10px}
+  .px-mini span.line{font-family:'Poppins','Montserrat',sans-serif;font-weight:300;
+    font-size:clamp(16px,1.55vw,19px);line-height:1.35;color:#F1ECE1;display:block}
+  .px-mini .go{display:block;margin-top:14px;font-size:.84rem;font-weight:700;color:#FF6A3D}
+</style>
+<style>
+/*    SITE FOOTER, BUILT IN RATHER THAN PLACED
+   PtFooter is its own custom element and is meant to sit once in the
+   Wix footer strip, which is what makes it editable in one place for
+   every page. It would not load there, so it ships inside this page
+   instead. That is a real cost and it should be written down: this
+   copy of the footer will not track PtFooter v3.dc.html. Change one
+   and the other does not move.
+
+   PtFooter v3.dc.html stays the source of record. If it starts loading
+   in Wix again, delete this block and the markup at the foot of the
+   page rather than maintaining two.
+
+   Every selector here is pt- prefixed and nothing in the page uses that
+   prefix, so the two sheets do not touch.
+   ══════════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════════
+   PARALLAXX · SITE FOOTER · v3  ·  THREE COLUMNS + UTILITY ROW
+   -------------------------------------------------------------------
+   THE PROBLEM WITH v2
+   Twenty-four links in four equal columns. Every one of them the same
+   size, the same colour, the same weight. On a site whose entire
+   premise is "pick one of two doors", the last thing on the page was
+   a sitemap that made twenty-four things look equally important.
+
+   THE FIX IS NOT FEWER LINKS. IT IS HIERARCHY.
+   Seven pages on this site are linked from NOWHERE except this footer:
+   Blog, both podcasts, Progress Journal, Three Toxic Lies, Identity
+   2.0, As Seen In. Delete them from here and they are orphaned:
+   unreachable by a human, and invisible to search because nothing
+   points at them. So they stay. They just stop shouting.
+
+   WHAT THE VISITOR SEES NOW
+     THREE COLUMNS, LARGE   the two doors, then Daniel. nine links.
+                            the whole site, as far as anyone arriving
+                            cares.
+     ONE QUIET ROW, SMALL   everything else, inline, dot-separated,
+                            in the register of a footnote rather than
+                            a menu. Reachable. Not competing.
+
+   Reading order does the work: doors first at full weight, then the
+   row you only look at if you were already looking for something
+   specific, then legal. Each tier is quieter than the one above it.
+
+   WHY THERE IS NO BLURB UNDER THE LOGO
+   A footer does not need to restate the pitch. Everything above it has
+   already spoken, and by the time anyone is down here they are looking
+   for a link, not for the argument again.
+
+   WHY THE GIVE IT ALL BANNER IS GONE
+   It was a full-width tinted panel with a badge and two lines of copy,
+   for a brand that reads as a men's event. Under a footer that serves
+   two avatars it was the single loudest thing on the page, and it was
+   shouting at half the audience. It is now one gold line in Daniel's
+   column, which is the correct size for a sibling brand.
+
+   ───────────────────────────────────────────────────────────────────
+   TOKENS shared with GIVE IT ALL:  navy #061938  gold #E8C65F  Montserrat
+   TOKENS Parallaxx only:  coral #FF501F  Poppins  cream #F1ECE1
+
+   THE ACCENT RULE. GOLD IS DANIEL. CORAL IS YOU.
+   There is NO coral down here, on purpose. Coral marks the reader's
+   move, and every ask has already been made: the nav carries a coral
+   Contact pill on every page, and the page above closes with its own.
+   GIVE IT ALL is gold, because it is his world, not your move.
+   ═══════════════════════════════════════════════════════════════════ */
+:root{
+  --px-navy:#061938;
+  --px-navy-deep:#04122A;
+  --px-navy-ink:#030C1C;
+  --px-gold:#E8C65F;
+  --px-gold-lift:#F3DD93;
+  --px-coral:#FF501F;
+  --px-coral-lift:#FF6A3D;
+  --px-cream:#F1ECE1;
+  --px-mist:#B1BFD7;
+  --px-slate:#7C89A3;
+}
+
+#pt-foot,#pt-foot *{box-sizing:border-box}
+#pt-foot{
+  background:#030C1C;
+  border-top:1px solid rgba(232,198,95,.16);
+  font-family:'Montserrat',system-ui,-apple-system,sans-serif;
+  color:#B1BFD7;-webkit-font-smoothing:antialiased}
+#pt-foot-inner{max-width:1360px;margin:0 auto;
+  padding:clamp(34px,3.6vw,46px) clamp(20px,4vw,52px) 24px}
+
+/* ═══ TIER 1 · IDENTITY + THE THREE COLUMNS ═══════════════════════
+   Two doors and Daniel. The doors are the reader's two routes in;
+   the third is everywhere Daniel himself shows up, which is what the
+   GIVE IT ALL bar used to be doing at ten times the size. */
+#pt-foot-top{
+  display:grid;
+  grid-template-columns:minmax(260px,1fr) repeat(3,minmax(0,.72fr));
+  gap:clamp(30px,3.4vw,52px);
+  align-items:start;
+  margin-bottom:clamp(28px,3vw,36px)}
+/* Identity spans the full width once the columns need the room. */
+@media(max-width:1080px){#pt-foot-top{grid-template-columns:repeat(3,minmax(0,1fr));gap:38px 30px}
+  #pt-ident{grid-column:1/-1}}
+/* THREE COLUMNS ALL THE WAY DOWN. This used to fall to two at 680 and to
+   one at 440, which on a 390px phone made the footer 878px tall, taller
+   than most of the sections above it and by a long way the tallest thing
+   nobody came for. Held at three it is 563px, a third shorter, and the
+   two-up version was the worst of both: it put Daniel alone on a row and
+   left half of it empty.
+
+   Holding three also keeps the footer the same object it is on desktop.
+   Three doors, three columns, whatever the device. The type comes down
+   at the bottom breakpoint to buy the width, which is the right trade
+   for a block that is scanned rather than read. */
+@media(max-width:680px){#pt-foot-top{gap:30px 20px}}
+@media(max-width:440px){
+  #pt-foot-top{gap:22px 12px}
+  .pt-door h4{font-size:.6rem;letter-spacing:.12em;margin-bottom:10px;padding-bottom:8px}
+  .pt-door a{font-size:.78rem;line-height:1.28;padding:4px 0}
+}
+
+#pt-foot-logo{display:inline-block;line-height:0;margin-bottom:14px;text-decoration:none}
+#pt-foot-logo img{height:30px;width:auto;display:block;
+  font-size:.8rem;font-weight:700;color:#F1ECE1}
+
+#pt-social{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px}
+#pt-social a{font-size:.85rem;font-weight:600;color:#B1BFD7;
+  text-decoration:none;transition:color .2s ease}
+#pt-social a:hover,#pt-social a:focus-visible{color:#E8C65F;outline:none}
+
+/* ── THE DOORS. Deliberately larger than anything else down here. ── */
+.pt-door h4{
+  font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
+  font-weight:800;color:#A88F4E;margin:0 0 12px;
+  padding-bottom:9px;border-bottom:1px solid rgba(232,198,95,.18)}
+/* THE WHOLE BLOCK IS DELIBERATELY SHALLOW. Nothing down here is being
+   sold. It exists so that seven otherwise-orphaned pages are reachable
+   and so somebody hunting for terms or a podcast can find them. Every
+   vertical value in this file was cut roughly a third for that reason,
+   and the type went with it. If it starts feeling like a section again,
+   it has grown.
+
+   .92rem, not 1.02. At 1.02 these matched the page's body copy exactly,
+   which made the footer read as another content section rather than as
+   the foot of the page. They are still the largest thing down here, and
+   still clearly larger than the utility row at .82, so the hierarchy the
+   note above describes is intact. The size came off the type and went
+   into padding instead, so the tap target grew rather than shrank. */
+.pt-door a{
+  display:block;color:#D7DEEA;font-size:.92rem;font-weight:500;
+  line-height:1.3;padding:5px 0;margin-bottom:1px;text-decoration:none;
+  border-radius:3px;transition:color .2s ease}
+.pt-door a:first-of-type{padding-top:0}
+.pt-door a:last-child{margin-bottom:0}
+.pt-door a:hover,.pt-door a:focus-visible{color:#E8C65F;outline:none}
+
+/* THE SIBLING BRAND, AS A LINE RATHER THAN A BANNER.
+   It stays GOLD, because gold is Daniel and GIVE IT ALL is his room.
+   That single colour is now the whole signal — it used to be a
+   42px badge, a border, a tinted panel and two lines of body copy,
+   which made a men's-retreat brand the loudest thing in a footer
+   serving two avatars. */
+.pt-door a.ext{color:#E8C65F;font-weight:600}
+.pt-door a.ext:hover,.pt-door a.ext:focus-visible{color:#F3DD93}
+.pt-door a.ext .mk{font-size:.8em;margin-left:.35em;opacity:.8}
+
+/* ═══ TIER 2 · THE UTILITY ROW ════════════════════════════════════
+   Everything the site has that is not a door. Small, inline, dot
+   separated. This is the register of a footnote, and that is the
+   point: it is here for the person who came looking for it, and
+   invisible to the person who did not. */
+#pt-util{
+  display:flex;flex-wrap:wrap;align-items:center;
+  gap:7px 0;
+  padding-top:18px;border-top:1px solid rgba(241,236,225,.1);
+  margin-bottom:14px}
+#pt-util a{
+  color:#6E7B94;font-size:.82rem;text-decoration:none;
+  padding:3px 0;border-radius:3px;white-space:nowrap;
+  transition:color .2s ease}
+#pt-util a:hover,#pt-util a:focus-visible{color:#E8C65F;outline:none}
+/* Separator TRAILS its link rather than leading the next one. With
+   ::before, every line the row wraps onto opens with an orphaned dot.
+   Trailing means a wrapped line starts on a word, which is what the
+   eye expects, and the dot left at a line end reads as continuation. */
+#pt-util a:not(:last-child)::after{
+  content:"·";color:#3E4A63;margin:0 11px;display:inline-block}
+
+/* ═══ TIER 3 · LEGAL ══════════════════════════════════════════════ */
+#pt-legal{
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  color:#5E6B85;font-size:.8rem;line-height:1.6}
+#pt-legal .links{display:inline-flex;gap:18px;flex-wrap:wrap}
+#pt-legal a{color:inherit;text-decoration:none;
+  border-bottom:1px solid rgba(232,198,95,.4);padding-bottom:1px;
+  transition:color .2s ease,border-color .2s ease}
+#pt-legal a:hover,#pt-legal a:focus-visible{
+  color:#B1BFD7;border-bottom-color:#E8C65F;outline:none}
+
+#pt-foot a:focus-visible{outline:2px solid rgba(232,198,95,.7);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){#pt-foot,#pt-foot *{transition:none!important}}
+</style>
+</helmet>
+
+<div id="px-root">
+
+<!-- ══════════════ 01 · THE FRAME ══════════════
+     PLAIN. It names the CATEGORY (coaching), who it is for, and who runs it,
+     in twenty-five words, and it diagnoses nobody, because a diagnosis has to
+     pick an avatar and we have not met them yet.
+
+     "handle it all on their own" is the clients' own language on BOTH sides,
+     which is why it can carry a general sentence:
+       men's hero   "You handled it all yourself. That's the distance."
+       men's mirror "I kept it all internally."
+       Gena K       "I was trying to figure it out by myself."
+       Ana R        "I couldn't break through them alone."
+
+     THE SUBLINE IS THE CONTINUATION. The headline says who this is for in
+     the third person, which is how a category line has to work. The subline
+     turns it on the reader, and it does it with the two pages' OWN answers
+     to the same question:
+       men's mirror    "How're you doing?"    -> "Good. Fine. Yeah, not too bad."
+       women's mirror  "How's it all going?"  -> "Busy. Good busy."
+     Fine is his word and busy is hers, both verbatim, and neither one genders
+     the sentence. That question is also the one place the two avatar pages
+     are supposed to rhyme, so the home page is now the third instance of a
+     deliberate echo rather than a repeat.
+
+     CUT, 3 Aug: "Take the one that's closer to true." Next to two doors
+     labelled for men and for women, "closer to true" reads as a question
+     about which one you are. Nothing on this page should invite that.
+
+     ALSO REPLACED EARLIER: "I hold rooms for people who are used to holding
+     them", over a three-sentence subline. Daniel does not describe what he
+     does as holding rooms. ══════════════ -->
+<section class="px-sec" id="px-top">
+  <div class="grid">
+    <div>
+      <span class="eyebrow px-hand px-rise px-d1">which is you</span>
+      <h1 class="px-serif px-rise px-d2">Coaching for people who handle it all on their own.</h1>
+      <p class="sub px-rise px-d3">Ask how you&rsquo;re doing and you say fine. Or busy. Same answer for years.</p>
+    </div>
+    <!-- [DANIEL] Replace with the Wix Media URL for daniel-clear.jpg.
+         Real, straight on, not a stage shot and not a headshot. -->
+    <figure class="px-portrait px-rise px-d3" style="margin:0">
+      <img src="DANIEL_CLEAR_JPG_URL" alt="Daniel Lawson" loading="eager" fetchpriority="high">
+      <!-- NO CAPTION. "No glass between us." belongs to the men's page portrait
+           and cannot be reused here. Anything written to replace it was decorating
+           a photograph that already says what it needs to: this is the man, and
+           there is nothing in front of him. -->
+    </figure>
+  </div>
+</section>
+
+<!-- ══════════════ 02 · THE DOORS ══════════════
+     BOTH HEADINGS ARE SECOND PERSON, and that is load bearing rather than
+     stylistic. When the men's door was third person ("A man who carries it
+     all...") and the women's was second ("You've hit every target..."), the
+     page put a HE beside a SHE and readers assembled them into a couple:
+     two characters in one relationship rather than two strangers who would
+     never meet. Second person creates no character, so there is nobody to
+     pair her with. Do not flip either one back on its own.
+
+     Both headings are verbatim from their own built hero. "A man who
+     carries it all. And a partner she never feels." now sits in the body,
+     one level down, where it is a detail rather than the frame -- and it is
+     still the line a WIFE recognises her husband in, which is how she gets
+     him to the right page without the site asking her which gender she is.
+
+     NOT USED, deliberately: "Twenty years in, and she's told you something
+     is missing." Hotter, but it needs his wife to have actually had that
+     conversation and plenty have not. A door is a filter for a whole
+     avatar, so it takes the safe version.
+
+     Women's heading and body are both LIFTED VERBATIM from the built
+     women's hero, which moved past its spec document and is better than
+     it. A door has to carry the hook of the page it opens or the click
+     reads as a bait.
+
+     The women's built hero carries NO qualifier strip, so the one below
+     is the only line on either door that is not quoting its own page.
+     Either it goes on her hero or it comes off both doors.
+     See HOME PAGE - Alignment Audit.md C1. ══════════════ -->
+<section class="px-sec">
+  <div id="px-doors">
+
+    <a class="px-door px-rise px-d3" href="https://www.parallaxxtransformations.com/men">
+      <span class="tag">For men</span>
+      <h2>You handled it all yourself. That&rsquo;s where the distance came from.</h2>
+      <p>A man who carries it all. And a partner she never feels.</p>
+      <div class="qual">Relationship &middot; Years in &middot; Care about her</div>
+      <span class="go">This is me <span aria-hidden="true">&#8594;</span></span>
+    </a>
+
+    <a class="px-door px-rise px-d4" href="https://www.parallaxxtransformations.com/women">
+      <span class="tag">For women</span>
+      <h2>You&rsquo;ve hit every target. And you&rsquo;re still behind.</h2>
+      <p>&ldquo;Everything is a priority right now.&rdquo; And it has been for six years.</p>
+      <div class="qual">Independent &middot; Capable &middot; Successful</div>
+      <span class="go">This is me <span aria-hidden="true">&#8594;</span></span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ══════════════ 03 · THE ONE THING BOTH OF THEM DO ══════════════
+     The only general sentence allowed on this site, and the reason the
+     page does not read as two unrelated businesses sharing a logo.
+
+     WRITTEN AS "YOU ... OR YOU", NOT "HE ... SHE". The he/she version put
+     a man and a woman in consecutive clauses and the page read as a couple.
+     Second person addresses one reader at a time and the pairing has
+     nothing to attach to. Same sources either way: the first clause is
+     [CLIENT], the second is [S, Christine] as her page now states it, and
+     the shrinking is [CLIENT + F-V].
+
+     The last line is [D-LIVED] and it is the confession that earns the
+     rest of the page. ══════════════ -->
+<section class="px-sec" id="px-shared">
+  <div class="px-wrap">
+    <span class="eyebrow px-hand px-rise px-d1">it starts the same way</span>
+    <h2 class="px-serif px-rise px-d2">Completely different circumstances. The same patterns within.</h2>
+    <p class="px-rise px-d3">You handled it on your own so you&rsquo;d never be a burden on anyone. You do still have expectations but keep them to yourself, so nobody ever gets the chance to turn you down.</p>
+
+    <!-- REWRITTEN 3 Aug. Was "the want got smaller until it couldn't be
+         refused", which read as though the asking WORKED. The point is the
+         opposite: the ask gets shaved down to the bare minimum, so it is
+         safe and it is also barely worth having. Both halves have to be in
+         the sentence or it reads as a win. -->
+    <p class="px-rise px-d3">So you trim what you ask for. Small enough that it can&rsquo;t be refused, and small enough that getting it changes nothing.</p>
+
+    <!-- REWRITTEN 3 Aug. Was "You didn't start it, and you can't see it from
+         the inside. That is the bit nobody gets to work on alone." Too
+         compressed to land. It is carrying two separate ideas and this is
+         the block where they have to be clear, because together they ARE
+         the argument for the offer:
+           1. nobody chose this, it was worked out young and it worked
+              -- men's page: "A boy works out what gets his needs met.
+              Yours worked then, so you never replaced them."
+           2. it is invisible from inside, AND effort is not the missing
+              ingredient. Both clauses are verbatim off the men's page:
+              "But you were never shown what you couldn't see" and
+              "Effort was never what was missing."
+
+         CONSIDERED AND NOT USED: "you can't see the label when you're inside
+         the jar." Two problems. The site already owns a container metaphor
+         made of glass -- the film, the pane, "I was the man behind the
+         glass" -- and a jar is also glass, so it half-rhymes with the real
+         metaphor instead of matching it or standing clear of it. And it is
+         a coaching-circuit aphorism, which is the register this page spends
+         its whole length staying out of. -->
+    <p class="px-rise px-d3">You worked this out young. It worked, so you never replaced it. But you were never shown what you couldn&rsquo;t see, so more effort hasn&rsquo;t changed it. Because effort isn&rsquo;t what was missing.</p>
+    <p class="mine px-rise px-d4">I did it too. I built things people needed so I&rsquo;d never have to ask to be included. Worked fine for about thirty years.</p>
+  </div>
+</section>
+
+<!-- ══════════════ 04 · ME, AND THE RECORD ══════════════
+     NO ORIGIN STORY. There are two of them and they are avatar-specific:
+     the stages and the half-ask are his, the number that moved is hers.
+     Running either one here picks a side before anybody has walked
+     through a door. The record is neutral, true, and needs nothing
+     captured first, which is why it is the safest evidence on the site.
+
+     [DANIEL] STILL NEEDED: countries, rooms held, people worked with,
+     and the as-seen-in logos. One line of numbers under the credential
+     sentence is the cheapest win available on this page. ══════════════ -->
+<section class="px-sec" id="px-me">
+  <!-- [DANIEL] Replace with the Wix Media URL. Source: gallery3onstage.jpg
+       from the GIVE IT ALL build. 2000px wide, q74, 230KB. -->
+  <div class="px-plate" aria-hidden="true"><img src="STAGE_ROOM_JPG_URL" alt="" loading="lazy" decoding="async"></div>
+  <div class="px-veil" aria-hidden="true"></div>
+  <div class="px-wrap">
+    <!-- HAND LINE. "and now me." is the hand line on BOTH avatar pages, so it
+         cannot open this block. This one only works at the top of the funnel,
+         and it answers the H1 rather than repeating it. -->
+    <span class="hand px-hand px-rise px-d1">who&rsquo;s holding it</span>
+    <p class="cred px-rise px-d2">I&rsquo;m <strong>Daniel Lawson</strong>. Credentialled through the <strong>International Coach Guild</strong>, qualified through over half a decade of client results, and the founder of <strong>GIVE IT ALL</strong> world of experiences.</p>
+
+    <!-- THE RECORD. Numbers ruled 3 Aug 2026: 6+ years, 9 countries. The men's
+         page still carried 5+ / 7 and has been corrected to match.
+         Spelling follows the avatar pages: "Int'l Coach Guild", not
+         "International". The media strip (ABC News, Wanderlust, Brainz,
+         Solarcon) is deliberately NOT here: it runs at the foot of both avatar
+         pages and it would cost this page more than it pays on a router. -->
+    <dl class="px-record px-rise px-d3">
+      <div><dt>1000+</dt><dd>lives changed</dd></div>
+      <div><dt>9</dt><dd>countries</dd></div>
+      <div><dt>6+</dt><dd>years facilitating</dd></div>
+    </dl>
+
+    <!-- NO GUIDE POSITION HERE, and that is the point. The two avatar pages
+         take OPPOSITE positions and both are correct:
+           /men   "I haven't been married for 10 years+ (yet). But we're not
+                  too dissimilar."   Peer. It has to be, because a finished man
+                  who never did the thing is a fraud, and the page admits the
+                  not-married fact out loud.
+           /women "I did not just get out of it. I got me back."   Completed.
+                  It has to be, because peer is the fatal reading on her side,
+                  and her fear is that stopping means being passed over.
+         The guide position is a SALES argument. A router does not need it, and
+         whichever one it picked it would half-contradict the other page four
+         seconds later.
+
+         The page's human claim is already made, once, in block 03: "I did it
+         too. I built things people needed so I'd never have to ask to be
+         included." That is a scene rather than a claim and it commits to
+         nothing about how far out he is. This link is now the promise that the
+         rest of the story exists, read in whichever register belongs to the
+         reader. See HOME PAGE - Alignment Audit.md A3. -->
+    <a class="more px-rise px-d4" href="https://www.parallaxxtransformations.com/about-daniel-lawson">How I got here <span aria-hidden="true">&#8594;</span></a>
+  </div>
+</section>
+
+<!-- ══════════════ 05 · NEITHER OF THOSE ══════════════ -->
+<section class="px-sec" id="px-else">
+  <div class="px-wrap">
+    <span class="lab">Here for something else?</span>
+    <div class="row">
+      <a href="https://giveitallevent.com">GIVE IT ALL experiences</a>
+      <a href="https://www.parallaxxtransformations.com/daniel-lawson-speaking">Speaking</a>
+      <a href="https://www.parallaxxtransformations.com/parallaxx-perspectives-podcast">The podcast</a>
+      <a href="https://www.parallaxxtransformations.com/ptjournal">The journal</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 06 · THE CLOSE ══════════════
+     The doors again, nothing new, and no second call to action competing
+     with them. ══════════════ -->
+<section class="px-sec" id="px-close">
+  <!-- The line for somebody who read the whole page and still has not clicked.
+       Note this is the only hand line on the site in title case; every other
+       one, here and on both avatar pages, is lowercase. Deliberate or not, it
+       is a one-word change. -->
+  <span class="hand px-hand px-rise px-d1">Choose Your Path</span>
+  <div class="pair">
+    <a class="px-mini px-rise px-d2" href="https://www.parallaxxtransformations.com/men">
+      <span class="tag">For men</span>
+      <span class="line">You handled it all yourself. That&rsquo;s where the distance came from.</span>
+      <span class="go">This is me <span aria-hidden="true">&#8594;</span></span>
+    </a>
+    <a class="px-mini px-rise px-d3" href="https://www.parallaxxtransformations.com/women">
+      <span class="tag">For women</span>
+      <span class="line">You&rsquo;ve hit every target. And you&rsquo;re still behind.</span>
+      <span class="go">This is me <span aria-hidden="true">&#8594;</span></span>
+    </a>
+  </div>
+</section>
+
+<footer id="pt-foot">
+  <div id="pt-foot-inner">
+
+    <div id="pt-foot-top">
+
+      <!-- ══ IDENTITY ══ The mark and the four places he posts. No
+           paragraph, no CTA: both were cut, and the column is better
+           for it. ══ -->
+      <div id="pt-ident">
+        <a id="pt-foot-logo" href="https://www.parallaxxtransformations.com" aria-label="Parallaxx Transformations — home">
+          <img src="https://static.wixstatic.com/media/e1784d_fe3c841c471f47d088f0cd631a89d883~mv2.png"
+               alt="Parallaxx Transformations" loading="lazy">
+        </a>
+        <nav id="pt-social" aria-label="Social">
+          <a href="https://www.youtube.com/@ReconnectYou1/featured" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://www.linkedin.com/in/daniel-reconnect-you/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://www.instagram.com/daniel.lawson__/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/Kiwi.Daniel" target="_blank" rel="noopener">Facebook</a>
+        </nav>
+      </div>
+
+      <!-- ══ THE TWO DOORS ══ Same names, same order as the nav. ══ -->
+      <nav class="pt-door" aria-label="For men">
+        <h4>For Men</h4>
+        <a href="https://www.parallaxxtransformations.com/men">Start here</a>
+        <a href="https://www.parallaxxtransformations.com/the-reconnected-man">The Reconnected Man</a>
+        <!-- /reconnect is the five-archetype quiz, not a programme.
+             It is his free way in, so it belongs beside the door. -->
+        <a href="https://www.parallaxxtransformations.com/reconnect">The Archetype Quiz</a>
+      </nav>
+
+      <nav class="pt-door" aria-label="For women">
+        <h4>For Women</h4>
+        <a href="https://www.parallaxxtransformations.com/women">Start here</a>
+        <a href="https://www.parallaxxtransformations.com/the-reconnected-woman">The Reconnected Woman</a>
+        <!-- [CLIENT] /priority-audit is the URL the women's home page
+             CTA uses. Confirm the page is live before publishing. -->
+        <a href="https://www.parallaxxtransformations.com/priority-audit">The Priority Audit</a>
+      </nav>
+
+      <!-- ══ DANIEL ══ Not a door. The three places he shows up in
+           person, smallest commitment first. GIVE IT ALL is the last
+           of them rather than a banner of its own. ══ -->
+      <nav class="pt-door" aria-label="Daniel">
+        <h4>Daniel</h4>
+        <a href="https://www.parallaxxtransformations.com/about-daniel-lawson">About</a>
+        <a href="https://www.parallaxxtransformations.com/daniel-lawson-speaking">Speaking</a>
+        <!-- [CLIENT] No facilitating page exists on the site yet. This
+             URL is a guess and must be confirmed or repointed. -->
+        <a href="https://www.parallaxxtransformations.com/facilitating">Facilitating</a>
+        <a class="ext" href="https://giveitallevent.com" target="_blank" rel="noopener">GIVE IT ALL<span class="mk" aria-hidden="true">&#8599;</span></a>
+      </nav>
+
+    </div>
+
+    <!-- ══ THE UTILITY ROW ══
+         Ordered by who asks for it: the person, then the work he makes,
+         then the proof. Seven of these are linked from nowhere else on
+         the site, which is exactly why the row exists. ══ -->
+    <nav id="pt-util" aria-label="More">
+      <a href="https://www.parallaxxtransformations.com/contact-daniel-lawson">Contact</a>
+      <a href="https://www.parallaxxtransformations.com/book-a-call-with-daniel-lawson">Book a Call</a>
+      <a href="https://www.parallaxxtransformations.com/reconnect-you-podcast-with-daniel-lawson">Reconnect You Podcast</a>
+      <a href="https://www.parallaxxtransformations.com/parallaxx-perspectives-podcast">Perspectives Podcast</a>
+      <a href="https://www.parallaxxtransformations.com/blog">Blog</a>
+      <a href="https://www.parallaxxtransformations.com/ptjournal">Progress Journal</a>
+      <a href="https://www.parallaxxtransformations.com/three-toxic-lies">Three Toxic Lies</a>
+      <!-- [CLIENT] If Identity 2.0 is aimed at one avatar, promote it
+           into that door's column instead of leaving it here. -->
+      <a href="https://www.parallaxxtransformations.com/your-identity-challenge">Your Identity 2.0 Challenge</a>
+      <a href="https://www.parallaxxtransformations.com/testimonials-daniel-lawson">Testimonials</a>
+      <a href="https://www.parallaxxtransformations.com/daniel-lawson-as-seen-in">As Seen In</a>
+    </nav>
+
+    <div id="pt-legal">
+      <span>&copy; <span id="pt-year">2026</span> Parallaxx Transformations &middot; Daniel Lawson</span>
+      <span class="links">
+        <a href="https://www.parallaxxtransformations.com/terms-of-use">Terms of Service</a>
+        <a href="https://www.parallaxxtransformations.com/privacy-policy">Privacy Policy</a>
+      </span>
+    </div>
+
+  </div>
+</footer>
+
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1360,&quot;height&quot;:1600}}">
+class Component extends DCLogic {
+  componentDidMount(){
+    const root = document.getElementById('px-root');
+    if(!root) return;
+
+    /* THE ONLY SCRIPT ON THE PAGE, AND NOTHING DEPENDS ON IT.
+       Every word above is already visible before this runs. All it does is
+       cancel the entrance for anybody arriving already scrolled, so a deep
+       link or a restored scroll position does not replay an animation the
+       visitor has effectively already watched. */
+    /* ══ FOOTER YEAR ══
+       The footer is built into this page rather than placed as its own
+       element, same as the women's page. This is the only line of script it
+       has: a stale copyright year is the one thing in a footer nobody
+       remembers to update, and it is what makes a site look abandoned.
+       Runs BEFORE the reduced-motion return so it happens either way. */
+    const year = document.getElementById('pt-year');
+    if (year) year.textContent = String(new Date().getFullYear());
+
+    const reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    if(reduce) return;
+
+    if(window.scrollY > 40){
+      root.querySelectorAll('.px-rise').forEach(el=>{ el.style.animation = 'none'; });
+    }
+  }
+  renderVals(){ return {}; }
+}
+</script>
+</body>
+</html>

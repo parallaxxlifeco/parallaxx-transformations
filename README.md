@@ -36,12 +36,20 @@ deploy so the CDN and browser caches let go.
 
 Header and footer differ by page. The men's home page and The Reconnected Man
 carry their own chrome, so the site Header and Footer are turned **off** for
-those. The women's home page does not: PtNav and PtFooter are separate
-elements placed once in the Wix header and footer strips, which is what makes
-them site-wide and editable in one place. Leave both **on** for that page.
+those.
 
-Neither PtNav nor PtFooter is in this repo. They are deployed by hand, so a
-change to either does not ship with a push here.
+The women's home page takes the nav from the header strip and carries its own
+footer. So for that page: site Header **on**, site Footer **off**. PtFooter
+would not load in the Wix footer strip, so the footer is built into the page
+instead. That is a duplicate and it is worth knowing about: the copy inside
+`Parallaxx Home Women.dc.html` will not track `PtFooter v3.dc.html`. Change one
+and the other does not move. If the strip starts working, delete the built-in
+block and go back to placing the element.
+
+`PtFooter v3.dc.html` is in the repo as the source of record for that footer,
+but nothing builds or deploys it from here. `PtNav v3.dc.html` is not in the
+repo at all yet. Both are placed by hand, so a change to either does not ship
+with a push.
 
 SEO is set in Wix page settings, not in the component.
 
@@ -58,6 +66,13 @@ shadow root: the page would render perfectly while its only instrument was
 dead. It also escapes backslashes before embedding the CSS, because a CSS
 codepoint escape reads as an octal escape inside a template literal and takes
 the whole file with it.
+
+Every in-page anchor is driven by script rather than by the browser. `href="#id"`
+is resolved against the document, and deployed the whole page sits inside a
+shadow root where the document has no such id, so the hero button did nothing
+at all on the live site while working perfectly in the preview. No error, no
+warning. Anything that adds an in-page link has to keep going through that
+handler.
 
 The Priority Audit runs **in the page**, not on `/priority-audit`. The first
 of the fifteen statements is live in the intro, so answering it starts the run

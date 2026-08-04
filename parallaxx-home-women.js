@@ -1819,7 +1819,207 @@
 
 @media(max-width:900px){
   #px-reframe-cols,#px-daniel-cols{grid-template-columns:1fr !important}
-}`;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SITE FOOTER, BUILT IN RATHER THAN PLACED
+   PtFooter is its own custom element and is meant to sit once in the
+   Wix footer strip, which is what makes it editable in one place for
+   every page. It would not load there, so it ships inside this page
+   instead. That is a real cost and it should be written down: this
+   copy of the footer will not track PtFooter v3.dc.html. Change one
+   and the other does not move.
+
+   PtFooter v3.dc.html stays the source of record. If it starts loading
+   in Wix again, delete this block and the markup at the foot of the
+   page rather than maintaining two.
+
+   Every selector here is pt- prefixed and nothing in the page uses that
+   prefix, so the two sheets do not touch.
+   ══════════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════════
+   PARALLAXX · SITE FOOTER · v3  ·  THREE COLUMNS + UTILITY ROW
+   -------------------------------------------------------------------
+   THE PROBLEM WITH v2
+   Twenty-four links in four equal columns. Every one of them the same
+   size, the same colour, the same weight. On a site whose entire
+   premise is "pick one of two doors", the last thing on the page was
+   a sitemap that made twenty-four things look equally important.
+
+   THE FIX IS NOT FEWER LINKS. IT IS HIERARCHY.
+   Seven pages on this site are linked from NOWHERE except this footer:
+   Blog, both podcasts, Progress Journal, Three Toxic Lies, Identity
+   2.0, As Seen In. Delete them from here and they are orphaned:
+   unreachable by a human, and invisible to search because nothing
+   points at them. So they stay. They just stop shouting.
+
+   WHAT THE VISITOR SEES NOW
+     THREE COLUMNS, LARGE   the two doors, then Daniel. nine links.
+                            the whole site, as far as anyone arriving
+                            cares.
+     ONE QUIET ROW, SMALL   everything else, inline, dot-separated,
+                            in the register of a footnote rather than
+                            a menu. Reachable. Not competing.
+
+   Reading order does the work: doors first at full weight, then the
+   row you only look at if you were already looking for something
+   specific, then legal. Each tier is quieter than the one above it.
+
+   WHY THERE IS NO BLURB UNDER THE LOGO
+   A footer does not need to restate the pitch. Everything above it has
+   already spoken, and by the time anyone is down here they are looking
+   for a link, not for the argument again.
+
+   WHY THE GIVE IT ALL BANNER IS GONE
+   It was a full-width tinted panel with a badge and two lines of copy,
+   for a brand that reads as a men's event. Under a footer that serves
+   two avatars it was the single loudest thing on the page, and it was
+   shouting at half the audience. It is now one gold line in Daniel's
+   column, which is the correct size for a sibling brand.
+
+   ───────────────────────────────────────────────────────────────────
+   TOKENS shared with GIVE IT ALL:  navy #061938  gold #E8C65F  Montserrat
+   TOKENS Parallaxx only:  coral #FF501F  Poppins  cream #F1ECE1
+
+   THE ACCENT RULE. GOLD IS DANIEL. CORAL IS YOU.
+   There is NO coral down here, on purpose. Coral marks the reader's
+   move, and every ask has already been made: the nav carries a coral
+   Contact pill on every page, and the page above closes with its own.
+   GIVE IT ALL is gold, because it is his world, not your move.
+   ═══════════════════════════════════════════════════════════════════ */
+:root{
+  --px-navy:#061938;
+  --px-navy-deep:#04122A;
+  --px-navy-ink:#030C1C;
+  --px-gold:#E8C65F;
+  --px-gold-lift:#F3DD93;
+  --px-coral:#FF501F;
+  --px-coral-lift:#FF6A3D;
+  --px-cream:#F1ECE1;
+  --px-mist:#B1BFD7;
+  --px-slate:#7C89A3;
+}
+
+#pt-foot,#pt-foot *{box-sizing:border-box}
+#pt-foot{
+  background:#030C1C;
+  border-top:1px solid rgba(232,198,95,.16);
+  font-family:'Montserrat',system-ui,-apple-system,sans-serif;
+  color:#B1BFD7;-webkit-font-smoothing:antialiased}
+#pt-foot-inner{max-width:1360px;margin:0 auto;
+  padding:clamp(34px,3.6vw,46px) clamp(20px,4vw,52px) 24px}
+
+/* ═══ TIER 1 · IDENTITY + THE THREE COLUMNS ═══════════════════════
+   Two doors and Daniel. The doors are the reader's two routes in;
+   the third is everywhere Daniel himself shows up, which is what the
+   GIVE IT ALL bar used to be doing at ten times the size. */
+#pt-foot-top{
+  display:grid;
+  grid-template-columns:minmax(260px,1fr) repeat(3,minmax(0,.72fr));
+  gap:clamp(30px,3.4vw,52px);
+  align-items:start;
+  margin-bottom:clamp(28px,3vw,36px)}
+/* Identity spans the full width once the columns need the room. */
+@media(max-width:1080px){#pt-foot-top{grid-template-columns:repeat(3,minmax(0,1fr));gap:38px 30px}
+  #pt-ident{grid-column:1/-1}}
+/* THREE COLUMNS ALL THE WAY DOWN. This used to fall to two at 680 and to
+   one at 440, which on a 390px phone made the footer 878px tall, taller
+   than most of the sections above it and by a long way the tallest thing
+   nobody came for. Held at three it is 563px, a third shorter, and the
+   two-up version was the worst of both: it put Daniel alone on a row and
+   left half of it empty.
+
+   Holding three also keeps the footer the same object it is on desktop.
+   Three doors, three columns, whatever the device. The type comes down
+   at the bottom breakpoint to buy the width, which is the right trade
+   for a block that is scanned rather than read. */
+@media(max-width:680px){#pt-foot-top{gap:30px 20px}}
+@media(max-width:440px){
+  #pt-foot-top{gap:22px 12px}
+  .pt-door h4{font-size:.6rem;letter-spacing:.12em;margin-bottom:10px;padding-bottom:8px}
+  .pt-door a{font-size:.78rem;line-height:1.28;padding:4px 0}
+}
+
+#pt-foot-logo{display:inline-block;line-height:0;margin-bottom:14px;text-decoration:none}
+#pt-foot-logo img{height:30px;width:auto;display:block;
+  font-size:.8rem;font-weight:700;color:#F1ECE1}
+
+#pt-social{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px}
+#pt-social a{font-size:.85rem;font-weight:600;color:#B1BFD7;
+  text-decoration:none;transition:color .2s ease}
+#pt-social a:hover,#pt-social a:focus-visible{color:#E8C65F;outline:none}
+
+/* ── THE DOORS. Deliberately larger than anything else down here. ── */
+.pt-door h4{
+  font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
+  font-weight:800;color:#A88F4E;margin:0 0 12px;
+  padding-bottom:9px;border-bottom:1px solid rgba(232,198,95,.18)}
+/* THE WHOLE BLOCK IS DELIBERATELY SHALLOW. Nothing down here is being
+   sold. It exists so that seven otherwise-orphaned pages are reachable
+   and so somebody hunting for terms or a podcast can find them. Every
+   vertical value in this file was cut roughly a third for that reason,
+   and the type went with it. If it starts feeling like a section again,
+   it has grown.
+
+   .92rem, not 1.02. At 1.02 these matched the page's body copy exactly,
+   which made the footer read as another content section rather than as
+   the foot of the page. They are still the largest thing down here, and
+   still clearly larger than the utility row at .82, so the hierarchy the
+   note above describes is intact. The size came off the type and went
+   into padding instead, so the tap target grew rather than shrank. */
+.pt-door a{
+  display:block;color:#D7DEEA;font-size:.92rem;font-weight:500;
+  line-height:1.3;padding:5px 0;margin-bottom:1px;text-decoration:none;
+  border-radius:3px;transition:color .2s ease}
+.pt-door a:first-of-type{padding-top:0}
+.pt-door a:last-child{margin-bottom:0}
+.pt-door a:hover,.pt-door a:focus-visible{color:#E8C65F;outline:none}
+
+/* THE SIBLING BRAND, AS A LINE RATHER THAN A BANNER.
+   It stays GOLD, because gold is Daniel and GIVE IT ALL is his room.
+   That single colour is now the whole signal — it used to be a
+   42px badge, a border, a tinted panel and two lines of body copy,
+   which made a men's-retreat brand the loudest thing in a footer
+   serving two avatars. */
+.pt-door a.ext{color:#E8C65F;font-weight:600}
+.pt-door a.ext:hover,.pt-door a.ext:focus-visible{color:#F3DD93}
+.pt-door a.ext .mk{font-size:.8em;margin-left:.35em;opacity:.8}
+
+/* ═══ TIER 2 · THE UTILITY ROW ════════════════════════════════════
+   Everything the site has that is not a door. Small, inline, dot
+   separated. This is the register of a footnote, and that is the
+   point: it is here for the person who came looking for it, and
+   invisible to the person who did not. */
+#pt-util{
+  display:flex;flex-wrap:wrap;align-items:center;
+  gap:7px 0;
+  padding-top:18px;border-top:1px solid rgba(241,236,225,.1);
+  margin-bottom:14px}
+#pt-util a{
+  color:#6E7B94;font-size:.82rem;text-decoration:none;
+  padding:3px 0;border-radius:3px;white-space:nowrap;
+  transition:color .2s ease}
+#pt-util a:hover,#pt-util a:focus-visible{color:#E8C65F;outline:none}
+/* Separator TRAILS its link rather than leading the next one. With
+   ::before, every line the row wraps onto opens with an orphaned dot.
+   Trailing means a wrapped line starts on a word, which is what the
+   eye expects, and the dot left at a line end reads as continuation. */
+#pt-util a:not(:last-child)::after{
+  content:"·";color:#3E4A63;margin:0 11px;display:inline-block}
+
+/* ═══ TIER 3 · LEGAL ══════════════════════════════════════════════ */
+#pt-legal{
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  color:#5E6B85;font-size:.8rem;line-height:1.6}
+#pt-legal .links{display:inline-flex;gap:18px;flex-wrap:wrap}
+#pt-legal a{color:inherit;text-decoration:none;
+  border-bottom:1px solid rgba(232,198,95,.4);padding-bottom:1px;
+  transition:color .2s ease,border-color .2s ease}
+#pt-legal a:hover,#pt-legal a:focus-visible{
+  color:#B1BFD7;border-bottom-color:#E8C65F;outline:none}
+
+#pt-foot a:focus-visible{outline:2px solid rgba(232,198,95,.7);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){#pt-foot,#pt-foot *{transition:none!important}}`;
 
   var HTML = `<div id="px-root">
 
@@ -2655,6 +2855,91 @@
 </section>
 
 
+<footer id="pt-foot">
+  <div id="pt-foot-inner">
+
+    <div id="pt-foot-top">
+
+      <!-- ══ IDENTITY ══ The mark and the four places he posts. No
+           paragraph, no CTA: both were cut, and the column is better
+           for it. ══ -->
+      <div id="pt-ident">
+        <a id="pt-foot-logo" href="https://www.parallaxxtransformations.com" aria-label="Parallaxx Transformations — home">
+          <img src="https://static.wixstatic.com/media/e1784d_fe3c841c471f47d088f0cd631a89d883~mv2.png"
+               alt="Parallaxx Transformations" loading="lazy">
+        </a>
+        <nav id="pt-social" aria-label="Social">
+          <a href="https://www.youtube.com/@ReconnectYou1/featured" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://www.linkedin.com/in/daniel-reconnect-you/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://www.instagram.com/daniel.lawson__/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/Kiwi.Daniel" target="_blank" rel="noopener">Facebook</a>
+        </nav>
+      </div>
+
+      <!-- ══ THE TWO DOORS ══ Same names, same order as the nav. ══ -->
+      <nav class="pt-door" aria-label="For men">
+        <h4>For Men</h4>
+        <a href="https://www.parallaxxtransformations.com/men">Start here</a>
+        <a href="https://www.parallaxxtransformations.com/the-reconnected-man">The Reconnected Man</a>
+        <!-- /reconnect is the five-archetype quiz, not a programme.
+             It is his free way in, so it belongs beside the door. -->
+        <a href="https://www.parallaxxtransformations.com/reconnect">The Archetype Quiz</a>
+      </nav>
+
+      <nav class="pt-door" aria-label="For women">
+        <h4>For Women</h4>
+        <a href="https://www.parallaxxtransformations.com/women">Start here</a>
+        <a href="https://www.parallaxxtransformations.com/the-reconnected-woman">The Reconnected Woman</a>
+        <!-- [CLIENT] /priority-audit is the URL the women's home page
+             CTA uses. Confirm the page is live before publishing. -->
+        <a href="https://www.parallaxxtransformations.com/priority-audit">The Priority Audit</a>
+      </nav>
+
+      <!-- ══ DANIEL ══ Not a door. The three places he shows up in
+           person, smallest commitment first. GIVE IT ALL is the last
+           of them rather than a banner of its own. ══ -->
+      <nav class="pt-door" aria-label="Daniel">
+        <h4>Daniel</h4>
+        <a href="https://www.parallaxxtransformations.com/about-daniel-lawson">About</a>
+        <a href="https://www.parallaxxtransformations.com/daniel-lawson-speaking">Speaking</a>
+        <!-- [CLIENT] No facilitating page exists on the site yet. This
+             URL is a guess and must be confirmed or repointed. -->
+        <a href="https://www.parallaxxtransformations.com/facilitating">Facilitating</a>
+        <a class="ext" href="https://giveitallevent.com" target="_blank" rel="noopener">GIVE IT ALL<span class="mk" aria-hidden="true">&#8599;</span></a>
+      </nav>
+
+    </div>
+
+    <!-- ══ THE UTILITY ROW ══
+         Ordered by who asks for it: the person, then the work he makes,
+         then the proof. Seven of these are linked from nowhere else on
+         the site, which is exactly why the row exists. ══ -->
+    <nav id="pt-util" aria-label="More">
+      <a href="https://www.parallaxxtransformations.com/contact-daniel-lawson">Contact</a>
+      <a href="https://www.parallaxxtransformations.com/book-a-call-with-daniel-lawson">Book a Call</a>
+      <a href="https://www.parallaxxtransformations.com/reconnect-you-podcast-with-daniel-lawson">Reconnect You Podcast</a>
+      <a href="https://www.parallaxxtransformations.com/parallaxx-perspectives-podcast">Perspectives Podcast</a>
+      <a href="https://www.parallaxxtransformations.com/blog">Blog</a>
+      <a href="https://www.parallaxxtransformations.com/ptjournal">Progress Journal</a>
+      <a href="https://www.parallaxxtransformations.com/three-toxic-lies">Three Toxic Lies</a>
+      <!-- [CLIENT] If Identity 2.0 is aimed at one avatar, promote it
+           into that door's column instead of leaving it here. -->
+      <a href="https://www.parallaxxtransformations.com/your-identity-challenge">Your Identity 2.0 Challenge</a>
+      <a href="https://www.parallaxxtransformations.com/testimonials-daniel-lawson">Testimonials</a>
+      <a href="https://www.parallaxxtransformations.com/daniel-lawson-as-seen-in">As Seen In</a>
+    </nav>
+
+    <div id="pt-legal">
+      <span>&copy; <span id="pt-year">2026</span> Parallaxx Transformations &middot; Daniel Lawson</span>
+      <span class="links">
+        <a href="https://www.parallaxxtransformations.com/terms-of-use">Terms of Service</a>
+        <a href="https://www.parallaxxtransformations.com/privacy-policy">Privacy Policy</a>
+      </span>
+    </div>
+
+  </div>
+</footer>
+
 <!-- ══════════════════════════════════════════════════════════════
      IMAGE MANIFEST — everything this page needs and does not have
      ──────────────────────────────────────────────────────────────
@@ -2756,12 +3041,40 @@
   if (hasGSAP) G.registerPlugin(window.ScrollTrigger);
 
   /* ══════════════ SMOOTH SCROLL ══════════════ */
+  let lenis = null;
   if (window.Lenis && !reduce) {
-    const lenis = new window.Lenis({ lerp: 0.11 });
+    lenis = new window.Lenis({ lerp: 0.11 });
     const raf = t => { lenis.raf(t); requestAnimationFrame(raf); };
     requestAnimationFrame(raf);
     if (hasGSAP) lenis.on('scroll', window.ScrollTrigger.update);
   }
+
+  /* ══════════════ IN-PAGE ANCHORS ══════════════
+     THE HERO BUTTON DID NOTHING ON THE LIVE SITE AND WORKED FINE LOCALLY.
+     href="#px-audit-sec" is resolved by the browser against the DOCUMENT.
+     In the preview the page IS the document, so it scrolled. Deployed, the
+     whole page lives inside a shadow root, the document has no element with
+     that id, and the browser correctly does nothing at all. No error, no
+     warning, just a button that looks alive and is not.
+
+     So every in-page anchor is resolved against root, which is the
+     document locally and the shadow root in the bundle. Both carry
+     getElementById, so the same line works in both runtimes, and it is
+     driven by hand rather than left to the browser.
+     Lenis owns the scroll position when it is running, so scrollIntoView
+     would be overwritten on its next frame; where it exists it does the
+     scrolling. */
+  root.addEventListener('click', e => {
+    const a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const id = a.getAttribute('href').slice(1);
+    if (!id) return;
+    const target = root.getElementById(id);
+    if (!target) return;
+    e.preventDefault();
+    if (lenis) lenis.scrollTo(target, { offset: 0, duration: 1.1 });
+    else target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  });
 
   /* ══════════════ KINETIC TYPE ══════════════
      Anything already on screen at boot animates immediately with no
@@ -3084,6 +3397,14 @@
   });
   window.addEventListener('resize', layout, { passive: true });
   layout();
+
+  /* ══════════════ FOOTER YEAR ══════════════
+     The footer is built into this page rather than placed as its own
+     element. This is the only line of script it has: a stale copyright
+     year is the one thing in a footer nobody remembers to update, and
+     it is what makes a site look abandoned. */
+  const year = root.getElementById('pt-year');
+  if (year) year.textContent = String(new Date().getFullYear());
 })();
 
 /* ══════════════════════════════════════════════════════════════════

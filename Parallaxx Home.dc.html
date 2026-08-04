@@ -126,6 +126,13 @@
     margin-bottom:22px;max-width:18ch}
   #px-top .sub{font-size:clamp(16px,1.8vw,20px);line-height:1.65;color:#B1BFD7;
     max-width:40ch}
+  /* FORCED BREAK, DESKTOP ONLY. Left to itself the line wraps after
+     "Or busy.", which strands "Same answer for years." on its own and
+     splits the two halves of the joke. Breaking after "fine." puts the
+     whole turn on line two. Below 821px the column is one grid cell
+     wide and the natural wrap beats an imposed one, so the br is off. */
+  #px-top .sub br{display:none}
+  @media(min-width:821px){#px-top .sub br{display:inline}}
   .px-portrait{position:relative;border-radius:20px;overflow:hidden;
     box-shadow:0 24px 60px rgba(0,0,0,.45)}
   .px-portrait img{width:100%;height:100%;display:block;object-fit:cover;
@@ -911,7 +918,7 @@
     <div>
       <span class="eyebrow px-hand px-rise px-d1">which is you</span>
       <h1 class="px-serif px-rise px-d2">Coaching for people who handle it all on their own.</h1>
-      <p class="sub px-rise px-d3">Ask how you&rsquo;re doing and you say fine. Or busy. Same answer for years.</p>
+      <p class="sub px-rise px-d3">Ask how you&rsquo;re doing and you say fine.<br> Or busy. Same answer for years.</p>
     </div>
     <!-- [DANIEL] Replace with the Wix Media URL for daniel-clear.jpg.
          Real, straight on, not a stage shot and not a headshot. -->

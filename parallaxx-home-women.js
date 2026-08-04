@@ -2297,6 +2297,20 @@
   #pt-cta .arrow{display:none}
 }
 
+
+/* ═══ THE 320px BAR ═══════════════════════════════════════════════
+   At 320 the logo, the Contact pill and the burger add up to more than
+   the bar, and the burger hangs 9px off the right edge. Nothing here is
+   a redesign: the logo loses 4px, the bar loses 6px of padding either
+   side, and the pill tightens. Added 4 Aug 2026 to all three pages and
+   to PtNav v3.dc.html, which stays the source of record. */
+@media(max-width:360px){
+  #pt-bar{padding-left:14px;padding-right:14px;gap:10px}
+  #pt-logo img{height:22px}
+  #pt-cta{padding:.6em .82em;font-size:.8rem}
+  #pt-burger{width:34px;margin-right:-4px}
+}
+
 @media(prefers-reduced-motion:reduce){
   #pt-nav,#pt-nav *{transition:none!important}
 }`;

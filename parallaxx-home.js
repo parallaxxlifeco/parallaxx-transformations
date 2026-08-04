@@ -77,6 +77,16 @@
   .px-serif{font-family:'Poppins','Montserrat',sans-serif;font-weight:300;letter-spacing:-.018em}
   .px-hand{font-family:'Lumios Marker','Permanent Marker',cursive;font-weight:400}
   .px-sec{padding:clamp(44px,5.5vw,78px) clamp(20px,4vw,52px);position:relative}
+  /* THE SMALLEST PHONES GET ROOM, NOT SMALLER TYPE.
+     At 320 the section and card gutters together eat 88px of a 320px screen,
+     which is why the qualifier still wrapped after the type had already been
+     scaled down as far as it should go. Shrinking the type further would have
+     made it unreadable to fix a layout problem. Taking 16px back off the
+     gutters fixes it and gives every other line on the page more room too. */
+  @media(max-width:360px){
+    .px-sec{padding-left:16px;padding-right:16px}
+    .px-door{padding:22px 18px}
+  }
   .px-wrap{max-width:1080px;margin:0 auto}
 
   @keyframes px-rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
@@ -135,10 +145,28 @@
   .px-door h2{font-family:'Poppins','Montserrat',sans-serif;font-weight:300;
     font-size:clamp(21px,2.35vw,29px);line-height:1.22;color:#F1ECE1;margin-bottom:12px}
   .px-door p{font-size:.96rem;line-height:1.7;color:#9DAAC0;margin-bottom:22px}
+  /* Heading and body are only ~6px apart in size on a phone, so without more
+     air between them they read as one block of text rather than a hook and a
+     line underneath it. */
+  @media(max-width:520px){
+    .px-door h2{margin-bottom:16px}
+  }
   /* The qualifier strip is the filter. It sits apart from the body copy so it
      reads as a spec rather than as another sentence. */
-  .px-door .qual{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;
-    font-weight:700;color:#7F8DA6;margin-bottom:24px;padding-top:16px;
+  /* SCALED, NOT STEPPED, and there is no breakpoint on it at all.
+     At .7rem with .15em tracking this strip wanted 335px and a 390px phone
+     gives the card 302, so "CARE ABOUT HER" and "SUCCESSFUL" each dropped an
+     orphan onto a second line. The tracking is what costs the room, not the
+     words, so the tracking gives way first.
+
+     The worst case is NOT the phone. It is ~900px, where the cards are still
+     side by side and each one is at its narrowest. A phone-only media query
+     fixed the phone and left 900 broken, and chasing it with one breakpoint
+     per handset is how you end up with five of them. One clamp holds a single
+     line from 320px all the way up. */
+  .px-door .qual{font-size:clamp(.5rem,1.1vw,.7rem);letter-spacing:.055em;
+    text-transform:uppercase;font-weight:700;color:#7F8DA6;
+    margin-bottom:24px;padding-top:16px;
     border-top:1px solid rgba(241,236,225,.09)}
   .px-door .go{margin-top:auto;font-size:.88rem;font-weight:700;color:#FF6A3D;
     display:inline-flex;align-items:center;gap:.5em}
@@ -216,6 +244,12 @@
       linear-gradient(180deg,#061938 0%,rgba(6,25,56,.74) 14%,rgba(6,25,56,.78) 86%,#061938 100%)}
   }
   #px-me{padding-top:clamp(66px,8vw,110px);padding-bottom:clamp(66px,8vw,110px)}
+  /* On a phone the veil is uniform, so the padding below the link is 66px of
+     flat dark photograph with nothing in it. Tighter, and the block ends
+     where the content does. */
+  @media(max-width:520px){
+    #px-me{padding-top:clamp(52px,12vw,66px);padding-bottom:clamp(46px,10vw,60px)}
+  }
   #px-me .px-wrap{max-width:900px;text-align:center;position:relative;z-index:1}
   #px-me .hand{color:#E8C65F;font-size:clamp(21px,3vw,30px);display:block;
     margin-bottom:20px}
@@ -237,6 +271,17 @@
     border-top:1px solid rgba(241,236,225,.16);
     border-bottom:1px solid rgba(241,236,225,.16)}
   #px-me .px-record div{text-align:center}
+  /* Flex-wrap put "1000+" and "9" on one row and "6+" alone underneath,
+     which reads as a mistake rather than as a set. A three-column grid
+     cannot wrap, so the row holds whatever the width. The labels tighten
+     with it; "YEARS FACILITATING" still takes two lines in its cell, and
+     that is fine because all three cells are the same width. */
+  @media(max-width:560px){
+    #px-me .px-record{display:grid;grid-template-columns:repeat(3,1fr);
+      gap:12px;padding:20px 0}
+    #px-me .px-record dt{font-size:clamp(23px,6.4vw,30px)}
+    #px-me .px-record dd{font-size:.57rem;letter-spacing:.08em;line-height:1.35}
+  }
   #px-me .px-record dt{font-family:'Poppins','Montserrat',sans-serif;font-weight:300;
     font-size:clamp(26px,3.4vw,38px);line-height:1;color:#E8C65F;margin:0}
   #px-me .px-record dd{margin:8px 0 0;font-size:.66rem;letter-spacing:.18em;
@@ -535,6 +580,20 @@
 @media(max-width:420px){
   #pt-cta{padding:.66em 1.05em}
   #pt-cta .arrow{display:none}
+}
+
+
+/* ═══ THE 320px BAR ═══════════════════════════════════════════════
+   At 320 the logo, the Contact pill and the burger add up to more than
+   the bar, and the burger hangs 9px off the right edge. Nothing here is
+   a redesign: the logo loses 4px, the bar loses 6px of padding either
+   side, and the pill tightens. Added 4 Aug 2026 to all three pages and
+   to PtNav v3.dc.html. */
+@media(max-width:360px){
+  #pt-bar{padding-left:14px;padding-right:14px;gap:10px}
+  #pt-logo img{height:22px}
+  #pt-cta{padding:.6em .82em;font-size:.8rem}
+  #pt-burger{width:34px;margin-right:-4px}
 }
 
 @media(prefers-reduced-motion:reduce){

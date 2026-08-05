@@ -202,8 +202,14 @@
     position:absolute;top:100%;left:0;right:0;
     flex-direction:column;align-items:stretch;gap:2px;
     margin-left:0;
-    background:rgba(6,25,56,.985);
-    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    /* SOLID, AND NO BACKDROP FILTER ON THIS ONE. The bar above keeps its
+       blur; this panel cannot have one. Nested backdrop-filters inside a
+       shadow root make Chromium composite this element against an already
+       filtered backdrop, and the page behind reads straight through a
+       background that is 98.5% opaque. On the built-in version of this nav
+       the hero headline was legible through the open menu. The bar's own
+       blur still gives the effect where it matters. */
+    background:#061938;
     border-bottom:1px solid rgba(232,198,95,.16);
     padding:10px clamp(16px,4vw,44px) 22px;
     max-height:calc(100vh - 68px);overflow-y:auto;
@@ -239,6 +245,20 @@
 @media(max-width:420px){
   #pt-cta{padding:.66em 1.05em}
   #pt-cta .arrow{display:none}
+}
+
+
+/* ═══ THE 320px BAR ═══════════════════════════════════════════════
+   At 320 the logo, the Contact pill and the burger add up to more than
+   the bar, and the burger hangs 9px off the right edge. Nothing here is
+   a redesign: the logo loses 4px, the bar loses 6px of padding either
+   side, and the pill tightens. Added 4 Aug 2026 to all three pages and
+   to PtNav v3.dc.html, which stays the source of record. */
+@media(max-width:360px){
+  #pt-bar{padding-left:14px;padding-right:14px;gap:10px}
+  #pt-logo img{height:22px}
+  #pt-cta{padding:.6em .82em;font-size:.8rem}
+  #pt-burger{width:34px;margin-right:-4px}
 }
 
 @media(prefers-reduced-motion:reduce){
@@ -397,8 +417,16 @@
     links.querySelectorAll('a').forEach(a =>
       a.addEventListener('click', () => { if(MOBILE()) closeMenu(); }));
 
+    /* composedPath, not e.target. A click inside a shadow root is RETARGETED
+       by the time it reaches the document: e.target becomes the host element,
+       so nav.contains(e.target) is false for a click on the burger itself and
+       this handler closed the panel in the same tick the burger opened it.
+       The menu looked completely dead. composedPath() reports the real path
+       through the shadow tree, and in the light DOM it still contains nav, so
+       one line covers both runtimes. */
     document.addEventListener('click', e => {
-      if(!nav.contains(e.target)){ items.forEach(closeDrop); if(MOBILE()) closeMenu(); }
+      const path = e.composedPath ? e.composedPath() : [e.target];
+      if(path.indexOf(nav) === -1){ items.forEach(closeDrop); if(MOBILE()) closeMenu(); }
     });
 
     document.addEventListener('keydown', e => {

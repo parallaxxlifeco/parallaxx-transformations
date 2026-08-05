@@ -302,8 +302,14 @@
     background:linear-gradient(90deg,#061938 0%,rgba(6,25,56,.72) 26%,rgba(6,25,56,.05) 68%,rgba(3,12,28,.45) 100%)}
   #pxa-hero .inner{position:relative;z-index:2;max-width:1240px;margin:0 auto;width:100%;flex:1;display:flex;flex-direction:column;justify-content:center}
   @media(max-width:900px){
-    #pxa-hero .shot{width:100%;opacity:.4}
-    #pxa-hero .shot::after{background:linear-gradient(180deg,rgba(4,18,42,.72),rgba(3,12,28,.95))}
+    /* THE PHOTO HAD VANISHED ON A PHONE. Two dimmers were stacked: the
+       image at 40% opacity and then a 72-95% wash on top of it, which left
+       roughly 6% of the photograph showing. Opacity up and the wash pulled
+       back at the top, where the headline is short and sits over flat navy
+       anyway. It still closes to near-black at the bottom, which is where
+       the record ribbon needs a clean ground. */
+    #pxa-hero .shot{width:100%;opacity:.72}
+    #pxa-hero .shot::after{background:linear-gradient(180deg,rgba(4,18,42,.40) 0%,rgba(4,18,42,.60) 44%,rgba(4,18,42,.86) 74%,rgba(3,12,28,.95) 100%)}
   }
 
 /* ── THE RIBBON ───────────────────────────────────────────────
@@ -786,8 +792,8 @@
         <a class="pt-link" href="https://www.parallaxxtransformations.com/men">For Men</a>
         <button class="pt-caret" type="button" aria-label="Show For Men menu" aria-expanded="false" aria-controls="pt-menu-men">&#9662;</button>
         <div class="pt-menu" id="pt-menu-men">
-          <a href="https://www.parallaxxtransformations.com/men">Start Here</a>
-          <a href="https://www.parallaxxtransformations.com/the-reconnected-man">The Reconnected Man</a>
+          <a href="https://www.parallaxxtransformations.com/the-reconnected-man">
+            <span class="pt-sub">Programme</span>The Reconnected Man</a>
         </div>
       </div>
 
@@ -796,8 +802,8 @@
         <a class="pt-link" href="https://www.parallaxxtransformations.com/women">For Women</a>
         <button class="pt-caret" type="button" aria-label="Show For Women menu" aria-expanded="false" aria-controls="pt-menu-women">&#9662;</button>
         <div class="pt-menu" id="pt-menu-women">
-          <a href="https://www.parallaxxtransformations.com/women">Start Here</a>
-          <a href="https://www.parallaxxtransformations.com/the-reconnected-woman">The Reconnected Woman</a>
+          <a href="https://www.parallaxxtransformations.com/the-reconnected-woman">
+            <span class="pt-sub">Programme</span>The Reconnected Woman</a>
         </div>
       </div>
 
@@ -1268,6 +1274,12 @@
      (the site nav) takes no space in flow, so summing children and skipping
      fixed ones is the only honest number: scrollHeight would miss it too and
      offsetHeight of the host is the very thing we are trying to check. */
+  /* Runaway guards. This loop once grew a document to Chrome's 2^24 clamp,
+     so every element is one-shot and the whole thing bails if the page is
+     already absurd. */
+  var PX_SANE_MAX = 200000;              // taller than any real page here
+  var pxCollapsed = new WeakSet();
+
   /* Sums the real content inside the shadow root. A fixed-position child (a
      baked-in site nav) takes no space in flow, so summing children and
      skipping fixed ones is the only honest number. */

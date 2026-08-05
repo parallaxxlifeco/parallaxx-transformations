@@ -140,6 +140,12 @@ OUT.write_text("""/* PARALLAXX TRANSFORMATIONS - About page Wix Custom Element. 
      (the site nav) takes no space in flow, so summing children and skipping
      fixed ones is the only honest number: scrollHeight would miss it too and
      offsetHeight of the host is the very thing we are trying to check. */
+  /* Runaway guards. This loop once grew a document to Chrome's 2^24 clamp,
+     so every element is one-shot and the whole thing bails if the page is
+     already absurd. */
+  var PX_SANE_MAX = 200000;              // taller than any real page here
+  var pxCollapsed = new WeakSet();
+
   /* Sums the real content inside the shadow root. A fixed-position child (a
      baked-in site nav) takes no space in flow, so summing children and
      skipping fixed ones is the only honest number. */

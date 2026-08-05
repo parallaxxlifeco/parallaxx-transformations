@@ -84,6 +84,23 @@
 #pt-logo img{height:30px;width:auto;display:block;
   font-size:.82rem;font-weight:700;letter-spacing:.02em;color:#F1ECE1}
 @media(max-width:600px){#pt-logo img{height:26px}}
+/* 400px AND BELOW. At 360 the mark is 216px wide, the Contact pill is
+   another 129 and the burger 40. Together with the gutters that is 28px
+   more than the screen, so the pill ran off the right edge and took half
+   the burger with it. A menu button you cannot reach is worse than any
+   of the things it opens. Everything comes down a step. */
+@media(max-width:400px){
+  #pt-logo img{height:21px}
+  /* The mark is an <img> with width:auto, so it normally scales with the
+     height above. If the CDN fails it falls back to the alt text, which
+     is a fixed 216px of wordmark and pushes the Contact pill and the
+     burger off the right edge. This caps it either way. */
+  #pt-logo{max-width:50vw;overflow:hidden}
+  #pt-bar{padding:14px 16px;gap:10px}
+  #pt-cta-wrap{gap:8px;margin-left:auto}
+  #pt-cta{font-size:.78rem;padding:.62em 1.05em}
+  #pt-burger{padding:6px;margin-right:-6px}
+}
 
 /* ═══ LINK RAIL ═══════════════════════════════════════════════════ */
 #pt-links{
@@ -247,20 +264,6 @@
   #pt-cta .arrow{display:none}
 }
 
-
-/* ═══ THE 320px BAR ═══════════════════════════════════════════════
-   At 320 the logo, the Contact pill and the burger add up to more than
-   the bar, and the burger hangs 9px off the right edge. Nothing here is
-   a redesign: the logo loses 4px, the bar loses 6px of padding either
-   side, and the pill tightens. Added 4 Aug 2026 to all three pages and
-   to PtNav v3.dc.html, which stays the source of record. */
-@media(max-width:360px){
-  #pt-bar{padding-left:14px;padding-right:14px;gap:10px}
-  #pt-logo img{height:22px}
-  #pt-cta{padding:.6em .82em;font-size:.8rem}
-  #pt-burger{width:34px;margin-right:-4px}
-}
-
 @media(prefers-reduced-motion:reduce){
   #pt-nav,#pt-nav *{transition:none!important}
 }`;
@@ -281,8 +284,8 @@
         <a class="pt-link" href="https://www.parallaxxtransformations.com/men">For Men</a>
         <button class="pt-caret" type="button" aria-label="Show For Men menu" aria-expanded="false" aria-controls="pt-menu-men">&#9662;</button>
         <div class="pt-menu" id="pt-menu-men">
-          <a href="https://www.parallaxxtransformations.com/men">Start Here</a>
-          <a href="https://www.parallaxxtransformations.com/the-reconnected-man">The Reconnected Man</a>
+          <a href="https://www.parallaxxtransformations.com/the-reconnected-man">
+            <span class="pt-sub">Programme</span>The Reconnected Man</a>
         </div>
       </div>
 
@@ -291,8 +294,8 @@
         <a class="pt-link" href="https://www.parallaxxtransformations.com/women">For Women</a>
         <button class="pt-caret" type="button" aria-label="Show For Women menu" aria-expanded="false" aria-controls="pt-menu-women">&#9662;</button>
         <div class="pt-menu" id="pt-menu-women">
-          <a href="https://www.parallaxxtransformations.com/women">Start Here</a>
-          <a href="https://www.parallaxxtransformations.com/the-reconnected-woman">The Reconnected Woman</a>
+          <a href="https://www.parallaxxtransformations.com/the-reconnected-woman">
+            <span class="pt-sub">Programme</span>The Reconnected Woman</a>
         </div>
       </div>
 

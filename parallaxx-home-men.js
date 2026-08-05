@@ -1267,8 +1267,8 @@
         <a class="pt-link" href="https://www.parallaxxtransformations.com/men">For Men</a>
         <button class="pt-caret" type="button" aria-label="Show For Men menu" aria-expanded="false" aria-controls="pt-menu-men">&#9662;</button>
         <div class="pt-menu" id="pt-menu-men">
-          <a href="https://www.parallaxxtransformations.com/the-reconnected-man">
-            <span class="pt-sub">Programme</span>The Reconnected Man</a>
+          <a href="https://www.parallaxxtransformations.com/men">Start Here</a>
+          <a href="https://www.parallaxxtransformations.com/the-reconnected-man">The Reconnected Man</a>
         </div>
       </div>
 
@@ -1277,8 +1277,8 @@
         <a class="pt-link" href="https://www.parallaxxtransformations.com/women">For Women</a>
         <button class="pt-caret" type="button" aria-label="Show For Women menu" aria-expanded="false" aria-controls="pt-menu-women">&#9662;</button>
         <div class="pt-menu" id="pt-menu-women">
-          <a href="https://www.parallaxxtransformations.com/the-reconnected-woman">
-            <span class="pt-sub">Programme</span>The Reconnected Woman</a>
+          <a href="https://www.parallaxxtransformations.com/women">Start Here</a>
+          <a href="https://www.parallaxxtransformations.com/the-reconnected-woman">The Reconnected Woman</a>
         </div>
       </div>
 

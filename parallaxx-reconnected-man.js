@@ -652,9 +652,12 @@
      refresh afterwards its triggers fire at the wrong offsets. Returns
      whether it actually changed anything so the caller can avoid refreshing
      for nothing. */
-  /* Sums the real content inside the shadow root. A fixed-position child (the
-     site nav) takes no space in flow, so summing children and skipping fixed
-     ones is the only honest number. */
+  /* Runaway guards. This loop once grew a document to Chrome's 2^24 clamp,
+     so every element is one-shot and the whole thing bails if the page is
+     already absurd. */
+  var PX_SANE_MAX = 200000;              // taller than any real page here
+  var pxCollapsed = new WeakSet();
+
   /* Sums the real content inside the shadow root. A fixed-position child (a
      baked-in site nav) takes no space in flow, so summing children and
      skipping fixed ones is the only honest number. */

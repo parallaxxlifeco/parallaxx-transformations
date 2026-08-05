@@ -2,7 +2,7 @@
 ## Alignment audit + rebuild notes
 
 **Baseline audited:** the live page at `parallaxxtransformations.com/the-reconnected-man`, captured 1 Aug 2026.
-**Target system:** `Parallaxx Home.dc.html` + `PtNav.dc.html` + `PtFooter.dc.html` (the v4 "Everything Is Glass" redesign).
+**Target system:** `Parallaxx Home Men.dc.html` + `PtNav.dc.html` + `PtFooter.dc.html` (the v4 "Everything Is Glass" redesign).
 **Deliverable:** this audit, plus a rebuilt `The Reconnected Man.dc.html`.
 
 ---
@@ -19,7 +19,7 @@ The page also runs this in its page code:
 $w.onReady(function () { $w('#header1').collapse(); $w('#footer1').collapse(); });
 ```
 
-So the Parallaxx header and footer are switched off, and the embed supplies its own **GIVE IT ALL** nav instead. A man who lands on this page from an ad has no Parallaxx navigation, no footer, and no route into the rest of the site. The new home page avoids all of this by shipping as a Wix **Custom Element** (`<parallaxx-home-page>` + `parallaxx-home-page.js`) that renders inline at true document height with PtNav and PtFooter placed as siblings.
+So the Parallaxx header and footer are switched off, and the embed supplies its own **GIVE IT ALL** nav instead. A man who lands on this page from an ad has no Parallaxx navigation, no footer, and no route into the rest of the site. The new home page avoids all of this by shipping as a Wix **Custom Element** (`<parallaxx-home-men>` + `parallaxx-home-men.js`) that renders inline at true document height with PtNav and PtFooter placed as siblings.
 
 **This is the single highest-value change on the list, and it's a deployment change, not a design one.**
 
@@ -174,4 +174,4 @@ Marked with `▸` in the rebuilt file.
 
 - [The Reconnected Man — live page](https://www.parallaxxtransformations.com/the-reconnected-man)
 - [The deployed embed source](https://www-parallaxxtransformations-com.filesusr.com/html/111174_6905def14065216df2e4cbaed4764a26.html)
-- `Parallaxx Home.dc.html`, `PtNav.dc.html`, `PtFooter.dc.html`, `reconnected-man-wix-inject.html` — Parallaxx Transformations Redesign folder
+- `Parallaxx Home Men.dc.html`, `PtNav.dc.html`, `PtFooter.dc.html`, `reconnected-man-wix-inject.html` — Parallaxx Transformations Redesign folder

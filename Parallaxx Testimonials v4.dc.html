@@ -548,7 +548,6 @@
     font-weight:700;color:#A08A5E;margin-left:.7em}
   .px-vidcap .line{display:block;margin-top:5px;font-family:'Poppins','Montserrat',sans-serif;
     font-style:italic;font-weight:300;font-size:clamp(14.5px,1.1vw,16.5px);line-height:1.45;color:#6E6960}
-    font-size:clamp(16px,1.35vw,19px);line-height:1.3}
   .px-vid-yt:hover .line{color:#B1BFD7}
   .px-vid-yt .play{width:50px;height:50px;left:auto;right:clamp(18px,2vw,24px);
     bottom:clamp(18px,2vw,24px);z-index:2}
@@ -612,10 +611,37 @@
      measuring it back. The orphan rule below has to know, so the
      breakpoints are declared outright. Same result at every width,
      now legible to the code that depends on it. */
+  /* THE BREAKPOINTS ARE SET BY MEASURE, NOT BY DEVICE.
+     Measured across the range, the old steps produced two bad bands.
+
+     At 768px the wall was still two columns while the mobile type rules
+     (560px) had not started, so a card was 295px wide carrying 15.5px
+     type: 33 characters a line, seven lines per testimonial. Exactly the
+     fault just fixed on phones, sitting one breakpoint higher.
+
+     And dropping to one column at tablet width overcorrects: a single
+     card free to fill 794px runs past 80 characters, which is as hard to
+     read as 33 for the opposite reason. So the single column is CAPPED
+     and centred rather than allowed to stretch.
+
+     Three steps now, each chosen so the card lands between 38 and 65
+     characters at every width in its band:
+       1344+     three columns
+       900-1343  two
+       under 900 one, capped at 620px and centred
+
+     The three-column step sits at 1344, not at the wrap's 1240
+     max-width, because the section's own padding is 52px a side at that
+     size. The wrap therefore does not actually REACH 1240 until the
+     viewport is 1240 + 104. Set at 1240 the breakpoint fired while the
+     container was still shrinking and gave a 304px card, 33 characters
+     a line: the same fault as the old 768px band, just narrower. Three
+     columns only earn their keep once the container has stopped
+     shrinking. */
   #px-wall{display:grid;grid-template-columns:repeat(3,1fr);
     gap:clamp(16px,1.8vw,24px);align-items:stretch}
-  @media(max-width:1040px){#px-wall{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:700px){#px-wall{grid-template-columns:1fr}}
+  @media(max-width:1343px){#px-wall{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:900px){#px-wall{grid-template-columns:1fr;max-width:620px;margin-inline:auto}}
 
   /* THE ORPHAN SITS IN THE MIDDLE.
      Nine cards give a clean 3x3 on All, but the filter does not inherit
@@ -837,17 +863,89 @@
    The clamps bottom out around 27-30px; on a 390px screen with 40px of
    padding that is roughly eleven characters a line, which is what turns
    headlines into ragged three-word stacks. */
+  /* ══════════════ MOBILE, MEASURED ══════════════
+     Measured at 390px before touching anything, and the numbers were
+     worse than they looked:
+
+       every heading            25px, h1 through h3, no hierarchy at all
+       card body                33 characters per line, over 7 lines
+       "All of them."           14 characters per line
+       section padding          20px each side, card padding 24px more
+
+     Optimal measure for body copy is 45 to 75 characters. Thirty-three
+     is not a style choice, it is a column too narrow to read in, and it
+     is what was turning three sentences into seven lines.
+
+     Three causes, all fixed here:
+
+     1. ONE SIZE FOR EVERY HEADING. A single rule forced h1, h2 and h3
+        to the same clamp, so the page had no hierarchy on a phone and
+        every heading was large enough to wrap twice. They now step:
+        26 / 21 / 17.
+
+     2. ch MAX-WIDTHS THROTTLING THE HEADINGS. max-width:17ch on the
+        hero and 20ch on the wall are measured against the element's OWN
+        font size, so at 25px they clamp the line to ~270px inside a
+        350px column. Sensible on a desktop where they stop a headline
+        running to 90 characters; on a phone they only add wraps.
+        Released below 560px.
+
+     3. PADDING EATING THE COLUMN. 20px section plus 24px card plus a
+        border left 300px of usable width out of 390. Now 15 and 17,
+        which returns 22px to the line. Combined with a slightly smaller
+        body size that takes the card from 33 characters to about 40,
+        and the average testimonial from seven lines to five.
+
+     The type comes DOWN and the measure goes UP, which is the opposite
+     of the instinct to enlarge text on a small screen. Bigger type in a
+     narrow column is what causes the ladder of short lines. */
   @media(max-width:560px){
-    h1.px-serif,h2.px-serif,h3.px-serif{font-size:clamp(21px,6.4vw,28px)!important;line-height:1.24!important}
-    .px-sec{padding-top:clamp(40px,10vw,54px)!important;padding-bottom:clamp(40px,10vw,54px)!important}
+    h1.px-serif{font-size:clamp(22px,6vw,26px)!important;line-height:1.18!important;max-width:none!important}
+    h2.px-serif{font-size:clamp(19px,5.1vw,22px)!important;line-height:1.2!important;max-width:none!important}
+    h3{font-size:clamp(16px,4.3vw,17.5px)!important;line-height:1.3!important}
+    .px-sec{padding-left:15px!important;padding-right:15px!important;
+      padding-top:clamp(38px,9vw,50px)!important;padding-bottom:clamp(38px,9vw,50px)!important}
+    .px-card{padding:20px 17px!important}
+    .px-door{padding:20px 18px!important}
+    .px-before,.px-now{font-size:14.9px!important;line-height:1.62!important}
+    .px-card details p{font-size:14px!important;line-height:1.6!important}
+    #px-hero .lede{font-size:14.9px!important;line-height:1.64!important}
+    .px-door p{font-size:14.2px!important;line-height:1.6!important}
+    #px-hear p{font-size:14.6px!important;line-height:1.62!important}
+    .px-now{padding-left:13px!important}
     #px-hero{padding-top:104px!important}
     .px-hand{font-size:clamp(14px,4.6vw,20px)!important}
     #px-wall{grid-template-columns:1fr}
     /* 44px is the tap minimum on touch and these were 32. Height comes
        from min-height rather than padding so the pill keeps its shape. */
     #px-switch button{padding:.7em .95em;font-size:.8rem;min-height:44px}
-    #px-count b{font-size:clamp(1.35rem,7vw,1.7rem)}
-    #px-count span{font-size:.66rem;letter-spacing:.07em}
+    #px-count b{font-size:clamp(1.3rem,6.6vw,1.65rem)}
+    /* "LIVES CHANGED" and "YEARS FACILITATING" are 13 and 18 characters
+       in a 107px column. At .14em tracking both wrapped and the row read
+       as uneven. Tracking is the cheapest thing to spend here: it buys
+       the width without touching the size. */
+    /* "YEARS FACILITATING" is 18 characters and will not fit a 113px
+       column at any size worth reading. Rather than shrink the type
+       until it does, every label reserves two lines. One wraps, two do
+       not, and the row keeps a level baseline either way. Robust to a
+       label being reworded later, which shrinking is not. */
+    #px-count span{font-size:.66rem;letter-spacing:.02em;
+      min-height:2.6em;display:block}
+    #px-count{gap:10px;align-items:start}
+  }
+  /* 320 to 360. At 390 the column is workable; at 320 the same settings
+     gave 29 characters a line over eight lines. Padding comes off and
+     the body drops a further half point, which is the difference
+     between eight lines and six. */
+  @media(max-width:365px){
+    .px-sec{padding-left:12px!important;padding-right:12px!important}
+    .px-card{padding:18px 14px!important}
+    .px-before,.px-now{font-size:14.4px!important;line-height:1.58!important}
+    .px-now{padding-left:11px!important}
+    h1.px-serif{font-size:clamp(20px,5.8vw,23px)!important}
+    h2.px-serif{font-size:clamp(18px,5vw,20px)!important}
+    #px-count span{font-size:.62rem;letter-spacing:.01em}
+    #px-count{gap:8px}
   }
 </style>
 <style>
@@ -1365,8 +1463,8 @@
         <a class="pt-link" href="https://www.parallaxxtransformations.com/men">For Men</a>
         <button class="pt-caret" type="button" aria-label="Show For Men menu" aria-expanded="false" aria-controls="pt-menu-men">&#9662;</button>
         <div class="pt-menu" id="pt-menu-men">
-          <a href="https://www.parallaxxtransformations.com/men">Start Here</a>
-          <a href="https://www.parallaxxtransformations.com/the-reconnected-man">The Reconnected Man</a>
+          <a href="https://www.parallaxxtransformations.com/the-reconnected-man">
+            <span class="pt-sub">Programme</span>The Reconnected Man</a>
         </div>
       </div>
 
@@ -1375,8 +1473,8 @@
         <a class="pt-link" href="https://www.parallaxxtransformations.com/women">For Women</a>
         <button class="pt-caret" type="button" aria-label="Show For Women menu" aria-expanded="false" aria-controls="pt-menu-women">&#9662;</button>
         <div class="pt-menu" id="pt-menu-women">
-          <a href="https://www.parallaxxtransformations.com/women">Start Here</a>
-          <a href="https://www.parallaxxtransformations.com/the-reconnected-woman">The Reconnected Woman</a>
+          <a href="https://www.parallaxxtransformations.com/the-reconnected-woman">
+            <span class="pt-sub">Programme</span>The Reconnected Woman</a>
         </div>
       </div>
 

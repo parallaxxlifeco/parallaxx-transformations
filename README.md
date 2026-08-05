@@ -8,34 +8,10 @@ Never hand-edit a generated `.js` bundle; edit the source and rerun its build.
 
 | Page | Source | Build | Bundle / tag | Preview |
 |---|---|---|---|---|
-| Home, the front door | `Parallaxx Home.dc.html` | `build-home-bundle.py` | `parallaxx-home.js` · `parallaxx-home` | `home.html` |
-| Home, men | `Parallaxx Home Men.dc.html` | `build-home-men-bundle.py` | `parallaxx-home-men.js` · `parallaxx-home-men` | `index.html` |
+| Home | `Parallaxx Home Men.dc.html` | `build-home-men-bundle.py` | `parallaxx-home-men.js` · `parallaxx-home-men` | `index.html` |
 | The Reconnected Man | `The Reconnected Man.dc.html` | `build-reconnected-man-bundle.py` | `parallaxx-reconnected-man.js` · `parallaxx-reconnected-man` | `reconnected-man.html` |
 | Home, women | `Parallaxx Home Women.dc.html` | `build-home-women-bundle.py` | `parallaxx-home-women.js` · `parallaxx-home-women` | `home-women.html` |
-
-## The Source URLs
-
-Everything is served by **GitHub Pages** off `main`. This was not written down
-anywhere until now, which cost an afternoon: the only host named in the repo was
-a jsDelivr example in `wheel-of-reconnect-README.md`, which serves the same files
-from a different cache and would silently drift out of sync on the next push.
-**GitHub Pages is the one to use. Do not mix the two.**
-
-Base: `https://parallaxxlifeco.github.io/parallaxx-transformations/`
-
-| Wix Custom Element | Source URL | Tag |
-|---|---|---|
-| Home, the front door | `…/parallaxx-home.js` | `parallaxx-home` |
-| Home, men | `…/parallaxx-home-men.js` | `parallaxx-home-men` |
-| The Reconnected Man | `…/parallaxx-reconnected-man.js` | `parallaxx-reconnected-man` |
-| Home, women | `…/parallaxx-home-women.js` | `parallaxx-home-women` |
-
-The preview harnesses render as real pages at the same base, so
-`…/home.html` is the front door as Wix will show it, without touching Wix.
-
-Pages rebuilds within a minute or so of a push and its CDN holds a file for
-about ten minutes. If a deploy looks stale, bump the `?v=` query and hard
-reload before assuming the build is wrong.
+| Testimonials | `Parallaxx Testimonials v4.dc.html` | `build-testimonials-bundle.py` | `parallaxx-testimonials.js` · `parallaxx-testimonials` | `testimonials.html` |
 
 Also here: `parallaxx-wheel-of-reconnect.js`, a standalone interactive element,
 and `support.js`, the local shim that lets a `.dc.html` open in a browser.
@@ -43,17 +19,14 @@ and `support.js`, the local shim that lets a `.dc.html` open in a browser.
 ## Build
 
 ```
-python3 build-home-bundle.py
 python3 build-home-men-bundle.py
 python3 build-reconnected-man-bundle.py
 python3 build-home-women-bundle.py
+python3 build-testimonials-bundle.py
 ```
 
 All four refuse to build rather than ship a bundle that fails silently in a
-shadow root. `build-home-bundle.py` adds one more refusal of its own: it will
-not build while either image on the home page is still a placeholder, because
-a broken portrait above the fold on the site's strongest URL is worse than no
-deploy at all. See the docstring in `build-home-men-bundle.py` for why the step
+shadow root. See the docstring in `build-home-men-bundle.py` for why the step
 exists at all, and the one in `build-home-women-bundle.py` for why that page
 needed a build of its own.
 
@@ -67,44 +40,66 @@ Header and footer differ by page. The men's home page and The Reconnected Man
 carry their own chrome, so the site Header and Footer are turned **off** for
 those.
 
-The women's home page carries its own nav and its own footer, so site Header
-and Footer are both **off** for it too. Neither strip would load its element in
-Wix, so both are built into the page. That leaves two copies of each, and it is
-worth knowing: the copies inside `Parallaxx Home Women.dc.html` will not track
-`PtNav v3.dc.html` or `PtFooter v3.dc.html`. Change one and the other does not
-move. If the strips start working, delete the built-in blocks and go back to
-placing the elements.
+The women's home page and Testimonials carry their own nav and their own
+footer, so site Header and Footer are both **off** for them too. Neither strip
+would load its element in Wix, so both are built into those pages. That leaves
+several copies of each, and it is worth knowing: the copies inside
+`Parallaxx Home Women.dc.html` and `Parallaxx Testimonials v4.dc.html` will not
+track `PtNav v3.dc.html` or `PtFooter v3.dc.html`. Change one and the others do
+not move. If the strips start working, delete the built-in blocks and go back
+to placing the elements.
 
 `PtNav v3.dc.html` and `PtFooter v3.dc.html` are both in the repo as the
 sources of record. Nothing builds or deploys them from here yet.
 
 SEO is set in Wix page settings, not in the component.
 
-## Home, the front door
+## Testimonials
 
-The routing page at `/`. It supersedes `Parallaxx Home Sort.dc.html`, which was
-120 words and two buttons sitting on the strongest URL on the domain.
+The rebuild of `/testimonials-daniel-lawson`. What was there served every
+testimonial as a flattened PNG with the photo, the quote, the name and the
+country baked into one image, inside two carousels. Google indexed none of it,
+a screen reader got none of it, and on a phone the body copy rendered at
+roughly 7px because an image cannot reflow. The whole page held five sentences
+of machine-readable text, one of which contained a typo. This closes the item
+left open in `RECONNECTED-MAN-AUDIT.md`.
 
-Its one job is to get the right person to `/men` or `/women` in under fifteen
-seconds and give them a reason to trust Daniel on the way past. It sells
-nothing: no price, no application, and neither instrument, because the
-archetype quiz and the Priority Audit are avatar-specific by construction and
-neither survives being asked before a door is chosen.
+Nine testimonials, transcribed verbatim, as text. Names, countries and the
+three beats each client actually wrote in: what it was like, what changed, what
+it is like now. The middle beat sits in a `<details>` so nothing load-bearing is
+hidden and no JavaScript is needed to open it. Faces are cropped out of the
+original flattened PNGs with Wix's own `/v1/crop/` transform, so there was no
+re-upload and no reshoot.
 
-**Its build is deliberately lighter than the other three.** No GSAP and no
-Lenis, so `boot()` runs immediately rather than waiting on two CDN round trips,
-and nothing on the page depends on an animation completing. A page whose entire
-purpose is routing cannot lose its headline to a stranded tween, which is what
-happened twice on the men's page. `build-home-bundle.py` fails the build if
-GSAP ever appears in the source.
+**No content depends on JavaScript.** The stylesheet leaves everything visible;
+`.px-js`, which is what hides anything, is only ever added by the script at
+boot. A dead script is therefore indistinguishable from reduced motion, which
+is the correct failure for a page made entirely of proof. There is no GSAP, no
+ScrollTrigger and no Lenis here for the same reason.
 
-**Two images need Wix Media URLs before it will build.** The hero portrait
-(`daniel-clear.jpg`) and the full-bleed plate behind the record
-(`home-plate-room.jpg`). Both are placeholders in the source until uploaded.
+The All / Men / Women filter is deep-linkable: `#men` and `#women` are read on
+arrival, so each avatar page can link into its own half without anyone
+maintaining a second URL. A lone last card is centred from script rather than
+CSS, because `:nth-of-type` counts hidden siblings and would fire on the wrong
+card the moment anything is filtered.
 
-The footer is built into this page too, so site Header and Footer are both
-**off** for it. Same caveat as the women's page: that copy will not track
-`PtFooter v3.dc.html`.
+Four client interviews load click-to-play; nothing is requested from
+`youtube-nocookie.com` until a cover is pressed. **Their covers are separate
+images hosted on Wix Media, not the YouTube thumbnails.** Those carry
+drop-shadowed display type baked into the pixels, which is the exact fault this
+page exists to undo, and they are staying on YouTube where a loud thumbnail
+earns its click. `covers/` holds the four prepared files, 1600×900 sRGB JPEG.
+
+Two editorial rules are written into the head of the `.dc.html` and both are
+easy to undo by accident. **Never count the testimonials** in visible copy: "all
+ten" and "Men 5" read as a ceiling, and what is shown is a selection out of more
+than a thousand. **Never defend the proof**: lines like "nobody prompted this"
+presume the reader is suspicious and then argue with them. The honesty lives in
+the build, not the copy.
+
+Nine `Review` objects ship as JSON-LD, injected into `document.head` rather than
+the shadow root, where a crawler would never see them. No `aggregateRating` is
+declared, because none of these people gave a star rating.
 
 ## Home, women
 
@@ -150,5 +145,5 @@ this page uses.
 
 Rebuilt onto the v4 system from the older Give It All-skinned page.
 `RECONNECTED-MAN-AUDIT.md` records what changed and why, and lists the work
-still open, the largest being that the testimonial screenshots are still
-flattened PNGs and need transcribing into real text.
+still open. The largest of those, the flattened testimonial PNGs, is closed by
+the Testimonials page above.

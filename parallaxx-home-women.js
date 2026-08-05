@@ -58,23 +58,6 @@
   ::selection{background:#FF501F;color:#fff}
   img{display:block;max-width:100%}
 
-  /* ══ THE HOST ═════════════════════════════════════════════════════
-     A custom element is display:inline by default. Inline means no block
-     box, a baseline to sit on, and a wrapper free to size itself wrong --
-     which is what leaves a band of PAGE background under the component.
-     On a Wix page that band is white.
-
-     Both declarations matter. display:block fixes the box. The background
-     means that if anything ever does leave a gap, the gap is navy and
-     invisible rather than a white cliff at the foot of the site.
-
-     This never showed up in preview because the harnesses set display on
-     the tag from OUTSIDE. The harness was quietly fixing it and Wix was
-     not, so it belongs in here, where it ships. Added 4 Aug 2026 to all
-     three pages at once. #04122A, matching #px-root on this page.
-     ══════════════════════════════════════════════════════════════════ */
-  :host{display:block;background:#04122A}
-
   #px-root{background:#04122A;color:#B1BFD7;font-family:'Montserrat',system-ui,sans-serif;font-size:16px;line-height:1.7;overflow-x:clip;position:relative}
   /* DISPLAY FACE. Was Cormorant Garamond at weight 300 with negative tracking --
      settings that flatter a high-contrast serif and gut a geometric sans.
@@ -1263,9 +1246,33 @@
 #px-rcs-state .lab,#px-rcs-state .txt{transition:opacity .26s ease,color .45s ease}
 #px-rcs-state.swap .lab,#px-rcs-state.swap .txt{opacity:0}
 @media(max-width:560px){#px-rcs-state{min-height:0}}
+/* ══════════════════════════════════════════════════════════════════
+   MOBILE: THE READ-OUT GOES FIRST, AND IT STICKS.
+   Stacked, the three cards are 635px and the panel is another 340. A
+   phone has 772 under the nav, so they cannot both be on screen. In
+   source order the panel sits below all three cards, which meant that
+   on a phone every tap updated something 664px off screen. The card
+   turned over and, as far as she could tell, nothing happened.
+
+   So on mobile the panel is pulled above the stack with order and
+   pinned under the nav. She taps a card, the answer changes in front of
+   her, and the cards scroll underneath. Nothing about the desktop
+   layout changes: there the panel is beside the cards and already in
+   view, so it needs none of this.
+
+   The type comes down a step here as well. A pinned panel spends
+   viewport that the cards need, and at 340px it was taking nearly half
+   the screen before the first card appeared.
+   ══════════════════════════════════════════════════════════════════ */
 @media(max-width:900px){
-  #px-rcs-cols{grid-template-columns:1fr;gap:30px}
-  #px-rcs-state{min-height:0}
+  #px-rcs-cols{grid-template-columns:1fr;gap:18px}
+  #px-rcs-state{order:-1;position:sticky;top:84px;z-index:5;min-height:0;
+    background:#0A1D3C;border-radius:0 14px 14px 0;
+    box-shadow:0 18px 30px -22px rgba(0,0,0,.9);
+    padding:clamp(16px,4vw,20px) clamp(18px,4.5vw,22px)}
+  #px-rcs-state .lab{margin-bottom:7px}
+  #px-rcs-state .txt{font-size:.98rem;line-height:1.5;max-width:none}
+  #px-rcs-state .txt + .txt{margin-top:.7em}
 }
 @media(prefers-reduced-motion:reduce){
   /* no rotation. The back simply replaces the front. */
@@ -2134,6 +2141,23 @@
 #pt-logo img{height:30px;width:auto;display:block;
   font-size:.82rem;font-weight:700;letter-spacing:.02em;color:#F1ECE1}
 @media(max-width:600px){#pt-logo img{height:26px}}
+/* 400px AND BELOW. At 360 the mark is 216px wide, the Contact pill is
+   another 129 and the burger 40. Together with the gutters that is 28px
+   more than the screen, so the pill ran off the right edge and took half
+   the burger with it. A menu button you cannot reach is worse than any
+   of the things it opens. Everything comes down a step. */
+@media(max-width:400px){
+  #pt-logo img{height:21px}
+  /* The mark is an <img> with width:auto, so it normally scales with the
+     height above. If the CDN fails it falls back to the alt text, which
+     is a fixed 216px of wordmark and pushes the Contact pill and the
+     burger off the right edge. This caps it either way. */
+  #pt-logo{max-width:50vw;overflow:hidden}
+  #pt-bar{padding:14px 16px;gap:10px}
+  #pt-cta-wrap{gap:8px;margin-left:auto}
+  #pt-cta{font-size:.78rem;padding:.62em 1.05em}
+  #pt-burger{padding:6px;margin-right:-6px}
+}
 
 /* ═══ LINK RAIL ═══════════════════════════════════════════════════ */
 #pt-links{
@@ -2297,22 +2321,81 @@
   #pt-cta .arrow{display:none}
 }
 
-
-/* ═══ THE 320px BAR ═══════════════════════════════════════════════
-   At 320 the logo, the Contact pill and the burger add up to more than
-   the bar, and the burger hangs 9px off the right edge. Nothing here is
-   a redesign: the logo loses 4px, the bar loses 6px of padding either
-   side, and the pill tightens. Added 4 Aug 2026 to all three pages and
-   to PtNav v3.dc.html, which stays the source of record. */
-@media(max-width:360px){
-  #pt-bar{padding-left:14px;padding-right:14px;gap:10px}
-  #pt-logo img{height:22px}
-  #pt-cta{padding:.6em .82em;font-size:.8rem}
-  #pt-burger{width:34px;margin-right:-4px}
-}
-
 @media(prefers-reduced-motion:reduce){
   #pt-nav,#pt-nav *{transition:none!important}
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   PHONE PASS. Everything in here is mobile only; nothing above 700px
+   moves. Written after seeing the built page on a handset rather than
+   in a narrow desktop window, which is why several of these are not
+   what the clamps predicted.
+
+   THE HERO WAS THE WORST OF IT, AND IT WAS MY DOING. The alignment fix
+   that put the headline on the page column also carried max-width
+   min(720px,58vw) down to the phone. 58vw is 226px on a 390 screen, so
+   the H1 broke to three lines and the button to three, inside a column
+   half the width of the one it was sitting in. Both are full width
+   here.
+   ══════════════════════════════════════════════════════════════════ */
+@media(max-width:700px){
+
+  /* ── HERO ─────────────────────────────────────────────────────── */
+  /* Full width, and clear of the fixed nav. The copy is bottom-aligned
+     on a phone, so the padding only bites when the block is tall
+     enough to reach the bar, which is exactly when it was hiding
+     under it. */
+  #px-hero-copy{padding-top:96px}
+  #px-hero-copy .inner > *{max-width:none}
+  #px-hero .px-fade.px-serif{font-size:1.06rem}
+
+  /* ── DISPLAY TYPE ─────────────────────────────────────────────── */
+  /* One step down across the board. Every headline on the page lost a
+     line: the mirror went four to three, the audit three to two, the
+     hero three to two. */
+  /* !important, and it is not laziness. Every headline on this page
+     carries its clamp as an INLINE style, which beats any stylesheet
+     rule no matter how specific. Without this the mirror stayed on
+     four lines while the rule sat there doing nothing. */
+  .px-sec h2.px-serif,#pa-intro h2.pa-serif,#pa-turn h2.pa-serif,
+  #pa-result h2.pa-serif,#pa-items h2.pa-serif,
+  #px-hero h1{font-size:21px!important;line-height:1.2!important}
+  .px-pull,.px-verdict{font-size:17px!important;line-height:1.36!important}
+  #px-cost h2.px-serif,#px-rcs h2.px-serif{font-size:20px!important}
+
+  /* The quote is the one piece of handwriting long enough to wrap.
+     Wider column and a step down takes it from four lines to three. */
+  #px-machine-quote{max-width:34ch;font-size:1rem;line-height:1.38}
+
+  /* ── BUTTONS ──────────────────────────────────────────────────── */
+  /* Smaller pills, and every one of them on a single line. The two
+     that were wrapping did it because the pill was sized to a column
+     rather than to its own text. */
+  .px-btn,.px-ghost,.pa-btn,.pa-ghost{
+    font-size:.86rem;padding:12px 20px;white-space:nowrap;line-height:1.2}
+  .px-btn,.px-ghost{display:inline-flex;align-items:center;gap:.4em}
+
+  /* ── THE AUDIT ────────────────────────────────────────────────── */
+  /* The live first statement was a 223px card before she had read a
+     word of it. Tighter box, tighter pills, and the scale runs two up
+     instead of ragged threes. */
+  .pa-live-row{padding:18px 16px;border-radius:12px}
+  .pa-live-row .q,#pa-stmt{font-size:1rem;line-height:1.4}
+  .pa-scale{gap:6px}
+  .pa-opt{padding:10px 10px;font-size:.78rem;border-radius:999px;flex:1 1 46%}
+  .pa-promise{font-size:.86rem;line-height:1.5}
+  .pa-fine{font-size:.74rem}
+  #pa-intro .lede{font-size:.95rem;line-height:1.55}
+
+  /* ── SECTION RHYTHM ───────────────────────────────────────────── */
+  /* 32, not 40. The inherited sheet sets this with !important at its
+     own breakpoint, so this has to shout back. */
+  #px-root > section,#px-root > .px-sec{
+    padding-top:32px!important;padding-bottom:32px!important}
+  #px-hero{padding-top:0!important;padding-bottom:0!important}
+  #px-creds{padding-top:26px!important;padding-bottom:26px!important}
+  #px-audit-sec{padding-top:0!important;padding-bottom:0!important}
 }`;
 
   var HTML = `<div id="px-root">
@@ -2333,8 +2416,8 @@
         <a class="pt-link" href="https://www.parallaxxtransformations.com/men">For Men</a>
         <button class="pt-caret" type="button" aria-label="Show For Men menu" aria-expanded="false" aria-controls="pt-menu-men">&#9662;</button>
         <div class="pt-menu" id="pt-menu-men">
-          <a href="https://www.parallaxxtransformations.com/men">Start Here</a>
-          <a href="https://www.parallaxxtransformations.com/the-reconnected-man">The Reconnected Man</a>
+          <a href="https://www.parallaxxtransformations.com/the-reconnected-man">
+            <span class="pt-sub">Programme</span>The Reconnected Man</a>
         </div>
       </div>
 
@@ -2343,8 +2426,8 @@
         <a class="pt-link" href="https://www.parallaxxtransformations.com/women">For Women</a>
         <button class="pt-caret" type="button" aria-label="Show For Women menu" aria-expanded="false" aria-controls="pt-menu-women">&#9662;</button>
         <div class="pt-menu" id="pt-menu-women">
-          <a href="https://www.parallaxxtransformations.com/women">Start Here</a>
-          <a href="https://www.parallaxxtransformations.com/the-reconnected-woman">The Reconnected Woman</a>
+          <a href="https://www.parallaxxtransformations.com/the-reconnected-woman">
+            <span class="pt-sub">Programme</span>The Reconnected Woman</a>
         </div>
       </div>
 
@@ -2426,16 +2509,6 @@
         <span style="font-size:.78rem;color:#5E6B85;line-height:1.5;display:inline-block">
           Ninety seconds.<br>Answer&rsquo;s on the screen.</span>
       </div>
-
-      <!-- THE QUALIFIER. Added 3 Aug 2026. The men's hero has always carried
-           one and hers had nothing doing that job. A qualifier that filters
-           people OUT is what makes the ones left feel found. Same three words
-           as the women's door on the home page, so the door quotes its own
-           page rather than inventing. Men's equivalent, same date:
-           "Relationship. Years in. Care about her." -->
-      <p class="px-fade" style="font-size:.78rem;line-height:1.6;color:#5E6B85;margin-top:20px;letter-spacing:.02em">
-        Independent. Capable. Successful.
-      </p>
     </div>
   </div>
 

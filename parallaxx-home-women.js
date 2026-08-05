@@ -3373,11 +3373,78 @@
      ScrollTrigger has already cached those, so a refresh has to follow.
      Returns whether anything actually changed so we do not refresh for
      nothing. */
+  /* Sums the real content inside the shadow root. A fixed-position child (the
+     site nav) takes no space in flow, so summing children and skipping fixed
+     ones is the only honest number. */
+  /* Sums the real content inside the shadow root. A fixed-position child (a
+     baked-in site nav) takes no space in flow, so summing children and
+     skipping fixed ones is the only honest number. */
+  function contentHeight(host){
+    var total = 0;
+    try{
+      var kids = host.shadowRoot ? host.shadowRoot.children : [];
+      for (var i=0;i<kids.length;i++){
+        var c = kids[i];
+        if (c.tagName === 'STYLE') continue;
+        var cs = window.getComputedStyle(c);
+        if (cs.position === 'fixed' || cs.display === 'none') continue;
+        total += c.getBoundingClientRect().height;
+      }
+    }catch(e){}
+    return total;
+  }
+
+  /* WHAT THIS IS ACTUALLY FIXING, measured on the live About page 5 Aug.
+     59851px of page with 5790px of content in it: fifty thousand pixels of
+     empty section under the footer. Wix writes the widget height the editor
+     last recorded into an INLINE STYLESHEET RULE, not an inline style:
+
+         #comp-msfv7drl { height: 59851px }
+         #comp-msfv7drl { --custom-element-height: 59851px }
+
+     Two consequences, and the previous version of this function missed both.
+
+     1. A plain host.style.height = 'auto' LOSES to that rule. Every write
+        here has to be setProperty with 'important' or nothing moves.
+     2. The rule sits on the PARENT and the host stretches to match, so host
+        and parent measure identically. Comparing each ancestor against the
+        HOST and asking for a 600px difference therefore compares a number
+        with itself. It never fired, on any page, for the exact case it was
+        written for. Everything is measured against the CONTENT now.
+
+     Verified in the browser before shipping: 59851 -> 5790, and it held.
+
+     THE RUNAWAY GUARDS STAY. They are not paranoia: this loop once grew a
+     document to Chrome's 2^24 clamp. Every element is one-shot via the
+     WeakSet, and the whole thing bails if the page is already absurd. */
   function collapseAncestors(host){
     var changed = false;
-    try{ var h=host.getBoundingClientRect().height; if(h<50) return false;
-      var n=host.parentElement,guard=0;
-      while(n && n!==document.body && guard++<14){ if(n.getBoundingClientRect().height>h+600){ n.style.height='auto'; n.style.minHeight='0px'; changed = true; } n=n.parentElement; }
+    try{
+      if (document.documentElement.scrollHeight > PX_SANE_MAX) return false;
+      var content = contentHeight(host);
+      if (content < 50) return false;
+
+      if (!pxCollapsed.has(host) && host.getBoundingClientRect().height > content + 24){
+        pxCollapsed.add(host);
+        if (window.getComputedStyle(host).display === 'inline') host.style.setProperty('display','block','important');
+        host.style.setProperty('height','auto','important');
+        host.style.setProperty('min-height','0px','important');
+        host.style.setProperty('max-height','none','important');
+        changed = true;
+      }
+
+      var n = host.parentElement, guard = 0;
+      while(n && n !== document.body && guard++ < 14){
+        if(!pxCollapsed.has(n) && n.getBoundingClientRect().height > content + 240){
+          pxCollapsed.add(n);
+          n.style.setProperty('height','auto','important');
+          n.style.setProperty('min-height','0px','important');
+          n.style.setProperty('max-height','none','important');
+          n.style.setProperty('--custom-element-height','auto','important');
+          changed = true;
+        }
+        n = n.parentElement;
+      }
     }catch(e){}
     return changed;
   }
@@ -4397,7 +4464,13 @@
       loadLibs().then(function(){ try{ boot(shadow); }catch(e){ console.error('[px] boot failed:', e); } })
         .catch(function(){ try{ boot(shadow); }catch(e){} });
       requestAnimationFrame(function(){ collapseAndRefresh(host); });
-      [400,1200,2500].forEach(function(t){ setTimeout(function(){ collapseAndRefresh(host); }, t); });
+      [400,1200,2500,4000,6000].forEach(function(t){ setTimeout(function(){ collapseAndRefresh(host); }, t); });
+      /* Images arriving late change the content height, and Wix can re-apply
+         its stored height after its own layout settles. Watching the host is
+         cheaper and far more reliable than guessing more timeouts. */
+      if (window.ResizeObserver){
+        try{ new ResizeObserver(function(){ collapseAndRefresh(host); }).observe(host); }catch(e){}
+      }
       window.addEventListener('resize', function(){ collapseAndRefresh(host); }, {passive:true});
     }
   }

@@ -669,6 +669,53 @@
     #px-vv-controls{grid-column:1;grid-row:2;padding-top:16px}
     #px-vv-card{grid-column:1;grid-row:3;align-self:auto;margin-top:8px}
   }
+
+  /* ══ THE MOBILE VERSION OF THIS SECTION ═══════════════════════════
+     THE PROBLEM. The block above stacks stage / pills / card, and on a
+     390px phone that runs to about 1000px with the control in the middle
+     of it. The three pills and the read-out they change end up between
+     250 and 640px apart, so you tap a dimension and the only thing that
+     tells you what happened is off the bottom of the screen. On desktop
+     the stage and the card share a row and cause and effect are visible
+     together; the stack throws that away, which is the whole point of
+     the interaction.
+
+     THE FIX IS THREE THINGS.
+
+     1. A flex column instead of a grid, so the pills can stick. A sticky
+        GRID item is trapped inside its own grid area and never travels.
+        A sticky FLEX item takes the whole flex container as its
+        containing block, which here is the entire feature. order: does
+        the arranging, so the markup does not have to change.
+
+     2. display:contents dissolves the controls wrapper, so the pills row
+        and its caption become direct children of the column and can be
+        ordered and stuck independently. That matters: sticking the whole
+        control block put a 200px bar over the read-out and covered the
+        headline you had just changed. Only the pills stick, at about
+        60px, and the caption scrolls away with everything else because
+        it is read once.
+
+     3. The stage is capped and centred rather than a full-width square.
+        At 350px it was 45% of the viewport and all it does is set the
+        mood. It keeps its 1:1 ratio, because the canvas texture is
+        sampled square and stretching it would distort the photograph.
+
+     RESULT: the pills sit under the nav for the whole section and the
+     entire read-out fits on screen beneath them, so every tap changes
+     text you are already looking at. */
+  @media(max-width:820px){
+    #px-vv-grid{display:flex;flex-direction:column}
+    #px-vv-stage{order:1;max-width:min(62vw,240px);margin:0 auto}
+    #px-vv-controls{display:contents}
+    #px-vv-pills{order:2;position:sticky;top:74px;z-index:6;
+      margin-top:16px;padding:8px;border-radius:14px;
+      background:rgba(4,18,42,.94);border:1px solid rgba(241,236,225,.16);
+      box-shadow:0 14px 34px -14px rgba(0,0,0,.75)}
+    #px-vv-controls > p{order:3;margin-top:10px!important;text-align:center;
+      font-size:.74rem!important}
+    #px-vv-card{order:4;margin-top:16px}
+  }
   /* THE FORK. Home carries the shared truth. The brutal, gendered pain
      lives behind these two doors, where it can hit as hard as it likes. */
   .px-doors{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:760px;margin:26px auto 0}
@@ -1022,7 +1069,21 @@
   .pt-item:last-child{border-bottom:none}
   .pt-link{flex:1 1 auto;padding:15px 2px;font-size:1rem}
   .pt-item.is-active > .pt-link::after,.pt-link.is-active::after{display:none}
-  .pt-caret{flex:0 0 auto;padding:15px 10px;font-size:.85em}
+  /* The caret was #7C89A3 at .85em: the same grey as inactive text, on a
+     control people are meant to notice and press. On a phone it read as
+     punctuation, not a button. Gold picks it out of the row, the stroke
+     gives the glyph weight a font-weight cannot (it is a symbol, and the
+     face has no bolder cut of it), and the ring makes the tap target
+     visible so it is obvious there is more underneath. */
+  .pt-caret{
+    flex:0 0 auto;padding:11px 12px;font-size:1.02em;
+    color:#E8C65F;-webkit-text-stroke:.6px #E8C65F;
+    border:1px solid rgba(232,198,95,.34);border-radius:999px;
+    margin-left:6px;
+  }
+  .pt-item.is-open .pt-caret{
+    color:#F4E1A2;-webkit-text-stroke:.6px #F4E1A2;
+    background:rgba(232,198,95,.14);border-color:rgba(232,198,95,.62)}
 
   /* Child list is a plain indented block on mobile. A floating panel
      inside a panel is a place to get lost. */
@@ -1793,7 +1854,7 @@
 
       <!-- ROW 2, under the stage. Out of the card's way. -->
       <div id="px-vv-controls">
-        <div style="display:flex;gap:9px" class="px-fade">
+        <div id="px-vv-pills" style="display:flex;gap:9px" class="px-fade">
           <button class="px-pill" data-k="vision">Vision</button>
           <button class="px-pill" data-k="values">Values</button>
           <button class="px-pill" data-k="velocity">Velocity</button>

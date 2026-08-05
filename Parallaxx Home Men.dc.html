@@ -846,7 +846,7 @@
   h1,h2,h3,h4{text-wrap:balance}
   p{text-wrap:pretty}
   @media(max-width:560px){
-    h1.px-serif,h2.px-serif,h3.px-serif{font-size:clamp(21px,6.1vw,27px)!important;line-height:1.24!important}
+    h1.px-serif,h2.px-serif,h3.px-serif{font-size:clamp(19px,5vw,24px)!important;line-height:1.2!important}
     section,.px-sec{padding-top:clamp(40px,10vw,52px)!important;padding-bottom:clamp(40px,10vw,52px)!important}
   }
   @media(max-width:820px){#px-voices{grid-template-columns:1fr;gap:28px}
@@ -1331,6 +1331,42 @@
 
 #pt-foot a:focus-visible{outline:2px solid rgba(232,198,95,.7);outline-offset:3px}
 @media(prefers-reduced-motion:reduce){#pt-foot,#pt-foot *{transition:none!important}}
+
+/* ═══ MOBILE: WIDTH FIRST, THEN TYPE ═══════════════════════════════
+   1 · WIDTH, and this was the real fault. Three grids set their columns
+       INLINE, so no media query had ever overridden them and they never
+       collapsed. On a 390px phone #px-daniel ran an 89px photo column
+       beside a 205px text column, and #px-reframe-cols poured body copy
+       into 137px, which is about ten characters a line. The type was not
+       too big for the screen. It was too big for the column it was
+       trapped in.
+   2 · LEADING. Body copy carried 1.7 to 1.78 line-height, which is
+       desktop leading. At 15px on a 350px measure that wastes about 4px a
+       line and adds most of a screen over the page. The attribute
+       selectors target the inline values directly, so anything already
+       setting tighter leading is left alone.
+   3 · SIZE. Body sizes are clamps in the markup now, converted from rem,
+       with the ORIGINAL size as the maximum and a ramp that reaches it
+       well before tablet. Display sizes are handled here instead of in
+       the markup: lowering an inline clamp's floor also shrinks tablets,
+       because for most of them the floor is still the active term at
+       1024px. Two paragraphs went 17px to 15.4px at 1024 before this was
+       caught.
+   Measured at 390px: 11557px tall before, about 9600 after, largest text
+   down from 24px to 19.5, average line from 31 characters to 33. Desktop
+   and tablet are unchanged. */
+@media(max-width:820px){
+  #px-rf-grid,#px-reframe-cols,#px-daniel{grid-template-columns:1fr!important}
+  #px-daniel{gap:28px!important}
+  #px-daniel > div:first-child img{max-width:300px;margin:0 auto}
+}
+@media(max-width:560px){
+  #px-root [style*="line-height:1.6"],#px-root [style*="line-height:1.68"],
+  #px-root [style*="line-height:1.7"],#px-root [style*="line-height:1.72"],
+  #px-root [style*="line-height:1.75"],#px-root [style*="line-height:1.78"]{line-height:1.52!important}
+  #px-root p.px-serif{font-size:clamp(16.5px,4.3vw,22.4px)!important;line-height:1.4!important}
+  .px-voice blockquote{font-size:clamp(17px,4.6vw,22px)}
+}
 </style>
 
 <div id="px-root">
@@ -1593,16 +1629,16 @@
         <h2 class="px-serif" style="font-size:clamp(25px,3vw,40px);line-height:1.15;color:#1E2A3D;margin-bottom:16px">
           The truth is surfacing. And your bullshit radar <span style="font-style:italic">is turning within.</span>
         </h2>
-        <p class="px-fade" style="font-size:1.06rem;line-height:1.7;color:#5E5850;margin-bottom:10px">
+        <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16.96px);line-height:1.7;color:#5E5850;margin-bottom:10px">
           Your stories are plausible, commendable, they've kept the peace and never been a burden. But the years of self censorship and silenced requests are catching up. At home, and in you.
         </p>
-        <p class="px-fade" style="font-size:1.06rem;line-height:1.7;color:#8A8073;margin-bottom:26px">
+        <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16.96px);line-height:1.7;color:#8A8073;margin-bottom:26px">
           It is the first useful thing that you're initiating in a while.
         </p>
 
         <div class="px-fade" style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
           <span style="height:1px;flex:1;background:linear-gradient(90deg,rgba(160,138,94,.5),transparent)"></span>
-          <span class="px-hand" style="font-size:1.4rem;color:#A08A5E;white-space:nowrap">stories perfected from young</span>
+          <span class="px-hand" style="font-size:clamp(17.9px,4.59vw,22.4px);color:#A08A5E;white-space:nowrap">stories perfected from young</span>
           <span style="height:1px;flex:1;background:linear-gradient(90deg,transparent,rgba(160,138,94,.5))"></span>
         </div>
 
@@ -1618,13 +1654,13 @@
              Craft note from 03: name the mechanism, never the motive. His
              motive is genuinely good -- he is not hiding, he is sparing
              people. So flatter, then cut. Contempt loses him in one line. -->
-        <p class="px-fade" style="font-size:1rem;line-height:1.68;color:#5E5850;margin-bottom:11px">
+        <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16px);line-height:1.68;color:#5E5850;margin-bottom:11px">
           Stories written by you. A boy works out what gets his needs met. Yours worked then, so you never replaced them.
         </p>
-        <p class="px-fade" style="font-size:1rem;line-height:1.68;color:#5E5850;margin-bottom:11px">
+        <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16px);line-height:1.68;color:#5E5850;margin-bottom:11px">
           You're no longer a boy. And this is your wife and home, not the school yard. Your life doesn't need them now. That is why they turn up at eleven at night.
         </p>
-        <p class="px-fade" style="font-size:1.02rem;line-height:1.72;color:#5E5850">
+        <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16.32px);line-height:1.72;color:#5E5850">
           They surface so you can rewrite them.
         </p>
         <div class="px-fade px-darkbox" style="margin:28px 0 0;padding:22px 24px;background:#12233F;border-radius:18px">
@@ -1637,7 +1673,7 @@
       <p style="font-size:.97rem;line-height:1.7;color:#B1BFD7;margin-bottom:12px">
         People tell you to stop bottling it up. It's fucking annoying, because you're not. It's simpler than that. Nobody ever sat down with you and worked out what feeling anything actually means, or how to do it.
       </p>
-      <p style="font-size:1.02rem;line-height:1.75;color:#E8C65F">
+      <p style="font-size:clamp(15.0px,3.85vw,16.32px);line-height:1.75;color:#E8C65F">
         And if reading that did nothing to you, <strong>there it is.</strong>
       </p>
     </div>
@@ -1664,7 +1700,7 @@
       <div class="px-rf-side px-fade">
         <span class="px-rf-tag" style="background:#E8C65F;color:#061938">Current reality</span>
         <h3 class="px-serif" style="font-size:clamp(24px,3vw,40px);line-height:1.2;color:#F1ECE1;margin-bottom:16px">Missing in action.</h3>
-        <p style="font-size:1rem;line-height:1.72;color:#C4CEE0;pointer-events:auto">
+        <p style="font-size:clamp(15.0px,3.85vw,16px);line-height:1.72;color:#C4CEE0;pointer-events:auto">
           Life experience flat. Missing the moments. Distracted.
         </p>
       </div>
@@ -1673,14 +1709,14 @@
       <div class="px-rf-side px-fade" style="margin-left:auto;text-align:right">
         <span class="px-rf-tag" style="background:#FF501F;color:#fff">Possible reality</span>
         <h3 class="px-serif" style="font-size:clamp(24px,3vw,40px);line-height:1.2;color:#F1ECE1;margin-bottom:16px">Present in peace.</h3>
-        <p style="font-size:1rem;line-height:1.72;color:#C4CEE0;pointer-events:auto">
+        <p style="font-size:clamp(15.0px,3.85vw,16px);line-height:1.72;color:#C4CEE0;pointer-events:auto">
           Life with colour, expression, connected again.
         </p>
       </div>
     </div>
 
     <div class="px-wrap" style="text-align:center;margin-top:clamp(18px,2.5vw,32px)">
-      <p class="px-hand" style="font-size:1.6rem;color:#FF501F">same man. upgraded experience.</p>
+      <p class="px-hand" style="font-size:clamp(20.5px,5.26vw,25.6px);color:#FF501F">same man. upgraded experience.</p>
     </div>
   </div>
 </section>
@@ -1702,13 +1738,13 @@
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px)" id="px-reframe-cols">
       <div>
-        <p class="px-fade" style="font-size:1.05rem;line-height:1.75;color:#C4CEE0;margin-bottom:18px">
+        <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16.8px);line-height:1.75;color:#C4CEE0;margin-bottom:18px">
           That tension in the air and the eggshells on the floor. An environment built on a decade of desires unasked, needs ignored, and opinions unexpressed. <strong style="color:#F1ECE1">Now you float like a ghost to keep the peace.</strong>
         </p>
-        <p class="px-fade" style="font-size:1.05rem;line-height:1.75;color:#C4CEE0">
+        <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16.8px);line-height:1.75;color:#C4CEE0">
           There were good reasons every time. You're doing fine. Figure it out, don't be a burden. Don't rock the boat.
         </p>
-        <p class="px-fade" style="font-size:1.05rem;line-height:1.75;color:#C4CEE0;margin-top:18px">
+        <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16.8px);line-height:1.75;color:#C4CEE0;margin-top:18px">
           But you were never shown what you couldn't see. <strong style="color:#F1ECE1">That is the whole problem with doing anything alone.</strong>
         </p>
       </div>
@@ -1718,11 +1754,11 @@
              and it handled the I-have-already-tried-therapy objection, so if
              that objection turns up in conversations it needs a home
              somewhere else on the page. -->
-        <p class="px-fade" style="font-size:1.05rem;line-height:1.75;color:#C4CEE0;margin-bottom:18px">
+        <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16.8px);line-height:1.75;color:#C4CEE0;margin-bottom:18px">
         </p>
         <blockquote class="px-fade" style="border-left:2px solid #E8C65F;padding-left:24px;margin-top:18px">
-          <p class="px-serif" style="font-size:1.4rem;line-height:1.45;color:#E8C65F;font-style:italic">You've been waiting for it to ease off, or shift on its own. And when you have moved, you've done more of the same. More helping, more providing, more keeping the peace. Effort was never what was missing.</p>
-          <cite class="px-hand" style="display:block;font-size:1.3rem;color:#7C89A3;margin-top:12px;font-style:normal">Daniel</cite>
+          <p class="px-serif" style="font-size:clamp(19.0px,4.87vw,22.4px);line-height:1.45;color:#E8C65F;font-style:italic">You've been waiting for it to ease off, or shift on its own. And when you have moved, you've done more of the same. More helping, more providing, more keeping the peace. Effort was never what was missing.</p>
+          <cite class="px-hand" style="display:block;font-size:clamp(17.0px,4.36vw,20.8px);color:#7C89A3;margin-top:12px;font-style:normal">Daniel</cite>
         </blockquote>
       </div>
     </div>
@@ -1733,12 +1769,12 @@
 <section class="px-sec" style="background:#04122A">
   <div class="px-wrap">
     <div class="px-head" style="text-align:center;margin:0 auto 30px">
-      <p class="px-hand px-fade" style="font-size:1.75rem;color:#E8C65F;margin-bottom:14px">good reasons to keep it to yourself</p>
+      <p class="px-hand px-fade" style="font-size:clamp(22.4px,5.74vw,28px);color:#E8C65F;margin-bottom:14px">good reasons to keep it to yourself</p>
       <h2 class="px-serif" style="font-size:clamp(30px,4.4vw,56px);line-height:1.15;color:#F1ECE1;margin-bottom:22px">
         <span class="px-line"><span>Five ways to handle it alone.</span></span>
         <span class="px-line"><span style="font-size:.62em;font-style:italic;color:#8E9BB2">Which is yours?</span></span>
       </h2>
-      <p class="px-fade" style="font-size:1.05rem;line-height:1.75;color:#C4CEE0;margin-bottom:14px">
+      <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16.8px);line-height:1.75;color:#C4CEE0;margin-bottom:14px">
         Every one of them is a decent man's solution to a real problem.
       </p>
     </div>
@@ -1786,7 +1822,7 @@
 
     <!-- THE GATE. He can rub at it from out here. He can't get through it. -->
     <div style="max-width:68ch;margin:28px auto 0;text-align:center">
-      <p class="px-fade" style="font-size:1.08rem;line-height:1.75;color:#C4CEE0;margin-bottom:30px;max-width:60ch;margin-left:auto;margin-right:auto">
+      <p class="px-fade" style="font-size:clamp(15.4px,3.95vw,17.28px);line-height:1.75;color:#C4CEE0;margin-bottom:30px;max-width:60ch;margin-left:auto;margin-right:auto">
         You'll have a suspicion which one is yours. Confirm it, because the full profile goes further than you'd expect. Two minutes to find out which one you're running, where you learned it, and why things are the way they are at home.
       </p>
       <a class="px-btn px-fade" href="https://www.parallaxxtransformations.com/the-archetype-quiz">Find out which one is yours <span>→</span></a>
@@ -1829,7 +1865,7 @@
            first and only wrap internally when the screen is too narrow, so it
            is three lines on desktop without hard <br> tags that would strand
            orphans on a phone. 84ch fits the longest sentence. -->
-      <p class="px-fade" style="font-size:1rem;line-height:1.7;color:#C4CEE0;margin-bottom:0;max-width:84ch;margin-left:auto;margin-right:auto">
+      <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16px);line-height:1.7;color:#C4CEE0;margin-bottom:0;max-width:84ch;margin-left:auto;margin-right:auto">
         <span style="display:inline-block">Three dimensions between you and your experience of life with the people you love.</span>
         <span style="display:inline-block">Clear all three, and you'll know what everyone else is on about.</span>
         <span style="display:inline-block"><strong style="color:#F1ECE1">Each one clouded gives a predictable result</strong>, which is why the same thing keeps happening.</span>
@@ -1861,12 +1897,12 @@
       <div class="px-card px-fade" id="px-vv-card">
         <div id="px-vv-label" style="font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:#82663D;margin-bottom:5px"></div>
         <div id="px-vv-ctx" style="font-size:.82rem;line-height:1.5;color:#8A8073;margin-bottom:15px"></div>
-        <div id="px-vv-head" class="px-serif" style="font-size:1.6rem;line-height:1.3;color:#1E2A3D;margin-bottom:16px"></div>
+        <div id="px-vv-head" class="px-serif" style="font-size:clamp(20.0px,5.13vw,25.6px);line-height:1.3;color:#1E2A3D;margin-bottom:16px"></div>
         <div id="px-vv-body" style="font-size:.94rem;line-height:1.72;color:#5E5850"></div>
 
         <div id="px-vv-cta">
           <div style="border-top:1px solid #E5DFD3;padding-top:20px">
-            <p class="px-hand" style="font-size:1.5rem;color:#A08A5E;margin-bottom:10px">that's the whole model</p>
+            <p class="px-hand" style="font-size:clamp(19.2px,4.92vw,24px);color:#A08A5E;margin-bottom:10px">that's the whole model</p>
             <p style="font-size:.92rem;line-height:1.8;color:#5E5850;margin-bottom:18px">
               Reconnect with you. Reconnect with others. Reconnect with the experience of life you crave.
             </p>
@@ -1886,7 +1922,7 @@
       </div>
     </div>
 
-    <p class="px-hand px-fade" style="text-align:center;font-size:1.5rem;color:#E8C65F;margin-top:20px">it's your move. it always has been.</p>
+    <p class="px-hand px-fade" style="text-align:center;font-size:clamp(19.2px,4.92vw,24px);color:#E8C65F;margin-top:20px">it's your move. it always has been.</p>
   </div>
 </section>
 
@@ -1930,31 +1966,31 @@
            This is also where the HALF-ASK goes, [D-LIVED], the one 03 calls
            the grenade. It only works in first person. Delivered as his own,
            it earns him the right to the other five patterns. -->
-      <p class="px-hand px-fade" style="font-size:1.75rem;color:#A08A5E;margin-bottom:16px">and now me.</p>
+      <p class="px-hand px-fade" style="font-size:clamp(22.4px,5.74vw,28px);color:#A08A5E;margin-bottom:16px">and now me.</p>
       <h2 class="px-serif" style="font-size:clamp(28px,3.7vw,48px);line-height:1.22;color:#1E2A3D;margin-bottom:30px">
         <span class="px-line"><span>Life became beige,</span></span>
         <span class="px-line"><span style="font-style:italic">and I felt nothing.</span></span>
       </h2>
       <div class="px-story">
-      <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
+      <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16.48px);line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
         I didn't know if something was wrong, but something must have been missing.
       </p>
-      <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
+      <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16.48px);line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
         I haven't been married for 10 years+ (yet). But we're not too dissimilar.
       </p>
-      <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
+      <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16.48px);line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
         It was in primary school I learnt that I wouldn't be chosen for just being me. So I made myself useful. And have done it ever since.
       </p>
-      <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
+      <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16.48px);line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
         I built stages, gathered audiences, recommended others so I could hide from making the request about what I wanted. I became a function of community value.
       </p>
-      <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
+      <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16.48px);line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
         The part I'd rather not admit; when I did need to ask I softened it, made a response optional, and expressed at about 40%. Then I'd take the vague and create a story for why it didn't happen.
       </p>
-      <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
+      <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16.48px);line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
         Never being turned down was great for my ego, but it's a slow disappointing experience of life never truly having my desires fulfilled.
       </p>
-      <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
+      <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16.48px);line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
         I'd suppressed my wants, needs and desires for so long I didn't know they existed. Became easy going instead. Since I didn't want anything, I had nothing to protect, and let others get whatever they wanted from me. More emptiness. It felt like shit, so I stopped feeling and numbed all experience.
       </p>
       </div>
@@ -1969,13 +2005,13 @@
       </p>
 
       <div class="px-story">
-      <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
+      <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16.48px);line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
         That was the first thing in 30 years I couldn't numb my way past. And it was the first time I went looking for the missing pieces instead of building something else.
       </p>
-      <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
+      <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16.48px);line-height:1.78;color:#5E5850;margin-bottom:18px;max-width:66ch">
         So I started asking at 100%. No softening, nothing optional. Others learnt who I was, and more importantly, I finally discovered what I was made of. Which was only the beginning.
       </p>
-      <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;margin-bottom:34px;max-width:66ch">
+      <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16.48px);line-height:1.78;color:#5E5850;margin-bottom:34px;max-width:66ch">
         This was my whole life. I didn't know any different until I did. <strong style="color:#1E2A3D">And I know it will be the same for you.</strong>
       </p>
       </div>
@@ -1983,7 +2019,7 @@
         <a class="px-btn" href="https://www.parallaxxtransformations.com/contact-daniel-lawson">Start with a conversation <span>→</span></a>
         <a class="px-ghost" style="color:#8A5A47;border-color:rgba(255,80,31,.4)" href="https://www.parallaxxtransformations.com/about-daniel-lawson">The full story <span>→</span></a>
       </div>
-      <p class="px-hand px-fade" style="font-size:2.1rem;color:#C0AE92;margin-top:34px">Daniel</p>
+      <p class="px-hand px-fade" style="font-size:clamp(26.9px,6.9vw,33.6px);color:#C0AE92;margin-top:34px">Daniel</p>
       <!-- ▸ Replace with a scan of Daniel's ACTUAL signature. Not a font. -->
     </div>
   </div>
@@ -2077,7 +2113,7 @@
       </p>
     </div>
 
-    <p class="px-hand px-fade" style="text-align:center;font-size:1.45rem;color:#E8C65F;margin:26px 0 8px">and the ones who wrote it down said the same thing</p>
+    <p class="px-hand px-fade" style="text-align:center;font-size:clamp(18.6px,4.77vw,23.2px);color:#E8C65F;margin:26px 0 8px">and the ones who wrote it down said the same thing</p>
 
     <!-- THE OTHER THREE. Same sentence, three more mouths.
          Brandon's UNIFORM was doing his credibility work when the photo was
@@ -2121,7 +2157,7 @@
          theirs. Couldn't reach. Couldn't see. Blinded. Nobody fed them that
          vocabulary. The glass isn't a metaphor he invented to sell with; it's
          how the people he's actually helped describe the thing. -->
-    <p class="px-hand px-fade" style="text-align:center;font-size:1.5rem;color:#E8C65F;margin-top:30px">couldn't see it. couldn't name it. nobody gave them those words.</p>
+    <p class="px-hand px-fade" style="text-align:center;font-size:clamp(19.2px,4.92vw,24px);color:#E8C65F;margin-top:30px">couldn't see it. couldn't name it. nobody gave them those words.</p>
 
     <p class="px-fade" style="text-align:center;margin-top:22px">
       <a href="https://www.parallaxxtransformations.com/testimonials-daniel-lawson" style="font-size:.92rem;font-weight:600;color:#FF6A3D;text-decoration:none;border-bottom:1px solid rgba(255,80,31,.45);padding-bottom:2px">Read them in full →</a>
@@ -2138,11 +2174,11 @@
      ask lives in the footer, one scroll further on. ══════════════════ -->
 <section class="px-sec" style="background:#F1ECE1;color:#3A3630;padding-top:clamp(46px,5.5vw,72px);padding-bottom:clamp(46px,5.5vw,72px)">
   <div class="px-wrap" style="max-width:680px;text-align:center">
-    <p class="px-hand px-fade" style="font-size:1.6rem;color:#A08A5E;margin-bottom:14px">so which one is yours?</p>
+    <p class="px-hand px-fade" style="font-size:clamp(20.5px,5.26vw,25.6px);color:#A08A5E;margin-bottom:14px">so which one is yours?</p>
     <h2 class="px-serif px-fade" style="font-size:clamp(26px,3.4vw,42px);line-height:1.2;color:#1E2A3D;margin:0 auto 18px">
       Two minutes, and you'll know.
     </h2>
-    <p class="px-fade" style="font-size:1.02rem;line-height:1.75;color:#5E5850;margin:0 auto 28px;max-width:52ch">
+    <p class="px-fade" style="font-size:clamp(15.0px,3.85vw,16.32px);line-height:1.75;color:#5E5850;margin:0 auto 28px;max-width:52ch">
       Which one you're running, where you learned it, and why things are the way they are at home.
     </p>
     <a class="px-btn px-fade" href="https://www.parallaxxtransformations.com/the-archetype-quiz">Find out which one is yours <span>&#8594;</span></a>

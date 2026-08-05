@@ -58,6 +58,14 @@
   ::selection{background:#FF501F;color:#fff}
   img{display:block;max-width:100%}
 
+  /* ══ THE HOST ═════════════════════════════════════════════════════
+     A custom element is display:inline by default. Inline means no block
+     box and a wrapper free to size itself wrong, which leaves a band of
+     PAGE background under the component. On a Wix page that band is white.
+     The preview harnesses set display on the tag from OUTSIDE, so this only
+     ever showed up on the live site. ══════════════════════════════════ */
+  :host{display:block;background:#04122A}
+
   #px-root{background:#04122A;color:#B1BFD7;font-family:'Montserrat',system-ui,sans-serif;font-size:16px;line-height:1.7;overflow-x:clip;position:relative}
   /* DISPLAY FACE. Was Cormorant Garamond at weight 300 with negative tracking --
      settings that flatter a high-contrast serif and gut a geometric sans.
@@ -2321,6 +2329,18 @@
   #pt-cta .arrow{display:none}
 }
 
+
+/* ═══ THE 320px BAR ═══════════════════════════════════════════════
+   At 320 the logo, the Contact pill and the burger add up to more than
+   the bar and the burger hangs 9px off the right edge. The logo loses
+   4px, the bar loses 6px of padding either side, the pill tightens. */
+@media(max-width:360px){
+  #pt-bar{padding-left:14px;padding-right:14px;gap:10px}
+  #pt-logo img{height:22px}
+  #pt-cta{padding:.6em .82em;font-size:.8rem}
+  #pt-burger{width:34px;margin-right:-4px}
+}
+
 @media(prefers-reduced-motion:reduce){
   #pt-nav,#pt-nav *{transition:none!important}
 }
@@ -2509,6 +2529,14 @@
         <span style="font-size:.78rem;color:#5E6B85;line-height:1.5;display:inline-block">
           Ninety seconds.<br>Answer&rsquo;s on the screen.</span>
       </div>
+
+      <!-- THE QUALIFIER. The men's hero has always carried one and hers had
+           nothing doing that job. A qualifier that filters people OUT is what
+           makes the ones left feel found. Same three words as the women's
+           door on the home page, so the door quotes its own page. -->
+      <p class="px-fade" style="font-size:.78rem;line-height:1.6;color:#5E6B85;margin-top:20px;letter-spacing:.02em">
+        Independent. Capable. Successful.
+      </p>
     </div>
   </div>
 

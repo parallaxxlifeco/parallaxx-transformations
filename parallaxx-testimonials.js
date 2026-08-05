@@ -139,7 +139,7 @@
   .px-hand{font-family:'Lumios Marker','Permanent Marker',cursive}
   .px-wrap{max-width:1240px;margin:0 auto}
   .px-sec{padding:clamp(52px,6.5vw,92px) clamp(20px,4vw,52px);position:relative}
-  .px-label{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:#5E6B85}
+  .px-label{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#67748E}
   .px-rule{width:56px;height:1px;background:rgba(232,198,95,.5);border:0}
 
   .px-btn{display:inline-flex;align-items:center;gap:.55em;background:#FF501F;color:#fff;
@@ -190,15 +190,19 @@
   /* THE COUNT. Three facts, no adjectives. It sits inside the hero
      rather than in its own band because it is the SUBTITLE of the
      claim, not a separate boast. */
-  #px-count{display:flex;justify-content:center;gap:clamp(22px,5vw,64px);
-    flex-wrap:wrap;margin-top:clamp(30px,4vw,44px);
+  /* GRID, NOT WRAPPING FLEX. On a phone the three figures wrapped 2 + 1
+     and the last one sat alone under a gap, which reads as a mistake
+     rather than as a row. Three equal columns hold at every width; the
+     type comes down instead. */
+  #px-count{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,5vw,64px);
+    margin-top:clamp(30px,4vw,44px);
     padding-top:clamp(26px,3vw,34px);border-top:1px solid rgba(241,236,225,.09);
     max-width:660px;margin-left:auto;margin-right:auto}
   #px-count div{text-align:center}
   #px-count b{display:block;font-family:'Poppins','Montserrat',sans-serif;
     font-size:clamp(1.5rem,3vw,2rem);font-weight:500;color:#E8C65F;line-height:1.1}
-  #px-count span{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;
-    font-weight:700;color:#5E6B85}
+  #px-count span{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+    font-weight:700;color:#67748E;line-height:1.4}
 
 /* ═══ 02 · THE PATTERN ════════════════════════════════════════════
    Fragments, verbatim, attributed, from four different countries.
@@ -303,8 +307,8 @@
      If this band ever needs more weight, it comes from the phrase or
      the spacing, not from portraits. */
   .px-frag .who{margin-top:clamp(13px,1.5vw,18px)}
-  .px-frag cite{font-style:normal;font-size:.67rem;letter-spacing:.13em;
-    text-transform:uppercase;font-weight:700;color:#7C89A3;line-height:1.4}
+  .px-frag cite{font-style:normal;font-size:.72rem;letter-spacing:.11em;
+    text-transform:uppercase;font-weight:700;color:#8394AD;line-height:1.45}
 
 /* ═══ 03 · HEAR ONE ═══════════════════════════════════════════════
    VIDEO FACADE. A YouTube <iframe> pulls roughly a megabyte of
@@ -570,6 +574,7 @@
   #px-switch button{appearance:none;border:0;cursor:pointer;background:transparent;
     font-family:inherit;font-size:.84rem;font-weight:700;letter-spacing:.06em;
     color:#8E9BB2;padding:.72em 1.5em;border-radius:999px;
+    min-height:40px;display:inline-flex;align-items:center;justify-content:center;
     transition:background .25s ease,color .25s ease}
   #px-switch button:hover{color:#F1ECE1}
   #px-switch button[aria-selected="true"]{background:#FF501F;color:#fff}
@@ -662,8 +667,13 @@
   .px-who .n span{display:block;font-size:.7rem;font-weight:700;letter-spacing:.14em;
     text-transform:uppercase;color:#E8C65F;margin-top:3px}
 
-  .px-beat{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
-    font-weight:800;color:#5E6B85;margin-bottom:9px}
+  /* 11px, not 9.9. BEFORE and NOW are the only signposts inside a card
+     and they were the smallest type on the page. Uppercase at heavy
+     weight with .2em tracking survives small sizes better than most
+     things, which is how it got away with it, but under 10px it stops
+     being read and starts being a texture above a paragraph. */
+  .px-beat{font-size:.69rem;letter-spacing:.18em;text-transform:uppercase;
+    font-weight:800;color:#6A7893;margin-bottom:9px}
 
   /* ── WHY THE CARD BODY IS NOT POPPINS ────────────────────────────
      It was, at weight 300, 19.5px, leading 1.46 -- and it was genuinely
@@ -736,9 +746,15 @@
      to shout at rest. The caret stays coral so the affordance is never
      in doubt, and the whole thing goes coral on hover and focus. One
      stays lit: the one you are pointing at. */
+  /* THE TOGGLE WAS A 21px TAP TARGET.
+     It is the only control inside a card and it measured 139x21, against
+     a 44px minimum on touch. Padding grows the hit area and a matching
+     negative margin takes the layout change back out, so the card looks
+     identical and the thumb gets somewhere to land. */
   .px-card summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;
     gap:.5em;font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-    color:#8FA0BC;transition:color .25s ease}
+    color:#8FA0BC;transition:color .25s ease;
+    padding:11px 12px 11px 0;margin:-11px 0}
   .px-card summary .cx{color:#FF501F}
   .px-card summary::-webkit-details-marker{display:none}
   .px-card summary:hover,.px-card details[open] summary{color:#F1ECE1}
@@ -778,8 +794,8 @@
     transition:border-color .3s ease,transform .3s ease,box-shadow .3s ease}
   .px-door:hover,.px-door:focus-visible{border-color:rgba(255,80,31,.55);
     transform:translateY(-3px);box-shadow:0 30px 60px -34px rgba(30,42,61,.6);outline:none}
-  .px-door .tag{font-size:.63rem;letter-spacing:.2em;text-transform:uppercase;
-    font-weight:800;color:#A08A5E;margin-bottom:13px}
+  .px-door .tag{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+    font-weight:800;color:#98814F;margin-bottom:13px}
   .px-door h3{font-family:'Poppins','Montserrat',sans-serif;font-weight:400;
     font-size:clamp(18px,2vw,24px);line-height:1.26;color:#1E2A3D;margin-bottom:11px}
   .px-door p{font-size:.92rem;line-height:1.68;color:#5E5850;margin-bottom:20px}
@@ -812,8 +828,11 @@
     #px-hero{padding-top:104px!important}
     .px-hand{font-size:clamp(14px,4.6vw,20px)!important}
     #px-wall{grid-template-columns:1fr}
-    #px-switch button{padding:.7em 1.05em;font-size:.78rem}
-    #px-count{gap:20px}
+    /* 44px is the tap minimum on touch and these were 32. Height comes
+       from min-height rather than padding so the pill keeps its shape. */
+    #px-switch button{padding:.7em .95em;font-size:.8rem;min-height:44px}
+    #px-count b{font-size:clamp(1.35rem,7vw,1.7rem)}
+    #px-count span{font-size:.66rem;letter-spacing:.07em}
   }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -1216,10 +1235,16 @@
    the foot of the page. They are still the largest thing down here, and
    still clearly larger than the utility row at .82, so the hierarchy the
    note above describes is intact. The size came off the type and went
-   into padding instead, so the tap target grew rather than shrank. */
+   into padding instead, so the tap target grew rather than shrank.
+
+   margin-bottom went 1px -> 9px on 5 Aug. The padding already made each
+   link a decent target, but stacked with 1px between them the boxes
+   were effectively continuous, so an imprecise tap in a column landed
+   on a neighbour rather than on nothing. The targets are the same size;
+   there is simply somewhere to miss now. */
 .pt-door a{
   display:block;color:#D7DEEA;font-size:.92rem;font-weight:500;
-  line-height:1.3;padding:5px 0;margin-bottom:1px;text-decoration:none;
+  line-height:1.3;padding:5px 0;margin-bottom:9px;text-decoration:none;
   border-radius:3px;transition:color .2s ease}
 .pt-door a:first-of-type{padding-top:0}
 .pt-door a:last-child{margin-bottom:0}
@@ -1240,9 +1265,20 @@
    separated. This is the register of a footnote, and that is the
    point: it is here for the person who came looking for it, and
    invisible to the person who did not. */
+/* SPACING, NOT SIZE. Measured on a 390px viewport, adjacent links in
+   this row sat 0px apart: the dot separator is an ::after INSIDE the
+   anchor, so each link's hit box ran all the way to the next one's.
+   Nothing here is too small to hit; the problem was that a near miss
+   could not miss. A thumb aimed at "Blog" drifting three pixels right
+   opened "Progress Journal", and a wrong destination is worse than a
+   dead tap, because there is no retry, only a back button.
+
+   So the dot now hugs the link it belongs to and the flex gap carries
+   the separation. Visually the row is within a couple of pixels of
+   where it was. Between the hit boxes there is now 18px of nothing. */
 #pt-util{
   display:flex;flex-wrap:wrap;align-items:center;
-  gap:7px 0;
+  gap:9px 18px;
   padding-top:18px;border-top:1px solid rgba(241,236,225,.1);
   margin-bottom:14px}
 #pt-util a{
@@ -1255,7 +1291,7 @@
    Trailing means a wrapped line starts on a word, which is what the
    eye expects, and the dot left at a line end reads as continuation. */
 #pt-util a:not(:last-child)::after{
-  content:"·";color:#3E4A63;margin:0 11px;display:inline-block}
+  content:"·";color:#3E4A63;margin:0 0 0 9px;display:inline-block}
 
 /* ═══ TIER 3 · LEGAL ══════════════════════════════════════════════ */
 #pt-legal{

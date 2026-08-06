@@ -6,28 +6,21 @@
 <title>The Reconnected Woman — preview</title>
 <style>
   html,body{margin:0;padding:0;background:#04122A}
-  /* Preview harness only, and it mirrors the Wix arrangement exactly so what
-     you see here is what the page will be. In Wix each of the three is its own
-     Custom Element widget, with the site Header + Footer turned OFF:
+  /* Preview harness only, and it is the Wix arrangement exactly: ONE custom
+     element, PtNav v3 and PtFooter v3 baked inside it, the same as the home,
+     men, women, about and testimonials pages.
 
-       parallaxx-nav.js                  tag  parallaxx-nav        active="women"
-       parallaxx-woman.js   tag  parallaxx-reconnected-woman
-       parallaxx-footer.js               tag  parallaxx-footer
+       Source URL   parallaxx-reconnected-woman.js
+       Tag          parallaxx-reconnected-woman
+       Site Header + Footer   OFF
 
-     Nothing here needs re-pasting when any of the three changes. Rebuild,
-     push, and the page picks it up. */
-  parallaxx-nav{display:block;position:relative;z-index:200}
+     No ?v= needed. GitHub Pages ignores the query string and serves current
+     bytes either way. Rebuild, push, and the page picks it up. */
   parallaxx-reconnected-woman{display:block}
-  parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
 </style>
 </head>
 <body>
-  <parallaxx-nav active="women"></parallaxx-nav>
   <parallaxx-reconnected-woman></parallaxx-reconnected-woman>
-  <parallaxx-footer></parallaxx-footer>
-
-  <script src="./parallaxx-nav.js"></script>
   <script src="./parallaxx-reconnected-woman.js"></script>
-  <script src="./parallaxx-footer.js"></script>
 </body>
 </html>

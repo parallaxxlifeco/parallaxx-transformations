@@ -1,0 +1,1027 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --trw-black:      #061938;
+    --trw-dark:       #112030;
+    --trw-card:       #162638;
+    --trw-border:     #1E3347;
+    --trw-gold:       #D4B84A;
+    --trw-gold-light: #E8CF72;
+    --trw-gold-dark:  #A8912E;
+    --trw-orange:     #E8451C;
+    --trw-orange-dk:  #C43715;
+    --trw-white:      #ffffff;
+    --trw-cream:      #F0EDE6;
+    --trw-muted:      #5A7A96;
+    --trw-text:       #8AADCA;
+    --trw-head:       'Montserrat', system-ui, sans-serif;
+    --trw-body:       'Poppins', system-ui, sans-serif;
+  }
+
+  #trw-page *, #trw-page *::before, #trw-page *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  #trw-page {
+    background: var(--trw-black);
+    color: var(--trw-text);
+    font-family: var(--trw-body);
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    width: 100%;
+    overflow-x: clip;
+  }
+
+  #trw-page h1, #trw-page h2, #trw-page h3, #trw-page h4 {
+    font-family: var(--trw-head);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--trw-cream);
+    font-weight: 700;
+  }
+
+  #trw-page p { color: var(--trw-text); font-weight: 300; }
+  #trw-page strong { color: var(--trw-cream); font-weight: 600; }
+  #trw-page a { color: var(--trw-gold); }
+  #trw-page img { display: block; max-width: 100%; }
+
+  #trw-page .container      { max-width: 860px;  margin: 0 auto; padding: 0 28px; }
+  #trw-page .container-wide { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+
+  #trw-page .overline {
+    display: block;
+    font-family: var(--trw-body);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--trw-gold);
+    margin-bottom: 14px;
+  }
+
+  #trw-page .divider {
+    width: 48px; height: 1px;
+    background: var(--trw-gold);
+    margin: 24px auto 0;
+  }
+  #trw-page .divider--left { margin-left: 0; }
+
+  #trw-page section { padding: 64px 0; }
+
+  /* BUTTONS */
+  #trw-page .btn {
+    display: inline-block;
+    padding: 17px 46px;
+    font-family: var(--trw-body);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+  }
+  #trw-page .btn--gold { background: var(--trw-orange); color: var(--trw-white); }
+  #trw-page .btn--gold:hover {
+    background: var(--trw-orange-dk);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 32px rgba(232,69,28,0.35);
+  }
+  #trw-page .btn--outline {
+    background: transparent;
+    color: var(--trw-orange);
+    border: 1px solid var(--trw-orange);
+  }
+  #trw-page .btn--outline:hover { background: var(--trw-orange); color: var(--trw-white); }
+  #trw-page .btn--full { display: block; text-align: center; width: 100%; }
+
+  /* HERO */
+  #trw-page #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 72px 28px;
+    position: relative;
+    overflow: hidden;
+    background: var(--trw-black);
+  }
+  #trw-page #hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      -45deg, transparent, transparent 56px,
+      rgba(212,184,74,0.04) 56px, rgba(212,184,74,0.04) 57px
+    );
+    pointer-events: none;
+  }
+  #trw-page #hero::after {
+    content: '';
+    position: absolute;
+    top: 40%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(212,184,74,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  #trw-page .hero-inner { position: relative; z-index: 1; }
+  #trw-page .hero-kicker {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--trw-gold); margin-bottom: 32px;
+    animation: trwFadeUp 0.7s ease 0.1s both;
+  }
+  #trw-page #hero h1 {
+    font-size: clamp(40px, 11vw, 108px);
+    font-weight: 800; color: var(--trw-white);
+    line-height: 0.95; margin-bottom: 28px;
+    overflow-wrap: break-word;
+    animation: trwFadeUp 0.7s ease 0.25s both;
+  }
+  #trw-page #hero h1 .accent { color: var(--trw-gold); }
+  #trw-page .hero-tagline {
+    font-size: clamp(18px, 2.4vw, 22px);
+    font-weight: 300; color: #6B91AE;
+    max-width: 520px; margin: 0 auto 52px;
+    letter-spacing: 0.02em;
+    animation: trwFadeUp 0.7s ease 0.4s both;
+  }
+  #trw-page #hero .btn { animation: trwFadeUp 0.7s ease 0.55s both; }
+  #trw-page .hero-rule {
+    margin-top: 48px; padding-top: 32px;
+    border-top: 1px solid var(--trw-border);
+    font-size: 12px; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--trw-muted);
+    overflow-wrap: break-word;
+    animation: trwFadeUp 0.7s ease 0.7s both;
+  }
+
+  @keyframes trwFadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* VSL */
+  #trw-page #vsl { background: var(--trw-dark); padding: 52px 0; }
+  #trw-page #vsl .section-head { text-align: center; margin-bottom: 40px; }
+
+  /* VIDEO */
+  #trw-page .video-wrap {
+    background: #000;
+    border: 1px solid var(--trw-border);
+    overflow: hidden; position: relative;
+  }
+  #trw-page .video-wrap video { display: block; width: 100%; height: auto; }
+  #trw-page .video-wrap--landscape { aspect-ratio: 16/9; }
+  #trw-page .video-wrap--landscape video { width: 100%; height: 100%; object-fit: cover; }
+  #trw-page .video-wrap--reel { aspect-ratio: 9/16; }
+  #trw-page .video-wrap--reel video { width: 100%; height: 100%; object-fit: cover; }
+
+  /* Video play overlay */
+  #trw-page .video-play-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 2;
+    transition: background 0.3s ease, opacity 0.4s ease;
+  }
+  #trw-page .video-play-overlay:hover { background: rgba(6, 25, 56, 0.18); }
+  #trw-page .video-play-overlay svg {
+    width: 96px; height: 96px;
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5));
+    transition: transform 0.25s ease;
+  }
+  #trw-page .video-play-overlay:hover svg { transform: scale(1.08); }
+  #trw-page .video-play-overlay.is-hidden { opacity: 0; pointer-events: none; }
+  @media (max-width: 600px) {
+    #trw-page .video-play-overlay svg { width: 68px; height: 68px; }
+  }
+
+  /* CRISIS */
+  #trw-page #crisis {
+    background: var(--trw-dark);
+    border-top: 1px solid var(--trw-border);
+    border-bottom: 1px solid var(--trw-border);
+    text-align: center; padding: 52px 0;
+  }
+  #trw-page #crisis blockquote {
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 300; color: var(--trw-cream);
+    line-height: 1.6; max-width: 740px;
+    margin: 0 auto 32px; font-style: italic;
+  }
+  #trw-page #crisis .stand {
+    font-size: 14px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--trw-gold);
+  }
+
+  /* INITIATION */
+  #trw-page #initiation { background: var(--trw-black); }
+  #trw-page #initiation .section-head { text-align: center; margin-bottom: 40px; }
+  #trw-page #initiation h2 { font-size: clamp(26px, 3.5vw, 40px); }
+
+  #trw-page .archetype-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--trw-border);
+    border: 1px solid var(--trw-border); margin-bottom: 40px;
+  }
+  #trw-page .archetype-card {
+    background: var(--trw-card); padding: 28px 24px;
+    position: relative; display: flex; align-items: flex-start; gap: 18px;
+  }
+  #trw-page .archetype-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, var(--trw-gold-dark), var(--trw-gold));
+  }
+  #trw-page .archetype-num {
+    font-family: var(--trw-head); font-size: 32px; font-weight: 700;
+    color: var(--trw-gold); opacity: 0.5; line-height: 1.2;
+    flex-shrink: 0; min-width: 36px;
+  }
+  #trw-page .archetype-card p { font-size: 15px; line-height: 1.75; color: var(--trw-cream); padding-top: 4px; }
+  #trw-page .archetype-body { padding-top: 4px; flex: 1; }
+  #trw-page .archetype-body p { padding-top: 0; }
+  #trw-page .archetype-label {
+    display: block;
+    font-family: var(--trw-head);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--trw-gold);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  /* DISTINCTION */
+  #trw-page #distinction { background: var(--trw-black); }
+  #trw-page #distinction .section-head { text-align: center; margin-bottom: 40px; }
+  #trw-page #distinction h2 { font-size: clamp(26px, 3.5vw, 40px); }
+
+  #trw-page .position-box {
+    border: 1px solid var(--trw-border); border-left: 3px solid var(--trw-gold);
+    background: var(--trw-card); padding: 28px 36px; text-align: center;
+  }
+  #trw-page .position-box p { font-size: 19px; font-weight: 300; color: var(--trw-cream); line-height: 1.7; }
+
+  /* ENTRY */
+  #trw-page #entry { background: var(--trw-dark); text-align: center; }
+  #trw-page #entry h2 { font-size: clamp(26px, 3.5vw, 40px); margin-bottom: 24px; }
+  #trw-page #entry .lead { font-size: 18px; max-width: 620px; margin: 0 auto 44px; line-height: 1.85; }
+
+  /* VALUES */
+  #trw-page #values { background: var(--trw-black); }
+  #trw-page #values .section-head { text-align: center; margin-bottom: 40px; }
+  #trw-page #values h2 { font-size: clamp(26px, 3.5vw, 40px); }
+
+  #trw-page .values-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px; margin-bottom: 28px;
+  }
+  #trw-page .value-card {
+    padding: 28px 24px 24px; border: 1px solid var(--trw-border);
+    position: relative; overflow: hidden;
+  }
+  #trw-page .value-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px; background: var(--trw-gold);
+    transform: scaleX(0); transform-origin: left; transition: transform 0.35s ease;
+  }
+  #trw-page .value-card:hover::after { transform: scaleX(1); }
+  #trw-page .value-card h3 { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--trw-gold); margin-bottom: 16px; }
+  #trw-page .value-card p { font-size: 16px; }
+
+  #trw-page .innercircle-box {
+    text-align: center; padding: 28px 40px;
+    border: 1px solid var(--trw-border); background: var(--trw-card);
+  }
+  #trw-page .innercircle-box p { font-size: 19px; font-weight: 300; color: var(--trw-cream); max-width: 600px; margin: 0 auto; }
+
+  /* PRICING */
+  #trw-page #pricing { background: var(--trw-dark); text-align: center; }
+  #trw-page #pricing h2 { font-size: clamp(26px, 3.5vw, 40px); margin-bottom: 16px; }
+  #trw-page #pricing .lead { font-size: 17px; max-width: 480px; margin: 0 auto; }
+
+  #trw-page .price-card {
+    max-width: 500px; margin: 52px auto 0;
+    background: var(--trw-card); border: 1px solid var(--trw-border);
+    position: relative; overflow: hidden;
+  }
+  #trw-page .price-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--trw-gold-dark), var(--trw-gold), var(--trw-gold-dark));
+  }
+  #trw-page .price-top { padding: 28px 36px 20px; border-bottom: 1px solid var(--trw-border); }
+  #trw-page .price-amount { font-family: var(--trw-head); font-size: 80px; font-weight: 700; color: var(--trw-white); line-height: 1; }
+  #trw-page .price-amount sup { font-size: 30px; vertical-align: top; margin-top: 14px; display: inline-block; color: var(--trw-gold); }
+  #trw-page .price-note { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--trw-muted); margin-top: 10px; }
+  #trw-page .price-features { list-style: none; padding: 16px 36px; }
+  #trw-page .price-features li {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 11px 0; border-bottom: 1px solid var(--trw-border);
+    font-size: 16px; color: var(--trw-cream);
+  }
+  #trw-page .price-features li:last-child { border-bottom: none; }
+  #trw-page .price-features li::before { content: '\2014'; color: var(--trw-gold); flex-shrink: 0; margin-top: 1px; }
+  #trw-page .price-action { padding: 0 36px 28px; }
+
+  /* BONUS */
+  #trw-page #bonus { background: var(--trw-black); }
+  #trw-page #bonus .section-head { text-align: center; margin-bottom: 32px; }
+  #trw-page #bonus h2 { font-size: clamp(26px, 3.5vw, 40px); }
+
+  #trw-page .bonus-card {
+    display: grid; grid-template-columns: 200px 1fr;
+    border: 1px solid var(--trw-border); overflow: hidden;
+    max-width: 740px; margin: 0 auto;
+  }
+  #trw-page .bonus-left {
+    background: var(--trw-gold); padding: 28px 20px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center; gap: 6px;
+  }
+  #trw-page .bonus-left .tag { font-family: var(--trw-head); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(0,0,0,0.55); }
+  #trw-page .bonus-left .title { font-family: var(--trw-head); font-size: 20px; font-weight: 700; color: var(--trw-black); line-height: 1.2; }
+  #trw-page .bonus-right { background: var(--trw-card); padding: 24px 32px; }
+  #trw-page .bonus-right h3 { font-size: 22px; color: var(--trw-white); margin-bottom: 14px; }
+  #trw-page .bonus-right p { font-size: 16px; margin-bottom: 20px; }
+  #trw-page .value-strip { display: flex; align-items: center; gap: 14px; }
+  #trw-page .value-strip .was { font-size: 14px; color: var(--trw-muted); text-decoration: line-through; }
+  #trw-page .value-strip .now { font-family: var(--trw-head); font-size: 15px; letter-spacing: 0.1em; color: var(--trw-gold); }
+
+  /* BIO */
+  #trw-page #bio { background: var(--trw-dark); }
+  #trw-page .bio-grid { display: grid; grid-template-columns: 300px 1fr; gap: 48px; align-items: center; }
+  #trw-page .bio-img-wrap { position: relative; }
+  #trw-page .bio-img-wrap::after {
+    content: ''; position: absolute; bottom: -14px; right: -14px;
+    width: 55%; height: 55%; border: 1px solid var(--trw-gold);
+    pointer-events: none; z-index: 0;
+  }
+  #trw-page .bio-img-wrap > * { position: relative; z-index: 1; }
+  #trw-page .bio-text h2 { font-size: clamp(24px, 3vw, 36px); margin-bottom: 6px; }
+  #trw-page .bio-role { display: block; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--trw-gold); margin-bottom: 24px; }
+  #trw-page .bio-text p { margin-bottom: 14px; font-size: 15px; line-height: 1.85; }
+  #trw-page .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  #trw-page .tag { padding: 6px 13px; border: 1px solid var(--trw-border); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--trw-muted); }
+
+  /* FAQ */
+  #trw-page #faq { background: var(--trw-black); }
+  #trw-page #faq .section-head { text-align: center; margin-bottom: 40px; }
+  #trw-page #faq h2 { font-size: clamp(26px, 3.5vw, 40px); }
+  #trw-page .faq-wrap { max-width: 760px; margin: 0 auto; }
+  #trw-page .faq-item { border-bottom: 1px solid var(--trw-border); }
+  #trw-page .faq-item:first-of-type { border-top: 1px solid var(--trw-border); }
+  #trw-page .faq-btn {
+    width: 100%; background: none; border: none; padding: 18px 0;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 24px; cursor: pointer; text-align: left;
+  }
+  #trw-page .faq-q { font-family: var(--trw-head); font-size: 17px; color: var(--trw-cream); letter-spacing: 0.03em; }
+  #trw-page .faq-ico {
+    flex-shrink: 0; width: 26px; height: 26px;
+    border: 1px solid var(--trw-border); display: flex; align-items: center;
+    justify-content: center; color: var(--trw-gold); font-size: 18px;
+    transition: transform 0.3s ease, border-color 0.3s;
+  }
+  #trw-page .faq-item.open .faq-ico { transform: rotate(45deg); border-color: var(--trw-gold); }
+  #trw-page .faq-body { overflow: hidden; max-height: 0; transition: max-height 0.38s ease; }
+  #trw-page .faq-body-inner { padding: 0 0 26px; font-size: 16px; line-height: 1.9; color: #6B91AE; max-width: 640px; }
+
+  /* PHILOSOPHY */
+  #trw-page #philosophy { background: var(--trw-dark); text-align: center; }
+  #trw-page .philosophy-inner { max-width: 660px; margin: 0 auto; }
+  #trw-page .philosophy-inner .headline { font-family: var(--trw-head); font-size: clamp(32px, 5vw, 56px); color: var(--trw-white); margin-bottom: 32px; line-height: 1.05; }
+  #trw-page .philosophy-inner .headline em { display: block; color: var(--trw-gold); font-style: normal; }
+  #trw-page .philosophy-inner p { font-size: 17px; line-height: 1.9; margin-bottom: 18px; }
+  #trw-page .philosophy-inner .closing { font-size: 18px; font-style: italic; color: var(--trw-gold); margin-top: 24px; }
+
+  /* BRAND MARK (top-left, fixed) */
+  #trw-page .trw-brand {
+    position: fixed;
+    top: 18px;
+    left: 22px;
+    z-index: 50;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 9px 14px 8px;
+    background: rgba(6,25,56,0.62);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(212,184,74,0.22);
+    text-decoration: none;
+    line-height: 1;
+    transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+  }
+  #trw-page .trw-brand:hover {
+    border-color: var(--trw-gold);
+    background: rgba(6,25,56,0.85);
+    transform: translateY(-1px);
+  }
+  #trw-page .trw-brand .trw-brand-name {
+    font-family: var(--trw-head);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--trw-cream);
+  }
+  #trw-page .trw-brand .trw-brand-sub {
+    font-family: var(--trw-body);
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--trw-gold);
+  }
+  #trw-page .trw-brand:hover .trw-brand-name { color: var(--trw-white); }
+
+  /* FINAL CTA */
+  #trw-page #cta-final { background: var(--trw-black); border-top: 1px solid var(--trw-border); text-align: center; padding: 80px 28px; }
+  #trw-page #cta-final h2 { font-size: clamp(36px, 6vw, 64px); margin-bottom: 20px; }
+  #trw-page #cta-final .sub { font-size: 18px; color: #6B91AE; max-width: 460px; margin: 0 auto 52px; }
+
+  /* SCROLL ANIMATIONS */
+  #trw-page .anim { opacity: 0; transform: translateY(32px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  #trw-page .anim.in-view { opacity: 1; transform: translateY(0); }
+  #trw-page .anim-scale { opacity: 0; transform: scale(0.96); transition: opacity 0.6s ease, transform 0.6s ease; }
+  #trw-page .anim-scale.in-view { opacity: 1; transform: scale(1); }
+  #trw-page .anim-left { opacity: 0; transform: translateX(-32px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  #trw-page .anim-left.in-view { opacity: 1; transform: translateX(0); }
+  #trw-page .anim-right { opacity: 0; transform: translateX(32px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  #trw-page .anim-right.in-view { opacity: 1; transform: translateX(0); }
+  #trw-page .anim-d1 { transition-delay: 0.1s; }
+  #trw-page .anim-d2 { transition-delay: 0.2s; }
+  #trw-page .anim-d3 { transition-delay: 0.3s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    #trw-page .anim, #trw-page .anim-scale, #trw-page .anim-left, #trw-page .anim-right,
+    #trw-page .hero-kicker, #trw-page #hero h1, #trw-page .hero-tagline,
+    #trw-page #hero .btn, #trw-page .hero-rule {
+      animation: none; opacity: 1; transform: none; transition: none;
+    }
+  }
+
+  /* MODAL */
+  #trw-apply-modal { display: none; position: fixed; inset: 0; z-index: 9999; align-items: center; justify-content: center; padding: 20px; }
+  #trw-apply-modal.is-open { display: flex; }
+  #trw-apply-modal .modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); cursor: pointer; }
+  #trw-apply-modal .modal-box {
+    position: relative; z-index: 1; background: var(--trw-card);
+    border: 1px solid var(--trw-border); border-top: 2px solid var(--trw-gold);
+    width: 100%; max-width: 580px; max-height: 90vh;
+    overflow-y: auto; -webkit-overflow-scrolling: touch;
+  }
+  #trw-apply-modal .modal-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 28px; border-bottom: 1px solid var(--trw-border);
+    position: sticky; top: 0; background: var(--trw-card); z-index: 2;
+  }
+  #trw-apply-modal .modal-title { font-family: var(--trw-head); font-size: 14px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--trw-cream); }
+  #trw-apply-modal .modal-close {
+    background: none; border: 1px solid var(--trw-border); color: var(--trw-muted);
+    width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 20px; line-height: 1;
+    transition: color 0.2s, border-color 0.2s; flex-shrink: 0;
+  }
+  #trw-apply-modal .modal-close:hover { color: var(--trw-cream); border-color: var(--trw-gold); }
+  #trw-apply-modal .modal-body { padding: 0; }
+  #trw-apply-modal .modal-body iframe { display: block; width: 100%; border: none; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    #trw-page .archetype-grid { grid-template-columns: 1fr; }
+    #trw-page .values-grid    { grid-template-columns: 1fr; }
+    #trw-page .bonus-card     { grid-template-columns: 1fr; }
+    #trw-page .bonus-left     { flex-direction: row; justify-content: center; padding: 28px; gap: 16px; }
+  }
+  @media (max-width: 600px) {
+    #trw-page .bonus-left     { flex-direction: column; padding: 24px; gap: 8px; }
+  }
+  @media (max-width: 600px) {
+    #trw-page { font-size: 15px; line-height: 1.65; }
+    #trw-page section { padding: 56px 0 44px; }
+    #trw-page #hero { min-height: auto; padding: 80px 20px 60px; }
+    #trw-page .container, #trw-page .container-wide { padding: 0 20px; }
+    #trw-page .hero-rule { letter-spacing: 0.08em; font-size: 10px; }
+    #trw-page .hero-tagline { font-size: 15px; line-height: 1.55; margin-bottom: 40px; }
+    #trw-page #hero h1 { margin-bottom: 22px; }
+
+    #trw-page #initiation h2,
+    #trw-page #distinction h2,
+    #trw-page #entry h2,
+    #trw-page #values h2,
+    #trw-page #pricing h2,
+    #trw-page #bonus h2,
+    #trw-page #faq h2 { font-size: 22px; line-height: 1.2; }
+
+    #trw-page .section-head { margin-bottom: 28px; }
+
+    #trw-page #crisis blockquote { font-size: 17px; line-height: 1.5; margin-bottom: 22px; }
+    #trw-page #crisis .stand { font-size: 10px; letter-spacing: 0.08em; }
+
+    #trw-page .archetype-card { padding: 22px 18px; gap: 14px; }
+    #trw-page .archetype-card p { font-size: 14px; line-height: 1.55; }
+    #trw-page .archetype-num { font-size: 26px; min-width: 28px; }
+
+    #trw-page .position-box { padding: 24px 20px; }
+    #trw-page .position-box p { font-size: 15px; line-height: 1.55; }
+
+    #trw-page #entry .lead { font-size: 15px; line-height: 1.65; margin-bottom: 32px; }
+
+    #trw-page .value-card { padding: 22px 18px 20px; }
+    #trw-page .value-card p { font-size: 14px; line-height: 1.55; }
+    #trw-page .innercircle-box { padding: 24px 20px; }
+    #trw-page .innercircle-box p { font-size: 15px; line-height: 1.55; }
+
+    #trw-page #pricing .lead { font-size: 14px; }
+    #trw-page .price-card { margin-top: 36px; }
+    #trw-page .price-top { padding: 22px 24px 16px; }
+    #trw-page .price-amount { font-size: 60px; }
+    #trw-page .price-amount sup { font-size: 22px; margin-top: 10px; }
+    #trw-page .price-features { padding: 12px 18px; }
+    #trw-page .price-features li { font-size: 13px; padding: 9px 0; line-height: 1.5; text-align: left; }
+    #trw-page .price-action { padding: 0 24px 22px; }
+
+    #trw-page .bonus-right { padding: 22px 20px; }
+    #trw-page .bonus-right h3 { font-size: 18px; margin-bottom: 10px; }
+    #trw-page .bonus-right p { font-size: 14px; line-height: 1.55; margin-bottom: 14px; }
+
+    #trw-page .bio-grid { grid-template-columns: 1fr; gap: 28px; }
+    #trw-page .bio-img-wrap { max-width: 220px; margin: 0 auto; }
+    #trw-page .bio-text h2 { font-size: 22px; }
+    #trw-page .bio-text p { font-size: 14px; line-height: 1.6; }
+
+    #trw-page .faq-btn { padding: 14px 0; }
+    #trw-page .faq-q { font-size: 15px; }
+    #trw-page .faq-body-inner { font-size: 14px; line-height: 1.6; padding-bottom: 20px; }
+
+    #trw-page #philosophy .headline { font-size: 24px; line-height: 1.15; margin-bottom: 22px; }
+    #trw-page #philosophy p { font-size: 15px; line-height: 1.65; margin-bottom: 14px; }
+    #trw-page #philosophy .closing { font-size: 16px; }
+
+    #trw-page .trw-brand { top: 12px; left: 14px; padding: 7px 11px 6px; }
+    #trw-page .trw-brand .trw-brand-name { font-size: 11px; letter-spacing: 0.16em; }
+    #trw-page .trw-brand .trw-brand-sub { font-size: 7px; letter-spacing: 0.28em; }
+    #trw-page #cta-final { padding: 56px 20px; }
+    #trw-page #cta-final h2 { font-size: 30px; line-height: 1.1; margin-bottom: 14px; }
+    #trw-page #cta-final .sub { font-size: 14px; line-height: 1.55; margin-bottom: 36px; }
+
+    #trw-page .btn { padding: 14px 36px; font-size: 11px; }
+  }
+</style>
+
+<div id="trw-page">
+
+<a class="trw-brand" href="https://parallaxxtransformations.com" aria-label="Parallaxx Transformations &mdash; back to home">
+  <span class="trw-brand-name">Parallaxx</span>
+  <span class="trw-brand-sub">Transformations</span>
+</a>
+
+<section id="hero">
+  <div class="hero-inner">
+    <p class="hero-kicker">A Give It All Experience</p>
+    <h1>The<br><span class="accent">Reconnected</span><br>Woman</h1>
+    <p class="hero-tagline">For women done abandoning themselves to keep it all together.</p>
+    <button class="btn btn--gold" data-trw-modal>Apply Now</button>
+    <p class="hero-rule">Real Integrity &nbsp;&middot;&nbsp; Deep Self-Trust &nbsp;&middot;&nbsp; True Connection</p>
+  </div>
+</section>
+
+
+<section id="vsl">
+  <div class="container">
+    <div class="section-head anim">
+      <span class="overline">Watch This First</span>
+      <div class="divider"></div>
+    </div>
+    <div class="video-wrap video-wrap--landscape anim anim-d1" style="margin-top:40px;">
+      <video id="trw-vsl-video" playsinline preload="metadata">
+        <source src="https://video.wixstatic.com/video/111174_c76bb418f85d49579bd90c14e6addf79/1080p/mp4/file.mp4" type="video/mp4">
+      </video>
+      <button class="video-play-overlay" id="trw-vsl-play" type="button" aria-label="Play video">
+        <svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="48" cy="48" r="46" fill="rgba(6,25,56,0.85)" stroke="#D4B84A" stroke-width="2"/>
+          <polygon points="40,30 68,48 40,66" fill="#D4B84A"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+
+<section id="crisis">
+  <div class="container">
+    <blockquote class="anim">"We're living through a crisis of women losing themselves to the lives they built, and the consequences are seen everywhere."</blockquote>
+    <p class="stand anim anim-d2">We stand for Integrity, Self-Trust &amp; Connection<br>as the demonstration for every relationship in your life.</p>
+  </div>
+</section>
+
+
+<section id="initiation">
+  <div class="container-wide">
+    <div class="section-head anim">
+      <span class="overline">Who This Is For</span>
+      <h2>An Initiation For Women</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="archetype-grid">
+      <div class="archetype-card anim anim-d1">
+        <div class="archetype-num">01</div>
+        <p>The woman who understands the life she craves is a reflection of the woman she needs to come home to.</p>
+      </div>
+      <div class="archetype-card anim anim-d2">
+        <div class="archetype-num">02</div>
+        <p>The woman who will stop equating her output to her worth.</p>
+      </div>
+      <div class="archetype-card anim anim-d3">
+        <div class="archetype-num">03</div>
+        <p>The woman who shows up as a present human being again.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="distinction">
+  <div class="container-wide">
+    <div class="section-head anim">
+      <span class="overline">Be Clear On What This Is</span>
+      <h2>What This Isn't.</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="archetype-grid">
+      <div class="archetype-card anim anim-d1">
+        <div class="archetype-num">01</div>
+        <div class="archetype-body">
+          <h3 class="archetype-label">Not A Women's Circle</h3>
+          <p>No sage. No goddess work. No Ohms.</p>
+        </div>
+      </div>
+      <div class="archetype-card anim anim-d2">
+        <div class="archetype-num">02</div>
+        <div class="archetype-body">
+          <h3 class="archetype-label">Not A Sisterhood</h3>
+          <p>No performance. No loyalty pact. No comfort without change.</p>
+        </div>
+      </div>
+      <div class="archetype-card anim anim-d3">
+        <div class="archetype-num">03</div>
+        <div class="archetype-body">
+          <h3 class="archetype-label">Not A Coaching Program</h3>
+          <p>Except for the coaching you give yourself.</p>
+        </div>
+      </div>
+    </div>
+    <div class="position-box anim">
+      <p>Be seen, heard, witnessed, and held within your integrity.<br><strong>For you. And as a demonstration for those who matter to you.</strong></p>
+    </div>
+  </div>
+</section>
+
+
+<section id="entry">
+  <div class="container">
+    <span class="overline anim">Entry Requirements</span>
+    <h2 class="anim anim-d1">Sounds Like You?</h2>
+    <div class="divider anim anim-d1" style="margin:24px auto 40px;"></div>
+    <p class="lead anim anim-d2">
+      By application only. This is important work. We take it seriously &mdash; and we ask that
+      you give it the respect it deserves. <strong>Not everyone will be accepted.</strong>
+    </p>
+    <button class="btn btn--gold anim anim-d3" data-trw-modal>Apply Now</button>
+  </div>
+</section>
+
+
+<section id="values">
+  <div class="container-wide">
+    <div class="section-head anim">
+      <span class="overline">What We Stand For</span>
+      <h2>What We Value</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="values-grid">
+      <div class="value-card anim anim-d1">
+        <h3>Dedication</h3>
+        <p>We all commit to the process by showing up like this work matters &mdash; because it does.</p>
+      </div>
+      <div class="value-card anim anim-d2">
+        <h3>Punctuality</h3>
+        <p>As a sign of respect to ourselves and each other.</p>
+      </div>
+      <div class="value-card anim anim-d3">
+        <h3>Raw Vulnerability</h3>
+        <p>Being your best with imperfection. Real, unfiltered, and fully present for you.</p>
+      </div>
+    </div>
+    <div class="innercircle-box anim">
+      <p>We all have skin in the game and play full out. We require the same from you upon entry.<br><strong>We will become your newfound Inner Circle.</strong></p>
+    </div>
+  </div>
+</section>
+
+
+<!-- PRICING SECTION HIDDEN ‚Äî to re-enable, remove this opening line and the closing comment marker at the end of the section
+<section id="pricing">
+  <div class="container">
+    <span class="overline">The Investment</span>
+    <h2>If This Is You...</h2>
+    <p class="lead" style="margin-top:16px;">A small entry fee. An enormous return.<br>Join any time &mdash; monthly rollover, cancel whenever.</p>
+    <div class="price-card anim-scale">
+      <div class="price-top">
+        <div class="price-amount"><sup>&euro;</sup>59</div>
+        <div class="price-note">Per Month &nbsp;&middot;&nbsp; Cancel Anytime</div>
+      </div>
+      <ul class="price-features">
+        <li>Weekly group containers (4-week cycles)</li>
+        <li>Live facilitation &amp; hot-seat coaching</li>
+        <li>Inner Circle community access</li>
+        <li>First access to new frameworks &amp; resources</li>
+        <li>Flexible &mdash; join at any point in the cycle</li>
+      </ul>
+      <div class="price-action">
+        <button class="btn btn--gold btn--full" data-trw-modal>Apply Now</button>
+      </div>
+    </div>
+  </div>
+</section>
+END PRICING SECTION HIDDEN -->
+
+
+
+<section id="bonus">
+  <div class="container">
+    <div class="section-head anim">
+      <span class="overline">Bonus Gift</span>
+      <h2>Join Now &amp; Receive</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="bonus-card anim anim-d1">
+      <div class="bonus-left">
+        <span class="tag">Complimentary</span>
+        <span class="title">Bonus Access</span>
+      </div>
+      <div class="bonus-right">
+        <h3>Your Identity 2.0</h3>
+        <p>A complete online program designed for successful women who are ready to architect the next version of themselves.</p>
+        <div class="value-strip">
+          <span class="was">Normally $597</span>
+          <span class="now">Yours Free</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="bio">
+  <div class="container-wide">
+    <div class="bio-grid">
+      <div class="bio-img-wrap anim-left">
+        <div class="video-wrap video-wrap--reel">
+          <video id="trw-bio-video" playsinline preload="metadata" poster="https://static.wixstatic.com/media/111174_52bb7073da274289b13738d153e1334e~mv2.jpg">
+            <source src="https://video.wixstatic.com/video/111174_4e1bcc7d4c634401adae988048a9cb1b/1080p/mp4/file.mp4" type="video/mp4">
+          </video>
+          <button class="video-play-overlay" id="trw-bio-play" type="button" aria-label="Play bio video">
+            <svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="48" cy="48" r="46" fill="rgba(6,25,56,0.85)" stroke="#D4B84A" stroke-width="2"/>
+              <polygon points="40,30 68,48 40,66" fill="#D4B84A"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="bio-text anim-right">
+        <span class="overline">Facilitated By</span>
+        <h2>Daniel Lawson</h2>
+        <span class="bio-role">Relationship &amp; Connection Coach</span>
+        <p>Daniel has been coaching personal connections and relationships for 6 years after being accredited through the International Coach Guild at The Coaching Institute in Melbourne.</p>
+        <p>His flagship program &mdash; the <strong>Relational Connection System Framework&trade;</strong> &mdash; has helped tens of dozens of graduates and hundreds more through global retreats and facilitations worldwide.</p>
+        <p>Daniel is the go-to recommended relationship coach within the Bali Brotherhood Ecosystem, and the founder and host of <strong>GIVE IT ALL</strong> &mdash; voted the #1 best networking event in Medell&iacute;n and widely recognised across Bulgaria and Bali.</p>
+        <p>You're in good hands for creating space within yourself for deep transformation and growth &mdash; fast.</p>
+        <div class="tags">
+          <span class="tag">ICG Accredited</span>
+          <span class="tag">6 Years Coaching</span>
+          <span class="tag">Global Facilitator</span>
+          <span class="tag">Relational Connection System&trade;</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="faq">
+  <div class="container-wide">
+    <div class="section-head anim">
+      <span class="overline">Common Questions</span>
+      <h2>Before You Apply</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="faq-wrap">
+      <div class="faq-item anim anim-d1">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-q">Isn't this just another women's circle?</span>
+          <span class="faq-ico" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">No. Where women's circles are often built on becoming more feminine and the performance of it all. We will just go straight to calling as it is for you. This circle is grounded in masculine energy without the show so you can let go.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-q">Why is this circle hosted by a man?</span>
+          <span class="faq-ico" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">Because I am in a relationship with a woman like you. I have seen first hand the struggles of finding a space that celebrates her ambitious strength while having a container strong enough to hold all she is carrying. In this space you bring all of you without risk of being intimidating, in competition, or with the need to prove anything &mdash; I've got you here.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-q">I have great male and female friends. Do I need this?</span>
+          <span class="faq-ico" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">You tell me? Friendship runs on co-regulation, you leave feeling better but don't create change. The women you'd usually go to are likely running the same operating system you are. Friends offer support. I am not here to be your friend as this space will reflect truth &mdash; not comfort.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-q">Do you offer a trial period first?</span>
+          <span class="faq-ico" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">No, we don't offer a trial. We've found the woman who commits &mdash; who shows up and takes responsibility for extracting the value she's looking for &mdash; gets the best experience. If you can spend on another course you won't finish but aren't willing to take a small risk on the work that would actually change you, this probably isn't your crew.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-q">Is this online or in person?</span>
+          <span class="faq-ico" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">Both. Depending on community access and requirements. When you apply, select your preferred option and we'll discuss what's available to you.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-q">Do I need to attend every session?</span>
+          <span class="faq-ico" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">The short answer is no. But if you're already expecting not to be committed to the process, the women in the room, and the consistency real change requires &mdash; it may not be the best fit for you.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-q">How do I know when sessions are?</span>
+          <span class="faq-ico" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">We're fluid with scheduling based on community requests. Currently two sessions are held at different times for the best global coverage. Apply, and if accepted, we'll find what fits your schedule.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-q">What does the entry fee actually include?</span>
+          <span class="faq-ico" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">The entry fee is largely a pay-to-play filter for women willing to invest in themselves. The actual value &mdash; group facilitation, hot-seat coaching, resources, and the connections you'll make &mdash; is exponentially greater than &euro;59.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-q">Is this a sales funnel? Are there upsells coming?</span>
+          <span class="faq-ico" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">No. This is a standalone experience with real, substantial value. There is an option to go deeper through 1:1 coaching within the Reconnect Program &mdash; and if you choose that path, your total time in the Inner Circle is deducted from the program cost, with free access carried over.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="philosophy">
+  <div class="container">
+    <div class="philosophy-inner anim">
+      <span class="overline">A Note About This Inner Circle</span>
+      <div class="headline">Reconnect Is<em>Integrity.</em></div>
+      <div class="divider"></div>
+      <p style="margin-top:36px;">The Reconnected Woman requires skin in the game to join a community where we explore what it actually means to come home to yourself &mdash; in your work, your relationships, and your life.</p>
+      <p>This is also a space where I develop and test new frameworks and content. You'll have first access to emerging resources, tools, and programs as they become available &mdash; both free and paid.</p>
+      <p class="closing">"You're joining a living conversation."</p>
+    </div>
+  </div>
+</section>
+
+
+<section id="cta-final">
+  <div class="container">
+    <span class="overline anim">Ready?</span>
+    <h2 class="anim anim-d1">The Inner Circle<br>Is Waiting.</h2>
+    <p class="sub anim anim-d2">Applications are reviewed individually. Not everyone is accepted.</p>
+    <button class="btn btn--gold anim anim-d3" data-trw-modal>Apply Now</button>
+  </div>
+</section>
+
+
+
+</div><!-- #trw-page -->
+
+
+<!-- Apply modal -->
+<div id="trw-apply-modal" role="dialog" aria-modal="true" aria-label="Application Form">
+  <div class="modal-backdrop"></div>
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-title">The Reconnected Woman &mdash; Application</span>
+      <button class="modal-close" aria-label="Close form">&times;</button>
+    </div>
+    <div class="modal-body">
+      <!-- WIX: replace iframe src and form ID with the new LeadConnector form for The Reconnected Woman -->
+      <iframe
+        src="https://api.leadconnectorhq.com/widget/form/TowKVXREz7wCk7AWO4jG"
+        height="1439"
+        title="The Reconnected Woman Application Form"
+        id="form-TowKVXREz7wCk7AWO4jG"
+        data-form-id="TowKVXREz7wCk7AWO4jG"
+        data-form-name="The Reconnected Woman Application Form"
+      ></iframe>
+    </div>
+  </div>
+</div>
+
+<script src="https://link.msgsndr.com/js/form_embed.js"></script>
+
+<script>
+(function() {
+  // FAQ accordion
+  document.querySelectorAll('#trw-page .faq-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item   = btn.closest('.faq-item');
+      const body   = item.querySelector('.faq-body');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('#trw-page .faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-body').style.maxHeight = null;
+        i.querySelector('.faq-btn').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // Apply modal
+  const modal    = document.getElementById('trw-apply-modal');
+  const backdrop = modal.querySelector('.modal-backdrop');
+  const closeBtn = modal.querySelector('.modal-close');
+  function openModal()  { modal.classList.add('is-open');    document.body.style.overflow = 'hidden'; closeBtn.focus(); }
+  function closeModal() { modal.classList.remove('is-open'); document.body.style.overflow = ''; }
+  document.querySelectorAll('[data-trw-modal]').forEach(el => el.addEventListener('click', openModal));
+  backdrop.addEventListener('click', closeModal);
+  closeBtn.addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal(); });
+
+  // Video play overlays ‚Äî works for any video paired with a sibling .video-play-overlay button
+  document.querySelectorAll('#trw-page .video-play-overlay').forEach(overlay => {
+    overlay.addEventListener('click', () => {
+      const video = overlay.parentElement.querySelector('video');
+      if (!video) return;
+      video.controls = true;
+      video.play().catch(() => {});
+      overlay.classList.add('is-hidden');
+    });
+  });
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('#trw-page .anim, #trw-page .anim-scale, #trw-page .anim-left, #trw-page .anim-right').forEach(el => observer.observe(el));
+})();
+</script>

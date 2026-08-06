@@ -1,0 +1,1028 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --trm-black:      #061938;
+    --trm-dark:       #112030;
+    --trm-card:       #162638;
+    --trm-border:     #1E3347;
+    --trm-gold:       #D4B84A;
+    --trm-gold-light: #E8CF72;
+    --trm-gold-dark:  #A8912E;
+    --trm-orange:     #E8451C;
+    --trm-orange-dk:  #C43715;
+    --trm-white:      #ffffff;
+    --trm-cream:      #F0EDE6;
+    --trm-muted:      #5A7A96;
+    --trm-text:       #8AADCA;
+    --trm-head:       'Montserrat', system-ui, sans-serif;
+    --trm-body:       'Poppins', system-ui, sans-serif;
+  }
+
+  #trm-page *, #trm-page *::before, #trm-page *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  #trm-page {
+    background: var(--trm-black);
+    color: var(--trm-text);
+    font-family: var(--trm-body);
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    width: 100%;
+    overflow-x: clip;
+  }
+
+  #trm-page h1, #trm-page h2, #trm-page h3, #trm-page h4 {
+    font-family: var(--trm-head);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--trm-cream);
+    font-weight: 700;
+  }
+
+  #trm-page p { color: var(--trm-text); font-weight: 300; }
+  #trm-page strong { color: var(--trm-cream); font-weight: 600; }
+  #trm-page a { color: var(--trm-gold); }
+  #trm-page img { display: block; max-width: 100%; }
+
+  #trm-page .container      { max-width: 860px;  margin: 0 auto; padding: 0 28px; }
+  #trm-page .container-wide { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+
+  #trm-page .overline {
+    display: block;
+    font-family: var(--trm-body);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--trm-gold);
+    margin-bottom: 14px;
+  }
+
+  #trm-page .divider {
+    width: 48px; height: 1px;
+    background: var(--trm-gold);
+    margin: 24px auto 0;
+  }
+  #trm-page .divider--left { margin-left: 0; }
+
+  #trm-page section { padding: 64px 0; }
+
+  /* BUTTONS */
+  #trm-page .btn {
+    display: inline-block;
+    padding: 17px 46px;
+    font-family: var(--trm-body);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+  }
+  #trm-page .btn--gold { background: var(--trm-orange); color: var(--trm-white); }
+  #trm-page .btn--gold:hover {
+    background: var(--trm-orange-dk);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 32px rgba(232,69,28,0.35);
+  }
+  #trm-page .btn--outline {
+    background: transparent;
+    color: var(--trm-orange);
+    border: 1px solid var(--trm-orange);
+  }
+  #trm-page .btn--outline:hover { background: var(--trm-orange); color: var(--trm-white); }
+  #trm-page .btn--full { display: block; text-align: center; width: 100%; }
+
+  /* HERO */
+  #trm-page #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 72px 28px;
+    position: relative;
+    overflow: hidden;
+    background: var(--trm-black);
+  }
+  #trm-page #hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      -45deg, transparent, transparent 56px,
+      rgba(212,184,74,0.04) 56px, rgba(212,184,74,0.04) 57px
+    );
+    pointer-events: none;
+  }
+  #trm-page #hero::after {
+    content: '';
+    position: absolute;
+    top: 40%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(212,184,74,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  #trm-page .hero-inner { position: relative; z-index: 1; }
+  #trm-page .hero-kicker {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--trm-gold); margin-bottom: 32px;
+    animation: trmFadeUp 0.7s ease 0.1s both;
+  }
+  #trm-page #hero h1 {
+    font-size: clamp(40px, 11vw, 108px);
+    font-weight: 800; color: var(--trm-white);
+    line-height: 0.95; margin-bottom: 28px;
+    overflow-wrap: break-word;
+    animation: trmFadeUp 0.7s ease 0.25s both;
+  }
+  #trm-page #hero h1 .accent { color: var(--trm-gold); }
+  #trm-page .hero-tagline {
+    font-size: clamp(18px, 2.4vw, 22px);
+    font-weight: 300; color: #6B91AE;
+    max-width: 500px; margin: 0 auto 52px;
+    letter-spacing: 0.02em;
+    animation: trmFadeUp 0.7s ease 0.4s both;
+  }
+  #trm-page #hero .btn { animation: trmFadeUp 0.7s ease 0.55s both; }
+  #trm-page .hero-rule {
+    margin-top: 48px; padding-top: 32px;
+    border-top: 1px solid var(--trm-border);
+    font-size: 12px; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--trm-muted);
+    overflow-wrap: break-word;
+    animation: trmFadeUp 0.7s ease 0.7s both;
+  }
+
+  @keyframes trmFadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* VSL */
+  #trm-page #vsl { background: var(--trm-dark); padding: 52px 0; }
+  #trm-page #vsl .section-head { text-align: center; margin-bottom: 40px; }
+
+  /* VIDEO */
+  #trm-page .video-wrap {
+    background: #000;
+    border: 1px solid var(--trm-border);
+    overflow: hidden; position: relative;
+  }
+  #trm-page .video-wrap video { display: block; width: 100%; height: auto; }
+  #trm-page .video-wrap--landscape { aspect-ratio: 16/9; }
+  #trm-page .video-wrap--landscape video { width: 100%; height: 100%; object-fit: cover; }
+  #trm-page .video-wrap--reel { aspect-ratio: 9/16; }
+  #trm-page .video-wrap--reel video { width: 100%; height: 100%; object-fit: cover; }
+
+  /* CRISIS */
+  #trm-page #crisis {
+    background: var(--trm-dark);
+    border-top: 1px solid var(--trm-border);
+    border-bottom: 1px solid var(--trm-border);
+    text-align: center; padding: 52px 0;
+  }
+  #trm-page #crisis blockquote {
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 300; color: var(--trm-cream);
+    line-height: 1.6; max-width: 700px;
+    margin: 0 auto 32px; font-style: italic;
+  }
+  #trm-page #crisis .stand {
+    font-size: 14px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--trm-gold);
+  }
+
+  /* INITIATION */
+  #trm-page #initiation { background: var(--trm-black); }
+  #trm-page #initiation .section-head { text-align: center; margin-bottom: 40px; }
+  #trm-page #initiation h2 { font-size: clamp(26px, 3.5vw, 40px); }
+
+  #trm-page .archetype-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--trm-border);
+    border: 1px solid var(--trm-border); margin-bottom: 40px;
+  }
+  #trm-page .archetype-card {
+    background: var(--trm-card); padding: 28px 24px;
+    position: relative; display: flex; align-items: flex-start; gap: 18px;
+  }
+  #trm-page .archetype-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, var(--trm-gold-dark), var(--trm-gold));
+  }
+  #trm-page .archetype-num {
+    font-family: var(--trm-head); font-size: 32px; font-weight: 700;
+    color: var(--trm-gold); opacity: 0.5; line-height: 1.2;
+    flex-shrink: 0; min-width: 36px;
+  }
+  #trm-page .archetype-card p { font-size: 15px; line-height: 1.75; color: var(--trm-cream); padding-top: 4px; }
+
+  #trm-page .position-box {
+    border: 1px solid var(--trm-border); border-left: 3px solid var(--trm-gold);
+    background: var(--trm-card); padding: 28px 36px; text-align: center;
+  }
+  #trm-page .position-box p { font-size: 19px; font-weight: 300; color: var(--trm-cream); line-height: 1.7; }
+
+  /* ENTRY */
+  #trm-page #entry { background: var(--trm-dark); text-align: center; }
+  #trm-page #entry h2 { font-size: clamp(26px, 3.5vw, 40px); margin-bottom: 24px; }
+  #trm-page #entry .lead { font-size: 18px; max-width: 620px; margin: 0 auto 44px; line-height: 1.85; }
+
+  /* VALUES */
+  #trm-page #values { background: var(--trm-black); }
+  #trm-page #values .section-head { text-align: center; margin-bottom: 40px; }
+  #trm-page #values h2 { font-size: clamp(26px, 3.5vw, 40px); }
+
+  #trm-page .values-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px; margin-bottom: 28px;
+  }
+  #trm-page .value-card {
+    padding: 28px 24px 24px; border: 1px solid var(--trm-border);
+    position: relative; overflow: hidden;
+  }
+  #trm-page .value-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px; background: var(--trm-gold);
+    transform: scaleX(0); transform-origin: left; transition: transform 0.35s ease;
+  }
+  #trm-page .value-card:hover::after { transform: scaleX(1); }
+  #trm-page .value-card h3 { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--trm-gold); margin-bottom: 16px; }
+  #trm-page .value-card p { font-size: 16px; }
+
+  #trm-page .brotherhood-box {
+    text-align: center; padding: 28px 40px;
+    border: 1px solid var(--trm-border); background: var(--trm-card);
+  }
+  #trm-page .brotherhood-box p { font-size: 19px; font-weight: 300; color: var(--trm-cream); max-width: 580px; margin: 0 auto; }
+
+  /* PRICING */
+  #trm-page #pricing { background: var(--trm-dark); text-align: center; }
+  #trm-page #pricing h2 { font-size: clamp(26px, 3.5vw, 40px); margin-bottom: 16px; }
+  #trm-page #pricing .lead { font-size: 17px; max-width: 480px; margin: 0 auto; }
+
+  #trm-page .price-card {
+    max-width: 500px; margin: 52px auto 0;
+    background: var(--trm-card); border: 1px solid var(--trm-border);
+    position: relative; overflow: hidden;
+  }
+  #trm-page .price-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--trm-gold-dark), var(--trm-gold), var(--trm-gold-dark));
+  }
+  #trm-page .price-top { padding: 28px 36px 20px; border-bottom: 1px solid var(--trm-border); }
+  #trm-page .price-amount { font-family: var(--trm-head); font-size: 80px; font-weight: 700; color: var(--trm-white); line-height: 1; }
+  #trm-page .price-amount sup { font-size: 30px; vertical-align: top; margin-top: 14px; display: inline-block; color: var(--trm-gold); }
+  #trm-page .price-note { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--trm-muted); margin-top: 10px; }
+  #trm-page .price-features { list-style: none; padding: 16px 36px; }
+  #trm-page .price-features li {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 11px 0; border-bottom: 1px solid var(--trm-border);
+    font-size: 16px; color: var(--trm-cream);
+  }
+  #trm-page .price-features li:last-child { border-bottom: none; }
+  #trm-page .price-features li::before { content: '\2014'; color: var(--trm-gold); flex-shrink: 0; margin-top: 1px; }
+  #trm-page .price-action { padding: 0 36px 28px; }
+
+  /* BONUS */
+  #trm-page #bonus { background: var(--trm-black); }
+  #trm-page #bonus .section-head { text-align: center; margin-bottom: 32px; }
+  #trm-page #bonus h2 { font-size: clamp(26px, 3.5vw, 40px); }
+
+  #trm-page .bonus-card {
+    display: grid; grid-template-columns: 200px 1fr;
+    border: 1px solid var(--trm-border); overflow: hidden;
+    max-width: 740px; margin: 0 auto;
+  }
+  #trm-page .bonus-left {
+    background: var(--trm-gold); padding: 28px 20px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center; gap: 6px;
+  }
+  #trm-page .bonus-left .tag { font-family: var(--trm-head); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(0,0,0,0.55); }
+  #trm-page .bonus-left .title { font-family: var(--trm-head); font-size: 20px; font-weight: 700; color: var(--trm-black); line-height: 1.2; }
+  #trm-page .bonus-right { background: var(--trm-card); padding: 24px 32px; }
+  #trm-page .bonus-right h3 { font-size: 22px; color: var(--trm-white); margin-bottom: 14px; }
+  #trm-page .bonus-right p { font-size: 16px; margin-bottom: 20px; }
+  #trm-page .value-strip { display: flex; align-items: center; gap: 14px; }
+  #trm-page .value-strip .was { font-size: 14px; color: var(--trm-muted); text-decoration: line-through; }
+  #trm-page .value-strip .now { font-family: var(--trm-head); font-size: 15px; letter-spacing: 0.1em; color: var(--trm-gold); }
+
+  /* TESTIMONIALS */
+  #trm-page #testimonials { background: var(--trm-dark); text-align: center; }
+  #trm-page #testimonials h2 { font-size: clamp(26px, 3.5vw, 40px); margin-bottom: 40px; }
+
+  #trm-page .testi-video-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  #trm-page .testi-video-card { background: var(--trm-card); border: 1px solid var(--trm-border); overflow: hidden; }
+  #trm-page .testi-video-label {
+    padding: 14px 20px; border-top: 1px solid var(--trm-border);
+    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--trm-gold); display: flex; align-items: center; gap: 8px;
+  }
+  #trm-page .testi-video-label::before { content: '\25B6'; font-size: 9px; opacity: 0.6; }
+
+  /* WhatsApp gallery */
+  #trm-page .wa-gallery { margin-top: 64px; }
+  #trm-page .wa-label { text-align: center; margin-bottom: 32px; }
+  #trm-page .wa-label span {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--trm-muted);
+  }
+  #trm-page .wa-label span::before, #trm-page .wa-label span::after {
+    content: ''; display: block; width: 40px; height: 1px; background: var(--trm-border);
+  }
+  #trm-page .wa-grid { columns: 4; column-gap: 10px; }
+  #trm-page .wa-item {
+    break-inside: avoid; margin-bottom: 10px;
+    border: 1px solid var(--trm-border); overflow: hidden;
+    background: var(--trm-card); cursor: pointer;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  #trm-page .wa-item:hover { transform: translateY(-3px); border-color: var(--trm-gold); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+  #trm-page .wa-item img { display: block; width: 100%; height: auto; }
+
+  /* Lightbox */
+  #trm-wa-lightbox { display: none; position: fixed; inset: 0; z-index: 9998; align-items: center; justify-content: center; padding: 20px; }
+  #trm-wa-lightbox.is-open { display: flex; }
+  #trm-wa-lightbox .trm-lb-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.92); backdrop-filter: blur(8px); cursor: pointer; }
+  #trm-wa-lightbox .trm-lb-img { position: relative; z-index: 1; max-width: 420px; max-height: 90vh; width: 100%; }
+  #trm-wa-lightbox .trm-lb-img img { width: 100%; height: auto; max-height: 90vh; object-fit: contain; border: 1px solid var(--trm-border); }
+  #trm-wa-lightbox .trm-lb-close {
+    position: absolute; top: -14px; right: -14px;
+    width: 32px; height: 32px;
+    background: var(--trm-card); border: 1px solid var(--trm-border);
+    color: var(--trm-muted); display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 18px; transition: color 0.2s, border-color 0.2s;
+  }
+  #trm-wa-lightbox .trm-lb-close:hover { color: var(--trm-cream); border-color: var(--trm-gold); }
+
+  /* BIO */
+  #trm-page #bio { background: var(--trm-black); }
+  #trm-page .bio-grid { display: grid; grid-template-columns: 300px 1fr; gap: 48px; align-items: center; }
+  #trm-page .bio-img-wrap { position: relative; }
+  #trm-page .bio-img-wrap::after {
+    content: ''; position: absolute; bottom: -14px; right: -14px;
+    width: 55%; height: 55%; border: 1px solid var(--trm-gold);
+    pointer-events: none; z-index: 0;
+  }
+  #trm-page .bio-img-wrap > * { position: relative; z-index: 1; }
+  #trm-page .bio-text h2 { font-size: clamp(24px, 3vw, 36px); margin-bottom: 6px; }
+  #trm-page .bio-role { display: block; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--trm-gold); margin-bottom: 24px; }
+  #trm-page .bio-text p { margin-bottom: 14px; font-size: 15px; line-height: 1.85; }
+  #trm-page .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  #trm-page .tag { padding: 6px 13px; border: 1px solid var(--trm-border); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--trm-muted); }
+
+  /* FAQ */
+  #trm-page #faq { background: var(--trm-dark); }
+  #trm-page #faq .section-head { text-align: center; margin-bottom: 40px; }
+  #trm-page #faq h2 { font-size: clamp(26px, 3.5vw, 40px); }
+  #trm-page .faq-wrap { max-width: 760px; margin: 0 auto; }
+  #trm-page .faq-item { border-bottom: 1px solid var(--trm-border); }
+  #trm-page .faq-item:first-of-type { border-top: 1px solid var(--trm-border); }
+  #trm-page .faq-btn {
+    width: 100%; background: none; border: none; padding: 18px 0;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 24px; cursor: pointer; text-align: left;
+  }
+  #trm-page .faq-q { font-family: var(--trm-head); font-size: 17px; color: var(--trm-cream); letter-spacing: 0.03em; }
+  #trm-page .faq-ico {
+    flex-shrink: 0; width: 26px; height: 26px;
+    border: 1px solid var(--trm-border); display: flex; align-items: center;
+    justify-content: center; color: var(--trm-gold); font-size: 18px;
+    transition: transform 0.3s ease, border-color 0.3s;
+  }
+  #trm-page .faq-item.open .faq-ico { transform: rotate(45deg); border-color: var(--trm-gold); }
+  #trm-page .faq-body { overflow: hidden; max-height: 0; transition: max-height 0.38s ease; }
+  #trm-page .faq-body-inner { padding: 0 0 26px; font-size: 16px; line-height: 1.9; color: #6B91AE; max-width: 640px; }
+
+  /* PHILOSOPHY */
+  #trm-page #philosophy { background: var(--trm-black); text-align: center; }
+  #trm-page .philosophy-inner { max-width: 660px; margin: 0 auto; }
+  #trm-page .philosophy-inner .headline { font-family: var(--trm-head); font-size: clamp(32px, 5vw, 56px); color: var(--trm-white); margin-bottom: 32px; line-height: 1.05; }
+  #trm-page .philosophy-inner .headline em { display: block; color: var(--trm-gold); font-style: normal; }
+  #trm-page .philosophy-inner p { font-size: 17px; line-height: 1.9; margin-bottom: 18px; }
+  #trm-page .philosophy-inner .closing { font-size: 18px; font-style: italic; color: var(--trm-gold); margin-top: 24px; }
+
+  /* BRAND MARK (top-left, fixed) */
+  #trm-page .trm-brand {
+    position: fixed;
+    top: 18px;
+    left: 22px;
+    z-index: 50;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 9px 14px 8px;
+    background: rgba(6,25,56,0.62);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(212,184,74,0.22);
+    text-decoration: none;
+    line-height: 1;
+    transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+  }
+  #trm-page .trm-brand:hover {
+    border-color: var(--trm-gold);
+    background: rgba(6,25,56,0.85);
+    transform: translateY(-1px);
+  }
+  #trm-page .trm-brand .trm-brand-name {
+    font-family: var(--trm-head);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--trm-cream);
+  }
+  #trm-page .trm-brand .trm-brand-sub {
+    font-family: var(--trm-body);
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--trm-gold);
+  }
+  #trm-page .trm-brand:hover .trm-brand-name { color: var(--trm-white); }
+
+  /* FINAL CTA */
+  #trm-page #cta-final { background: var(--trm-dark); border-top: 1px solid var(--trm-border); text-align: center; padding: 80px 28px; }
+  #trm-page #cta-final h2 { font-size: clamp(36px, 6vw, 64px); margin-bottom: 20px; }
+  #trm-page #cta-final .sub { font-size: 18px; color: #6B91AE; max-width: 420px; margin: 0 auto 52px; }
+
+  /* FOOTER */
+  #trm-page footer { background: var(--trm-black); border-top: 1px solid var(--trm-border); padding: 24px 28px; text-align: center; }
+  #trm-page footer p { font-size: 13px; color: var(--trm-muted); letter-spacing: 0.04em; }
+  #trm-page footer a { color: var(--trm-gold); text-decoration: none; }
+  #trm-page footer a:hover { color: var(--trm-gold-light); }
+
+  /* SCROLL ANIMATIONS */
+  #trm-page .anim { opacity: 0; transform: translateY(32px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  #trm-page .anim.in-view { opacity: 1; transform: translateY(0); }
+  #trm-page .anim-scale { opacity: 0; transform: scale(0.96); transition: opacity 0.6s ease, transform 0.6s ease; }
+  #trm-page .anim-scale.in-view { opacity: 1; transform: scale(1); }
+  #trm-page .anim-left { opacity: 0; transform: translateX(-32px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  #trm-page .anim-left.in-view { opacity: 1; transform: translateX(0); }
+  #trm-page .anim-right { opacity: 0; transform: translateX(32px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  #trm-page .anim-right.in-view { opacity: 1; transform: translateX(0); }
+  #trm-page .anim-d1 { transition-delay: 0.1s; }
+  #trm-page .anim-d2 { transition-delay: 0.2s; }
+  #trm-page .anim-d3 { transition-delay: 0.3s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    #trm-page .anim, #trm-page .anim-scale, #trm-page .anim-left, #trm-page .anim-right,
+    #trm-page .hero-kicker, #trm-page #hero h1, #trm-page .hero-tagline,
+    #trm-page #hero .btn, #trm-page .hero-rule {
+      animation: none; opacity: 1; transform: none; transition: none;
+    }
+  }
+
+  /* MODAL */
+  #trm-apply-modal { display: none; position: fixed; inset: 0; z-index: 9999; align-items: center; justify-content: center; padding: 20px; }
+  #trm-apply-modal.is-open { display: flex; }
+  #trm-apply-modal .modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); cursor: pointer; }
+  #trm-apply-modal .modal-box {
+    position: relative; z-index: 1; background: var(--trm-card);
+    border: 1px solid var(--trm-border); border-top: 2px solid var(--trm-gold);
+    width: 100%; max-width: 580px; max-height: 90vh;
+    overflow-y: auto; -webkit-overflow-scrolling: touch;
+  }
+  #trm-apply-modal .modal-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 28px; border-bottom: 1px solid var(--trm-border);
+    position: sticky; top: 0; background: var(--trm-card); z-index: 2;
+  }
+  #trm-apply-modal .modal-title { font-family: var(--trm-head); font-size: 14px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--trm-cream); }
+  #trm-apply-modal .modal-close {
+    background: none; border: 1px solid var(--trm-border); color: var(--trm-muted);
+    width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 20px; line-height: 1;
+    transition: color 0.2s, border-color 0.2s; flex-shrink: 0;
+  }
+  #trm-apply-modal .modal-close:hover { color: var(--trm-cream); border-color: var(--trm-gold); }
+  #trm-apply-modal .modal-body { padding: 0; }
+  #trm-apply-modal .modal-body iframe { display: block; width: 100%; border: none; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    #trm-page .archetype-grid { grid-template-columns: 1fr; }
+    #trm-page .values-grid    { grid-template-columns: 1fr; }
+    #trm-page .testi-video-grid { grid-template-columns: 1fr; }
+    #trm-page .bonus-card     { grid-template-columns: 1fr; }
+    #trm-page .bonus-left     { flex-direction: row; justify-content: center; padding: 28px; gap: 16px; }
+    #trm-page .wa-grid        { columns: 3; }
+  }
+  @media (max-width: 600px) {
+    #trm-page { font-size: 15px; line-height: 1.65; }
+    #trm-page section { padding: 44px 0; }
+    #trm-page #hero { padding: 64px 20px; }
+    #trm-page .container, #trm-page .container-wide { padding: 0 20px; }
+    #trm-page .hero-rule { letter-spacing: 0.18em; font-size: 11px; }
+    #trm-page .hero-tagline { font-size: 15px; line-height: 1.55; margin-bottom: 40px; }
+    #trm-page #hero h1 { margin-bottom: 22px; }
+
+    #trm-page #initiation h2,
+    #trm-page #entry h2,
+    #trm-page #values h2,
+    #trm-page #pricing h2,
+    #trm-page #bonus h2,
+    #trm-page #testimonials h2,
+    #trm-page #faq h2 { font-size: 22px; line-height: 1.2; }
+
+    #trm-page .section-head { margin-bottom: 28px; }
+
+    #trm-page #crisis blockquote { font-size: 17px; line-height: 1.5; margin-bottom: 22px; }
+    #trm-page #crisis .stand { font-size: 12px; }
+
+    #trm-page .archetype-card { padding: 22px 18px; gap: 14px; }
+    #trm-page .archetype-card p { font-size: 14px; line-height: 1.55; }
+    #trm-page .archetype-num { font-size: 26px; min-width: 28px; }
+
+    #trm-page .position-box { padding: 24px 20px; }
+    #trm-page .position-box p { font-size: 15px; line-height: 1.55; }
+
+    #trm-page #entry .lead { font-size: 15px; line-height: 1.65; margin-bottom: 32px; }
+
+    #trm-page .value-card { padding: 22px 18px 20px; }
+    #trm-page .value-card p { font-size: 14px; line-height: 1.55; }
+    #trm-page .brotherhood-box { padding: 24px 20px; }
+    #trm-page .brotherhood-box p { font-size: 15px; line-height: 1.55; }
+
+    #trm-page #pricing .lead { font-size: 14px; }
+    #trm-page .price-card { margin-top: 36px; }
+    #trm-page .price-top { padding: 22px 24px 16px; }
+    #trm-page .price-amount { font-size: 60px; }
+    #trm-page .price-amount sup { font-size: 22px; margin-top: 10px; }
+    #trm-page .price-features { padding: 12px 24px; }
+    #trm-page .price-features li { font-size: 14px; padding: 9px 0; line-height: 1.5; }
+    #trm-page .price-action { padding: 0 24px 22px; }
+
+    #trm-page .bonus-right { padding: 22px 20px; }
+    #trm-page .bonus-right h3 { font-size: 18px; margin-bottom: 10px; }
+    #trm-page .bonus-right p { font-size: 14px; line-height: 1.55; margin-bottom: 14px; }
+
+    #trm-page .bio-grid { grid-template-columns: 1fr; gap: 28px; }
+    #trm-page .bio-img-wrap { max-width: 220px; }
+    #trm-page .bio-text h2 { font-size: 22px; }
+    #trm-page .bio-text p { font-size: 14px; line-height: 1.6; }
+
+    #trm-page .faq-btn { padding: 14px 0; }
+    #trm-page .faq-q { font-size: 15px; }
+    #trm-page .faq-body-inner { font-size: 14px; line-height: 1.6; padding-bottom: 20px; }
+
+    #trm-page #philosophy .headline { font-size: 24px; line-height: 1.15; margin-bottom: 22px; }
+    #trm-page #philosophy p { font-size: 15px; line-height: 1.65; margin-bottom: 14px; }
+    #trm-page #philosophy .closing { font-size: 16px; }
+
+    #trm-page .trm-brand { top: 12px; left: 14px; padding: 7px 11px 6px; }
+    #trm-page .trm-brand .trm-brand-name { font-size: 11px; letter-spacing: 0.16em; }
+    #trm-page .trm-brand .trm-brand-sub { font-size: 7px; letter-spacing: 0.28em; }
+    #trm-page #cta-final { padding: 56px 20px; }
+    #trm-page #cta-final h2 { font-size: 30px; line-height: 1.1; margin-bottom: 14px; }
+    #trm-page #cta-final .sub { font-size: 14px; line-height: 1.55; margin-bottom: 36px; }
+
+    #trm-page .btn { padding: 14px 36px; font-size: 11px; }
+
+    #trm-page .wa-grid { columns: 2; }
+  }
+</style>
+
+<div id="trm-page">
+
+<a class="trm-brand" href="https://parallaxxtransformations.com" aria-label="Parallaxx Transformations &mdash; back to home">
+  <span class="trm-brand-name">Parallaxx</span>
+  <span class="trm-brand-sub">Transformations</span>
+</a>
+
+<section id="hero">
+  <div class="hero-inner">
+    <p class="hero-kicker">A Give It All Experience</p>
+    <h1>The<br><span class="accent">Reconnected</span><br>Man</h1>
+    <p class="hero-tagline">For men done living in disconnection and loneliness.</p>
+    <button class="btn btn--gold" data-trm-modal>Apply Now</button>
+    <p class="hero-rule">Real Connection &nbsp;&middot;&nbsp; Deep Love &nbsp;&middot;&nbsp; True Intimacy</p>
+  </div>
+</section>
+
+
+<section id="vsl">
+  <div class="container">
+    <div class="section-head anim">
+      <span class="overline">Watch This First</span>
+      <div class="divider"></div>
+    </div>
+    <div class="video-wrap video-wrap--landscape anim anim-d1" style="margin-top:40px;">
+      <video controls playsinline preload="metadata" poster="https://static.wixstatic.com/media/111174_607c1b06261f47cf889c337ae45a20ed~mv2.png">
+        <source src="https://video.wixstatic.com/video/111174_7af3a35d66374744965fbdaa2f9a3a9b/1080p/mp4/file.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+
+<section id="crisis">
+  <div class="container">
+    <blockquote class="anim">"We're living through a crisis of connection, and the consequences are everywhere. But standing for what truly matters takes immense courage."</blockquote>
+    <p class="stand anim anim-d2">We stand for real Connection, Love &amp; Intimacy &mdash;<br>not just with women, but in every relationship that defines us.</p>
+  </div>
+</section>
+
+
+<section id="initiation">
+  <div class="container-wide">
+    <div class="section-head anim">
+      <span class="overline">Who This Is For</span>
+      <h2>An Initiation For Men<br>Who Are Intentionally Becoming</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="archetype-grid">
+      <div class="archetype-card anim anim-d1">
+        <div class="archetype-num">01</div>
+        <p>The man who understands that the relationship he craves is a reflection of who he needs to become.</p>
+      </div>
+      <div class="archetype-card anim anim-d2">
+        <div class="archetype-num">02</div>
+        <p>The man who can get out of his head and back into his heart.</p>
+      </div>
+      <div class="archetype-card anim anim-d3">
+        <div class="archetype-num">03</div>
+        <p>The man who shows up as a human again.</p>
+      </div>
+    </div>
+    <div class="position-box anim">
+      <p>This isn't about dating tips or relationship coaching.<br>
+      This is about becoming the best version of yourself &mdash; <strong>for you</strong>, and as a model of demonstration for those around you.</p>
+    </div>
+  </div>
+</section>
+
+
+<section id="entry">
+  <div class="container">
+    <span class="overline anim">Entry Requirements</span>
+    <h2 class="anim anim-d1">Sounds Like You?</h2>
+    <div class="divider anim anim-d1" style="margin:24px auto 40px;"></div>
+    <p class="lead anim anim-d2">
+      The Reconnected Man is a small investment, but there is an application to be accepted.
+      This is important work. We take it seriously &mdash; and we ask that you give it the respect
+      it deserves. <strong>Not everyone will be accepted.</strong>
+    </p>
+    <button class="btn btn--gold anim anim-d3" data-trm-modal>Apply Now</button>
+  </div>
+</section>
+
+
+<section id="values">
+  <div class="container-wide">
+    <div class="section-head anim">
+      <span class="overline">What We Stand For</span>
+      <h2>What We Value</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="values-grid">
+      <div class="value-card anim anim-d1">
+        <h3>Dedication</h3>
+        <p>We all commit to the process by showing up like this work matters &mdash; because it does.</p>
+      </div>
+      <div class="value-card anim anim-d2">
+        <h3>Punctuality</h3>
+        <p>As a sign of respect to ourselves and each other. Time is a sacred resource here.</p>
+      </div>
+      <div class="value-card anim anim-d3">
+        <h3>Raw Vulnerability</h3>
+        <p>Being the best with imperfection. Real, unfiltered, and fully present.</p>
+      </div>
+    </div>
+    <div class="brotherhood-box anim">
+      <p>We all have skin in the game and play full out. We require the same from you upon entry.<br><strong>We will become your newfound brotherhood.</strong></p>
+    </div>
+  </div>
+</section>
+
+
+<section id="pricing">
+  <div class="container">
+    <span class="overline">The Investment</span>
+    <h2>If This Is You...</h2>
+    <p class="lead" style="margin-top:16px;">A small entry fee. An enormous return.<br>Join any time &mdash; monthly rollover, cancel whenever.</p>
+    <div class="price-card anim-scale">
+      <div class="price-top">
+        <div class="price-amount"><sup>&euro;</sup>59</div>
+        <div class="price-note">Per Month &nbsp;&middot;&nbsp; Cancel Anytime</div>
+      </div>
+      <ul class="price-features">
+        <li>Weekly group containers (4-week cycles)</li>
+        <li>Live facilitation &amp; hot-seat coaching</li>
+        <li>Brotherhood community access</li>
+        <li>First access to new frameworks &amp; resources</li>
+        <li>Flexible &mdash; join at any point in the cycle</li>
+      </ul>
+      <div class="price-action">
+        <button class="btn btn--gold btn--full" data-trm-modal>Apply Now</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="bonus">
+  <div class="container">
+    <div class="section-head anim">
+      <span class="overline">Bonus Gift</span>
+      <h2>Join Now &amp; Receive</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="bonus-card anim anim-d1">
+      <div class="bonus-left">
+        <span class="tag">Complimentary</span>
+        <span class="title">Bonus Access</span>
+      </div>
+      <div class="bonus-right">
+        <h3>Your Identity 2.0</h3>
+        <p>A complete online program designed for successful entrepreneurs and salespeople who are ready to architect the next version of themselves.</p>
+        <div class="value-strip">
+          <span class="was">Normally $597</span>
+          <span class="now">Yours Free</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="testimonials">
+  <div class="container-wide">
+    <span class="overline" style="display:block;text-align:center;">Social Proof</span>
+    <h2>What Others Are Saying</h2>
+    <div class="testi-video-grid">
+      <div class="testi-video-card anim anim-d1">
+        <div class="video-wrap video-wrap--reel">
+          <video controls playsinline preload="metadata" poster="https://static.wixstatic.com/media/111174_a9a3ee79bb13414582e4f2390f945548~mv2.jpg">
+            <source src="https://video.wixstatic.com/video/111174_59a18a858df34f798fbeb5ae8d5b19b8/1080p/mp4/file.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="testi-video-label">Member Testimonial</div>
+      </div>
+      <div class="testi-video-card anim anim-d2">
+        <div class="video-wrap video-wrap--reel">
+          <video controls playsinline preload="metadata" poster="https://static.wixstatic.com/media/111174_113a5b75e82e4904bea5b4ffdfaad34e~mv2.jpg">
+            <source src="https://video.wixstatic.com/video/111174_a6961c80d0464fbe8437a38fa69071da/720p/mp4/file.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="testi-video-label">Member Testimonial</div>
+      </div>
+    </div>
+
+    <div class="wa-gallery anim">
+      <div class="wa-label"><span>Direct From The Brotherhood</span></div>
+      <div class="wa-grid">
+        <div class="wa-item" data-lightbox="https://static.wixstatic.com/media/111174_ae318f43a9d9450a9ae0806285100f2c~mv2.png">
+          <img src="https://static.wixstatic.com/media/111174_ae318f43a9d9450a9ae0806285100f2c~mv2.png" alt="Member message" loading="lazy">
+        </div>
+        <div class="wa-item" data-lightbox="https://static.wixstatic.com/media/111174_2283c9d739b843ee8b0c1ab57a5ae2ea~mv2.jpg">
+          <img src="https://static.wixstatic.com/media/111174_2283c9d739b843ee8b0c1ab57a5ae2ea~mv2.jpg" alt="Member message" loading="lazy">
+        </div>
+        <div class="wa-item" data-lightbox="https://static.wixstatic.com/media/111174_31841433a355493593556033672b9403~mv2.jpg">
+          <img src="https://static.wixstatic.com/media/111174_31841433a355493593556033672b9403~mv2.jpg" alt="Member message" loading="lazy">
+        </div>
+        <div class="wa-item" data-lightbox="https://static.wixstatic.com/media/111174_62486f734c3144e296824e16df173d83~mv2.jpg">
+          <img src="https://static.wixstatic.com/media/111174_62486f734c3144e296824e16df173d83~mv2.jpg" alt="Member message" loading="lazy">
+        </div>
+        <div class="wa-item" data-lightbox="https://static.wixstatic.com/media/111174_9ce3cda44fc94dd1bcb2fbd1d5c69721~mv2.jpg">
+          <img src="https://static.wixstatic.com/media/111174_9ce3cda44fc94dd1bcb2fbd1d5c69721~mv2.jpg" alt="Member message" loading="lazy">
+        </div>
+        <div class="wa-item" data-lightbox="https://static.wixstatic.com/media/111174_9257e03b4d344d0b93e276ef36847e16~mv2.jpg">
+          <img src="https://static.wixstatic.com/media/111174_9257e03b4d344d0b93e276ef36847e16~mv2.jpg" alt="Member message" loading="lazy">
+        </div>
+        <div class="wa-item" data-lightbox="https://static.wixstatic.com/media/111174_a475a5e5caa34053b1377af317e5d4fe~mv2.jpg">
+          <img src="https://static.wixstatic.com/media/111174_a475a5e5caa34053b1377af317e5d4fe~mv2.jpg" alt="Member message" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="bio">
+  <div class="container-wide">
+    <div class="bio-grid">
+      <div class="bio-img-wrap anim-left">
+        <div class="video-wrap video-wrap--reel">
+          <video controls playsinline preload="metadata" poster="https://static.wixstatic.com/media/111174_52bb7073da274289b13738d153e1334e~mv2.jpg">
+            <source src="https://video.wixstatic.com/video/111174_4e1bcc7d4c634401adae988048a9cb1b/1080p/mp4/file.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="bio-text anim-right">
+        <span class="overline">Facilitated By</span>
+        <h2>Daniel Lawson</h2>
+        <span class="bio-role">Relationship &amp; Connection Coach</span>
+        <p>Daniel has been coaching personal connections and relationships for 6 years after being accredited through the International Coach Guild at The Coaching Institute in Melbourne.</p>
+        <p>His flagship program &mdash; the <strong>Relational Connection System Framework&trade;</strong> &mdash; has helped tens of dozens of graduates and hundreds more through global retreats and facilitations worldwide.</p>
+        <p>Daniel is the go-to recommended relationship coach within the Bali Brotherhood Ecosystem, and the founder and host of <strong>GIVE IT ALL</strong> &mdash; voted the #1 best networking event in Medell&iacute;n and widely recognised across Bulgaria and Bali.</p>
+        <p>You're in good hands for creating space within yourself for deep transformation and growth &mdash; fast.</p>
+        <div class="tags">
+          <span class="tag">ICG Accredited</span>
+          <span class="tag">6 Years Coaching</span>
+          <span class="tag">Global Facilitator</span>
+          <span class="tag">Bali Brotherhood</span>
+          <span class="tag">Relational Connection System&trade;</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="faq">
+  <div class="container-wide">
+    <div class="section-head anim">
+      <span class="overline">Common Questions</span>
+      <h2>Before You Apply</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="faq-wrap">
+      <div class="faq-item anim anim-d1">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-q">Do you offer a trial period first?</span>
+          <span class="faq-ico" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">No, we don't offer a trial. We've found the man who commits &mdash; who shows up and takes responsibility for extracting the value he's looking for &mdash; gets the best experience. If you can gamble money on dates but aren't willing to take a small risk investing in yourself, this probably isn't your crew.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-q">Is this online or in person?</span>
+          <span class="faq-ico" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">Both. Depending on community access and requirements. When you apply, select your preferred option and we'll discuss what's available to you.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-q">Do I need to attend every session?</span>
+          <span class="faq-ico" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">The short answer is no. But if you're already expecting not to be committed to the process, the brothers, and the consistency real transformation requires &mdash; it may not be the best fit for you.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-q">How do I know when sessions are?</span>
+          <span class="faq-ico" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">We're fluid with scheduling based on community requests. Currently two sessions are held at different times for the best global coverage. Apply, and if accepted, we'll find what fits your schedule.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-q">What does the entry fee actually include?</span>
+          <span class="faq-ico" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">The entry fee is largely a pay-to-play filter for men willing to invest in themselves. The actual value &mdash; group facilitation, hot-seat coaching, resources, and the connections you'll make &mdash; is exponentially greater than &euro;59.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-q">Is this a sales funnel? Are there upsells coming?</span>
+          <span class="faq-ico" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-body" role="region">
+          <div class="faq-body-inner">No. This is a standalone experience with real, substantial value. There is an option to go deeper through 1:1 coaching within the Reconnect Program &mdash; and if you choose that path, your total time in the circle is deducted from the program cost, with free access carried over.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="philosophy">
+  <div class="container">
+    <div class="philosophy-inner anim">
+      <span class="overline">A Note About This Circle</span>
+      <div class="headline">Reconnect Is<em>Emotional Leadership.</em></div>
+      <div class="divider"></div>
+      <p style="margin-top:36px;">The Reconnected Man requires skin in the game to join a community where we explore what it means to show up fully &mdash; in our relationships and in our lives.</p>
+      <p>This is also a space where I develop and test new frameworks and content. You'll have first access to emerging resources, tools, and programs as they become available &mdash; both free and paid.</p>
+      <p class="closing">"You're joining a living conversation."</p>
+    </div>
+  </div>
+</section>
+
+
+<section id="cta-final">
+  <div class="container">
+    <span class="overline anim">Ready?</span>
+    <h2 class="anim anim-d1">The Brotherhood<br>Is Waiting.</h2>
+    <p class="sub anim anim-d2">Applications are reviewed individually. Not everyone is accepted. If this resonates &mdash; don't wait.</p>
+    <button class="btn btn--gold anim anim-d3" data-trm-modal>Apply Now</button>
+  </div>
+</section>
+
+
+
+</div><!-- #trm-page -->
+
+
+<!-- WhatsApp lightbox -->
+<div id="trm-wa-lightbox">
+  <div class="trm-lb-backdrop"></div>
+  <div class="trm-lb-img">
+    <button class="trm-lb-close" aria-label="Close">&times;</button>
+    <img src="" alt="Member message">
+  </div>
+</div>
+
+<!-- Apply modal -->
+<div id="trm-apply-modal" role="dialog" aria-modal="true" aria-label="Application Form">
+  <div class="modal-backdrop"></div>
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-title">The Reconnected Man &mdash; Application</span>
+      <button class="modal-close" aria-label="Close form">&times;</button>
+    </div>
+    <div class="modal-body">
+      <iframe
+        src="https://api.leadconnectorhq.com/widget/form/UxzzQRv0AbKKQZ0P9bau"
+        height="1439"
+        title="The Reconnected Man Application Form"
+        id="form-UxzzQRv0AbKKQZ0P9bau"
+        data-form-id="UxzzQRv0AbKKQZ0P9bau"
+        data-form-name="The Reconnected Man Application Form"
+      ></iframe>
+    </div>
+  </div>
+</div>
+
+<script src="https://link.msgsndr.com/js/form_embed.js"></script>
+
+<script>
+(function() {
+  // FAQ accordion
+  document.querySelectorAll('#trm-page .faq-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item   = btn.closest('.faq-item');
+      const body   = item.querySelector('.faq-body');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('#trm-page .faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-body').style.maxHeight = null;
+        i.querySelector('.faq-btn').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // Apply modal
+  const modal    = document.getElementById('trm-apply-modal');
+  const backdrop = modal.querySelector('.modal-backdrop');
+  const closeBtn = modal.querySelector('.modal-close');
+  function openModal()  { modal.classList.add('is-open');    document.body.style.overflow = 'hidden'; closeBtn.focus(); }
+  function closeModal() { modal.classList.remove('is-open'); document.body.style.overflow = ''; }
+  document.querySelectorAll('[data-trm-modal]').forEach(el => el.addEventListener('click', openModal));
+  backdrop.addEventListener('click', closeModal);
+  closeBtn.addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal(); });
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('#trm-page .anim, #trm-page .anim-scale, #trm-page .anim-left, #trm-page .anim-right').forEach(el => observer.observe(el));
+
+  // WhatsApp lightbox
+  const lightbox         = document.getElementById('trm-wa-lightbox');
+  const lightboxImg      = lightbox.querySelector('img');
+  const lightboxBackdrop = lightbox.querySelector('.trm-lb-backdrop');
+  const lightboxClose    = lightbox.querySelector('.trm-lb-close');
+  function openLightbox(src)  { lightboxImg.src = src; lightbox.classList.add('is-open');    document.body.style.overflow = 'hidden'; }
+  function closeLightbox()    { lightbox.classList.remove('is-open'); document.body.style.overflow = ''; lightboxImg.src = ''; }
+  document.querySelectorAll('#trm-page .wa-item').forEach(item => item.addEventListener('click', () => openLightbox(item.dataset.lightbox)));
+  lightboxBackdrop.addEventListener('click', closeLightbox);
+  lightboxClose.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox(); });
+})();
+</script>

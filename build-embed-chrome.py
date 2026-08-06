@@ -60,6 +60,27 @@ SRC  = HERE / "src"
 NAV_BUNDLE    = HERE / "parallaxx-nav.js"
 FOOTER_BUNDLE = HERE / "parallaxx-footer.js"
 
+# ── HOW THE CHROME GETS INTO THE PAGE ─────────────────────────────────────
+# EXTERNAL (default) references the bundles on GitHub Pages, which is already
+# how the rest of the site loads its custom elements:
+#
+#     <parallaxx-home></parallaxx-home>
+#     <script src="https://parallaxxlifeco.github.io/.../parallaxx-home.js?v=...">
+#
+# That matters for two reasons. The embed stays close to its original size
+# instead of nearly doubling, and every later change to the nav or footer
+# reaches these two pages on the next push with nothing to re-paste.
+#
+# INLINE bakes both bundles into the file. Self-contained, no external
+# request, but ~38KB heavier and frozen at build time. Use it only if the
+# pages ever need to work without reaching github.io.
+#
+# Bump PAGES_VERSION on every deploy: it busts the CDN and browser cache the
+# same way the ?v= on the other pages does.
+MODE = "external"          # "external" | "inline"
+PAGES_BASE = "https://parallaxxlifeco.github.io/parallaxx-transformations/"
+PAGES_VERSION = "20260806a"
+
 # LIVE FINGERPRINTS. Captured 6 Aug 2026 by fetching each page's embed
 # straight off filesusr and hashing it, after a stale source shipped once.
 #
@@ -187,27 +208,44 @@ def build(page, nav_js, footer_js):
     j = s.find('</style>')
     s = s[:j] + '</style>\n<style>' + HOST_CSS + '</style>' + s[j + len('</style>'):]
 
-    # 5. Both bundles verbatim, then the shim.
-    s = s.rstrip() + (
-        "\n\n<!-- ══ PARALLAXX CHROME ══════════════════════════════════════════════\n"
-        "     parallaxx-nav and parallaxx-footer, inlined byte for byte from the\n"
-        "     built bundles. DO NOT EDIT THEM HERE. Edit PtNav v3.dc.html or\n"
-        "     PtFooter v3.dc.html, run build-chrome-bundles.py, then rerun\n"
-        "     build-embed-chrome.py. Anything changed by hand below is overwritten.\n"
-        "     ═══════════════════════════════════════════════════════════════════ -->\n"
-        "<script>\n" + nav_js + "\n</script>\n"
-        "<script>\n" + footer_js + "\n</script>\n"
-        "<script>" + SHIM + "</script>\n"
-    )
+    # 5. The chrome, then the shim.
+    if MODE == "external":
+        chrome = (
+            "\n\n<!-- ══ PARALLAXX CHROME ══════════════════════════════════════════════\n"
+            "     Loaded from GitHub Pages, the same host the rest of the site uses for\n"
+            "     its custom elements. Nothing here needs re-pasting when the nav or\n"
+            "     footer changes: rebuild the bundles, push, and this page picks them\n"
+            "     up on the next cache bust. Bump the ?v= to force that.\n"
+            "     ═══════════════════════════════════════════════════════════════════ -->\n"
+            f'<script src="{PAGES_BASE}parallaxx-nav.js?v={PAGES_VERSION}"></script>\n'
+            f'<script src="{PAGES_BASE}parallaxx-footer.js?v={PAGES_VERSION}"></script>\n'
+            "<script>" + SHIM + "</script>\n"
+        )
+    else:
+        chrome = (
+            "\n\n<!-- ══ PARALLAXX CHROME ══════════════════════════════════════════════\n"
+            "     parallaxx-nav and parallaxx-footer, inlined byte for byte from the\n"
+            "     built bundles. DO NOT EDIT THEM HERE. Edit PtNav v3.dc.html or\n"
+            "     PtFooter v3.dc.html, run build-chrome-bundles.py, then rerun\n"
+            "     build-embed-chrome.py. Anything changed by hand below is overwritten.\n"
+            "     ═══════════════════════════════════════════════════════════════════ -->\n"
+            "<script>\n" + nav_js + "\n</script>\n"
+            "<script>\n" + footer_js + "\n</script>\n"
+            "<script>" + SHIM + "</script>\n"
+        )
+    s = s.rstrip() + chrome
 
     out = HERE / page["src"]
     out.write_text(s, encoding="utf-8")
-    print(f'built {out.name}  ({len(s):,} bytes, was {before:,})  nav active="{page["active"]}"')
+    print(f'built {out.name}  ({len(s):,} chars, was {before:,})  '
+          f'nav active="{page["active"]}"  chrome={MODE}')
 
 
 if __name__ == "__main__":
-    nav_js    = read_bundle(NAV_BUNDLE)
-    footer_js = read_bundle(FOOTER_BUNDLE)
+    nav_js = footer_js = ""
+    if MODE == "inline":
+        nav_js    = read_bundle(NAV_BUNDLE)
+        footer_js = read_bundle(FOOTER_BUNDLE)
     for p in PAGES:
         build(p, nav_js, footer_js)
     print("\nBoth live embeds now carry parallaxx-nav v3 and parallaxx-footer v3.")

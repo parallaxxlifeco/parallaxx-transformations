@@ -239,7 +239,21 @@
   .pt-item:last-child{border-bottom:none}
   .pt-link{flex:1 1 auto;padding:15px 2px;font-size:1rem}
   .pt-item.is-active > .pt-link::after,.pt-link.is-active::after{display:none}
-  .pt-caret{flex:0 0 auto;padding:15px 10px;font-size:.85em}
+  /* The caret was #7C89A3 at .85em: the same grey as inactive text, on a
+     control people are meant to notice and press. On a phone it read as
+     punctuation, not a button. Gold picks it out of the row, the stroke
+     gives the glyph weight a font-weight cannot (it is a symbol, and the
+     face has no bolder cut of it), and the ring makes the tap target
+     visible so it is obvious there is more underneath. */
+  .pt-caret{
+    flex:0 0 auto;padding:11px 12px;font-size:1.02em;
+    color:#E8C65F;-webkit-text-stroke:.6px #E8C65F;
+    border:1px solid rgba(232,198,95,.34);border-radius:999px;
+    margin-left:6px;
+  }
+  .pt-item.is-open .pt-caret{
+    color:#F4E1A2;-webkit-text-stroke:.6px #F4E1A2;
+    background:rgba(232,198,95,.14);border-color:rgba(232,198,95,.62)}
 
   /* Child list is a plain indented block on mobile. A floating panel
      inside a panel is a place to get lost. */
@@ -264,6 +278,20 @@
   #pt-cta .arrow{display:none}
 }
 
+
+/* ═══ THE 320px BAR ═══════════════════════════════════════════════
+   At 320 the logo, the Contact pill and the burger add up to more than
+   the bar, and the burger hangs 9px off the right edge. Nothing here is
+   a redesign: the logo loses 4px, the bar loses 6px of padding either
+   side, and the pill tightens. Added 4 Aug 2026 to all three pages and
+   to PtNav v3.dc.html, which stays the source of record. */
+@media(max-width:360px){
+  #pt-bar{padding-left:14px;padding-right:14px;gap:10px}
+  #pt-logo img{height:22px}
+  #pt-cta{padding:.6em .82em;font-size:.8rem}
+  #pt-burger{width:34px;margin-right:-4px}
+}
+
 @media(prefers-reduced-motion:reduce){
   #pt-nav,#pt-nav *{transition:none!important}
 }`;
@@ -284,8 +312,8 @@
         <a class="pt-link" href="https://www.parallaxxtransformations.com/men">For Men</a>
         <button class="pt-caret" type="button" aria-label="Show For Men menu" aria-expanded="false" aria-controls="pt-menu-men">&#9662;</button>
         <div class="pt-menu" id="pt-menu-men">
-          <a href="https://www.parallaxxtransformations.com/the-reconnected-man">
-            <span class="pt-sub">Programme</span>The Reconnected Man</a>
+          <a href="https://www.parallaxxtransformations.com/men">Start Here</a>
+          <a href="https://www.parallaxxtransformations.com/the-reconnected-man">The Reconnected Man</a>
         </div>
       </div>
 
@@ -294,8 +322,8 @@
         <a class="pt-link" href="https://www.parallaxxtransformations.com/women">For Women</a>
         <button class="pt-caret" type="button" aria-label="Show For Women menu" aria-expanded="false" aria-controls="pt-menu-women">&#9662;</button>
         <div class="pt-menu" id="pt-menu-women">
-          <a href="https://www.parallaxxtransformations.com/the-reconnected-woman">
-            <span class="pt-sub">Programme</span>The Reconnected Woman</a>
+          <a href="https://www.parallaxxtransformations.com/women">Start Here</a>
+          <a href="https://www.parallaxxtransformations.com/the-reconnected-woman">The Reconnected Woman</a>
         </div>
       </div>
 

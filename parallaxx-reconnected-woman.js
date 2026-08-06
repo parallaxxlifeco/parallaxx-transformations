@@ -857,12 +857,16 @@
 
     <p class="px-fade" style="font-size:1.06rem;line-height:1.78;color:#F1ECE1;max-width:56ch;margin-bottom:40px">You can see that and still keep everything you built.</p>
 
-    <!-- Poster reuses the Daniel still from section 09. A play button on a
-         flat navy rectangle reads as a broken embed, not as a video, and the
-         one thing this block has to do is look playable.
+    <!-- The real cover for this VSL, 1944x1090, which is 16:9 to two decimal
+         places, so object-fit:cover has nothing to crop. Worth recording why
+         that matters: the first stand-in here was the reel still from section
+         09 at 1080x1920, and in this frame cover keeps only the middle 32% of
+         a portrait image's height, which took his head off and left a torso
+         holding a microphone. A play button on flat navy reads as a broken
+         embed; a badly cropped one reads worse.
          ▸ TODO: confirm the runtime for .len -->
     <button class="px-vid px-fade" data-mp4="https://video.wixstatic.com/video/111174_c76bb418f85d49579bd90c14e6addf79/1080p/mp4/file.mp4" aria-label="Play: Daniel on the machine, and leaving it">
-      <img alt="" loading="lazy" src="https://static.wixstatic.com/media/111174_52bb7073da274289b13738d153e1334e~mv2.jpg">
+      <img alt="" loading="lazy" src="https://static.wixstatic.com/media/111174_288c16dbd5a94db8a6e6cc043ed2fc74~mv2.png">
       <span class="play" aria-hidden="true"></span>
       <span class="len">3 min</span>
     </button>

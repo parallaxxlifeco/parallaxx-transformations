@@ -103,7 +103,7 @@
   /* ── TYPE ───────────────────────────────────────────────────────── */
   .wrap{position:relative;z-index:5;width:100%;height:100%;
     display:flex;flex-direction:column;justify-content:center;
-    padding:0 0 24px 56px;max-width:660px}
+    padding:0 0 40px 56px;max-width:620px}
 
   .kicker{font-size:12px;font-weight:700;letter-spacing:.4em;
     text-transform:uppercase;color:#E8C65F;margin-bottom:20px}
@@ -111,14 +111,18 @@
   /* Poppins 300 is the page's display weight. 300 reads as composure;
      800 reads as a shout, and this man does not respond to being shouted at.
      66px rather than 74 now the column shares the frame with a face. */
+  /* 58px, not 66. At 66 the second line ran to 655px and crossed into his
+     face, which put type over the one thing the card is there to show.
+     58 pulls every line back inside the dark half and still reads as
+     display type at thumbnail size. */
   h1{font-family:'Poppins',sans-serif;font-weight:300;
-    font-size:66px;line-height:1.05;letter-spacing:-.02em;
-    color:#F1ECE1;margin-bottom:22px;
+    font-size:58px;line-height:1.08;letter-spacing:-.02em;
+    color:#F1ECE1;margin-bottom:20px;max-width:11.5ch;
     text-shadow:0 2px 22px rgba(4,18,42,.55)}
   h1 em{font-style:italic;font-weight:300;color:#94A9C8}
 
-  .sub{font-size:21px;font-weight:300;line-height:1.45;color:#B1BFD7;
-    max-width:31ch;text-shadow:0 1px 14px rgba(4,18,42,.6)}
+  .sub{font-size:20px;font-weight:300;line-height:1.45;color:#B1BFD7;
+    max-width:29ch;text-shadow:0 1px 14px rgba(4,18,42,.6)}
 
   .rule{position:absolute;left:56px;right:56px;bottom:104px;z-index:5;
     border-top:1px solid rgba(241,236,225,.14)}

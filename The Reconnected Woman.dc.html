@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+/* LUMIOS MARKER is not on Google Fonts -- upload the .woff2 to Wix Media and
+   drop the URL in below. Until then the stack falls through to Permanent
+   Marker, which is the closest free marker face, so nothing renders as a
+   system script by accident. */
+@font-face{font-family:'Lumios Marker';font-display:swap;
+  src:url('LUMIOS_MARKER_WOFF2_URL') format('woff2');}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://link.msgsndr.com/js/form_embed.js"></script>
+
+<style>
+/* ══════════════════════════════════════════════════════════════════════════
+   THE RECONNECTED WOMAN - rebuilt on the Parallaxx v4 system, copy corrected
+   against the W-series avatar archive (W01 The Circle, W02 The Woman,
+   W03 Her Source Bank).
+
+   THE COPY RULES THIS PAGE IS BUILT TO OBEY. All from W01/W02/W03.
+
+   1. NEVER blame her work, her ambition or her success. Attack any of those
+      and you lose her in one line. The machine is the antagonist, never her.
+   2. The machine goes FIRST. W02 2.2: it is the only argument that does not
+      ask her to concede anything about herself before it can start. She can
+      agree with it while defending everything she built.
+   3. Calibrate the promise DOWN. Three women independently described modest
+      outcomes. A no that cost nothing. A dinner she did not cancel. Nothing
+      on this page promises transformation.
+   4. Her noun is TRADE-OFF (Jennifer, unprompted). A trade-off is a decision,
+      so it leaves her agency intact. Every word that removes her agency
+      loses her.
+   5. Her emotion is self-disappointment and regret, NOT exhaustion. Rest is
+      not the solution to her problem, it is the fear. No tired, no burnout,
+      no "you deserve a break".
+   6. The doorway is the trough, not the peak. She can hear this on the
+      boring project, not at 11pm. Section 02 is written for that woman.
+   7. Lead with the ROOM. The man arrives as the explanation, not the
+      headline, which is why section 05 sits where it does and not higher.
+   8. BANNED, because she has already decided what kind of person uses these
+      words: feminine / divine feminine, soften, surrender, flow, sisterhood,
+      goddess, womb, moon, energy, held space, CONTAINER, "let a man lead
+      you" (fatal), healing journey, work life balance, "you deserve rest".
+      The old page said "weekly group containers" in the pricing card, which
+      was a carry-over from the men's page. It says sessions now.
+   9. The word CIRCLE arrives already meaning candles and a talking object.
+      It survives only inside the FAQ questions, because that is her
+      objection in her own words. Everywhere else this is a room, a group or
+      a session. The room's name is NOT resolved here. W01 5: it should come
+      out of a transcript, not a naming exercise. "Inner Circle" is gone.
+  10. No em dashes.
+
+   ONE THING ON THIS PAGE IS NOT SOURCED, AND IT IS MARKED HERE ON PURPOSE.
+   W01/W02/W03 are consultant material. Julia is a People Experience Lead in
+   consulting, Jennifer is a consultant on partner track, Christine is a
+   client. W02 3 lists "whether it generalises past consulting" as an open
+   question and W03 notes that both interviews are consultants and both
+   German-speaking. Nothing in the archive describes a founder.
+
+   Daniel has widened the avatar to include entrepreneurs and business
+   owners. Section 01 used to do that with a matched pair, one line for the
+   employee and one for the owner, which meant every reader skipped half of
+   it. It is one line now, written so it is true whoever sets the number, and
+   the reader supplies her own version. Section 09 carries the bridge instead.
+
+   The employer reading is sourced. The founder reading is his, not a
+   captured quote, so treat it as [D-BRIEF] until a woman who owns her own
+   business says it in her own words. W02 6: if a line is still grey in three
+   months and you are still using it, you have started inventing her.
+
+   DESIGN: same v4 kit as the home page and The Reconnected Man. Coral is the
+   reader, gold is Daniel's voice, bronze is gold's cream-side equivalent,
+   Poppins displays, Montserrat reads, navy alternates with cream.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  #prw-root img{display:block;max-width:100%}
+  #prw-root h1,#prw-root h2,#prw-root h3,#prw-root h4{text-wrap:balance}
+  #prw-root p{text-wrap:pretty}
+  #prw-root ::selection{background:#FF501F;color:#fff}
+
+/* ── TYPE ROLES ─────────────────────────────────────────────── */
+  .px-serif{font-family:'Poppins','Montserrat',sans-serif;font-weight:400;letter-spacing:-.018em}
+  .px-hand{font-family:'Lumios Marker','Permanent Marker',cursive;font-weight:400}
+  .px-label{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:#5E6B85}
+
+/* ── LAYOUT ─────────────────────────────────────────────────── */
+  .px-wrap{max-width:1240px;margin:0 auto}
+  .px-head{max-width:min(1140px,94vw);margin-left:auto;margin-right:auto}
+  .px-sec{padding:clamp(52px,6.5vw,92px) clamp(20px,4vw,52px);position:relative}
+
+/* ── BUTTONS ────────────────────────────────────────────────── */
+  .px-btn{display:inline-flex;align-items:center;gap:.55em;background:#FF501F;color:#fff;font-family:'Montserrat',system-ui,sans-serif;font-weight:700;font-size:.98rem;padding:1.05em 2.2em;border:none;border-radius:999px;text-decoration:none;cursor:pointer;transition:background .3s,transform .3s,box-shadow .3s;box-shadow:0 10px 30px -12px rgba(255,80,31,.5)}
+  .px-btn:hover{background:#FF6A3D;transform:translateY(-2px)}
+  .px-btn.full{display:flex;width:100%;justify-content:center}
+  .px-ghost{display:inline-flex;align-items:center;gap:.55em;color:#B1BFD7;border:1px solid rgba(232,198,95,.4);font-family:'Montserrat',system-ui,sans-serif;font-weight:600;font-size:.94rem;padding:1em 2em;border-radius:999px;text-decoration:none;transition:background .3s,border-color .3s,color .3s}
+  .px-ghost:hover{background:rgba(241,236,225,.08);border-color:#F1ECE1;color:#F1ECE1}
+  .px-ghost.on-cream{color:#8A5A47;border-color:rgba(255,80,31,.4)}
+  .px-ghost.on-cream:hover{background:rgba(255,80,31,.06);border-color:#FF501F;color:#FF501F}
+
+/* ── REVEAL PRIMITIVES ──────────────────────────────────────────
+   FAIL-SAFE BY DEFAULT. The hidden start state is gated behind #prw-root.anim,
+   which the JS adds only on the path that also animates it back. If the script
+   never runs, the class is never added and the page renders fully visible
+   instead of a navy screen with nothing on it. This page is 100% reveal
+   animated, so opacity:0 in the ungated rule would mean one failed request
+   between the reader and a blank page. */
+  .px-line{display:block;overflow:hidden}
+  .px-line > span{display:block;padding-right:.08em}
+  #prw-root.anim .px-line > span{transform:translateY(110%);will-change:transform}
+  #prw-root.anim .px-fade{opacity:0;transform:translateY(22px);will-change:transform,opacity}
+  @media(prefers-reduced-motion:reduce){
+    #prw-root.anim .px-line > span{transform:none!important}
+    #prw-root.anim .px-fade{opacity:1!important;transform:none!important}
+    *{animation:none!important}
+  }
+
+/* ── CARDS ──────────────────────────────────────────────────── */
+  .px-card{background:#fff;border-radius:20px;padding:28px 30px;border-top:3px solid #A08A5E}
+  .px-card .n{font-family:'Poppins','Montserrat',sans-serif;font-size:1.9rem;line-height:1;color:rgba(160,138,94,.65);margin-bottom:14px;display:block}
+  .px-card h3{font-size:.72rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#82663D;margin:0 0 12px}
+  .px-card p{font-size:.97rem;line-height:1.72;color:#5E5850}
+
+  /* Glass pane, the archetype-pane silhouette without the film */
+  .px-vpane{position:relative;display:flex;flex-direction:column;justify-content:flex-start;
+    padding:30px 28px;border-radius:14px;overflow:hidden;background:#0A1D3C;
+    border:1px solid rgba(232,198,95,.14);
+    transition:border-color .35s ease,transform .35s ease,box-shadow .35s ease}
+  .px-vpane:hover{transform:translateY(-6px);border-color:rgba(255,80,31,.4);box-shadow:0 30px 60px -30px rgba(3,12,28,.9)}
+  .px-vpane h3{font-size:.72rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#E8C65F;margin:0 0 16px}
+  .px-vpane p{font-size:.95rem;line-height:1.7;color:#C4CEE0;margin:0}
+
+  .px-darkbox{padding:26px 28px;background:#12233F;border-radius:18px}
+  .px-darkbox p{font-size:1rem;line-height:1.75;color:#B1BFD7}
+
+/* ── VIDEO FACADE ───────────────────────────────────────────────
+   Zero third-party requests until click. Play control bottom-left on purpose:
+   a centred button lands squarely on the speaker's mouth. Coral, because
+   pressing play is a reader action, not Daniel's voice. */
+  .px-vid{position:relative;display:block;width:100%;padding:0;border:0;cursor:pointer;background:#04122A;border-radius:16px;overflow:hidden;aspect-ratio:16/9;
+    box-shadow:0 26px 60px -34px rgba(3,12,28,.95),0 0 0 1px rgba(232,198,95,.14);transition:transform .3s ease,box-shadow .3s ease}
+  .px-vid:hover{transform:translateY(-3px);box-shadow:0 30px 70px -32px rgba(3,12,28,1),0 0 0 1px rgba(232,198,95,.34)}
+  .px-vid.reel{aspect-ratio:9/16;border-radius:18px}
+  .px-vid > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.92) brightness(.86);transition:filter .3s ease}
+  .px-vid:hover > img{filter:saturate(1) brightness(1)}
+  .px-vid .play{position:absolute;left:20px;bottom:20px;width:58px;height:58px;border-radius:999px;background:rgba(255,80,31,.94);box-shadow:0 10px 30px -8px rgba(255,80,31,.6);transition:transform .3s ease}
+  .px-vid .play::after{content:'';position:absolute;top:50%;left:53%;transform:translate(-50%,-50%);border-style:solid;border-width:10px 0 10px 16px;border-color:transparent transparent transparent #fff}
+  .px-vid:hover .play{transform:scale(1.09)}
+  .px-vid .len{position:absolute;right:12px;bottom:12px;padding:5px 10px;border-radius:8px;background:rgba(4,18,42,.82);backdrop-filter:blur(6px);font-size:.68rem;font-weight:700;letter-spacing:.06em;color:#B1BFD7}
+  .px-vid iframe,.px-vid video.live{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
+
+/* ── PRICING CARD ───────────────────────────────────────────────
+   Coral top rule, not gold: the price is the reader's move. */
+  .px-price{max-width:520px;margin:44px auto 0;background:#fff;border-radius:20px;overflow:hidden;
+    border-top:3px solid #FF501F;box-shadow:0 30px 70px -46px rgba(30,42,61,.6);text-align:left}
+  .px-price .amt{font-family:'Poppins','Montserrat',sans-serif;font-weight:400;font-size:76px;line-height:1;color:#1E2A3D;letter-spacing:-.03em}
+  .px-price .amt sup{font-size:28px;vertical-align:top;margin-top:12px;display:inline-block;color:#A08A5E;letter-spacing:0}
+  .px-price li{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid #EDE7DC;font-size:.97rem;line-height:1.6;color:#5E5850;list-style:none}
+  .px-price li:last-child{border-bottom:none}
+  /* Coral dot, drawn rather than typed so it sits on the cap-height. */
+  .px-price li span.d{flex:0 0 auto;width:6px;height:6px;border-radius:999px;background:#FF501F;margin-top:.62em;font-size:0}
+
+/* ── FAQ ────────────────────────────────────────────────────── */
+  .faq-wrap{max-width:760px;margin:0 auto}
+  .faq-item{border-bottom:1px solid rgba(241,236,225,.12)}
+  .faq-item:first-of-type{border-top:1px solid rgba(241,236,225,.12)}
+  .faq-btn{width:100%;background:none;border:none;padding:20px 0;display:flex;justify-content:space-between;align-items:center;gap:24px;cursor:pointer;text-align:left;font-family:'Montserrat',system-ui,sans-serif}
+  .faq-q{font-size:1.02rem;font-weight:600;color:#F1ECE1;line-height:1.5}
+  .faq-ico{flex-shrink:0;width:28px;height:28px;border:1px solid rgba(255,80,31,.4);border-radius:999px;display:flex;align-items:center;justify-content:center;color:#FF501F;font-size:18px;line-height:1;transition:transform .3s ease,border-color .3s ease,background .3s ease}
+  .faq-item.open .faq-ico{transform:rotate(45deg);border-color:#FF501F;background:rgba(255,80,31,.12)}
+  .faq-body{overflow:hidden;max-height:0;transition:max-height .38s ease}
+  .faq-body-inner{padding:0 0 26px;font-size:.98rem;line-height:1.85;color:#C4CEE0;max-width:640px}
+
+/* ── APPLICATION MODAL ──────────────────────────────────────── */
+  #prw-modal{display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;padding:20px;font-family:'Montserrat',system-ui,sans-serif}
+  #prw-modal.is-open{display:flex}
+  #prw-modal .mb{position:absolute;inset:0;background:rgba(3,12,28,.88);backdrop-filter:blur(6px);cursor:pointer}
+  #prw-modal .box{position:relative;z-index:1;background:#0A1D3C;border:1px solid rgba(232,198,95,.18);border-top:2px solid #FF501F;border-radius:18px;width:100%;max-width:580px;max-height:90vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  #prw-modal .hd{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 26px;border-bottom:1px solid rgba(241,236,225,.12);position:sticky;top:0;background:#0A1D3C;z-index:2}
+  #prw-modal .ttl{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#5E6B85}
+  #prw-modal .x{background:none;border:1px solid rgba(241,236,225,.16);border-radius:999px;color:#B1BFD7;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;line-height:1;flex-shrink:0;transition:color .2s,border-color .2s}
+  #prw-modal .x:hover{color:#FF501F;border-color:rgba(255,80,31,.55)}
+  #prw-modal iframe{display:block;width:100%;border:none}
+
+/* ── CREDENTIAL CHIPS ───────────────────────────────────────── */
+  .px-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+  .px-chips span{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8A8073;border:1px solid rgba(160,138,94,.35);border-radius:999px;padding:.6em 1.1em}
+
+/* ── GRIDS ──────────────────────────────────────────────────── */
+  #prw-who{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  #prw-isnt{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  /* Two of the four headings wrap at 4-up, which drops their body copy a line
+     below the others. Reserve the second line so all four bodies start level. */
+  #prw-isnt .px-vpane h3{min-height:2.4em}
+  @media(max-width:640px){ #prw-isnt .px-vpane h3{min-height:0} }
+  #prw-room{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  #prw-how{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  #prw-vals{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  #prw-daniel{display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(36px,5vw,76px);align-items:start}
+
+/* ── MOBILE ─────────────────────────────────────────────────── */
+  @media(max-width:1000px){ #prw-isnt{grid-template-columns:repeat(2,1fr)} }
+  @media(max-width:900px){ #prw-daniel > div:first-child{position:static!important} }
+  @media(max-width:820px){ #prw-who,#prw-room,#prw-how,#prw-vals{grid-template-columns:1fr} }
+  @media(max-width:640px){ #prw-isnt{grid-template-columns:1fr} }
+  @media(max-width:560px){
+    #prw-root h1.px-serif,#prw-root h2.px-serif,#prw-root h3.px-serif{font-size:clamp(21px,6.1vw,27px)!important;line-height:1.24!important}
+    #prw-root section,#prw-root .px-sec{padding-top:clamp(40px,10vw,52px)!important;padding-bottom:clamp(40px,10vw,52px)!important}
+    .px-hand{font-size:clamp(14px,4.6vw,21px)!important}
+    .px-price .amt{font-size:60px}
+  }
+</style>
+</helmet>
+
+<div id="prw-root" style="background:#04122A;color:#B1BFD7;font-family:'Montserrat',system-ui,sans-serif;font-size:16px;line-height:1.7;overflow-x:clip;position:relative">
+
+<!-- ══════════════ 01 · HERO ══════════════════════════════════════════════
+     The sub-headline is the positioning sentence from W01 1, stated as a
+     logistical fact rather than a philosophy. She does not have to believe
+     anything about masculine and feminine energy. She just has to notice
+     that nobody is looking at her to fix the silence.
+     ▸ TODO: a hero photograph behind the veil, as the home page has.
+     ═══════════════════════════════════════════════════════════════════ -->
+<section style="position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;padding:130px clamp(20px,4vw,52px) 90px;overflow:hidden;background:radial-gradient(120% 90% at 50% 14%,#0A2148 0%,#061938 44%,#030C1E 100%)">
+  <div aria-hidden="true" style="position:absolute;top:36%;left:50%;transform:translate(-50%,-50%);width:min(760px,110vw);height:min(760px,110vw);background:radial-gradient(circle,rgba(232,198,95,.07) 0%,rgba(232,198,95,.03) 38%,transparent 66%);pointer-events:none"></div>
+
+  <div style="position:relative;z-index:1;max-width:860px;min-width:0">
+    <p class="px-hand px-fade" style="font-size:1.6rem;color:#E8C65F;margin-bottom:18px">a give it all experience</p>
+
+    <h1 class="px-serif" style="font-size:clamp(38px,5.6vw,74px);line-height:1.1;color:#F1ECE1;margin-bottom:26px">
+      <!-- Capped lower than the men's page: "Woman" is a longer word and at
+           74px the title broke to two lines. Sized to hold one line. -->
+      <span class="px-line"><span style="font-weight:500;font-size:min(64px,calc((100vw - 48px) / 13));white-space:nowrap">The Reconnected Woman</span></span>
+      <span class="px-line"><span style="font-weight:300;font-style:italic;font-size:min(30px,calc((100vw - 48px) / 25));color:#B1BFD7;white-space:nowrap">for women done paying for the trade-off.</span></span>
+    </h1>
+
+    <!-- HERO STACK, DELIBERATELY SHORT. This was eight blocks deep and read as
+         noise. What earned its place: the family marker, the name, one line of
+         positioning, the button, and the price. Cut were the trust strip
+         ("Real Integrity · Deep Self-Trust · True Connection", three
+         abstractions next to a page that otherwise deals in cancelled dinners)
+         and the "every application is read individually" line, which already
+         appears twice further down where it is doing real work. -->
+    <p class="px-fade" style="font-size:clamp(17px,1.5vw,21px);line-height:1.65;color:#C4CEE0;max-width:30em;margin:0 auto 40px">A room of high-performing women where you are not the one holding it.</p>
+
+    <button class="px-btn px-fade" data-prw-modal>Apply now <span aria-hidden="true">&#8594;</span></button>
+
+    <p class="px-label px-fade" style="margin-top:22px">€59 a month · By application</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 02 · THE MACHINE ══════════════════════════════════════
+     THIS GOES FIRST ON PURPOSE. W02 2.2: every other angle asks her to
+     concede something about herself before the argument can start. This one
+     does not. She can agree with it while defending everything she has built.
+
+     Julia's material is expert observation of a population, so it is used
+     here to describe the MACHINE and never to describe her interior. That
+     line is load bearing: W03 03, "use it to write about the machine, do not
+     use it to write about her."
+
+     The last paragraph is the retarget. Two of three doorways in the archive
+     are troughs, not peaks. She can hear this on the slow project, not at
+     11pm, so the page says so out loud.
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="px-sec" style="background:#0A1D3C">
+  <div class="px-head" style="max-width:860px">
+    <p class="px-label px-fade" style="margin-bottom:18px">01. The machine</p>
+
+    <h2 class="px-serif" style="font-size:clamp(28px,3.9vw,50px);line-height:1.15;color:#F1ECE1;margin-bottom:26px">
+      <span class="px-line"><span>99% isn't enough.</span></span>
+      <span class="px-line"><span style="font-style:italic;color:#8E9BB2;font-size:.72em">It was never going to be.</span></span>
+    </h2>
+
+    <p class="px-fade" style="font-size:1.06rem;line-height:1.78;color:#C4CEE0;max-width:56ch;margin-bottom:16px">You hit the number and the number moves. Nobody has ever told you when you're done.</p>
+
+    <p class="px-fade" style="font-size:1.06rem;line-height:1.78;color:#C4CEE0;max-width:56ch;margin-bottom:16px">Nothing in it has a reason to. It works better when you keep running.</p>
+
+    <p class="px-fade" style="font-size:1.06rem;line-height:1.78;color:#F1ECE1;max-width:56ch;margin-bottom:40px">You can see that and still keep everything you built.</p>
+
+    <!-- ▸ TODO: poster still for the VSL, and confirm the runtime for .len -->
+    <button class="px-vid px-fade" data-mp4="https://video.wixstatic.com/video/111174_c76bb418f85d49579bd90c14e6addf79/1080p/mp4/file.mp4" aria-label="Play: Daniel on the machine, and leaving it">
+      <span class="play" aria-hidden="true"></span>
+      <span class="len">3 min</span>
+    </button>
+
+    <!-- ▸ THE PULL-QUOTE THAT USED TO SIT HERE HAS BEEN REMOVED. It read:
+         "I hit the target and it cost me my soul. The next year it went up
+         another 10%, so I had to do all of it again, plus more. I know this
+         machine. I left it." Daniel.
+
+         Three reasons it does not belong in section 01.
+
+         W01 3: lead with the room, the man arrives as the explanation and
+         not the headline. This is the first content section on the page, and
+         a gold pull-quote is the loudest element in it. He was arriving
+         first, in his own voice, before she had read a line about the room.
+
+         The section is written in second person about her, and the quote
+         switched the subject to him at exactly the moment it should be
+         landing on her.
+
+         Register. This page calibrates every outcome down, to a no that cost
+         nothing and a dinner she did not cancel. "It cost me my soul" was the
+         most inflated line on the page and it was his.
+
+         He is already present in this section as the VSL. The story itself
+         survives in section 09, where he is meant to arrive. -->
+  </div>
+</section>
+
+
+<!-- ══════════════ 03 · WHO THIS IS FOR ═════════════════════════════════
+     Cream break. Every card is sourced. 01 is Julia's 99/102. 02 is Julia on
+     why the no is impossible, the noble costume in professional dress. 03 is
+     Jennifer's cancelled dinners, the one concrete thing in the archive she
+     can come back to.
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="px-sec" style="background:#F1ECE1;color:#3A3630">
+  <div class="px-head">
+    <p class="px-label px-fade" style="color:#A08A5E;margin-bottom:16px">02. Who this is for</p>
+
+    <h2 class="px-serif" style="font-size:clamp(28px,3.9vw,50px);line-height:1.15;color:#1E2A3D;margin-bottom:20px">
+      <span class="px-line"><span>A room for women</span></span>
+      <span class="px-line"><span style="font-style:italic;color:#8A8073;font-size:.68em">who are already good at this.</span></span>
+    </h2>
+
+    <p class="px-fade" style="font-size:1.04rem;line-height:1.72;color:#5E5850;max-width:62ch;margin-bottom:12px">Most women who find this aren't at the worst of it. Slow project. Quiet quarter. Back from leave. Room to think again.</p>
+
+    <div id="prw-who" style="margin-top:40px">
+      <div class="px-card px-fade">
+        <span class="n">01</span>
+        <p>The woman who gives 102% and finds the bar has moved again.</p>
+      </div>
+      <div class="px-card px-fade">
+        <span class="n">02</span>
+        <p>The woman who can't say no, because no doesn't sound professional.</p>
+      </div>
+      <div class="px-card px-fade">
+        <span class="n">03</span>
+        <p>The woman who is done cancelling on the people who matter.</p>
+      </div>
+    </div>
+
+    <div class="px-fade" style="display:flex;align-items:center;gap:16px;margin:44px 0 24px">
+      <span style="height:1px;flex:1;background:linear-gradient(90deg,rgba(160,138,94,.5),transparent)"></span>
+      <span class="px-hand" style="font-size:1.4rem;color:#A08A5E;white-space:nowrap">you made the trade. you get to make another one.</span>
+      <span style="height:1px;flex:1;background:linear-gradient(90deg,transparent,rgba(160,138,94,.5))"></span>
+    </div>
+
+    <div class="px-darkbox px-fade" style="max-width:820px;margin:0 auto">
+      <p class="px-serif" style="font-size:clamp(18px,1.9vw,25px);line-height:1.4;color:#F1ECE1;font-style:italic;margin-bottom:14px">For once, a room you don't have to hold.</p>
+      <p>For you. And for the people who get you when the work is done.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ 04 · WHAT THIS ISN'T ═════════════════════════════════
+     A four-item anaphora list, which is the one place a negation stack earns
+     its keep. Each card is a row from W01 2, the table of things that are
+     fatal on their own. Card 04 is the important one: she does not believe
+     she is burnt out, she believes she is behind.
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="px-sec" style="background:#04122A">
+  <div class="px-head" style="max-width:1140px">
+    <p class="px-hand px-fade" style="font-size:1.6rem;color:#E8C65F;margin-bottom:14px">before you assume</p>
+
+    <h2 class="px-serif" style="font-size:clamp(28px,3.6vw,46px);line-height:1.18;color:#F1ECE1;margin-bottom:40px">
+      <span class="px-line"><span>What this isn't.</span></span>
+    </h2>
+
+    <div id="prw-isnt">
+      <div class="px-vpane px-fade"><h3>Not a women's circle</h3><p>No sage. No goddess work. No Ohms.</p></div>
+      <div class="px-vpane px-fade"><h3>Not a sisterhood</h3><p>No performance. No loyalty pact. No comfort without change.</p></div>
+      <div class="px-vpane px-fade"><h3>Not a coaching program</h3><p>No curriculum. You bring what's live and we work with it.</p></div>
+      <div class="px-vpane px-fade"><h3>Not a burnout program</h3><p>You don't think you're burnt out. You think you're behind.</p></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ 05 · WHY A MAN RUNS IT ═══════════════════════════════
+     Placed HERE and not higher. W01: lead with the room and what it does,
+     the man arrives as the explanation, not the headline.
+
+     The lead argument is the peer-room one, which W01 3b calls the one to
+     lead with because it survives the hostile reading. Nobody can hear it as
+     "women cannot lead". It says she is too good at helping, in a room full
+     of people she would want to help.
+
+     The headline used to read "is run by someone exactly like you", which she
+     can disagree with on sight: the woman fronting most circles in this
+     category is not like her at all, and that is exactly why she never went.
+     So the claim is now the thing both cases have in common. Peers leave her
+     a vacancy to fill. A performed version of womanhood leaves her being
+     gracious about it for an hour. Either way she is holding something, and
+     the promise of this page is the room where she is not.
+
+     Note where that second sentence aims. At the performance, never at the
+     woman giving it. Same line the FAQ already walks.
+
+     What is deliberately NOT here: any version of "I understand women", any
+     version of him being strong enough to hold what she is carrying, and the
+     word masculinity. All three are one step from "let a man lead you",
+     which W01 marks fatal with no recovery.
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="px-sec" style="background:#F7F3EA;color:#3A3630">
+  <div class="px-head" style="max-width:1080px">
+    <p class="px-label px-fade" style="color:#A08A5E;margin-bottom:16px">03. Why a man runs it</p>
+
+    <h2 class="px-serif" style="font-size:clamp(26px,3.6vw,46px);line-height:1.18;color:#1E2A3D;margin-bottom:26px">
+      <span class="px-line"><span>You'd end up holding</span></span>
+      <span class="px-line"><span style="font-style:italic;color:#8A8073;font-size:.78em">every other room like this.</span></span>
+    </h2>
+
+    <p class="px-fade" style="font-size:1.04rem;line-height:1.75;color:#5E5850;max-width:62ch;margin-bottom:18px">Put yourself in a room of women in your own field and you'll find the job. You always find the job. A room of peers is a room full of vacancies.</p>
+
+    <p class="px-fade" style="font-size:1.04rem;line-height:1.75;color:#5E5850;max-width:62ch;margin-bottom:18px">And when it isn't peers, it's someone performing a version of womanhood you don't buy, and you spend the hour being gracious about that instead.</p>
+
+    <p class="px-fade" style="font-size:1.04rem;line-height:1.75;color:#5E5850;max-width:62ch;margin-bottom:36px">Either way you're holding something. In here there's nothing to pick up.</p>
+
+    <div id="prw-room">
+      <div class="px-card px-fade"><h3>You are not running it</h3><p>Time, order, who speaks, when it ends. No silence for you to fill.</p></div>
+      <div class="px-card px-fade"><h3>Nobody needs anything from you</h3><p>Not agreement. Not admiration. Not for you to be okay.</p></div>
+      <div class="px-card px-fade"><h3>There is nothing to win</h3><p>No ranking. Nothing to position for. Your competence has nothing to do here.</p></div>
+    </div>
+
+    <p class="px-fade" style="font-size:1.04rem;line-height:1.75;color:#1E2A3D;max-width:62ch;margin-top:30px">Nothing here asks you to put anything down. It just has nothing to do.</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 06 · HOW IT WORKS ════════════════════════════════════
+     The gold line at the bottom is the most important sentence on the page.
+     Christine's actual wins, plus Jennifer's cancelled dinners. Three women
+     independently described outcomes this size. Nothing here gets inflated.
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="px-sec" style="background:#0A1D3C">
+  <div class="px-head" style="max-width:1080px">
+    <p class="px-label px-fade" style="margin-bottom:16px">04. How it works</p>
+
+    <h2 class="px-serif" style="font-size:clamp(26px,3.4vw,44px);line-height:1.18;color:#F1ECE1;margin-bottom:40px">
+      <span class="px-line"><span>One session a week.</span></span>
+      <span class="px-line"><span style="font-style:italic;color:#8E9BB2;font-size:.74em">In four-week cycles.</span></span>
+    </h2>
+
+    <div id="prw-how">
+      <div class="px-vpane px-fade"><h3>Weekly, in cycles</h3><p>One live session a week, in four-week cycles. Join at any point in a cycle.</p></div>
+      <div class="px-vpane px-fade"><h3>The hot seat</h3><p>You bring something live and we work it in the room. Everyone else takes it home too.</p></div>
+      <div class="px-vpane px-fade"><h3>€59 a month</h3><p>Month to month, cancel whenever. No contract and no lock-in.</p></div>
+    </div>
+
+    <div class="px-fade" style="margin-top:40px;border-left:2px solid #E8C65F;padding-left:26px">
+      <p class="px-serif" style="font-size:clamp(19px,2vw,26px);line-height:1.45;color:#E8C65F;font-style:italic;margin-bottom:10px">A win here is small and specific.</p>
+      <p style="font-size:1.04rem;line-height:1.75;color:#C4CEE0">A no that cost you nothing. A dinner you didn't cancel.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ 07 · THE INVESTMENT ══════════════════════════════════
+     sc-if so the offer can be pulled from the editor without deleting markup.
+
+     NOTE THE FIRST BULLET. It said "weekly group containers" on the live
+     page, carried over from the men's build. Container is on the banned list
+     and this was the worst position on the page for it, first line, at the
+     moment she decides to pay.
+     ═══════════════════════════════════════════════════════════════════ -->
+<sc-if value="{{ showPricing }}" hint-placeholder-val="{{ true }}">
+<section class="px-sec" style="background:#F7F3EA;color:#3A3630">
+  <div class="px-head" style="max-width:1000px;text-align:center">
+    <p class="px-label px-fade" style="color:#A08A5E;margin-bottom:16px">05. The investment</p>
+
+    <h2 class="px-serif" style="font-size:clamp(28px,3.7vw,48px);line-height:1.18;color:#1E2A3D;margin-bottom:22px">
+      <span class="px-line"><span>By application only.</span></span>
+      <span class="px-line"><span style="font-style:italic;color:#8A8073;font-size:.7em">And we'd rather leave a seat empty.</span></span>
+    </h2>
+
+    <p class="px-fade" style="font-size:1.02rem;line-height:1.72;color:#5E5850;max-width:66ch;margin:0 auto">We read every one. This work asks something of you, and <strong style="color:#1E2A3D;font-weight:600">not everyone will be accepted.</strong></p>
+
+    <div class="px-price px-fade">
+      <div style="padding:34px 38px 24px;border-bottom:1px solid #EDE7DC;text-align:center">
+        <div class="amt"><sup>€</sup>59</div>
+        <div style="font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:#6E655B;margin-top:12px;font-weight:700">Per month · Cancel anytime</div>
+      </div>
+      <ul style="padding:16px 38px">
+        <li><span class="d">·</span>Weekly group sessions (4-week cycles)</li>
+        <li><span class="d">·</span>Live facilitation and hot-seat coaching</li>
+        <li><span class="d">·</span>Access to the group between sessions</li>
+        <li><span class="d">·</span>First access to new frameworks and resources</li>
+        <li><span class="d">·</span>Flexible. Join at any point in the cycle</li>
+      </ul>
+      <div style="padding:6px 38px 34px">
+        <button class="px-btn full" data-prw-modal>Apply now <span aria-hidden="true">&#8594;</span></button>
+      </div>
+    </div>
+
+    <!-- ▸ THE BONUS BLOCK HAS BEEN REMOVED. It read: "Included when you're
+         accepted · Your Identity 2.0 · A full online program for working out
+         who you want to be next · Normally $597, yours free."
+
+         It broke the page in two places.
+
+         THE FUNNEL CONTRADICTION. The FAQ on this same page asks "Is this a
+         sales funnel? Are there upsells coming?" and answers "No." A struck
+         out $597 sitting a screen above that answer is a value stack, which
+         is the exact move the FAQ is denying. A reader who meets the bonus
+         first will not believe the FAQ when she gets to it.
+
+         THE REGISTER. Everything else here is calibrated down, to a no that
+         cost nothing and a dinner she did not cancel. A struck out price is
+         the loudest sales gesture available and it reads as the internet
+         marketing she scrolls past. Her register is professional, plain and
+         slightly dry. It also undercuts the page's own argument for the fee,
+         which is that the fee is small on purpose so everyone in the room
+         chose to be there. A free $597 turns the filter into a bargain.
+
+         Worth noting too: W02 grades the identity claim HALF CONFIRMED. It
+         is Daniel's history, and no woman in the archive has said it about
+         herself. It was the least sourced promise on the page.
+
+         IF THE PROGRAM SHOULD STILL BE INCLUDED, put it in the bullet list
+         above as a plain line with no price and no strike through:
+             <li><span class="d">·</span>Your Identity 2.0, the full online program</li>
+         That keeps the value and loses the sales gesture. -->
+  </div>
+</section>
+</sc-if>
+
+
+<!-- ══════════════ 08 · WHAT WE VALUE ═══════════════════════════════════
+     "This becomes your inner circle" is gone. W01 3b: she will not join a
+     category of people who need support, because joining it means admitting
+     membership. Belonging framing is a risk with this avatar, so the closing
+     line is about what the room asks, not what she gets to belong to.
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="px-sec" style="background:#04122A">
+  <div class="px-head" style="max-width:1080px">
+    <p class="px-hand px-fade" style="font-size:1.6rem;color:#E8C65F;margin-bottom:14px">what we stand for</p>
+
+    <h2 class="px-serif" style="font-size:clamp(28px,3.6vw,46px);line-height:1.18;color:#F1ECE1;margin-bottom:40px">
+      <span class="px-line"><span>What we value.</span></span>
+    </h2>
+
+    <div id="prw-vals">
+      <div class="px-vpane px-fade"><h3>Dedication</h3><p>We show up. Every cycle, whatever kind of week it's been.</p></div>
+      <div class="px-vpane px-fade"><h3>Punctuality</h3><p>We start on time. It's the first boundary you'll hold here.</p></div>
+      <div class="px-vpane px-fade"><h3>Raw Vulnerability</h3><p>You don't have to arrive polished. Nobody here needs the competent version of you.</p></div>
+    </div>
+
+    <p class="px-fade" style="font-size:1.05rem;line-height:1.75;color:#C4CEE0;max-width:56ch;margin:34px 0 0">Everyone here has skin in the game and plays full out. We ask the same of you.</p>
+    <p class="px-hand px-fade" style="font-size:1.75rem;color:#E8C65F;margin-top:14px">for two hours, nothing you do has to work</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 09 · DANIEL ══════════════════════════════════════════
+     CREDENTIAL ORDER REVERSED from the live page, which opened with
+     "Relationship & Connection Coach", ICG, the Relational Connection System
+     and the Bali Brotherhood, and buried the machine in paragraph four.
+
+     W01: the credential is not that he understands women. It is that he has
+     run this exact machine and got out of it. That is a first-person claim
+     he can make on this page and cannot make on the men's page, so it leads
+     and everything else supports it.
+
+     Bali Brotherhood is dropped here. It is the men's product's proof.
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="px-sec" style="background:#F7F3EA;color:#3A3630">
+  <div class="px-head" style="max-width:1140px">
+    <div id="prw-daniel">
+
+      <div>
+        <div style="position:sticky;top:96px">
+          <button class="px-vid reel px-fade" data-mp4="https://video.wixstatic.com/video/111174_4e1bcc7d4c634401adae988048a9cb1b/1080p/mp4/file.mp4" aria-label="Play: Daniel Lawson introduces himself" style="box-shadow:0 40px 80px -50px rgba(30,42,61,.6),0 0 0 1px rgba(160,138,94,.18)">
+            <img alt="Daniel Lawson" loading="lazy" src="https://static.wixstatic.com/media/111174_52bb7073da274289b13738d153e1334e~mv2.jpg">
+            <span class="play" aria-hidden="true"></span>
+            <span class="len">90 sec</span>
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <p class="px-hand px-fade" style="font-size:1.75rem;color:#A08A5E;margin-bottom:14px">and now me.</p>
+
+        <h2 class="px-serif" style="font-size:clamp(28px,3.7vw,48px);line-height:1.22;color:#1E2A3D;margin-bottom:26px">
+          <span class="px-line"><span>I ran this machine.</span></span>
+          <span class="px-line"><span style="font-style:italic;color:#8A8073;font-size:.76em">Then I left it.</span></span>
+        </h2>
+
+        <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;max-width:66ch;margin-bottom:20px">Business development for a tech company in Australia. I hit the number, the number moved another 10%, and I did it again. Then I resigned, lost my sense of identity for a while, and built it back.</p>
+
+        <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;max-width:66ch;margin-bottom:20px">That was on someone else's payroll. I run my own business now and the number still moves. I'm just the one moving it.</p>
+
+        <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;max-width:66ch;margin-bottom:20px">I've run this machine from both sides. That's why I'm the one holding the room.</p>
+
+        <p class="px-fade" style="font-size:1.03rem;line-height:1.78;color:#5E5850;max-width:66ch;margin-bottom:20px">Six years coaching connection and relationships since, accredited through the International Coach Guild at The Coaching Institute. My program is the <strong style="color:#1E2A3D;font-weight:600">Relational Connection System™</strong>. I founded and host <strong style="color:#1E2A3D;font-weight:600">GIVE IT ALL</strong>.</p>
+
+        <!-- ▸ THE PULL-QUOTE HERE HAS BEEN REMOVED. It read: "I'm not ahead of
+             you here. I'm just out the other side of it." Daniel.
+
+             It put him on her track, one step further along. A denied
+             comparison still plants the comparison, and W01 3 is specific
+             that he is not above her in the ranking, he is outside it: "it is
+             not a claim about who is better at anything." The moment the page
+             measures the two of them on one line, the offer becomes a man who
+             has worked out something she has not.
+
+             It also broke his own voice rule. Say what it is, not what it
+             isn't. "Not ahead of you, just out the other side" is the flip
+             he avoids everywhere else.
+
+             Nothing replaced it, because the two lines that would have gone
+             here are already placed and doing better work where they are:
+             "for two hours, nothing you do has to work" closes the values
+             section, and "I don't need anything from you in there" is the
+             back half of the FAQ answer on why a man runs it. The prose above
+             already carries the credential. A quote repeating it would only
+             add words to a section that is already the second longest on the
+             page. -->
+
+        <div class="px-chips px-fade">
+          <span>ICG Accredited</span>
+          <span>6 Years Coaching</span>
+          <span>Global Facilitator</span>
+          <span>Relational Connection System™</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ 10 · COMMON QUESTIONS ════════════════════════════════
+     Q1 and Q2 keep the word circle, because that is her objection in her own
+     words and this is the only place on the page it earns its keep.
+
+     Q2 is rewritten. The live answer ran "I'm in a relationship with a woman
+     like you, so I've seen up close how hard it is to find a room that
+     respects her ambition and is still strong enough to hold what she's
+     carrying." That is proximity as a credential, which is the exact claim
+     W01 replaced, and "strong enough to hold what she's carrying" makes him
+     the container for her rather than the holder of the room's structure.
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="px-sec" style="background:#04122A">
+  <div class="px-head" style="max-width:860px">
+    <p class="px-label px-fade" style="margin-bottom:16px">06. Before you apply</p>
+
+    <h2 class="px-serif" style="font-size:clamp(26px,3.2vw,42px);line-height:1.2;color:#F1ECE1;margin-bottom:38px">
+      <span class="px-line"><span>Common questions.</span></span>
+    </h2>
+
+    <div class="faq-wrap px-fade">
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false"><span class="faq-q">Isn't this just another women's circle?</span><span class="faq-ico" aria-hidden="true">+</span></button>
+        <div class="faq-body" role="region"><div class="faq-body-inner">Most of them ask you to get more in touch with your feminine, and there's a performance in that. We go straight to what's going on for you. Grounded and direct, and you put down whatever you carried in.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false"><span class="faq-q">Why is this circle run by a man?</span><span class="faq-ico" aria-hidden="true">+</span></button>
+        <div class="faq-body" role="region"><div class="faq-body-inner">Because someone has to run it, and if it were another woman like you, you'd end up helping. I don't need anything from you in there.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false"><span class="faq-q">I have great friends. Do I need this?</span><span class="faq-ico" aria-hidden="true">+</span></button>
+        <div class="faq-body" role="region"><div class="faq-body-inner">Keep them. Good friends make you feel better and that matters. What they can't usually do is change anything, because they're running the same operating system you are, whoever signs their invoices. Here you get someone with no stake in keeping you comfortable.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false"><span class="faq-q">Do you offer a trial period first?</span><span class="faq-ico" aria-hidden="true">+</span></button>
+        <div class="faq-body" role="region"><div class="faq-body-inner">No trial, and no lock-in either. It's month to month and you can cancel whenever. The women who get the most out of this are the ones who decided, rather than the ones still sampling. One cycle is enough to know.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false"><span class="faq-q">Is this online or in person?</span><span class="faq-ico" aria-hidden="true">+</span></button>
+        <div class="faq-body" role="region"><div class="faq-body-inner">Both, depending on access and requirements. When you apply, select your preference and we'll discuss what's available to you.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false"><span class="faq-q">Do I need to attend every session?</span><span class="faq-ico" aria-hidden="true">+</span></button>
+        <div class="faq-body" role="region"><div class="faq-body-inner">No. Life happens and the cycle rolls over. What matters is that you come back. The work compounds across a cycle.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false"><span class="faq-q">How do I know when sessions are?</span><span class="faq-ico" aria-hidden="true">+</span></button>
+        <div class="faq-body" role="region"><div class="faq-body-inner">We're fluid with scheduling based on what the group asks for. Right now two sessions run at different times for the best global coverage. Apply, and if accepted we'll find what fits your schedule.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false"><span class="faq-q">What does the entry fee actually include?</span><span class="faq-ico" aria-hidden="true">+</span></button>
+        <div class="faq-body" role="region"><div class="faq-body-inner">Live group facilitation, hot-seat coaching, the resources as they're built, and the women you'll meet. The fee is deliberately small. It's there so everyone in the room chose to be there.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false"><span class="faq-q">Is this a sales funnel? Are there upsells coming?</span><span class="faq-ico" aria-hidden="true">+</span></button>
+        <div class="faq-body" role="region"><div class="faq-body-inner">No. This is a standalone experience with real, substantial value. There is an option to go deeper through 1:1 coaching within the Reconnect Program, and if you choose that path, your time in the group is deducted from the program cost with free access carried over.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ 11 · THE CLOSE ═══════════════════════════════════════
+     Ends on cream so PtFooter's navy CTA block lands as a change of key.
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="px-sec" style="background:#F1ECE1;color:#3A3630">
+  <div class="px-head" style="max-width:760px">
+    <p class="px-hand px-fade" style="font-size:1.6rem;color:#A08A5E;margin-bottom:14px">a note about this room</p>
+
+    <h2 class="px-serif" style="font-size:clamp(26px,3.4vw,42px);line-height:1.2;color:#1E2A3D;margin-bottom:24px">
+      <span class="px-line"><span>Reconnect is</span></span>
+      <span class="px-line"><span style="font-style:italic;color:#8A8073">integrity.</span></span>
+    </h2>
+
+    <p class="px-fade" style="font-size:1.04rem;line-height:1.72;color:#5E5850;margin-bottom:18px">Skin in the game, and a room where we work out what it means to come back to yourself. In your work, your relationships, your life.</p>
+
+    <p class="px-fade" style="font-size:1.04rem;line-height:1.72;color:#5E5850;margin-bottom:30px">It's also where I build and test new frameworks. You get first access, free and paid.</p>
+
+    <p class="px-hand px-fade" style="font-size:1.75rem;color:#A08A5E;margin-bottom:44px">you're joining a living conversation</p>
+
+    <div class="px-fade" style="height:1px;background:linear-gradient(90deg,rgba(160,138,94,.5),transparent);margin-bottom:44px"></div>
+
+    <h3 class="px-serif" style="font-size:clamp(24px,2.8vw,38px);font-weight:500;line-height:1.25;color:#1E2A3D;margin-bottom:16px">
+      <span class="px-line"><span>Start with one application.</span></span>
+    </h3>
+
+    <p class="px-fade" style="font-size:1.02rem;line-height:1.7;color:#5E5850;margin-bottom:28px;max-width:52ch">Every application is read individually. Not everyone is accepted.</p>
+
+    <button class="px-btn px-fade" data-prw-modal>Apply now <span aria-hidden="true">&#8594;</span></button>
+  </div>
+</section>
+
+
+<!-- ══════════════ APPLICATION MODAL ════════════════════════════════════ -->
+<div id="prw-modal" role="dialog" aria-modal="true" aria-label="The Reconnected Woman application">
+  <div class="mb" data-prw-close></div>
+  <div class="box">
+    <div class="hd">
+      <span class="ttl">The Reconnected Woman Application</span>
+      <button class="x" data-prw-close aria-label="Close form">&times;</button>
+    </div>
+    <iframe src="https://api.leadconnectorhq.com/widget/form/TowKVXREz7wCk7AWO4jG"
+            height="1439" title="The Reconnected Woman Application Form"
+            id="form-TowKVXREz7wCk7AWO4jG" data-form-id="TowKVXREz7wCk7AWO4jG"
+            data-form-name="The Reconnected Woman Application Form"></iframe>
+  </div>
+</div>
+
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1360,&quot;height&quot;:6400},&quot;showPricing&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  componentDidMount(){
+    const root = document.getElementById('prw-root');
+    if(!root) return;
+
+    /* ROOT vs STAGE. Same node under the DC runtime, two different nodes in
+       the deployed bundle, so the difference is invisible until it breaks in
+       production only. The build script strips the line above and hands
+       boot() the SHADOW ROOT as root. A shadow root is a DocumentFragment:
+       querySelectorAll works on it, classList does NOT. So queries use root,
+       and anything touching classes or styles uses stage. */
+    const stage = (root.getElementById && root.getElementById('prw-root')) || root;
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hasGSAP = !!(window.gsap && window.ScrollTrigger);
+
+    /* .anim is what hides things, so it goes on ONLY on the path that also
+       animates them back. Every other path lands on reveal(). There is no
+       branch that hides content without owning the job of showing it again.
+
+       Anything already above the fold animates IMMEDIATELY with no
+       ScrollTrigger. A ScrollTrigger firing during layout settling once
+       stranded a hero headline half-clipped; this is that fix. */
+    const reveal = ()=>{
+      stage.classList.remove('anim');
+      root.querySelectorAll('.px-line > span').forEach(l=>{ l.style.transform = 'none'; });
+      root.querySelectorAll('.px-fade').forEach(el=>{ el.style.opacity = '1'; el.style.transform = 'none'; });
+    };
+
+    if(hasGSAP && !reduce){
+      stage.classList.add('anim');
+      try{
+      const G = window.gsap, ST = window.ScrollTrigger;
+      G.registerPlugin(ST);
+      const inView = (el)=>{ const r = el.getBoundingClientRect(); return r.top < window.innerHeight * 0.88; };
+
+      root.querySelectorAll('.px-line > span').forEach(l=>{
+        if(inView(l)) G.to(l,{y:'0%',duration:1.05,ease:'expo.out'});
+        else G.to(l,{y:'0%',duration:1.05,ease:'expo.out',scrollTrigger:{trigger:l,start:'top 88%',once:true}});
+      });
+      root.querySelectorAll('.px-fade').forEach(el=>{
+        if(inView(el)) G.to(el,{opacity:1,y:0,duration:.95,ease:'power3.out'});
+        else G.to(el,{opacity:1,y:0,duration:.95,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}});
+      });
+
+      if(window.Lenis){
+        const lenis = new window.Lenis({duration:1.15,smoothWheel:true,touchMultiplier:1.4});
+        const raf = (t)=>{ lenis.raf(t); requestAnimationFrame(raf); };
+        requestAnimationFrame(raf);
+        lenis.on('scroll', ST.update);
+      }
+      }catch(err){
+        console.warn('[prw] reveal failed, showing everything:', err);
+        reveal();
+      }
+    } else {
+      reveal();
+    }
+
+    /* ── VIDEO FACADE ────────────────────────────────────────────────── */
+    root.querySelectorAll('.px-vid').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        if(btn.dataset.live === '1') return;
+        btn.dataset.live = '1';
+        const mp4 = btn.getAttribute('data-mp4'), yt = btn.getAttribute('data-yt');
+        btn.querySelectorAll('.play,.len').forEach(n=>n.remove());
+        if(mp4){
+          const v = document.createElement('video');
+          v.className = 'live'; v.src = mp4; v.controls = true; v.autoplay = true;
+          v.playsInline = true; v.setAttribute('playsinline','');
+          btn.appendChild(v); v.play().catch(()=>{});
+        } else if(yt){
+          const f = document.createElement('iframe');
+          f.src = 'https://www.youtube-nocookie.com/embed/' + yt + '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+          f.allow = 'autoplay; encrypted-media; picture-in-picture';
+          f.setAttribute('allowfullscreen','');
+          btn.appendChild(f);
+        }
+      });
+    });
+
+    /* ── FAQ, single-open accordion ──────────────────────────────────── */
+    root.querySelectorAll('.faq-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const item = btn.closest('.faq-item');
+        const body = item.querySelector('.faq-body');
+        const isOpen = item.classList.contains('open');
+        root.querySelectorAll('.faq-item').forEach(i=>{
+          i.classList.remove('open');
+          i.querySelector('.faq-body').style.maxHeight = null;
+          i.querySelector('.faq-btn').setAttribute('aria-expanded','false');
+        });
+        if(!isOpen){
+          item.classList.add('open');
+          body.style.maxHeight = body.scrollHeight + 'px';
+          btn.setAttribute('aria-expanded','true');
+        }
+      });
+    });
+
+    /* ── APPLICATION MODAL ───────────────────────────────────────────── */
+    const modal = document.getElementById('prw-modal');
+    const openModal = ()=>{ modal.classList.add('is-open'); document.body.style.overflow = 'hidden';
+                            const x = modal.querySelector('.x'); if(x) x.focus(); };
+    const closeModal = ()=>{ modal.classList.remove('is-open'); document.body.style.overflow = ''; };
+    root.querySelectorAll('[data-prw-modal]').forEach(el=>el.addEventListener('click',openModal));
+    modal.querySelectorAll('[data-prw-close]').forEach(el=>el.addEventListener('click',closeModal));
+    document.addEventListener('keydown',(e)=>{
+      if(e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+    });
+
+    /* ── RESPONSIVE COLLAPSE ─────────────────────────────────────────── */
+    const layout = ()=>{
+      const g = document.getElementById('prw-daniel'); if(!g) return;
+      g.style.gridTemplateColumns = window.innerWidth < 900 ? '1fr' : '.82fr 1.18fr';
+    };
+    window.addEventListener('resize',layout,{passive:true});
+    layout();
+  }
+  renderVals(){ return {}; }
+}
+</script>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     DEPLOYMENT
+
+     Ship as a Wix CUSTOM ELEMENT, not an HTML embed:
+       Source URL = parallaxx-reconnected-woman.js
+       Tag        = parallaxx-reconnected-woman
+       Site header + footer = OFF
+       Place PtNav (active="experiences") and PtFooter around it.
+
+       <parallaxx-reconnected-woman></parallaxx-reconnected-woman>
+       <script src="./parallaxx-reconnected-woman.js?v=20260801a"></script>
+
+     Bump the ?v= query on every deploy.
+
+     Build with: python3 build-reconnected-woman-bundle.py
+
+     SEO lives in Wix page settings, not in this component.
+
+     STILL OPEN, from the archive rather than from the build:
+       · The room has no name yet. W01 5 says it should come out of a
+         transcript, not a naming exercise. Everything here says room, group
+         or session, which is deliberate and temporary.
+       · No client testimonial exists for this offer. Christine is mid
+         programme and her purchase story has never been captured. There is
+         no proof section on this page because there is nothing honest to put
+         in it yet.
+       · The differentiator has no captured quote. W01 3b: run one room,
+         eight women, no product, and ask afterwards what it was like that a
+         man was holding it.
+     ══════════════════════════════════════════════════════════════════════ -->
+</body>
+</html>

@@ -1034,6 +1034,23 @@
 #pt-logo img{height:30px;width:auto;display:block;
   font-size:.82rem;font-weight:700;letter-spacing:.02em;color:#F1ECE1}
 @media(max-width:600px){#pt-logo img{height:26px}}
+/* 400px AND BELOW. At 360 the mark is 216px wide, the Contact pill is
+   another 129 and the burger 40. Together with the gutters that is 28px
+   more than the screen, so the pill ran off the right edge and took half
+   the burger with it. A menu button you cannot reach is worse than any
+   of the things it opens. Everything comes down a step. */
+@media(max-width:400px){
+  #pt-logo img{height:21px}
+  /* The mark is an <img> with width:auto, so it normally scales with the
+     height above. If the CDN fails it falls back to the alt text, which
+     is a fixed 216px of wordmark and pushes the Contact pill and the
+     burger off the right edge. This caps it either way. */
+  #pt-logo{max-width:50vw;overflow:hidden}
+  #pt-bar{padding:14px 16px;gap:10px}
+  #pt-cta-wrap{gap:8px;margin-left:auto}
+  #pt-cta{font-size:.78rem;padding:.62em 1.05em}
+  #pt-burger{padding:6px;margin-right:-6px}
+}
 
 /* ═══ LINK RAIL ═══════════════════════════════════════════════════ */
 #pt-links{
@@ -1172,7 +1189,21 @@
   .pt-item:last-child{border-bottom:none}
   .pt-link{flex:1 1 auto;padding:15px 2px;font-size:1rem}
   .pt-item.is-active > .pt-link::after,.pt-link.is-active::after{display:none}
-  .pt-caret{flex:0 0 auto;padding:15px 10px;font-size:.85em}
+  /* The caret was #7C89A3 at .85em: the same grey as inactive text, on a
+     control people are meant to notice and press. On a phone it read as
+     punctuation, not a button. Gold picks it out of the row, the stroke
+     gives the glyph weight a font-weight cannot (it is a symbol, and the
+     face has no bolder cut of it), and the ring makes the tap target
+     visible so it is obvious there is more underneath. */
+  .pt-caret{
+    flex:0 0 auto;padding:11px 12px;font-size:1.02em;
+    color:#E8C65F;-webkit-text-stroke:.6px #E8C65F;
+    border:1px solid rgba(232,198,95,.34);border-radius:999px;
+    margin-left:6px;
+  }
+  .pt-item.is-open .pt-caret{
+    color:#F4E1A2;-webkit-text-stroke:.6px #F4E1A2;
+    background:rgba(232,198,95,.14);border-color:rgba(232,198,95,.62)}
 
   /* Child list is a plain indented block on mobile. A floating panel
      inside a panel is a place to get lost. */
@@ -1463,8 +1494,8 @@
         <a class="pt-link" href="https://www.parallaxxtransformations.com/men">For Men</a>
         <button class="pt-caret" type="button" aria-label="Show For Men menu" aria-expanded="false" aria-controls="pt-menu-men">&#9662;</button>
         <div class="pt-menu" id="pt-menu-men">
-          <a href="https://www.parallaxxtransformations.com/the-reconnected-man">
-            <span class="pt-sub">Programme</span>The Reconnected Man</a>
+          <a href="https://www.parallaxxtransformations.com/men">Start Here</a>
+          <a href="https://www.parallaxxtransformations.com/the-reconnected-man">The Reconnected Man</a>
         </div>
       </div>
 
@@ -1473,8 +1504,8 @@
         <a class="pt-link" href="https://www.parallaxxtransformations.com/women">For Women</a>
         <button class="pt-caret" type="button" aria-label="Show For Women menu" aria-expanded="false" aria-controls="pt-menu-women">&#9662;</button>
         <div class="pt-menu" id="pt-menu-women">
-          <a href="https://www.parallaxxtransformations.com/the-reconnected-woman">
-            <span class="pt-sub">Programme</span>The Reconnected Woman</a>
+          <a href="https://www.parallaxxtransformations.com/women">Start Here</a>
+          <a href="https://www.parallaxxtransformations.com/the-reconnected-woman">The Reconnected Woman</a>
         </div>
       </div>
 

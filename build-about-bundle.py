@@ -58,7 +58,11 @@ def style_block(open_line_idx):
 opens = [i for i, l in enumerate(lines) if l.strip() == "<style>"]
 if len(opens) < 2:
     sys.exit("FAIL: expected a @font-face <style> and a main <style> in the helmet.")
-FONTFACE, CSS = style_block(opens[0]), style_block(opens[1])
+FONTFACE = style_block(opens[0])
+# Block 0 is @font-face and has to reach document.head on its own. Every other
+# block is page or chrome CSS, concatenated in source order: the page sheet
+# (which carries PtNav v3), then PtFooter v3.
+CSS = "\n\n".join(style_block(i) for i in opens[1:])
 
 # Everything between </helmet> and </x-dc>, which is the same contract
 # build-chrome-bundles.py uses. It used to start at the page root instead,
@@ -84,6 +88,17 @@ if "const root =" in body:
 if "document.getElementById" in body:
     sys.exit("FAIL: a document.getElementById survived the rewrite.")
 
+
+if '<header id="pt-nav">' not in HTML:
+    sys.exit("FAIL: the nav markup is not in the extracted HTML.")
+if '<footer id="pt-foot">' not in HTML:
+    sys.exit("FAIL: the footer markup is not in the extracted HTML. This page "
+             "shipped with nothing at the bottom once; the guard is here so it "
+             "cannot happen quietly again.")
+if "#pt-foot{" not in CSS:
+    sys.exit("FAIL: the footer stylesheet did not make it into CSS.")
+if "pt-year" not in body:
+    sys.exit("FAIL: the copyright-year logic is missing from the bundle body.")
 font_links = re.findall(r'<link href="([^"]+)" rel="stylesheet">',
                         "\n".join(lines[:opens[0] + 30]))
 fonts = "\n".join(

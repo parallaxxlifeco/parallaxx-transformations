@@ -83,7 +83,13 @@
 /* ── LAYOUT ─────────────────────────────────────────────────── */
   .px-wrap{max-width:1240px;margin:0 auto}
   .px-head{max-width:min(1140px,94vw);margin-left:auto;margin-right:auto}
-  .px-sec{padding:clamp(52px,6.5vw,92px) clamp(20px,4vw,52px);position:relative}
+  /* Was clamp(52px,6.5vw,92px). Ten bands at 92px top and bottom is 1840px
+     of gap on a page whose longest section is 380 words: the reader scrolls
+     past more empty than copy. Tightened, and .px-sec.tight lets a band that
+     follows straight on from the one above close the gap further instead of
+     restating it. */
+  .px-sec{padding:clamp(40px,4.4vw,64px) clamp(20px,4vw,52px);position:relative}
+  .px-sec.tight{padding-top:clamp(22px,2.4vw,32px)}
 
 /* ── BUTTONS ────────────────────────────────────────────────── */
   .px-btn{display:inline-flex;align-items:center;gap:.55em;background:#FF501F;color:#fff;font-family:'Montserrat',system-ui,sans-serif;font-weight:700;font-size:.98rem;padding:1.05em 2.2em;border:none;border-radius:999px;text-decoration:none;cursor:pointer;transition:background .3s,transform .3s,box-shadow .3s;box-shadow:0 10px 30px -12px rgba(255,80,31,.5)}
@@ -197,11 +203,22 @@
 /* ── MOBILE ─────────────────────────────────────────────────── */
   @media(max-width:1000px){ #prw-isnt{grid-template-columns:repeat(2,1fr)} }
   @media(max-width:900px){ #prw-daniel > div:first-child{position:static!important} }
-  @media(max-width:820px){ #prw-who,#prw-room,#prw-how,#prw-vals{grid-template-columns:1fr} }
-  @media(max-width:640px){ #prw-isnt{grid-template-columns:1fr} }
+  /* Was a straight drop to one column at 820. Five grids all collapsing at
+     the same width turned the whole page into one column of near-identical
+     boxes, which is the thing that reads as repetitive. A 2-up step holds
+     the shape down to phone width. */
+  @media(max-width:820px){ #prw-who,#prw-room,#prw-how,#prw-vals{grid-template-columns:repeat(2,1fr)} }
+  @media(max-width:560px){ #prw-who,#prw-room,#prw-how,#prw-vals{grid-template-columns:1fr} }
+  @media(max-width:520px){ #prw-isnt{grid-template-columns:1fr} }
+  /* The handwriting lines are nowrap so each reads as one written stroke.
+     Fine until the line is wider than the phone: the 47-character one in
+     section 02 measures 327px at a 360px viewport, and #prw-root clips
+     overflow, so it does not scroll -- it is simply cut off mid-sentence.
+     A broken line beats an unreadable one. */
+  @media(max-width:640px){ #prw-root .px-hand{white-space:normal!important} }
   @media(max-width:560px){
     #prw-root h1.px-serif,#prw-root h2.px-serif,#prw-root h3.px-serif{font-size:clamp(21px,6.1vw,27px)!important;line-height:1.24!important}
-    #prw-root section,#prw-root .px-sec{padding-top:clamp(40px,10vw,52px)!important;padding-bottom:clamp(40px,10vw,52px)!important}
+    #prw-root section,#prw-root .px-sec{padding-top:clamp(30px,7.4vw,44px)!important;padding-bottom:clamp(30px,7.4vw,44px)!important}
     .px-hand{font-size:clamp(14px,4.6vw,21px)!important}
     .px-price .amt{font-size:60px}
   }
@@ -832,8 +849,12 @@
 
     <p class="px-fade" style="font-size:1.06rem;line-height:1.78;color:#F1ECE1;max-width:56ch;margin-bottom:40px">You can see that and still keep everything you built.</p>
 
-    <!-- ▸ TODO: poster still for the VSL, and confirm the runtime for .len -->
+    <!-- Poster reuses the Daniel still from section 09. A play button on a
+         flat navy rectangle reads as a broken embed, not as a video, and the
+         one thing this block has to do is look playable.
+         ▸ TODO: confirm the runtime for .len -->
     <button class="px-vid px-fade" data-mp4="https://video.wixstatic.com/video/111174_c76bb418f85d49579bd90c14e6addf79/1080p/mp4/file.mp4" aria-label="Play: Daniel on the machine, and leaving it">
+      <img alt="" loading="lazy" src="https://static.wixstatic.com/media/111174_52bb7073da274289b13738d153e1334e~mv2.jpg">
       <span class="play" aria-hidden="true"></span>
       <span class="len">3 min</span>
     </button>

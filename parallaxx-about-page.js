@@ -462,11 +462,22 @@
    NN/g list location and contact among the things users came for, and Orbit
    measured 11% of About visitors going to Contact next. So the close carries
    where he is, how to reach him, and the page's only button. */
-  #pxa-close{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(30px,5vw,72px);align-items:start}
-  .px-setting{background:#FBF8F2;border:1px solid #E2DACB;border-radius:20px;padding:26px 28px}
+  /* One column. The setting card used to sit in a .85fr rail beside the
+     close, which made a six-item list about 300px wide and turned every
+     entry into three or four short lines. It reads better as a band
+     under the button: the same six facts, across instead of down. */
+  #pxa-close{display:grid;grid-template-columns:1fr;gap:clamp(34px,4.5vw,52px);align-items:start}
+  /* auto-fit, not a fixed count. At full width that lands three across on
+     desktop and two on a tablet without a breakpoint for either; 250px is
+     the narrowest a line of this prose reads at before it starts breaking
+     mid-phrase. Each dt/dd pair is wrapped in a div so a heading can never
+     be orphaned into the column above its own answer. */
+  .px-setting{background:#FBF8F2;border:1px solid #E2DACB;border-radius:20px;
+    padding:clamp(24px,3vw,34px) clamp(24px,3vw,36px);
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:clamp(22px,2.6vw,30px) clamp(28px,3.4vw,44px)}
   .px-setting dt{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:#82663D;margin-bottom:6px}
-  .px-setting dd{font-size:.95rem;line-height:1.66;color:#5E5850;margin-bottom:18px}
-  .px-setting dd:last-child{margin-bottom:0}
+  .px-setting dd{font-size:.95rem;line-height:1.66;color:#5E5850;margin-bottom:0}
   .px-setting a{color:#8A5A47;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(160,138,94,.5)}
 
 /* ── MOBILE ─────────────────────────────────────────────────── */
@@ -474,7 +485,6 @@
     .px-row{grid-template-columns:1fr;gap:20px}
     .px-row.flip .media{order:0}
     .px-row .media,.px-row.turn .media{aspect-ratio:16/10}
-    #pxa-close{grid-template-columns:1fr}
   }
   @media(max-width:820px){
     #pxa-who,#pxa-off{grid-template-columns:1fr}
@@ -1447,23 +1457,35 @@
            list rather than prose, because this is the one block on the page
            nobody reads in sentences. -->
       <dl class="px-setting px-fade">
-        <dt>Based</dt>
-        <dd>Kiwi by birth, Australian by business, Bulgarian by relationship. No fixed base. Currently between Bali and Bulgaria.</dd>
+        <div>
+          <dt>Based</dt>
+          <dd>Kiwi by birth, Australian by business, Bulgarian by relationship. No fixed base. Currently between Bali and Bulgaria.</dd>
+        </div>
 
-        <dt>Works</dt>
-        <dd>Online worldwide, and in person wherever the rooms are running. Mexico, Australia, USA, Bali, Dominican Republic, Bulgaria, Colombia.</dd>
+        <div>
+          <dt>Works</dt>
+          <dd>Online worldwide, and in person wherever the rooms are running. Mexico, Australia, USA, Bali, Dominican Republic, Bulgaria, Colombia.</dd>
+        </div>
 
-        <dt>The work</dt>
-        <dd><a href="https://www.parallaxxtransformations.com/men">The men's work</a> and <a href="https://www.parallaxxtransformations.com/women">the women's work</a> each have a page of their own.</dd>
+        <div>
+          <dt>The work</dt>
+          <dd><a href="https://www.parallaxxtransformations.com/men">The men's work</a> and <a href="https://www.parallaxxtransformations.com/women">the women's work</a> each have a page of their own.</dd>
+        </div>
 
-        <dt>The long version</dt>
-        <dd>The whole origin story, told fully, is <a href="https://youtu.be/1Dn8Cf5bRYo">on video here</a>. It runs about forty minutes.</dd>
+        <div>
+          <dt>The long version</dt>
+          <dd>The whole origin story, told fully, is <a href="https://youtu.be/1Dn8Cf5bRYo">on video here</a>. It runs about forty minutes.</dd>
+        </div>
 
-        <dt>What people said</dt>
-        <dd>There is <a href="https://www.parallaxxtransformations.com/testimonials-daniel-lawson">a whole page of it</a>. None of it is on this one on purpose.</dd>
+        <div>
+          <dt>What people said</dt>
+          <dd>There is <a href="https://www.parallaxxtransformations.com/testimonials-daniel-lawson">a whole page of it</a>. None of it is on this one on purpose.</dd>
+        </div>
 
-        <dt>Reach me</dt>
-        <dd><a href="https://www.parallaxxtransformations.com/contact-daniel-lawson">Share what's going on for you</a>. It comes to me, not to a team.</dd>
+        <div>
+          <dt>Reach me</dt>
+          <dd><a href="https://www.parallaxxtransformations.com/contact-daniel-lawson">Share what's going on for you</a>. It comes to me, not to a team.</dd>
+        </div>
       </dl>
 
     </div>

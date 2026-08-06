@@ -118,18 +118,21 @@
   }
 
 /* ── CARDS ──────────────────────────────────────────────────── */
-  .px-card{background:#fff;border-radius:20px;padding:28px 30px;border-top:3px solid #A08A5E}
-  .px-card .n{font-family:'Poppins','Montserrat',sans-serif;font-size:1.9rem;line-height:1;color:rgba(160,138,94,.65);margin-bottom:14px;display:block}
-  .px-card h3{font-size:.72rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#82663D;margin:0 0 12px}
+  /* Was 28px 30px with a 1.9rem numeral and 14px under it: roughly 120px of
+     chrome around a single eleven-word sentence, three times in a row. Not a
+     word of copy changes; there is just less air bolted to it. */
+  .px-card{background:#fff;border-radius:20px;padding:21px 23px;border-top:3px solid #A08A5E}
+  .px-card .n{font-family:'Poppins','Montserrat',sans-serif;font-size:1.4rem;line-height:1;color:rgba(160,138,94,.65);margin-bottom:8px;display:block}
+  .px-card h3{font-size:.72rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#82663D;margin:0 0 9px}
   .px-card p{font-size:.97rem;line-height:1.72;color:#5E5850}
 
   /* Glass pane, the archetype-pane silhouette without the film */
   .px-vpane{position:relative;display:flex;flex-direction:column;justify-content:flex-start;
-    padding:30px 28px;border-radius:14px;overflow:hidden;background:#0A1D3C;
+    padding:22px 24px;border-radius:14px;overflow:hidden;background:#0A1D3C;
     border:1px solid rgba(232,198,95,.14);
     transition:border-color .35s ease,transform .35s ease,box-shadow .35s ease}
   .px-vpane:hover{transform:translateY(-6px);border-color:rgba(255,80,31,.4);box-shadow:0 30px 60px -30px rgba(3,12,28,.9)}
-  .px-vpane h3{font-size:.72rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#E8C65F;margin:0 0 16px}
+  .px-vpane h3{font-size:.72rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#E8C65F;margin:0 0 11px}
   .px-vpane p{font-size:.95rem;line-height:1.7;color:#C4CEE0;margin:0}
 
   .px-darkbox{padding:26px 28px;background:#12233F;border-radius:18px}
@@ -196,13 +199,18 @@
   #prw-isnt .px-vpane h3{min-height:2.4em}
   @media(max-width:640px){ #prw-isnt .px-vpane h3{min-height:0} }
   #prw-room{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-  #prw-how{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  #prw-how{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
   #prw-vals{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
   #prw-daniel{display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(36px,5vw,76px);align-items:start}
 
 /* ── MOBILE ─────────────────────────────────────────────────── */
   @media(max-width:1000px){ #prw-isnt{grid-template-columns:repeat(2,1fr)} }
   @media(max-width:900px){ #prw-daniel > div:first-child{position:static!important} }
+  /* The reel is 9:16. Stacked at 390px that is 350 wide and 622 tall, which
+     is why this one band ran to 1551px for 129 words -- the video was most
+     of it. Capping the width keeps the portrait crop and takes roughly 200px
+     out of the scroll without touching the copy beside it. */
+  @media(max-width:900px){ #prw-daniel .px-vid.reel{max-width:270px;margin-left:auto;margin-right:auto} }
   /* Was a straight drop to one column at 820. Five grids all collapsing at
      the same width turned the whole page into one column of near-identical
      boxes, which is the thing that reads as repetitive. A 2-up step holds
@@ -902,7 +910,7 @@
 
     <p class="px-fade" style="font-size:1.04rem;line-height:1.72;color:#5E5850;max-width:62ch;margin-bottom:12px">Most women who find this aren't at the worst of it. Slow project. Quiet quarter. Back from leave. Room to think again.</p>
 
-    <div id="prw-who" style="margin-top:40px">
+    <div id="prw-who" style="margin-top:26px">
       <div class="px-card px-fade">
         <span class="n">01</span>
         <p>The woman who gives 102% and finds the bar has moved again.</p>
@@ -937,7 +945,7 @@
      fatal on their own. Card 04 is the important one: she does not believe
      she is burnt out, she believes she is behind.
      ═══════════════════════════════════════════════════════════════════ -->
-<section class="px-sec" style="background:#04122A">
+<section class="px-sec tight" style="background:#04122A">
   <div class="px-head" style="max-width:1140px">
     <p class="px-hand px-fade" style="font-size:1.6rem;color:#E8C65F;margin-bottom:14px">before you assume</p>
 
@@ -1023,10 +1031,14 @@
     <div id="prw-how">
       <div class="px-vpane px-fade"><h3>Weekly, in cycles</h3><p>One live session a week, in four-week cycles. Join at any point in a cycle.</p></div>
       <div class="px-vpane px-fade"><h3>The hot seat</h3><p>You bring something live and we work it in the room. Everyone else takes it home too.</p></div>
-      <div class="px-vpane px-fade"><h3>€59 a month</h3><p>Month to month, cancel whenever. No contract and no lock-in.</p></div>
+      <!-- The euro-59 card was here. "Month to month, cancel whenever, no
+           lock-in" was already the Investment band below and the answer to
+           "is there a trial" in the FAQ, so the page said it three times
+           before a reader had asked once. How it works is now only the two
+           things that are actually mechanics: the cadence and the hot seat. -->
     </div>
 
-    <div class="px-fade" style="margin-top:40px;border-left:2px solid #E8C65F;padding-left:26px">
+    <div class="px-fade" style="margin-top:28px;border-left:2px solid #E8C65F;padding-left:26px">
       <p class="px-serif" style="font-size:clamp(19px,2vw,26px);line-height:1.45;color:#E8C65F;font-style:italic;margin-bottom:10px">A win here is small and specific.</p>
       <p style="font-size:1.04rem;line-height:1.75;color:#C4CEE0">A no that cost you nothing. A dinner you didn't cancel.</p>
     </div>
@@ -1110,7 +1122,7 @@
      membership. Belonging framing is a risk with this avatar, so the closing
      line is about what the room asks, not what she gets to belong to.
      ═══════════════════════════════════════════════════════════════════ -->
-<section class="px-sec" style="background:#04122A">
+<section class="px-sec tight" style="background:#04122A">
   <div class="px-head" style="max-width:1080px">
     <p class="px-hand px-fade" style="font-size:1.6rem;color:#E8C65F;margin-bottom:14px">what we stand for</p>
 

@@ -288,6 +288,38 @@ OUT.write_text("""/* PARALLAXX TRANSFORMATIONS - Home page Wix Custom Element. T
         }
         n = n.parentElement;
       }
+
+      /* ── LAST RESORT: SWEEP EVERYTHING BELOW US ──────────────────
+         Added 10 Aug, because the walk above still assumes the void is
+         related to this widget by ancestry or by being a sibling of one
+         of its ancestors. On a Wix page it does not have to be either:
+         a stored height can sit on a section three levels sideways, and
+         the empty space lands under the footer regardless.
+
+         So: if the document is STILL materially taller than the bottom
+         of our own content once the targeted passes have run, take one
+         bounded sweep of the whole document for empty boxes that begin
+         at or below that bottom edge, and collapse those. Bounded three
+         ways -- it only runs when there is still a real discrepancy, it
+         only touches boxes that pass the same strict emptiness test,
+         and each element is one-shot via the WeakSet. Anything with a
+         single character of text, an image or a control in it is
+         somebody's content and is never touched. */
+      var bottom = host.getBoundingClientRect().bottom + window.scrollY;
+      if (document.documentElement.scrollHeight > bottom + 400){
+        var all = document.body.querySelectorAll('div,section,footer,main');
+        for (var k=0; k<all.length && k<3000; k++){
+          var el = all[k];
+          if (pxCollapsed.has(el)) continue;
+          if (el.contains(host)) continue;
+          var r = el.getBoundingClientRect();
+          if (r.top + window.scrollY < bottom - 8) continue;
+          if (!pxIsEmptyBox(el)) continue;
+          pxCollapsed.add(el);
+          pxClearHeight(el);
+          changed = true;
+        }
+      }
     }catch(e){}
     return changed;
   }

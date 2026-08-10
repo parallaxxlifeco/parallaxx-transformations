@@ -156,6 +156,8 @@ OUT.write_text("""/* PARALLAXX TRANSFORMATIONS - Home page Wix Custom Element. T
   var PX_SANE_MAX = 200000;              // taller than any real page here
   var pxCollapsed = new WeakSet();
   var pxRefreshes = 0;
+  var pxPasses    = 0;                   // hard ceiling on collapse passes
+  var PX_MAX_PASSES = 400;
 
   /* Sums the real content inside the shadow root. A fixed-position child (a
      baked-in site nav) takes no space in flow, so summing children and
@@ -196,33 +198,93 @@ OUT.write_text("""/* PARALLAXX TRANSFORMATIONS - Home page Wix Custom Element. T
      Verified in the browser before shipping: 59851 -> 5790, and it held.
 
      THE RUNAWAY GUARDS STAY. They are not paranoia: this loop once grew a
-     document to Chrome's 2^24 clamp. Every element is one-shot via the
-     WeakSet, and the whole thing bails if the page is already absurd. */
+     document to Chrome's 2^24 clamp. The whole thing bails if the page is
+     already absurd, and there is a hard ceiling on total passes.
+
+     ───────────────────────────────────────────────────────────────────
+     REVISED 10 Aug, FOR THE ENDLESS BLUE SCROLL ON MOBILE.
+
+     Three separate faults, and the version above fixed none of them on a
+     phone.
+
+     1. THE WEAKSET MADE IT ONE-SHOT. Once an element had been collapsed
+        it was never looked at again. Wix re-applies the stored height
+        after ITS OWN layout settles, and on mobile it does it more than
+        once -- on orientation change, on the mobile-view swap, and when
+        its lazy sections resolve. We collapsed at 400ms, Wix wrote the
+        height back at 1800ms, and the WeakSet meant nothing ever fixed
+        it again. Re-applying is SAFE because the write is idempotent:
+        it only ever fires when the box is taller than its own content,
+        and setting height:auto on a box that is already auto changes
+        nothing and reports no change. The pass counter is the real
+        runaway guard and it is what the WeakSet was standing in for.
+
+     2. THE MOBILE HEIGHT IS A DIFFERENT NUMBER. Wix stores desktop and
+        mobile layout separately, so a page that was fixed on desktop can
+        still carry a five-figure height in the mobile breakpoint. This
+        is almost always the actual source of a navy void that scrolls
+        for a screen or twenty. Nothing about the fix changes; it just
+        has to still be running when the mobile layout applies, which is
+        what the longer watch window below is for.
+
+     3. THE VOID CAN BE A SIBLING, NOT AN ANCESTOR. Walking up only ever
+        finds boxes the widget is INSIDE. A Wix page whose section was
+        left with a stored height puts the empty space in a sibling
+        section AFTER ours, which no amount of ancestor walking touches.
+        Empty trailing siblings are now collapsed too -- and only if they
+        are genuinely empty: no text, no image, no iframe, no video, no
+        canvas, and taller than 200px. That test is deliberately strict.
+        A sibling with anything in it is somebody's content and is left
+        exactly alone. */
+  function pxIsEmptyBox(el){
+    try{
+      if (el.offsetHeight <= 200) return false;
+      if ((el.textContent || '').trim().length) return false;
+      if (el.querySelector('img,svg,iframe,video,canvas,input,button,picture')) return false;
+      var cs = window.getComputedStyle(el);
+      if (cs.position === 'fixed' || cs.display === 'none') return false;
+      return true;
+    }catch(e){ return false; }
+  }
+
+  function pxClearHeight(el){
+    el.style.setProperty('height','auto','important');
+    el.style.setProperty('min-height','0px','important');
+    el.style.setProperty('max-height','none','important');
+    el.style.setProperty('--custom-element-height','auto','important');
+  }
+
   function collapseAncestors(host){
     var changed = false;
     try{
+      if (pxPasses++ > PX_MAX_PASSES) return false;
       if (document.documentElement.scrollHeight > PX_SANE_MAX) return false;
       var content = contentHeight(host);
       if (content < 50) return false;
 
-      if (!pxCollapsed.has(host) && host.getBoundingClientRect().height > content + 24){
-        pxCollapsed.add(host);
+      if (host.getBoundingClientRect().height > content + 24){
         if (window.getComputedStyle(host).display === 'inline') host.style.setProperty('display','block','important');
-        host.style.setProperty('height','auto','important');
-        host.style.setProperty('min-height','0px','important');
-        host.style.setProperty('max-height','none','important');
+        pxClearHeight(host);
         changed = true;
       }
 
       var n = host.parentElement, guard = 0;
       while(n && n !== document.body && guard++ < 14){
-        if(!pxCollapsed.has(n) && n.getBoundingClientRect().height > content + 240){
-          pxCollapsed.add(n);
-          n.style.setProperty('height','auto','important');
-          n.style.setProperty('min-height','0px','important');
-          n.style.setProperty('max-height','none','important');
-          n.style.setProperty('--custom-element-height','auto','important');
+        if(n.getBoundingClientRect().height > content + 240){
+          pxClearHeight(n);
           changed = true;
+        }
+        /* EMPTY TRAILING SIBLINGS. Only forward siblings: an empty box
+           ABOVE the widget is a spacer somebody put there on purpose,
+           and collapsing it would move the page under the reader. */
+        var sib = n.nextElementSibling, sguard = 0;
+        while(sib && sguard++ < 6){
+          if (!pxCollapsed.has(sib) && pxIsEmptyBox(sib)){
+            pxCollapsed.add(sib);
+            pxClearHeight(sib);
+            changed = true;
+          }
+          sib = sib.nextElementSibling;
         }
         n = n.parentElement;
       }
@@ -259,7 +321,24 @@ OUT.write_text("""/* PARALLAXX TRANSFORMATIONS - Home page Wix Custom Element. T
       loadLibs().then(function(){ try{ boot(shadow); }catch(e){ console.error('[px] boot failed:', e); } })
         .catch(function(){ try{ boot(shadow); }catch(e){} });
       requestAnimationFrame(function(){ collapseAndRefresh(host); });
-      [400,1200,2500,4000,6000].forEach(function(t){ setTimeout(function(){ collapseAndRefresh(host); }, t); });
+      /* A WATCH WINDOW, NOT FIVE GUESSES. The old schedule stopped at
+         6s, and Wix's mobile layout can re-apply a stored height later
+         than that on a cold 4G load. Every 500ms for 20 seconds, then
+         once more at 30, and after that the ResizeObserver and the
+         resize/orientation handlers are on their own. A pass over an
+         already-correct page costs one getBoundingClientRect and
+         returns false, so the cost of the window is negligible and the
+         cost of missing the write is a screen of empty navy. */
+      var pxTicks = 0;
+      var pxWatch = setInterval(function(){
+        collapseAndRefresh(host);
+        if (++pxTicks >= 40) clearInterval(pxWatch);
+      }, 500);
+      [400,1200,2500,4000,6000,30000].forEach(function(t){ setTimeout(function(){ collapseAndRefresh(host); }, t); });
+      window.addEventListener('orientationchange', function(){
+        setTimeout(function(){ collapseAndRefresh(host); }, 300);
+      }, {passive:true});
+      window.addEventListener('load', function(){ collapseAndRefresh(host); }, {passive:true});
       /* Images arriving late change the content height, and Wix can re-apply
          its stored height after its own layout settles. Watching the host is
          cheaper and far more reliable than guessing more timeouts. */

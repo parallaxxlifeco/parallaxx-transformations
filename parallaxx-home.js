@@ -431,11 +431,27 @@
     transition:border-color .3s ease,background .3s ease}
   .px-mini:hover,.px-mini:focus-visible{border-color:rgba(255,80,31,.55);
     background:rgba(255,80,31,.07);outline:none}
-  .px-mini .tag{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
-    font-weight:800;color:#E8C65F;display:block;margin-bottom:10px}
+  /* ══ THE CLOSE ASKS THE SAME QUESTION, SO IT IS SET THE SAME SIZE · 10 Aug ══
+     These two cards carry the SAME sentence as the doors in block 02,
+     to the character. They were running a size below them in all three
+     of their parts -- tag .62 against .64, line 16-19px against 21-29,
+     go .84 against .88 -- so the close read as a footnote restating the
+     offer rather than as the offer put one last time. The reader who
+     reaches this block without having clicked is the only person left
+     on the page still deciding, and the type that closes them was the
+     smallest version of itself on the page.
+
+     Every value below is now LIFTED from .px-door rather than picked
+     again, here and at the phone breakpoint, so the two blocks cannot
+     drift apart a second time. The cards stay visually lighter than
+     the doors, which is still right: that is carried by the panel --
+     16px radius against 20, .04 fill against .045, no qualifier strip
+     and no body paragraph -- and not by shrinking the words. ══ */
+  .px-mini .tag{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;
+    font-weight:800;color:#E8C65F;display:block;margin-bottom:14px}
   .px-mini span.line{font-family:'Poppins','Montserrat',sans-serif;font-weight:300;
-    font-size:clamp(16px,1.55vw,19px);line-height:1.35;color:#F1ECE1;display:block}
-  .px-mini .go{display:block;margin-top:14px;font-size:.84rem;font-weight:700;color:#FF6A3D}
+    font-size:clamp(21px,2.35vw,29px);line-height:1.22;color:#F1ECE1;display:block}
+  .px-mini .go{display:block;margin-top:16px;font-size:.88rem;font-weight:700;color:#FF6A3D}
 
 /* ═══════════════════════════════════════════════════════════════════
    PHONE SIZING, MEASURED AGAINST THE CONTAINER · 10 Aug
@@ -527,17 +543,20 @@
         the loudest thing in the block. 5.6cqw puts them at 20 and the
         labels tighten to match.
 
-        The credential paragraph is LEFT ALIGNED on a phone. It is four
-        lines either way -- the sentence is 89 times its own font size
-        and no honest size gets it to three -- but centred, four lines
-        with a short last one reads as a narrow column of text floating
-        in the middle of the block, which is what "narrow text section"
-        is describing. Ranged left with tighter leading it reads as a
-        paragraph and stops looking like wasted width. The hand line,
-        the record and the link stay centred. ── */
+        THE CREDENTIAL PARAGRAPH IS CENTRED, REVERSED 10 Aug. It was
+        ranged left here on the argument that four centred lines with a
+        short last one read as a narrow column floating in the block.
+        Seen on the device that is not what happens: it is the only
+        ranged-left thing inside a block whose hand line, record and
+        link are all centred, so the paragraph reads as misaligned
+        rather than as deliberately set, and the eye catches the ragged
+        left edge against the centred rule above it before it reads a
+        word. A short last line in a centred block is ordinary; one
+        element out of four sitting off the block's own axis is not.
+        The whole block is centred again, which is also what it does on
+        every width above this breakpoint. ── */
   #px-me .px-wrap{container-type:inline-size}
   #px-me p{font-size:clamp(13.5px,4.1cqw,17.5px);line-height:1.62}
-  #px-me p.cred{text-align:left}
   #px-me .px-record dt{font-size:clamp(17px,5.6cqw,30px)}
   #px-me .px-record dd{font-size:clamp(7.5px,2.35cqw,10.5px);letter-spacing:.05em;
     line-height:1.3;margin-top:6px}
@@ -558,6 +577,18 @@
     grid-template-columns:1fr 1fr;gap:12px 16px;justify-items:center}
   #px-else a{font-size:clamp(12px,3.8cqw,15px)}
   #px-else .lab{font-size:.64rem;letter-spacing:.16em}
+
+  /* ── 06 THE CLOSE. The same container trick as the doors and the
+        same numbers, because it is the same sentence. The mini card is
+        NARROWER than a door card at this breakpoint -- a 900px pair
+        against a 1080px row -- so measuring against the card rather
+        than the screen is what actually makes the two blocks the same
+        size, instead of merely giving them the same declaration and a
+        different result. ── */
+  .px-mini{container-type:inline-size;padding:22px 18px}
+  .px-mini span.line{font-size:clamp(15px,5.5cqw,26px);line-height:1.28}
+  .px-mini .tag{font-size:.6rem;letter-spacing:.22em;margin-bottom:12px}
+  @media(max-width:360px){.px-mini{padding:22px 14px}}
 }
 
 /*/* ══════════════════════════════════════════════════════════════════
@@ -1143,10 +1174,35 @@
     margin-bottom:0;align-self:start}
   #pt-social{gap:14px}
   #pt-social a{font-size:.78rem}
+  /* ══ THE FOOTNOTE ROWS WERE LOUDER THAN THE DOORS · 10 Aug ══
+     .pt-door a came down to 3.2cqw here to buy the three columns
+     their width, and nothing underneath it followed. The utility row
+     stayed at .82rem and the legal line at .8rem, so on a 390px phone
+     the grey links rendered at 13.1px and 12.8px against door links
+     at 11.2 -- the least important type in the footer set two pixels
+     LARGER than the most important, which is the whole tier order
+     inverted by a breakpoint that only remembered one of its rules.
+
+     Fixed by measuring all three rows against the SAME container
+     rather than against the viewport, which this sheet has already
+     learned Wix does not hand the component:
+         doors   3.2cqw    ~11.2px
+         util    2.85cqw   ~10.0px
+         legal   2.7cqw     ~9.5px
+     #pt-foot-inner becomes the container for the two rows that sit
+     OUTSIDE #pt-foot-top. Its content box is exactly #pt-foot-top's
+     width -- the padding is on the inner, the top row has none -- so
+     one cqw means the same thing in all three rules and the ratios
+     hold at every width instead of only at the one they were read
+     off. Ceilings sit just under the desktop sizes so nothing jumps
+     at the breakpoint. ══ */
+  #pt-foot-inner{container-type:inline-size}
   #pt-util{display:grid;grid-template-columns:1fr 1fr;gap:2px 14px;
     align-items:start}
-  #pt-util a{white-space:normal;line-height:1.35;padding:5px 0}
+  #pt-util a{white-space:normal;line-height:1.35;padding:5px 0;
+    font-size:clamp(8px,2.85cqw,11.2px)}
   #pt-util a:not(:last-child)::after{content:none}
+  #pt-legal{font-size:clamp(7.6px,2.7cqw,10.6px);gap:10px;line-height:1.55}
 }
 
 #pt-foot a:focus-visible{outline:2px solid rgba(232,198,95,.7);outline-offset:3px}

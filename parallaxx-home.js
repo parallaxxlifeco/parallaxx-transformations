@@ -437,6 +437,129 @@
     font-size:clamp(16px,1.55vw,19px);line-height:1.35;color:#F1ECE1;display:block}
   .px-mini .go{display:block;margin-top:14px;font-size:.84rem;font-weight:700;color:#FF6A3D}
 
+/* ═══════════════════════════════════════════════════════════════════
+   PHONE SIZING, MEASURED AGAINST THE CONTAINER · 10 Aug
+   -------------------------------------------------------------------
+   WHY EVERY EARLIER FIX WAS A LITTLE TOO WIDE.
+
+   Every size on this page was a clamp with a vw middle term, and vw is
+   the VIEWPORT. This component does not get the viewport. It sits in a
+   Wix custom-element widget inside a Wix section, and Wix takes a
+   margin off both sides on mobile. So the type was being sized for a
+   390px screen while it was actually being laid out in something
+   closer to 340, and every line that had been solved to fit "with five
+   percent of headroom" was over the edge by the time it reached a
+   phone. That is one fault producing four symptoms: the qualifier
+   strip on two lines, the card heading on three, the "something else"
+   row on three, and the footer columns wrapping every link to the word.
+
+   YOU CANNOT FIX THAT WITH SMALLER NUMBERS. Guessing a narrower vw
+   coefficient just moves the cliff -- it would be wrong again the
+   moment Wix changed its gutter, or on a page where the widget is
+   full-bleed. The unit has to be the one that knows the answer.
+
+   cqw IS 1% OF THE CONTAINER, so a heading solved at 5.5cqw fits at
+   322px and still fits at 280px, without knowing or caring what the
+   viewport is or what Wix did to it.
+
+   THE CONTAINERS ARE PER BLOCK, NOT ON #px-root, AND THAT IS LOAD
+   BEARING. container-type:inline-size implies layout containment,
+   which makes the element a containing block for FIXED descendants.
+   #pt-nav is position:fixed and lives inside #px-root, so a container
+   on the root would turn the site nav into an element that scrolls
+   away with the page. Each block owns its own container instead.
+
+   FALLBACK: a browser without container queries treats the cqw
+   declaration as invalid and keeps the vw rule above it, which is
+   exactly today's behaviour. Nothing regresses, it just stops
+   improving. Safari 16 and Chrome 105 both have it.
+
+   EVERY NUMBER BELOW IS SOLVED, NOT PICKED. Natural single-line width
+   divided by font size is a constant per string in a given face, so
+   the ceiling for N lines is (N x container x 0.94) / that ratio. The
+   0.94 is greedy-wrap waste -- a line breaks before it is full. The
+   coefficients then take ~7% under the ceiling so a device whose
+   Montserrat measures a hair wider than the reference still holds.
+   Ratios measured in real Montserrat 700 and Poppins 300, not in a
+   fallback face, which is how the first pass got them wrong.
+   ═══════════════════════════════════════════════════════════════════ */
+@media(max-width:820px){
+
+  /* ── 01 HERO. Ratio 23.97 for the H1, so two lines needs 7.84cqw and
+        it takes 7.3. The subline has room to spare at 4.3. ── */
+  #px-top .grid{container-type:inline-size}
+  #px-top h1{font-size:clamp(22px,7.3cqw,34px)}
+  #px-top .sub{font-size:clamp(13.5px,4.3cqw,17.5px)}
+
+  /* ── 02 THE DOORS. The card is its own container, so the heading and
+        the strip are measured against the CARD, not the screen -- which
+        is the number that actually matters and the one vw could never
+        see. Padding comes down 24 -> 18 first, because the cheapest
+        width on the page is the width you stop spending.
+
+        Heading ratio 31.73 -> two lines at 5.92cqw, set at 5.5. This is
+        the "single word on line three" fix: at 19.7px the sentence
+        needed 2.03 lines, which rounds to three and leaves "from." on
+        its own. Two full lines beats three ragged ones.
+
+        Qualifier ratio 25.5 -> one line at 3.8cqw, set at 3.35. ── */
+  .px-door{container-type:inline-size;padding:22px 18px}
+  #px-doors .px-door h2{font-size:clamp(15px,5.5cqw,26px);line-height:1.28;
+    margin-bottom:18px}
+  .px-door .qual{font-size:clamp(8.5px,3.35cqw,11.2px);letter-spacing:.04em}
+  .px-door p{font-size:clamp(13px,4.2cqw,15.5px);line-height:1.6}
+  /* NO white-space:nowrap ON THE STRIP, deliberately. It would guarantee
+     one line and buy that with an ellipsis, and "CARE ABOUT..." is worse
+     than the same three words on two lines. The size is solved to fit;
+     if some device still beats it, wrapping is the graceful failure. */
+  @media(max-width:360px){.px-door{padding:22px 14px}}
+
+  /* ── 03 SHARED. Two lines here is not about the whole sentence, it is
+        about whether "Completely different circumstances." fits line
+        one. That clause is 0.574 of the string, so the real ratio is
+        17.06 and the ceiling is 5.86cqw. Set at 5.4. ── */
+  #px-shared .px-wrap{container-type:inline-size}
+  #px-shared h2{font-size:clamp(15px,5.4cqw,28px)}
+  #px-shared p{font-size:clamp(14px,4.25cqw,17px)}
+
+  /* ── 04 THE RECORD AND THE CREDENTIAL.
+        The numbers were 26px on a phone, which made a supporting strip
+        the loudest thing in the block. 5.6cqw puts them at 20 and the
+        labels tighten to match.
+
+        The credential paragraph is LEFT ALIGNED on a phone. It is four
+        lines either way -- the sentence is 89 times its own font size
+        and no honest size gets it to three -- but centred, four lines
+        with a short last one reads as a narrow column of text floating
+        in the middle of the block, which is what "narrow text section"
+        is describing. Ranged left with tighter leading it reads as a
+        paragraph and stops looking like wasted width. The hand line,
+        the record and the link stay centred. ── */
+  #px-me .px-wrap{container-type:inline-size}
+  #px-me p{font-size:clamp(13.5px,4.1cqw,17.5px);line-height:1.62}
+  #px-me p.cred{text-align:left}
+  #px-me .px-record dt{font-size:clamp(17px,5.6cqw,30px)}
+  #px-me .px-record dd{font-size:clamp(7.5px,2.35cqw,10.5px);letter-spacing:.05em;
+    line-height:1.3;margin-top:6px}
+  #px-me .px-record{gap:10px;margin:24px 0 20px}
+
+  /* ── 05 SOMETHING ELSE. Four links, and the split that gives two rows
+        is 277px + 201px at 15px. That holds down to a 280px container
+        and breaks below it. At 3.8cqw it holds to 250, and the gap
+        comes in because 26px of horizontal gap on a phone is a third
+        of a link. ── */
+  /* A GRID, NOT A WRAPPING FLEX ROW. Sized down it does land on two
+     lines, but flex fills greedily, so the split is 3 + 1 and "The
+     journal" sits alone under three others -- and which split you get
+     changes with every device width. Two columns is 2 + 2 at every
+     width, always, and the row stops being a thing that has to be
+     re-solved each time a phone gets wider. */
+  #px-else .row{container-type:inline-size;display:grid;
+    grid-template-columns:1fr 1fr;gap:12px 16px;justify-items:center}
+  #px-else a{font-size:clamp(12px,3.8cqw,15px)}
+  #px-else .lab{font-size:.64rem;letter-spacing:.16em}
+}
+
 /*/* ══════════════════════════════════════════════════════════════════
    SITE NAV, BUILT IN RATHER THAN PLACED
    Same story as the footer below it. PtNav belongs in the Wix header
@@ -991,14 +1114,35 @@
    always been rendering .92rem links inside 109px, which is most of
    why they wrapped three deep. The size drops again below, from a
    position where it can actually win. Leave this block last. */
+/* THE COLUMNS WRAP TO THE WORD, WHICH IS WHY THEY LOOK LIKE THEY RUN
+   INTO EACH OTHER · 10 Aug. Aligning the rows fixed the raggedness but
+   not the cause. At 109px and .79rem, "The Reconnected" is 115px wide,
+   so it cannot share a line with anything: the column breaks after
+   "The", then after "Reconnected", and three one-word lines beside
+   three one-word lines reads as one field of loose words rather than
+   as three lists. Nothing is actually overflowing its column -- it
+   just looks that way, which for this purpose is the same thing.
+
+   THE THRESHOLD IS "The Reconnected" FITTING ON A LINE. That string is
+   9.1x its own font size, so the column needs the type at or under
+   11.75px. 3.2cqw of the footer's own width lands on 11.2, and cqw is
+   used here for the same reason as the page sheet above: the widget is
+   not the viewport, and vw cannot see what Wix took.
+
+   The column gap goes 12 -> 14 in the same breath. Twelve pixels
+   between two columns of wrapped text is not enough white to separate
+   them, and that is the other half of "runs into the next column". */
 @media(max-width:560px){
-  #pt-foot-top{grid-template-rows:auto repeat(5,auto);row-gap:22px}
+  #pt-foot-top{grid-template-rows:auto repeat(5,auto);row-gap:22px;
+    container-type:inline-size;column-gap:14px}
   .pt-door{display:grid;grid-template-rows:subgrid;grid-row:2/span 5;
     row-gap:9px;align-content:start}
-  .pt-door h4{font-size:.6rem;letter-spacing:.11em;padding-bottom:8px;
+  .pt-door h4{font-size:clamp(8.5px,2.6cqw,10px);letter-spacing:.1em;padding-bottom:8px;
     margin-bottom:0;align-self:end}
-  .pt-door a{font-size:.79rem;line-height:1.3;padding:3px 0;
+  .pt-door a{font-size:clamp(8.8px,3.2cqw,12.6px);line-height:1.32;padding:3px 0;
     margin-bottom:0;align-self:start}
+  #pt-social{gap:14px}
+  #pt-social a{font-size:.78rem}
   #pt-util{display:grid;grid-template-columns:1fr 1fr;gap:2px 14px;
     align-items:start}
   #pt-util a{white-space:normal;line-height:1.35;padding:5px 0}
@@ -1584,6 +1728,38 @@
           sib = sib.nextElementSibling;
         }
         n = n.parentElement;
+      }
+
+      /* ── LAST RESORT: SWEEP EVERYTHING BELOW US ──────────────────
+         Added 10 Aug, because the walk above still assumes the void is
+         related to this widget by ancestry or by being a sibling of one
+         of its ancestors. On a Wix page it does not have to be either:
+         a stored height can sit on a section three levels sideways, and
+         the empty space lands under the footer regardless.
+
+         So: if the document is STILL materially taller than the bottom
+         of our own content once the targeted passes have run, take one
+         bounded sweep of the whole document for empty boxes that begin
+         at or below that bottom edge, and collapse those. Bounded three
+         ways -- it only runs when there is still a real discrepancy, it
+         only touches boxes that pass the same strict emptiness test,
+         and each element is one-shot via the WeakSet. Anything with a
+         single character of text, an image or a control in it is
+         somebody's content and is never touched. */
+      var bottom = host.getBoundingClientRect().bottom + window.scrollY;
+      if (document.documentElement.scrollHeight > bottom + 400){
+        var all = document.body.querySelectorAll('div,section,footer,main');
+        for (var k=0; k<all.length && k<3000; k++){
+          var el = all[k];
+          if (pxCollapsed.has(el)) continue;
+          if (el.contains(host)) continue;
+          var r = el.getBoundingClientRect();
+          if (r.top + window.scrollY < bottom - 8) continue;
+          if (!pxIsEmptyBox(el)) continue;
+          pxCollapsed.add(el);
+          pxClearHeight(el);
+          changed = true;
+        }
       }
     }catch(e){}
     return changed;

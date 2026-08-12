@@ -920,6 +920,8 @@
     #trw-page .step-label, #trw-page .step-then { font-size: 10px; }
     #trw-page .open-top { padding: 22px 24px 16px; }
     #trw-page .open-amount { font-size: 52px; }
+    #trw-page .open-when { font-size: 10px; letter-spacing: 0.08em; }
+    #trw-page .open-count { font-size: 10.5px; letter-spacing: 0.14em; }
     #trw-page .open-body { padding: 18px 24px 0; font-size: 14px; }
     #trw-page .open-gate { padding: 12px 24px 0; font-size: 13px; }
     #trw-page .open-action { padding: 18px 24px 24px; }
@@ -983,6 +985,58 @@
     #trw-page .dif-fig { font-size: 32px; -webkit-text-stroke-width: 0.9px; }
     #trw-page .dif-cell h3 { font-size: 15px; margin-bottom: 5px; }
     #trw-page .dif-cell p { font-size: 13px; }
+  }
+
+  /* ---- MOBILE TYPE PASS ----
+     The phone was running body copy at desktop-ish sizes, so almost every
+     line wrapped two or three deep and the page ran past 8000px. Sizes come
+     down, the leading comes with them, and the padding stops carrying
+     desktop values. Nothing changes above 760. */
+  @media (max-width: 760px) {
+    #trw-page .recog-line { font-size: 14.5px; line-height: 1.5; padding: 12px 0 12px 20px; }
+    #trw-page .recog-line::before { top: 21px; width: 9px; }
+    #trw-page .recog-closer { font-size: 15.5px; line-height: 1.4; margin-top: 16px; }
+
+    #trw-page .quote-big { font-size: 18.5px; line-height: 1.3; }
+    #trw-page .under-quote { font-size: 13.5px; line-height: 1.55; }
+    #trw-page .pull-line { font-size: 17.5px; line-height: 1.35; }
+    #trw-page .preframe { font-size: 14px; }
+    #trw-page .vsl-caption { font-size: 13px; line-height: 1.6; }
+    #trw-page .friends-body p { font-size: 14px; line-height: 1.55; }
+
+    #trw-page .trap-card { padding: 20px 18px; }
+    #trw-page .trap-card h3 { font-size: 16px; }
+    #trw-page .trap-card p { font-size: 13.5px; }
+
+    #trw-page .archetype-num { font-size: 22px; }
+    #trw-page .archetype-card h3 { font-size: 13px; letter-spacing: 0.14em; }
+    #trw-page .archetype-card p { font-size: 13.5px; line-height: 1.5; }
+
+    #trw-page .bio-text .bio-role { font-size: 15.5px; line-height: 1.35; }
+    #trw-page .bio-text p { font-size: 14px; line-height: 1.55; }
+
+    #trw-page .values-grid { gap: 10px; }
+    #trw-page .value-card { padding: 15px 16px 14px; }
+    #trw-page .value-card h3 { font-size: 11.5px; letter-spacing: 0.16em; margin-bottom: 7px; }
+    #trw-page .value-card p { font-size: 13.5px; line-height: 1.5; }
+
+    #trw-page #pricing .lead { font-size: 13.5px; }
+    #trw-page .open-amount { font-size: 42px; }
+    #trw-page .price-amount { font-size: 52px; }
+    #trw-page .price-amount sup { font-size: 19px; margin-top: 8px; }
+    #trw-page .open-body { font-size: 13.5px; line-height: 1.55; }
+    #trw-page .open-gate { font-size: 12.5px; line-height: 1.5; }
+    #trw-page .price-features { padding: 10px 24px; }
+    #trw-page .price-features li { font-size: 13.5px; padding: 9px 0; gap: 11px; }
+
+    #trw-page .faq-q { font-size: 14px; line-height: 1.35; }
+    #trw-page .faq-body-inner p { font-size: 13.5px; line-height: 1.55; }
+  }
+
+  @media (max-width: 380px) {
+    #trw-page .recog-line { font-size: 13.5px; }
+    #trw-page .quote-big { font-size: 17px; }
+    #trw-page .value-card p, #trw-page .price-features li { font-size: 13px; }
   }
 
 

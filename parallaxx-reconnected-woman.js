@@ -1631,8 +1631,8 @@ parallaxx-reconnected-woman {
     this._trwUp = true;
     addHead();
     this.innerHTML = HTML;
-    script('https://parallaxxlifeco.github.io/parallaxx-transformations/parallaxx-nav.js?v=20260806a', 'trw-nav-js');
-    script('https://parallaxxlifeco.github.io/parallaxx-transformations/parallaxx-footer.js?v=20260806a', 'trw-foot-js');
+    script('https://parallaxxlifeco.github.io/parallaxx-transformations/parallaxx-nav.js?v=20260812a', 'trw-nav-js');
+    script('https://parallaxxlifeco.github.io/parallaxx-transformations/parallaxx-footer.js?v=20260812a', 'trw-foot-js');
     script('https://link.msgsndr.com/js/form_embed.js', 'trw-ghl-js');
     try { boot(); } catch (e) { /* the page renders fully visible without it */ }
   };

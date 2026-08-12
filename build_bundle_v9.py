@@ -39,6 +39,18 @@ CSS += """
 #trw-page #hero .btn, #trw-page .hero-rule {
   opacity: 1 !important; transform: none !important; animation: none !important;
 }
+
+/* THE ENDLESS SCROLL. Wix measures the custom element and writes the result
+   back as a min-height on the element itself, so the element's height feeds
+   its own measurement and the page grew without bound: 11,456,701px of empty
+   navy under the footer. Pinning the host to its content breaks the loop.
+   Measured on the live page: 11,456,701px -> 8,710px. */
+parallaxx-reconnected-woman {
+  display: block !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+}
 """
 
 # body: the page root through the end of the apply modal, stopping at the

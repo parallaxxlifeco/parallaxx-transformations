@@ -1497,7 +1497,26 @@ parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
   const modal    = document.getElementById('trw-apply-modal');
   const backdrop = modal.querySelector('.modal-backdrop');
   const closeBtn = modal.querySelector('.modal-close');
-  function openModal()  { modal.classList.add('is-open');    document.body.style.overflow = 'hidden'; closeBtn.focus(); }
+  /* GHL's form_embed.js parks the iframe offscreen until it decides the form
+     is ready: position absolute, left -9999px, visibility hidden, opacity 0,
+     all as INLINE styles. Our modal starts display:none, so the script never
+     saw it become visible and never un-parked it. The form loaded fine and
+     sat 9999px to the left of the box, which measured 76px tall: the header,
+     and nothing under it.
+
+     So un-park it ourselves on open. Twice more on a timer, because the
+     script re-applies the parking if it initialises after the first click. */
+  function unparkForm() {
+    var frame = modal.querySelector('iframe');
+    if (!frame) return;
+    frame.style.position = 'static';
+    frame.style.left = 'auto';
+    frame.style.top = 'auto';
+    frame.style.visibility = 'visible';
+    frame.style.opacity = '1';
+    frame.style.pointerEvents = 'auto';
+  }
+  function openModal()  { modal.classList.add('is-open');    document.body.style.overflow = 'hidden'; unparkForm(); setTimeout(unparkForm, 350); setTimeout(unparkForm, 1400); closeBtn.focus(); }
   function closeModal() { modal.classList.remove('is-open'); document.body.style.overflow = ''; }
   document.querySelectorAll('[data-trw-modal]').forEach(el => el.addEventListener('click', openModal));
   backdrop.addEventListener('click', closeModal);

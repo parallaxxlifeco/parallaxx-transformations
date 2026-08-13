@@ -448,6 +448,32 @@ assert "parallaxx-nav" in s and "parallaxx-footer" in s, "chrome lost"
 assert s.count('class="value-card') == 5, "expected five standards"
 
 
+# ------------------------------------------------- 10. the form never showed
+sub(
+"""  function openModal()  { modal.classList.add('is-open');    document.body.style.overflow = 'hidden'; closeBtn.focus(); }""",
+"""  /* GHL's form_embed.js parks the iframe offscreen until it decides the form
+     is ready: position absolute, left -9999px, visibility hidden, opacity 0,
+     all as INLINE styles. Our modal starts display:none, so the script never
+     saw it become visible and never un-parked it. The form loaded fine and
+     sat 9999px to the left of the box, which measured 76px tall: the header,
+     and nothing under it.
+
+     So un-park it ourselves on open. Twice more on a timer, because the
+     script re-applies the parking if it initialises after the first click. */
+  function unparkForm() {
+    var frame = modal.querySelector('iframe');
+    if (!frame) return;
+    frame.style.position = 'static';
+    frame.style.left = 'auto';
+    frame.style.top = 'auto';
+    frame.style.visibility = 'visible';
+    frame.style.opacity = '1';
+    frame.style.pointerEvents = 'auto';
+  }
+  function openModal()  { modal.classList.add('is-open');    document.body.style.overflow = 'hidden'; unparkForm(); setTimeout(unparkForm, 350); setTimeout(unparkForm, 1400); closeBtn.focus(); }""",
+"unpark the form iframe")
+
+
 # ------------------------------------------------- 9. bust the chrome cache
 # The nav and footer are pulled with a fixed ?v= string, so a change to
 # parallaxx-footer.js is invisible until this moves. The footer just took the

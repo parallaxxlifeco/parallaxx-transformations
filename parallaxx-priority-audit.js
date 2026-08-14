@@ -120,8 +120,16 @@
   /* ── SCREENS ─────────────────────────────────────────────────── */
   .pa-screen{display:none}
   .pa-screen.is-on{display:block}
+  /* THE NAV IS position:fixed AND THIS FILE WAS BUILT WITHOUT ONE.
+     Baking PtNav in put a 68px bar over the top of every screen, and the
+     stages centre their content, so the progress row on the items screen
+     sat underneath it. Every stage clears the bar by its own height, and
+     scrollTopOf() below subtracts the same amount, so a screen change
+     lands the top of the content under the nav rather than behind it. */
+  #pa-root{--pa-nav:68px}
   .pa-stage{min-height:clamp(520px,78svh,860px);display:flex;flex-direction:column;justify-content:center;
-    padding:clamp(40px,7vw,86px) 0}
+    padding:clamp(40px,7vw,86px) 0;padding-top:calc(clamp(40px,7vw,86px) + var(--pa-nav))}
+  .pa-screen{scroll-margin-top:var(--pa-nav)}
   .pa-fadein{opacity:0;transform:translateY(16px);
     transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
   .pa-fadein.is-in{opacity:1;transform:none}
@@ -360,20 +368,63 @@
   /* ── RESPONSIVE ──────────────────────────────────────────────── */
   @media(max-width:620px){
     #pa-stmt{max-width:none;min-height:0;margin-bottom:22px}
-    /* THE SPANS RUN TOGETHER WITHOUT THIS, AND HAVE SINCE THE FILE WAS
-       WRITTEN · found 14 Aug. Above 620px each .l is a block, so the line
-       break between them comes from the layout and the markup needs no
-       whitespace between the tags -- and has none. Flip them to inline for
-       the phone and the browser has nothing to break on: it renders
-       "behinddespite your success" and "so much.So why does it". Only ever
-       visible under 620px, which is why it survived. The pseudo-element
-       puts the space back only where the spans are inline. */
-    #pa-intro h1 .l,#pa-intro h1 em .l{display:inline}
-    #pa-intro h1 .l::after{content:" "}
-    .pa-opt{padding:15px 17px;font-size:.96rem}
+    /* THE .l SPANS STAY BLOCKS ON A PHONE, AND THAT IS THE FIX FOR TWO
+       THINGS AT ONCE · 14 Aug. They used to flip to display:inline here so
+       the headline could rewrap, and since the markup carries no whitespace
+       between the tags -- it never needed any while they were blocks -- the
+       browser had nothing to break on and rendered "behinddespite your
+       success" and "so much.So why does it". Only ever visible under 620px,
+       which is how it survived.
+
+       Keeping them as blocks fixes the missing space AND fixes the line
+       count, which is the better reason. The spans exist to say where the
+       lines break; the phone is where that matters most, and letting the
+       browser guess was giving three lines and a widow. Two lines, by
+       construction, at a size chosen so the longer one fits 350px. */
+    #pa-intro h1{font-size:1.32rem;line-height:1.2;margin-top:14px}
+    #pa-intro h1 em{font-size:.62em;margin-top:.6em;line-height:1.34}
+    .pa-opt{padding:12px 15px;font-size:.9rem}
     .pa-stage{min-height:clamp(480px,72svh,760px);padding:clamp(30px,7vw,60px) 0}
     .pa-close-cta{flex-direction:column;align-items:stretch}
     .pa-close-cta .pa-btn,.pa-close-cta .pa-ghost{width:100%}
+  }
+
+  /* ── THE INTRO HAS TO FIT ONE PHONE, NOT ONE AND A BIT ──────────
+     Measured at 390x844 before this block: the nav takes 68px, leaving
+     776, and the intro ran to 829. Every part of it was sized for a
+     desktop column and then left to reflow, so the h1 took four lines,
+     the lede four, the promise five, and the card 213px on its own. Past
+     the fold on the one screen whose whole job is to be answered without
+     scrolling.
+
+     Nothing is hidden to achieve this. The promise is the value exchange
+     and the fine print is the reassurance; both stay and both get
+     smaller. The savings come from type sizes chosen for a 350px column
+     rather than inherited from one twice that wide, and from padding
+     that was generous at desktop and merely wasteful here. ─────────── */
+  @media(max-width:620px){
+    #pa-root{--pa-nav:66px}
+    #pa-intro .pa-stage{padding:18px 0;padding-top:calc(18px + var(--pa-nav))}
+    #pa-items .pa-stage{padding-top:calc(22px + var(--pa-nav));padding-bottom:22px}
+    /* 46px rows rather than 52. Still comfortably over the 44px tap
+       target, and it takes 30px off a column of five without making any
+       of them harder to hit. */
+    #pa-scale .pa-opt{padding:11px 14px;font-size:.86rem;gap:12px}
+    #pa-scale{gap:7px}
+    #pa-stmt{font-size:1.02rem;line-height:1.32}
+    #pa-intro p.lede{margin:14px auto 0;font-size:.84rem;line-height:1.5}
+    #pa-first{margin-top:18px}
+    #pa-first .pa-label{margin-bottom:9px}
+    .pa-live-row{padding:16px 14px;border-radius:12px}
+    .pa-live-row .q{font-size:.92rem;line-height:1.35;margin-bottom:14px}
+    /* Five targets on a 310px card. Two rows of 3+2 is the only honest
+       layout: one row puts "Nearly always" at 8px, and 8px is not a tap
+       target with a label on it. */
+    .pa-live-row .pa-scale{flex-wrap:wrap;gap:6px}
+    .pa-live-row .pa-opt{flex:1 1 30%;padding:9px 4px;font-size:.7rem;
+      border-radius:10px}
+    .pa-promise{margin-top:16px;font-size:.76rem;line-height:1.5}
+    .pa-fine{margin-top:10px;font-size:.68rem;line-height:1.45}
   }
 
   /* ── REDUCED MOTION. Nothing is gated on an animation. ───────── */
@@ -1616,7 +1667,11 @@
 
     function scrollTopOf(id){
       const el = $(id); if (!el) return;
-      const y = el.getBoundingClientRect().top + window.pageYOffset - 12;
+      /* Minus the nav, or the screen lands behind it. Measured rather
+         than hard-coded: the bar is shorter on a phone. */
+      const bar = $('pt-nav');
+      const navH = bar ? bar.getBoundingClientRect().height : 0;
+      const y = el.getBoundingClientRect().top + window.pageYOffset - navH - 12;
       try { window.scrollTo({ top: Math.max(0, y), behavior: reduce ? 'auto' : 'smooth' }); }
       catch (e) { window.scrollTo(0, Math.max(0, y)); }
     }

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Priority Audit — OG Card 1200x630</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   OG CARD - THE PRIORITY AUDIT - 1200 x 630
+
+   HOW TO EXPORT
+     1. Open in Chrome at 100% zoom.
+     2. DevTools > Cmd+Shift+P > "Capture node screenshot", pick <body>.
+     3. Save as og-priority-audit.jpg, quality 85. Keep it under 300KB.
+     4. Upload to Wix Media, select it in the page's Social Share tab.
+
+   NO FACE ON THIS ONE, AND THAT IS THE DECISION.
+   The men's card leads with a half-seen man because the men's page sells a
+   room to walk into. This page sells an INSTRUMENT, and the thing that makes
+   it worth a tap is that it measures something and hands the number back.
+   So the card shows the result: three pillars, ranked, one of them carrying
+   the pressure. It is the only link in the row that looks like it already
+   knows something about her.
+
+   THE BARS ARE THE PAGE'S OWN RESULT SCREEN, NOT A CHART INVENTED HERE.
+   Same order, same coral on the top pillar, same muted blue on the other
+   two, same right-aligned scores. Anyone who taps through meets the exact
+   object they were shown, which is the whole job of a share card.
+
+   The numbers are illustrative, not a real result. They are plausible for
+   this avatar - boundaries high, needs close behind - and they are labelled
+   as an example in the tag under them so the card never reads as a claim
+   about the person looking at it.
+
+   IDENTITY IS NEVER CARRIED BY COLOUR ALONE. Every bar is named and carries
+   its own score, so the coral marks the top pillar rather than encoding it.
+   The names and values wear text tokens; only the fills wear the accent.
+
+   FRAMING: type left, instrument right. WhatsApp and some feeds centre-crop
+   a 1.91:1 card toward square and keep roughly 24% to 76% of the width, so
+   the headline's first two lines and the top two bars survive that crop.
+
+   TOKENS: navy #061938, gold #E8C65F, cream #F1ECE1, coral #FF501F,
+   mist #B1BFD7. Current v4 tokens, so this card and the men's do not drift.
+   ═══════════════════════════════════════════════════════════════════ */
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1200px;height:630px;overflow:hidden}
+  body{
+    font-family:'Poppins',system-ui,sans-serif;
+    background:#061938;color:#B1BFD7;position:relative;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ── LIGHT ──────────────────────────────────────────────────────── */
+  /* Two washes doing different jobs: a cold vignette so the card has a
+     horizon, and a gold haze behind the instrument so the right half is
+     the warm side. Same device as the page's hero, a third of the size. */
+  .wash{position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      radial-gradient(ellipse at 72% 46%, rgba(232,198,95,.13) 0%, transparent 62%),
+      linear-gradient(0deg, rgba(4,18,42,.82) 0%, rgba(4,18,42,0) 52%);}
+  /* Diagonal hairlines, the same repeating rule the page carries. Subtle,
+     or it reads as UI rather than as texture. */
+  .grain{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.55;
+    background:repeating-linear-gradient(-45deg,
+      transparent 0 58px,
+      rgba(232,198,95,.035) 58px, rgba(232,198,95,.035) 59px);}
+
+  /* ── BRAND ──────────────────────────────────────────────────────── */
+  .brand{
+    position:absolute;top:40px;left:56px;z-index:6;
+    display:inline-flex;flex-direction:column;gap:4px;
+    padding:13px 18px 11px;line-height:1;
+    background:rgba(6,25,56,.62);border:1px solid rgba(232,198,95,.32);
+  }
+  .brand-name{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:700;
+    letter-spacing:.18em;text-transform:uppercase;color:#F1ECE1}
+  .brand-sub{font-size:9px;font-weight:600;letter-spacing:.32em;
+    text-transform:uppercase;color:#E8C65F}
+
+  /* ── TYPE ───────────────────────────────────────────────────────── */
+  .wrap{position:relative;z-index:5;width:600px;height:100%;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:0 0 44px 56px}
+
+  .kicker{font-size:12px;font-weight:700;letter-spacing:.4em;
+    text-transform:uppercase;color:#E8C65F;margin-bottom:20px}
+
+  /* Poppins 300 is the display weight across the site. 54px, not 58: this
+     headline runs to three lines where the men's runs to two, and at 58 the
+     third line reached the bars. */
+  h1{font-family:'Poppins',sans-serif;font-weight:300;
+    font-size:54px;line-height:1.08;letter-spacing:-.02em;
+    color:#F1ECE1;margin-bottom:20px;max-width:12ch;
+    text-shadow:0 2px 22px rgba(4,18,42,.55)}
+  h1 em{font-style:italic;font-weight:300;color:#94A9C8}
+
+  .sub{font-size:19px;font-weight:300;line-height:1.45;color:#B1BFD7;
+    max-width:30ch;text-shadow:0 1px 14px rgba(4,18,42,.6)}
+
+  /* ── THE INSTRUMENT ─────────────────────────────────────────────── */
+  .panel{position:absolute;z-index:5;right:56px;top:50%;
+    transform:translateY(-50%);width:430px;
+    padding:30px 30px 26px;border-radius:18px;
+    background:linear-gradient(168deg, rgba(18,35,63,.92), rgba(10,26,52,.86));
+    border:1px solid rgba(232,198,95,.16);
+    box-shadow:0 40px 80px -50px rgba(0,0,0,.9);}
+  .panel-head{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+    letter-spacing:.26em;text-transform:uppercase;color:#E8C65F;margin-bottom:22px}
+
+  .bar{margin-bottom:20px}
+  .bar:last-of-type{margin-bottom:0}
+  .bar-top{display:flex;align-items:baseline;justify-content:space-between;
+    margin-bottom:9px}
+  /* Text tokens, never the series colour. The fill carries identity; the
+     name and the score stay ink so they read at thumbnail size. */
+  .bar .name{font-size:16px;font-weight:400;color:#8E9BB2;letter-spacing:.01em}
+  .bar .val{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;
+    color:#8E9BB2}
+  .bar.is-top .name,.bar.is-top .val{color:#F1ECE1}
+
+  /* Thin marks, 4px rounded data-ends anchored to the baseline, and a 2px
+     surface gap where the fill stops short of the track. */
+  .track{height:9px;border-radius:999px;background:rgba(177,191,215,.13);
+    overflow:hidden}
+  .fill{height:100%;border-radius:999px;background:#5C7699}
+  .bar.is-top .fill{background:#FF501F}
+
+  .tag{margin-top:22px;padding-top:16px;
+    border-top:1px solid rgba(241,236,225,.10);
+    font-size:12px;line-height:1.5;color:#6E7C93}
+  .tag b{color:#E8C65F;font-weight:600}
+
+  /* ── FOOT ───────────────────────────────────────────────────────── */
+  .rule{position:absolute;left:56px;right:56px;bottom:104px;z-index:5;
+    border-top:1px solid rgba(241,236,225,.14)}
+  .foot{position:absolute;left:56px;right:56px;bottom:52px;z-index:5;
+    display:flex;align-items:center;justify-content:space-between;
+    font-size:14px;letter-spacing:.03em}
+  .foot .who{color:#8E9BB2}
+  .foot .who b{color:#E8C65F;font-weight:600}
+  .foot .cta{color:#FF6A3D;font-weight:700;letter-spacing:.02em}
+</style>
+</head>
+<body>
+
+  <div class="wash"></div>
+  <div class="grain"></div>
+
+  <div class="brand">
+    <span class="brand-name">Parallaxx</span>
+    <span class="brand-sub">Transformations</span>
+  </div>
+
+  <div class="wrap">
+    <div class="kicker">For women</div>
+    <h1>Why you always feel behind <em>despite your success.</em></h1>
+    <p class="sub">Fifteen statements about your working week, and the three things they were measuring.</p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">Your three, ranked</div>
+
+    <div class="bar is-top">
+      <div class="bar-top"><span class="name">Boundaries</span><span class="val">21 / 25</span></div>
+      <div class="track"><div class="fill" style="width:84%"></div></div>
+    </div>
+
+    <div class="bar">
+      <div class="bar-top"><span class="name">Needs</span><span class="val">18 / 25</span></div>
+      <div class="track"><div class="fill" style="width:72%"></div></div>
+    </div>
+
+    <div class="bar">
+      <div class="bar-top"><span class="name">Emotions</span><span class="val">12 / 25</span></div>
+      <div class="track"><div class="fill" style="width:48%"></div></div>
+    </div>
+
+    <p class="tag">Example result. <b>About ninety seconds</b>, all of it on screen, and nothing lands in your inbox.</p>
+  </div>
+
+  <div class="rule"></div>
+  <div class="foot">
+    <span class="who">with <b>Daniel Lawson</b> &middot; accredited coach, six years facilitating</span>
+    <span class="cta">parallaxxtransformations.com</span>
+  </div>
+
+</body>
+</html>

@@ -137,14 +137,38 @@
   #pa-intro p.lede{margin:26px auto 0;max-width:min(830px,100%);font-size:.97rem;
     line-height:1.62;text-wrap:pretty}
   #pa-intro .pa-hand{margin-top:34px;font-size:clamp(1rem,2.4vw,1.22rem)}
-  #pa-intro .cta{margin-top:36px;display:flex;flex-direction:column;align-items:center;gap:15px}
   #pa-intro .meta{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--slate);font-weight:700}
 
-  .pa-legend{margin:38px auto 0;max-width:560px;border-top:1px solid rgba(232,198,95,.28);padding-top:16px;
-    display:flex;justify-content:space-between;gap:10px;
-    font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--label)}
-  .pa-legend i{font-style:normal;color:var(--slate)}
-  @media(max-width:520px){.pa-legend i{display:none}}
+  /* THE LIVE FIRST ITEM. The women's page renders this card on cream, so
+     its rules are white-on-bronze. Here the intro screen is navy, so the
+     card is the same shape in the dark palette: a translucent panel, a
+     gold rule marking it as live rather than illustrative, and the pills
+     inheriting the dark .pa-opt they already have.
+
+     The pills stretch to equal widths instead of hugging their labels.
+     Five content-sized pills do not fit a 660px card and wrap to a second
+     row, which breaks the one-question read. */
+  #pa-first{max-width:660px;margin:34px auto 0}
+  #pa-first .pa-label{color:var(--gold);margin-bottom:14px;text-align:center}
+  .pa-live-row{background:rgba(18,35,63,.55);border-radius:14px;text-align:center;
+    border-left:3px solid var(--gold);
+    padding:clamp(26px,3.2vw,36px) clamp(20px,3vw,30px);
+    box-shadow:0 24px 50px -38px rgba(3,12,28,.9)}
+  .pa-live-row .q{font-size:1.05rem;line-height:1.45;color:var(--cream);margin:0 0 24px}
+  .pa-live-row .pa-scale{justify-content:center}
+  .pa-live-row .pa-opt{flex:1 1 0;padding:14px 8px;font-size:.84rem;
+    justify-content:center;text-align:center}
+  .pa-live-row .pa-opt:hover{transform:translateY(-2px)}
+  .pa-live-row .pa-opt .dot{display:none}
+  .pa-promise{color:var(--mist);line-height:1.66;font-size:.95rem;margin:26px auto 0;
+    max-width:64ch;text-align:center}
+  .pa-fine{font-size:.8rem;color:var(--label);margin:14px auto 0;text-align:center}
+  @media(max-width:520px){
+    .pa-live-row .pa-opt{font-size:.74rem;padding:12px 4px}
+    .pa-promise{font-size:.86rem;line-height:1.5}
+    .pa-fine{font-size:.74rem}
+  }
+
 
   /* ── 02 ITEMS ────────────────────────────────────────────────── */
   #pa-items{background:var(--navy)}
@@ -392,12 +416,24 @@
           <em><span class="l">You&rsquo;ve achieved so much.</span><span class="l">So why does it still feel like it&rsquo;s never enough?</span></em>
         </h1>
         <p class="lede pa-fadein">Rank how true the following 15 statements are for the past six months, to unlock what priority would have the most immediate impact in your life right now.</p>
-        <div class="pa-legend pa-fadein" aria-hidden="true">
-          <span>Never</span><i>Rarely</i><i>Sometimes</i><i>Often</i><span>Nearly always</span>
-        </div>
-        <div class="cta pa-fadein">
-          <button class="pa-btn" type="button" id="pa-start">Start the audit <span aria-hidden="true">&rarr;</span></button>
-          <span class="meta">About 90 seconds, all results on screen</span>
+        <!-- THE FIRST STATEMENT IS LIVE HERE, AND THE START BUTTON IS GONE.
+             Ported from the in-page audit on the women's home page, where
+             this is the whole activation cost: answering item one IS the
+             start, so the run begins on a tap she has already decided to
+             make rather than on a page load she has to agree to first.
+             The legend went with the button. It labelled the five points
+             of a scale that was not on screen yet; now the pills carry
+             their own labels, so it was naming something already named. -->
+        <div id="pa-first" class="pa-fadein">
+          <p class="pa-label">1 of 15</p>
+          <div class="pa-live-row">
+            <p class="q" id="pa-first-q">I say yes even when at personal capacity.</p>
+            <div class="pa-scale" id="pa-first-scale" role="radiogroup" aria-labelledby="pa-first-q"></div>
+          </div>
+          <p class="pa-promise">Instant access to three scores for where you might be carrying more than you
+            need to be. One small thing to try differently this week, and three questions worth reflecting
+            on, specific to your result.</p>
+          <p class="pa-fine">Answer the first one and the rest follows here. Nothing lands in your inbox.</p>
         </div>
       </div>
     </div>
@@ -792,13 +828,16 @@
     const SECOND = {
       'needs|boundaries': 'Every yes you have already given is spent before the week starts, so there is no room left for anything of your own. You get by on your bare minimum rather than moving towards your highest ideals.',
       'needs|emotions':   'This is what makes the first one look reasonable. If what you are worth is attached to what you delivered lately, then an hour spent on yourself is an hour of self-worth given up. Rescheduling your personal time reads as the strategic call, and it comes out the same way every time.',
-      'boundaries|needs': 'This is what keeps the first one cheap. The thing an extra yes costs is something of yours, and yours has no price on it. Nothing gets invoiced, nobody notices, and so the yes stays free to give.',
-      /* FLAGGED, NOT CHANGED. Section 13 of the copy doc: this paragraph
-         describes the cost coming out of her side, which is the needs
-         mechanism, so a woman whose second pillar is emotions currently
-         reads a needs explanation. The replacement is written and waiting
-         in that doc. Do not silently swap it. */
-      'boundaries|emotions': 'This is what makes the extra yes so easy to give. Whatever it costs comes out of your side: the meal, the hour, the thing you had planned. Nobody sees that part and nobody mentions it, so the yes goes on looking like it costs nothing.',
+      /* RESOLVED · 14 Aug. The flag that used to sit here was right: the
+         "cost comes out of your side" paragraph is the NEEDS mechanism,
+         and it was bound to boundaries|emotions, so a woman scoring
+         boundaries then emotions read an explanation of a different
+         pillar. Both entries below now match the live in-page audit on
+         the women's home page, where the swap was already made and the
+         emotions paragraph written. That page is the source of truth for
+         this copy; this file had been left behind. */
+      'boundaries|needs': 'This is what makes the extra yes so easy to give. Whatever it costs comes out of your side: the meal, the hour, the thing you had planned. Nobody sees that part and nobody mentions it, so the yes goes on looking like it costs nothing.',
+      'boundaries|emotions': 'Saying no is not really a calendar decision for you. If good is the minimum, and what you are worth depends on what you delivered lately, then every no costs you something that matters a lot more than an hour. That is why the reason arrives so fast. You never weighed it up. You already knew what it would cost, and the polite sentence was out before you finished thinking.',
       'emotions|needs':   'This is what removes the alternative. Nothing in the week is in a position to tell you how you are doing, because everything that was not work has already been moved. So the only insight is the one the work gives you, and the work is not qualified to give it.',
       'emotions|boundaries': 'This is what keeps the question at bay. A diary with nothing loose in it never leaves you anywhere long enough to ask what the last thing was worth. Which is convenient, and it is not an accident, and some part of you has known that for a while.'
     };
@@ -1090,15 +1129,40 @@
     }
 
     /* ══════════════ WIRING ══════════════ */
-    $('pa-start').addEventListener('click', () => {
-      current = 0; renderItem(); show(['pa-items']); scrollTopOf('pa-items');
-    });
+    /* THE START BUTTON IS GONE. The first statement is live on the intro
+       screen, so answering it IS the start: it records answer 1, moves to
+       item 2, and hands the section the whole viewport. Guarded on the
+       box existing so the file still runs if the card is ever pulled. */
+    (function liveFirst(){
+      const box = $('pa-first-scale');
+      if (!box) return;
+      $('pa-first-q').textContent = ITEMS[0].t;
+      SCALE.forEach((label, i) => {
+        const b = document.createElement('button');
+        b.type = 'button'; b.className = 'pa-opt';
+        b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', 'false');
+        b.setAttribute('data-v', String(i + 1));
+        b.innerHTML = '<span class="dot" aria-hidden="true"></span><span>' + label + '</span>';
+        b.addEventListener('click', () => {
+          answers[0] = i + 1;
+          current = 1;
+          renderItem();
+          show(['pa-items']);
+          scrollTopOf('pa-items');
+        });
+        box.appendChild(b);
+      });
+    })();
     $('pa-back').addEventListener('click', back);
     $('pa-see').addEventListener('click', finish);
     $('pa-pdf').addEventListener('click', () => { window.print(); });
     $('pa-again').addEventListener('click', () => {
       for (let i = 0; i < answers.length; i++) answers[i] = null;
       current = 0; lastResult = null;
+      /* Start again returns to the intro, so the live card has to forget
+         its selection too or it shows her last answer as still chosen. */
+      root.querySelectorAll('#pa-first-scale .pa-opt')
+          .forEach(b => b.setAttribute('aria-checked', 'false'));
       show(['pa-intro']); scrollTopOf('pa-intro');
     });
     $('pa-cta').setAttribute('href', CONFIG.conversationUrl);

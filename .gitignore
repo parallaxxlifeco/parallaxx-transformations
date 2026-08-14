@@ -1,0 +1,7 @@
+.DS_Store
+**/.DS_Store
+
+# Working material: copy decks, briefs, image library, archive.
+# NOT tracked, because this repo is public and none of it should be.
+_working/
+_to_delete/

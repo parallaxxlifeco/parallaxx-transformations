@@ -76,6 +76,17 @@
    animated, so opacity:0 in the base stylesheet means one failed request
    between the reader and a blank page. */
   .px-line{display:block;overflow:hidden}
+  /* THE BREAK IS PLACED, NOT DISCOVERED. Letting the subhead wrap on its
+     own was tried first and is not enough: text-wrap:balance only does
+     anything once a line actually overflows, and at 390px -- the most
+     common phone there is -- the line measures 348px inside 350px, so it
+     does NOT overflow, does NOT balance, and sits two pixels from being
+     clipped by .px-line's overflow:hidden. A designed break at the comma
+     is the only version that behaves the same on every phone.
+     display:none on a <br> suppresses the break; nowrap does not override
+     an explicit one, so both halves stay unwrapped on their own line. */
+  .prm-br{display:none}
+  @media(max-width:560px){.prm-br{display:inline}}
   .px-line > span{display:block;padding-right:.08em}
   #prm-root.anim .px-line > span{transform:translateY(110%);will-change:transform}
   #prm-root.anim .px-fade{opacity:0;transform:translateY(22px);will-change:transform,opacity}
@@ -85,23 +96,12 @@
     *{animation:none!important}
   }
 
-/* ── CARDS ──────────────────────────────────────────────────── */
-  .px-card{background:#fff;border-radius:20px;padding:28px 30px;border-top:3px solid #A08A5E}
-  .px-card .n{font-family:'Poppins','Montserrat',sans-serif;font-size:1.9rem;line-height:1;color:rgba(160,138,94,.65);margin-bottom:14px;display:block}
-  .px-card p{font-size:.97rem;line-height:1.72;color:#5E5850}
-
-  /* Glass value pane — the archetype-pane silhouette without the film */
-  .px-vpane{position:relative;display:flex;flex-direction:column;justify-content:flex-start;
-    padding:30px 28px;border-radius:14px;overflow:hidden;background:#0A1D3C;
-    border:1px solid rgba(232,198,95,.14);
-    transition:border-color .35s ease,transform .35s ease,box-shadow .35s ease}
-  .px-vpane:hover{transform:translateY(-6px);border-color:rgba(255,80,31,.4);box-shadow:0 30px 60px -30px rgba(3,12,28,.9)}
-  .px-vpane h3{font-size:.72rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#E8C65F;margin:0 0 16px}
-  .px-vpane p{font-size:.95rem;line-height:1.7;color:#C4CEE0;margin:0}
-
-  /* Dark inset box on cream */
-  .px-darkbox{padding:26px 28px;background:#12233F;border-radius:18px}
-  .px-darkbox p{font-size:1rem;line-height:1.75;color:#B1BFD7}
+/* ── CARDS ──────────────────────────────────────────────────────
+   .px-card, .px-vpane, .px-darkbox and .px-price were deleted here on
+   13 Aug, not merely unused: see the note above #who-tri. Nothing in
+   the markup referenced them once the three sections were rebuilt, and
+   a dead card sheet is how the next section quietly becomes a fourth
+   copy of the same block. Git has them if they are ever wanted back. */
 
   /* Door / fork card */
   .px-doors{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:760px;margin:34px auto 0}
@@ -142,18 +142,6 @@
   .px-byline .who{font-size:.9rem;font-weight:700;color:#B1BFD7;line-height:1.45}
   .px-byline .who span{display:block;font-size:.76rem;font-weight:500;color:#7C89A3;margin-top:2px}
 
-/* ── PRICING CARD ───────────────────────────────────────────────
-   Coral top rule, not gold: the price is the reader's move. */
-  .px-price{max-width:520px;margin:44px auto 0;background:#fff;border-radius:20px;overflow:hidden;
-    border-top:3px solid #FF501F;box-shadow:0 30px 70px -46px rgba(30,42,61,.6);text-align:left}
-  .px-price .amt{font-family:'Poppins','Montserrat',sans-serif;font-weight:400;font-size:76px;line-height:1;color:#1E2A3D;letter-spacing:-.03em}
-  .px-price .amt sup{font-size:28px;vertical-align:top;margin-top:12px;display:inline-block;color:#A08A5E;letter-spacing:0}
-  .px-price li{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid #EDE7DC;font-size:.97rem;line-height:1.6;color:#5E5850;list-style:none}
-  .px-price li:last-child{border-bottom:none}
-  /* Coral dot, not an em-dash. Drawn rather than typed so it sits on the
-     cap-height of the first line instead of the text baseline. */
-  .px-price li span.d{flex:0 0 auto;width:6px;height:6px;border-radius:999px;background:#FF501F;margin-top:.62em;font-size:0}
-
 /* ── FAQ ────────────────────────────────────────────────────────
    Re-skinned off the legacy --trm-* palette. The + is coral (reader action);
    the hairlines are cream at .12 like every other rule on the system. */
@@ -193,18 +181,221 @@
   .px-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
   .px-chips span{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8A8073;border:1px solid rgba(160,138,94,.35);border-radius:999px;padding:.6em 1.1em}
 
+
+/* ── THE THREE-ACROSS CARD GRID IS GONE, AND WHY ────────────────
+   Sections 02, 03 and 05 each had three of something, and each one
+   reached for the same rounded card in a different colour. Read in a
+   row -- which is how the page is actually read -- 03 was 02 again one
+   scroll later, and 05 was the same object inflated to 1270px with a
+   second copy of itself underneath for the bonus.
+
+   Same fix in all three places: the chrome goes, the type carries the
+   structure, and each section gets a DIFFERENT axis so none of them can
+   echo the one before. 02 runs across in columns, 03 runs down in rows,
+   05 becomes one two-sided object. Card padding, borders, radii and
+   drop shadows were most of the height, and none of them were saying
+   anything. .px-card, .px-vpane and .px-price are retired below. */
+
+/* ── HOW THESE THREE GET THEIR DEPTH BACK ───────────────────────
+   First pass removed the cards and the sections went flat: correct
+   diagnosis, wrong cure. A card is a box drawn around content; depth is
+   light falling on it. This pass adds the second and never the first.
+
+   Four devices, used across all three so the page reads as one hand:
+     · a wash rather than a border -- a 180deg white or gold gradient
+       that fades to nothing, so a panel has a lit top edge and no visible
+       edge anywhere else
+     · outlined numerals and gradient-filled display type, both guarded
+       by @supports, because the unsupported fallback for each is
+       INVISIBLE TEXT, which is exactly the silent failure this file has
+       been bitten by twice already
+     · hairlines that fade at their ends instead of stopping dead
+     · motion on entry via .px-fade per item, so the reveal staggers
+       itself, and motion on hover that moves light rather than boxes
+
+   .px-fade is put on the CHILDREN, not the container. GSAP reveals each
+   as it crosses 88% of the viewport, so the stagger is a consequence of
+   where things are rather than a timeline anyone has to maintain, and
+   the existing fail-safe already covers every element individually. */
+
+/* 02 · WHO THIS IS FOR — the triptych. Hairlines instead of boxes, and
+   the numerals promoted to outlined figures: at 0.72rem they were a
+   label nobody read, at 54px in gold outline they are the thing that
+   makes the column look built. */
+  #who-tri{display:grid;grid-template-columns:repeat(3,1fr);margin-top:30px;
+    border-top:1px solid rgba(160,138,94,.34)}
+  #who-tri .c{position:relative;padding:24px 30px 14px;isolation:isolate;
+    transition:transform .45s cubic-bezier(.2,.7,.3,1)}
+  /* The wash IS the panel. A pseudo-element so it can fade out downwards
+     and sit under the text without a stacking-context fight. */
+  #who-tri .c::before{content:"";position:absolute;inset:0;z-index:-1;
+    background:linear-gradient(180deg,rgba(255,255,255,.72),rgba(255,255,255,0) 72%);
+    opacity:.55;transition:opacity .45s ease}
+  #who-tri .c:hover{transform:translateY(-4px)}
+  #who-tri .c:hover::before{opacity:1}
+  #who-tri .c + .c{border-left:1px solid rgba(160,138,94,.22)}
+  #who-tri .c:first-child{padding-left:0}
+  #who-tri .c:last-child{padding-right:0}
+  #who-tri .n{font-family:'Poppins','Montserrat',sans-serif;
+    font-size:clamp(38px,3.6vw,54px);font-weight:300;line-height:1;
+    display:block;margin-bottom:10px;color:rgba(160,138,94,.34);
+    transition:color .45s ease,-webkit-text-stroke-color .45s ease}
+  /* Outline only where it will actually render. -webkit-text-stroke with
+     a transparent fill is invisible text on anything that does not
+     support it, so the filled colour above stays the default. */
+  @supports (-webkit-text-stroke:1px currentColor){
+    #who-tri .n{color:transparent;-webkit-text-stroke:1.15px rgba(160,138,94,.55)}
+    #who-tri .c:hover .n{-webkit-text-stroke-color:rgba(160,138,94,.95)}
+  }
+  #who-tri p{font-size:clamp(15px,1.15vw,17.5px);line-height:1.55;color:#3A3630;margin:0}
+  .who-close{margin:26px 0 0;display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+  .who-close .rule{height:1px;flex:1;min-width:40px;
+    background:linear-gradient(90deg,rgba(160,138,94,.5),transparent)}
+  /* Was .px-darkbox. A navy slab on cream is a second section inside a
+     section. This is a lit panel instead: gold rule, and a wash that
+     fades right so the block has a lit edge and no closed shape. */
+  .who-say{position:relative;padding:20px 26px 20px 24px;margin-top:20px;max-width:74ch;
+    border-left:2px solid #A08A5E;border-radius:0 14px 14px 0;
+    background:linear-gradient(100deg,rgba(255,255,255,.85),rgba(255,255,255,.15) 62%,transparent);
+    box-shadow:0 22px 44px -34px rgba(30,42,61,.5)}
+  .who-say .a{font-family:'Poppins','Montserrat',sans-serif;font-style:italic;
+    font-size:clamp(17px,1.6vw,22px);line-height:1.4;color:#1E2A3D;margin:0 0 8px}
+  .who-say .b{font-size:1rem;line-height:1.7;color:#5E5850;margin:0}
+
+/* 03 · WHAT WE VALUE — the spine.
+   The first attempt at this section was a ledger: a label column, a text
+   column, and a full-bleed hairline under each row. That is a TABLE, and
+   a table is a document form. Edge-to-edge rules and a left label column
+   are the two things that make a web page read as a printout, and it had
+   both. Height was never the problem here; the form was.
+
+   So: no rules at all, and the value name stops being a 23px label and
+   becomes 44px display type, which is the single biggest lever there is
+   between "a row in a table" and "a statement on a page". Three of those
+   at full size need a structure to hang from, and the structure is a lit
+   vertical spine with a node at each value -- a device that cannot exist
+   on paper, which is the point. The line is a gradient that fades out at
+   its foot rather than stopping, and each node carries its own glow.
+
+   The sentence sits UNDER its name and short of the measure rather than
+   beside it in a second column. That gives the block a rag down the
+   right instead of two hard edges, which is the other half of why the
+   ledger read as printed. */
+  #vals-split{display:grid;grid-template-columns:.88fr 1.12fr;gap:clamp(38px,5vw,84px);
+    align-items:start}
+  #vals-split .rail{position:sticky;top:clamp(88px,12vh,132px)}
+
+  #vals-spine{position:relative;margin-top:6px;padding-left:clamp(30px,4vw,52px)}
+  /* The spine. Fades at the foot so it reads as light rather than a
+     border, and stops short of the last sentence so it does not box the
+     block in. */
+  #vals-spine::before{content:"";position:absolute;left:0;top:.7em;bottom:22%;width:2px;
+    background:linear-gradient(180deg,rgba(232,198,95,.85),rgba(232,198,95,.32) 58%,rgba(232,198,95,0))}
+  #vals-spine .v{position:relative;padding:0 0 clamp(26px,3vw,40px)}
+  #vals-spine .v:last-child{padding-bottom:0}
+  #vals-spine .node{position:absolute;left:calc(-1 * clamp(30px,4vw,52px) - 5px);top:.46em;
+    width:12px;height:12px;border-radius:50%;background:#04122A;
+    border:2px solid #E8C65F;box-shadow:0 0 0 5px rgba(232,198,95,.10),0 0 18px rgba(232,198,95,.45);
+    transition:box-shadow .5s ease,transform .5s cubic-bezier(.2,.7,.3,1)}
+  #vals-spine h3{font-family:'Poppins','Montserrat',sans-serif;
+    font-size:clamp(27px,3.4vw,44px);font-weight:300;line-height:1.1;
+    letter-spacing:-.015em;color:#E8C65F;margin:0 0 10px;
+    transition:transform .55s cubic-bezier(.2,.7,.3,1)}
+  @supports (background-clip:text) or (-webkit-background-clip:text){
+    #vals-spine h3{background:linear-gradient(94deg,#F7E7B4,#E8C65F 42%,#BE9A22);
+      -webkit-background-clip:text;background-clip:text;color:transparent}
+  }
+  #vals-spine p{font-size:clamp(15px,1.12vw,17px);line-height:1.7;color:#9FB0CB;
+    margin:0;max-width:44ch}
+  #vals-spine .v:hover .node{transform:scale(1.18);
+    box-shadow:0 0 0 7px rgba(232,198,95,.14),0 0 26px rgba(232,198,95,.7)}
+  #vals-spine .v:hover h3{transform:translateX(7px)}
+
+/* 05 · THE INVESTMENT — the ticket. One object with a pay side and a
+   what-you-get side. The bonus is the last thing you get, so it sits
+   inside the list rather than in a card of its own, where it read as a
+   second pitch arriving after the decision had already been asked for. */
+  #inv-ticket{position:relative;display:grid;
+    grid-template-columns:minmax(260px,.82fr) 1fr;margin:0 auto;
+    max-width:900px;text-align:left;border-radius:22px;overflow:hidden;
+    background:linear-gradient(168deg,#fff,#FDFAF4);
+    border-top:3px solid #FF501F;
+    box-shadow:0 2px 0 rgba(255,255,255,.9) inset,
+               0 40px 80px -52px rgba(30,42,61,.62),
+               0 8px 24px -18px rgba(30,42,61,.4)}
+  #inv-ticket .pay{position:relative;padding:34px 32px;border-right:1px solid #EDE7DC;
+    background:linear-gradient(180deg,#FDFBF7,#F8F3E9);
+    display:flex;flex-direction:column;justify-content:center}
+  /* The price sits in its own light. Same device as the hero glow, at a
+     tenth of the size, so the two ends of the page rhyme. */
+  #inv-ticket .pay::before{content:"";position:absolute;top:-10%;left:50%;
+    width:118%;height:62%;transform:translateX(-50%);pointer-events:none;
+    background:radial-gradient(ellipse,rgba(232,198,95,.20),transparent 68%)}
+  #inv-ticket .amt{position:relative;font-family:'Poppins','Montserrat',sans-serif;
+    font-weight:300;color:#1E2A3D;font-size:clamp(46px,5.4vw,68px);
+    line-height:1;letter-spacing:-.02em}
+  @supports (background-clip:text) or (-webkit-background-clip:text){
+    #inv-ticket .amt{background:linear-gradient(168deg,#243450,#1E2A3D 52%,#0E1728);
+      -webkit-background-clip:text;background-clip:text;color:transparent}
+  }
+  #inv-ticket .amt sup{font-size:.42em;color:#A08A5E;top:-.62em;position:relative;
+    margin-right:2px;-webkit-text-fill-color:#A08A5E}
+  #inv-ticket .per{position:relative;font-size:.62rem;letter-spacing:.2em;
+    text-transform:uppercase;color:#A6968A;font-weight:700;margin:10px 0 20px}
+  #inv-ticket .roll{font-size:.76rem;line-height:1.55;color:#A6968A;margin-top:12px}
+  #inv-ticket .inc{padding:30px 32px}
+  #inv-ticket .inc ul{margin:0;padding:0}
+  #inv-ticket .inc li{list-style:none;font-size:.94rem;line-height:1.5;color:#3A3630;
+    padding:8px 0 8px 20px;position:relative;transition:transform .4s cubic-bezier(.2,.7,.3,1)}
+  #inv-ticket .inc li:hover{transform:translateX(4px)}
+  /* Drawn dot, kept from .px-price: it sits on the cap-height of the
+     first line where a typed bullet sits on the baseline. The ring is
+     new and is what stops five identical dots reading as a form. */
+  #inv-ticket .inc li::before{content:"";position:absolute;left:0;top:.78em;width:6px;height:6px;
+    border-radius:50%;background:#FF501F;box-shadow:0 0 0 3px rgba(255,80,31,.14);
+    transition:box-shadow .4s ease}
+  #inv-ticket .inc li:hover::before{box-shadow:0 0 0 5px rgba(255,80,31,.2)}
+  #inv-ticket .bonus{position:relative;margin-top:18px;padding:16px 18px 16px 20px;
+    border-radius:0 12px 12px 0;border-left:2px solid #E8C65F;
+    background:linear-gradient(100deg,rgba(232,198,95,.14),rgba(232,198,95,.03) 58%,transparent)}
+  #inv-ticket .bonus .k{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+    font-weight:800;color:#A08A5E;display:block;margin-bottom:5px}
+  #inv-ticket .bonus .t{font-family:'Poppins','Montserrat',sans-serif;font-weight:400;
+    color:#1E2A3D;font-size:1.02rem;margin:0 0 3px}
+  #inv-ticket .bonus .d{font-size:.86rem;line-height:1.6;color:#5E5850;margin:0 0 6px}
+  #inv-ticket .bonus .p{font-size:.8rem;color:#A6968A;margin:0}
+
+/* Hover lift and sweep are pointer affordances. On a touch screen they
+   either never fire or stick on after a tap, so they are desktop-only. */
+  @media(hover:none){
+    #who-tri .c:hover{transform:none}
+    #who-tri .c::before{opacity:.75}
+    #vals-spine .v:hover h3,#inv-ticket .inc li:hover{transform:none}
+    #vals-spine .v:hover .node{transform:none}
+  }
+
+
 /* ── GRIDS ──────────────────────────────────────────────────── */
-  #prm-vals{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  #prm-who{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
   #prm-reels{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:720px;margin:0 auto}
   #prm-daniel{display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(36px,5vw,76px);align-items:start}
 
 /* ── MOBILE ─────────────────────────────────────────────────── */
   @media(max-width:900px){
     #prm-daniel > div:first-child{position:static!important}
+    /* Sticky needs somewhere to travel. Stacked there is nothing
+       beside it, so the rail would just stall over its own values. */
+    #vals-split{grid-template-columns:1fr;gap:30px}
+    #vals-split .rail{position:static}
+    #vals-spine{margin-top:12px}
   }
   @media(max-width:820px){
-    #prm-vals,#prm-who{grid-template-columns:1fr}
+    /* The triptych's dividers are vertical; stacked they have to become
+       horizontal or the columns read as one run-on paragraph. */
+    #who-tri{grid-template-columns:1fr;border-top:none}
+    #who-tri .c{padding:16px 0;border-top:1px solid rgba(160,138,94,.22)}
+    #who-tri .c + .c{border-left:none}
+    #inv-ticket{grid-template-columns:1fr;max-width:460px}
+    #inv-ticket .pay{border-right:none;border-bottom:1px solid #EDE7DC;text-align:center}
   }
   @media(max-width:680px){
     .px-doors{grid-template-columns:1fr}
@@ -214,7 +405,6 @@
     #prm-root h1.px-serif,#prm-root h2.px-serif,#prm-root h3.px-serif{font-size:clamp(21px,6.1vw,27px)!important;line-height:1.24!important}
     #prm-root section,#prm-root .px-sec{padding-top:clamp(40px,10vw,52px)!important;padding-bottom:clamp(40px,10vw,52px)!important}
     .px-hand{font-size:clamp(14px,4.6vw,21px)!important}
-    .px-price .amt{font-size:60px}
   }
 
 /* ===================================================================
@@ -717,6 +907,100 @@
 #pt-legal a:hover,#pt-legal a:focus-visible{
   color:#B1BFD7;border-bottom-color:#E8C65F;outline:none}
 
+/* ═══ THE JUMBLE, AND WHY THREE COLUMNS WAS NOT THE PROBLEM ═══════
+   Held at three columns a 390px phone gives each one 109px, and at
+   109px "The Reconnected Man" takes three lines while "About" takes
+   one. Every column therefore started its second link at a different
+   height, its third at a different height again, and nothing in the
+   block lined up with anything beside it. Read top to bottom it is
+   three tidy lists; read across -- which is how anybody actually
+   looks at a footer -- it was rubble.
+
+   THE FIX IS ALIGNMENT, NOT FEWER COLUMNS. Dropping to two columns
+   was tried before and rejected in the note above for good reasons,
+   and it would not have fixed this: two ragged columns are still
+   ragged. Each column becomes a SUBGRID of the footer's own rows, so
+   row 2 is the same height in all three columns whether its link
+   wrapped to one line or three. The heading rule, the first link and
+   the last link now sit on the same three lines across the block.
+
+   Browsers without subgrid (pre-2023) ignore the declaration and get
+   exactly today's layout, which is the correct fallback.
+
+   The utility row loses its dot separators and becomes two columns at
+   the same breakpoint. Ten dot-separated links wrapping freely across
+   a phone put separators at the ends of lines and orphaned "As Seen
+   In" on a line of its own; two columns is a list, and a list is what
+   it is. Dots return above 560px where the row fits in two lines.
+
+   THE BLOCK ALSO HAS TO SIT HERE, AFTER .pt-door a, AND THAT IS A BUG
+   BEING FIXED RATHER THAN A HOUSE STYLE. The existing max-width:440
+   rule is written ABOVE the base .pt-door a declaration, and a media
+   query does not raise specificity -- the later rule wins at every
+   width. So its .78rem never applied on any phone: the columns have
+   always been rendering .92rem links inside 109px, which is most of
+   why they wrapped three deep. The size drops again below, from a
+   position where it can actually win. Leave this block last. */
+/* THE COLUMNS WRAP TO THE WORD, WHICH IS WHY THEY LOOK LIKE THEY RUN
+   INTO EACH OTHER · 10 Aug. Aligning the rows fixed the raggedness but
+   not the cause. At 109px and .79rem, "The Reconnected" is 115px wide,
+   so it cannot share a line with anything: the column breaks after
+   "The", then after "Reconnected", and three one-word lines beside
+   three one-word lines reads as one field of loose words rather than
+   as three lists. Nothing is actually overflowing its column -- it
+   just looks that way, which for this purpose is the same thing.
+
+   THE THRESHOLD IS "The Reconnected" FITTING ON A LINE. That string is
+   9.1x its own font size, so the column needs the type at or under
+   11.75px. 3.2cqw of the footer's own width lands on 11.2, and cqw is
+   used here for the same reason as the page sheet above: the widget is
+   not the viewport, and vw cannot see what Wix took.
+
+   The column gap goes 12 -> 14 in the same breath. Twelve pixels
+   between two columns of wrapped text is not enough white to separate
+   them, and that is the other half of "runs into the next column". */
+@media(max-width:560px){
+  #pt-foot-top{grid-template-rows:auto repeat(5,auto);row-gap:22px;
+    container-type:inline-size;column-gap:14px}
+  .pt-door{display:grid;grid-template-rows:subgrid;grid-row:2/span 5;
+    row-gap:9px;align-content:start}
+  .pt-door h4{font-size:clamp(8.5px,2.6cqw,10px);letter-spacing:.1em;padding-bottom:8px;
+    margin-bottom:0;align-self:end}
+  .pt-door a{font-size:clamp(8.8px,3.2cqw,12.6px);line-height:1.32;padding:3px 0;
+    margin-bottom:0;align-self:start}
+  #pt-social{gap:14px}
+  #pt-social a{font-size:.78rem}
+  /* ══ THE FOOTNOTE ROWS WERE LOUDER THAN THE DOORS · 10 Aug ══
+     .pt-door a came down to 3.2cqw here to buy the three columns
+     their width, and nothing underneath it followed. The utility row
+     stayed at .82rem and the legal line at .8rem, so on a 390px phone
+     the grey links rendered at 13.1px and 12.8px against door links
+     at 11.2 -- the least important type in the footer set two pixels
+     LARGER than the most important, which is the whole tier order
+     inverted by a breakpoint that only remembered one of its rules.
+
+     Fixed by measuring all three rows against the SAME container
+     rather than against the viewport, which this sheet has already
+     learned Wix does not hand the component:
+         doors   3.2cqw    ~11.2px
+         util    2.85cqw   ~10.0px
+         legal   2.7cqw     ~9.5px
+     #pt-foot-inner becomes the container for the two rows that sit
+     OUTSIDE #pt-foot-top. Its content box is exactly #pt-foot-top's
+     width -- the padding is on the inner, the top row has none -- so
+     one cqw means the same thing in all three rules and the ratios
+     hold at every width instead of only at the one they were read
+     off. Ceilings sit just under the desktop sizes so nothing jumps
+     at the breakpoint. ══ */
+  #pt-foot-inner{container-type:inline-size}
+  #pt-util{display:grid;grid-template-columns:1fr 1fr;gap:2px 14px;
+    align-items:start}
+  #pt-util a{white-space:normal;line-height:1.35;padding:5px 0;
+    font-size:clamp(8px,2.85cqw,11.2px)}
+  #pt-util a:not(:last-child)::after{content:none}
+  #pt-legal{font-size:clamp(7.6px,2.7cqw,10.6px);gap:10px;line-height:1.55}
+}
+
 #pt-foot a:focus-visible{outline:2px solid rgba(232,198,95,.7);outline-offset:3px}
 @media(prefers-reduced-motion:reduce){#pt-foot,#pt-foot *{transition:none!important}}`;
 
@@ -792,23 +1076,29 @@
   <div style="position:relative;z-index:1;max-width:840px">
     <p class="px-hand px-fade" style="font-size:1.6rem;color:#E8C65F;margin-bottom:18px">a give it all experience</p>
 
-    <h1 class="px-serif" style="font-size:clamp(38px,5.6vw,74px);line-height:1.1;color:#F1ECE1;margin-bottom:26px">
-      <span class="px-line"><span style="font-weight:500">The Reconnected Man</span></span>
+    <h1 class="px-serif" style="font-size:clamp(38px,5.6vw,74px);line-height:1.1;color:#F1ECE1;margin-bottom:46px">
+      <span class="px-line"><span style="font-weight:500">The Return of the Reconnected Man</span></span>
       <!-- Own clamp, not an em of the h1: the <560px !important override
            resizes h1.px-serif, and an em-sized child would ride it down to
-           ~12px. Sized to hold ONE line from 360px to 1600px. -->
-      <span class="px-line"><span style="font-weight:300;font-style:italic;font-size:clamp(15px,2.35vw,31px);color:#B1BFD7;white-space:nowrap">for men done living in disconnection.</span></span>
+           ~12px.
+
+           IT NO LONGER HOLDS ONE LINE ON A PHONE, AND MUST NOT TRY · 13 Aug.
+           The old subhead was 36 characters and this one is 46. At 360px the
+           nowrap line measures 349px inside a 350px column -- it fits by a
+           single pixel, and .px-line is overflow:hidden, so the moment a
+           fallback font renders a hair wider the tail of "desired." is cut
+           off silently. No scrollbar, no warning, just a truncated promise.
+           Dropping the type instead would put the subhead UNDER the 17px
+           hero line beneath it and invert the hierarchy. So it wraps below
+           560px at a break placed on the comma. See .prm-br. -->
+      <span class="px-line"><span class="prm-sub" style="font-weight:300;font-style:italic;font-size:clamp(15px,2.35vw,31px);color:#B1BFD7;white-space:nowrap">For men who are needed,<br class="prm-br"> but want to be desired.</span></span>
     </h1>
-
-    <p class="px-fade" style="font-size:clamp(17px,1.5vw,21px);line-height:1.65;color:#C4CEE0;max-width:30em;margin:0 auto 14px">Real connection, deep love, true intimacy. With women and every relationship that defines you.</p>
-
-    <p class="px-label px-fade" style="margin-bottom:38px">€59 a month · Application only · Online &amp; in person</p>
 
     <button class="px-btn px-fade" data-prm-modal>Apply now <span aria-hidden="true">&#8594;</span></button>
 
-    <p class="px-fade" style="font-size:.82rem;line-height:1.7;color:#5E6B85;margin-top:16px">Applications are reviewed individually. Not everyone is accepted.</p>
+    <p class="px-fade" style="font-size:.86rem;line-height:1.6;color:#E8C65F;font-weight:600;margin:20px auto 0;max-width:46ch">We open the doors once a month. The next time is <strong style="font-weight:700">September 8th</strong>, 4:30pm Bali / 10:30am CET.</p>
 
-    <p class="px-label px-fade" style="margin-top:46px;padding-top:28px;border-top:1px solid rgba(232,198,95,.14);color:#5E6B85">Real Connection &nbsp;·&nbsp; Deep Love &nbsp;·&nbsp; True Intimacy</p>
+    <p class="px-label px-fade" style="margin-top:46px;padding-top:28px;border-top:1px solid rgba(232,198,95,.14);color:#5E6B85">Say It &nbsp;·&nbsp; Mean It &nbsp;·&nbsp; Be It</p>
   </div>
 </section>
 
@@ -817,6 +1107,22 @@
 <section class="px-sec" style="background:#0A1D3C">
   <div class="px-head" style="max-width:860px">
     <p class="px-label px-fade" style="margin-bottom:18px">01. Watch this first</p>
+
+    <!-- MOVED DOWN FROM THE HERO · 13 Aug. The hero was carrying a banner,
+         a subhead, this line, a date and a strip, and five stacked
+         statements is four more than a hero can land. It reads better
+         here anyway: the section had a number and then a video with no
+         headline between them, and this is the headline. Sized as a lede,
+         not as body -- it is the first thing said on the page after the
+         hero, so it holds the measure on its own.
+
+         Centred against a left-aligned label above it on purpose: it is a
+         subheading for the video, not the section's opening paragraph,
+         and centring is what separates the two jobs. Sized DOWN from the
+         31px it first landed at, because at that size it was competing
+         with the h2s further down the page and reading as oversized body
+         rather than as a heading. -->
+    <p class="px-serif px-fade" style="font-size:clamp(17px,1.75vw,23px);line-height:1.45;color:#F1ECE1;font-weight:300;max-width:54ch;margin:0 auto 34px;text-align:center">Real connection, true intimacy, deep love.<br>With the brothers beside you and the woman you go home to.</p>
 
     <button class="px-vid px-fade" data-mp4="https://video.wixstatic.com/video/111174_7af3a35d66374744965fbdaa2f9a3a9b/1080p/mp4/file.mp4" aria-label="Play: Daniel on why The Reconnected Man exists">
       <img alt="" loading="lazy" src="https://static.wixstatic.com/media/111174_607c1b06261f47cf889c337ae45a20ed~mv2.png">
@@ -829,8 +1135,6 @@
       <p class="px-serif" style="font-size:clamp(19px,2vw,26px);line-height:1.45;color:#E8C65F;font-style:italic">We're living through a crisis of connection, and the consequences are everywhere. But standing for what truly matters takes immense courage.</p>
       <cite class="px-hand" style="display:block;font-size:1.3rem;color:#7C89A3;margin-top:14px;font-style:normal">Daniel</cite>
     </blockquote>
-
-    <p class="px-fade" style="font-size:1.05rem;line-height:1.75;color:#C4CEE0;margin-top:26px;max-width:52ch">We stand for real connection, love and intimacy. Not just with women, but in every relationship that defines us.</p>
   </div>
 </section>
 
@@ -848,61 +1152,54 @@
       <span class="px-line"><span style="font-style:italic;color:#8A8073;font-size:.66em">who are intentionally becoming.</span></span>
     </h2>
 
-    <div id="prm-who" style="margin-top:44px">
-      <div class="px-card px-fade">
-        <span class="n">01</span>
-        <p>The man who understands that the relationship he craves is a reflection of who he needs to become.</p>
-      </div>
-      <div class="px-card px-fade">
-        <span class="n">02</span>
-        <p>The man who can get out of his head and back into his heart.</p>
-      </div>
-      <div class="px-card px-fade">
-        <span class="n">03</span>
-        <p>The man who shows up as a human again.</p>
-      </div>
+    <div id="who-tri">
+      <div class="c px-fade"><span class="n">01</span><p>The man who understands that the relationship he craves is a reflection of who he needs to become.</p></div>
+      <div class="c px-fade"><span class="n">02</span><p>The man who can get out of his head and back into his heart.</p></div>
+      <div class="c px-fade"><span class="n">03</span><p>The man who shows up as a human again.</p></div>
     </div>
 
-    <div class="px-fade" style="display:flex;align-items:center;gap:16px;margin:44px 0 24px">
-      <span style="height:1px;flex:1;background:linear-gradient(90deg,rgba(160,138,94,.5),transparent)"></span>
-      <span class="px-hand" style="font-size:1.4rem;color:#A08A5E;white-space:nowrap">the relationship is the mirror</span>
-      <span style="height:1px;flex:1;background:linear-gradient(90deg,transparent,rgba(160,138,94,.5))"></span>
+    <div class="who-close px-fade">
+      <span class="px-hand" style="font-size:1.4rem;color:#A08A5E">the relationship is the mirror</span>
+      <span class="rule"></span>
     </div>
 
-    <div class="px-darkbox px-fade" style="max-width:820px;margin:0 auto">
-      <p class="px-serif" style="font-size:clamp(18px,1.9vw,25px);line-height:1.4;color:#F1ECE1;font-style:italic;margin-bottom:14px">This isn't about dating tips or relationship coaching.</p>
-      <p>This is about becoming the best version of yourself, <strong style="color:#F1ECE1;font-weight:600">for you</strong>, and as a model of demonstration for those around you.</p>
+    <div class="who-say px-fade">
+      <p class="a">This isn't about dating tips or relationship coaching.</p>
+      <p class="b">This is about coming back to yourself, so the people around you get <strong style="color:#1E2A3D;font-weight:600">the real you</strong>, not the version that just keeps everything running.</p>
     </div>
   </div>
 </section>
 
 
 <!-- ══════════════ 04 · WHAT WE VALUE ═══════════════════════════════════ -->
-<section class="px-sec" style="background:#04122A">
-  <div class="px-head" style="max-width:1080px">
-    <p class="px-hand px-fade" style="font-size:1.6rem;color:#E8C65F;margin-bottom:14px">what we stand for</p>
+<section class="px-sec" style="background:#04122A;overflow:hidden">
+  <!-- Same radial the hero uses, at a third of the size and parked behind
+       the head. It is what stops a flat navy field reading as a slide. -->
+  <div aria-hidden="true" style="position:absolute;top:-8%;left:0;width:min(720px,92%);height:58%;pointer-events:none;background:radial-gradient(ellipse at 22% 30%,rgba(232,198,95,.11),transparent 66%)"></div>
+  <div class="px-head" style="position:relative;max-width:1180px">
+   <div id="vals-split">
+    <!-- The rail. Sticky on desktop so the three standards travel past a
+         fixed head, which is the whole reason this is a split and not a
+         stack: it uses the right half of a 1360px screen instead of
+         leaving it empty, and it puts the reader's eye on one thing while
+         the values move under it. -->
+    <div class="rail">
+      <p class="px-hand px-fade" style="font-size:1.6rem;color:#E8C65F;margin-bottom:14px">what we stand for</p>
 
-    <h2 class="px-serif" style="font-size:clamp(28px,3.6vw,46px);line-height:1.18;color:#F1ECE1;margin-bottom:40px">
-      <span class="px-line"><span>What we value.</span></span>
-    </h2>
+      <h2 class="px-serif" style="font-size:clamp(28px,3.6vw,46px);line-height:1.18;color:#F1ECE1;margin-bottom:22px">
+        <span class="px-line"><span>What we value.</span></span>
+      </h2>
 
-    <div id="prm-vals">
-      <div class="px-vpane px-fade">
-        <h3>Dedication</h3>
-        <p>We all commit to the process by showing up like this work matters, because it does.</p>
-      </div>
-      <div class="px-vpane px-fade">
-        <h3>Punctuality</h3>
-        <p>As a sign of respect to ourselves and each other. Time is a sacred resource here.</p>
-      </div>
-      <div class="px-vpane px-fade">
-        <h3>Raw Vulnerability</h3>
-        <p>Being the best with imperfection. Real, unfiltered, and fully present.</p>
-      </div>
+      <p class="px-fade" style="font-size:1.02rem;line-height:1.75;color:#C4CEE0;max-width:34ch;margin:0">We all have skin in the game and play full out. We require the same from you upon entry.</p>
+      <p class="px-hand px-fade" style="font-size:1.6rem;color:#E8C65F;margin-top:16px;line-height:1.25">we become your newfound brotherhood</p>
     </div>
 
-    <p class="px-fade" style="font-size:1.05rem;line-height:1.75;color:#C4CEE0;max-width:56ch;margin:34px 0 0">We all have skin in the game and play full out. We require the same from you upon entry.</p>
-    <p class="px-hand px-fade" style="font-size:1.75rem;color:#E8C65F;margin-top:14px">we become your newfound brotherhood</p>
+    <div id="vals-spine">
+      <div class="v px-fade"><span class="node" aria-hidden="true"></span><h3>Dedication</h3><p>We all commit to the process by showing up like this work matters, because it does.</p></div>
+      <div class="v px-fade"><span class="node" aria-hidden="true"></span><h3>Punctuality</h3><p>As a sign of respect to ourselves and each other. Time is a sacred resource here.</p></div>
+      <div class="v px-fade"><span class="node" aria-hidden="true"></span><h3>Raw Vulnerability</h3><p>Being the best with imperfection. Real, unfiltered, and fully present.</p></div>
+    </div>
+   </div>
   </div>
 </section>
 
@@ -914,45 +1211,40 @@
 <sc-if value="{{ showPricing }}" hint-placeholder-val="{{ true }}">
 <section class="px-sec" style="background:#F7F3EA;color:#3A3630">
   <div class="px-head" style="max-width:1040px;text-align:center">
-    <p class="px-label px-fade" style="color:#A08A5E;margin-bottom:16px">03. The investment</p>
-
-    <h2 class="px-serif" style="font-size:clamp(28px,3.7vw,48px);line-height:1.18;color:#1E2A3D;margin-bottom:22px">
-      <span class="px-line"><span>A small entry fee.</span></span>
-      <span class="px-line"><span style="font-style:italic;color:#8A8073;font-size:.72em">An enormous return.</span></span>
-    </h2>
-
-    <!-- Sized to break as TWO lines, not three. Measure is set in px (not ch)
-         and the section head is widened to match, because this is a centred
-         billboard line, not a reading passage. -->
-    <p class="px-fade" style="font-size:1.02rem;line-height:1.72;color:#5E5850;max-width:1000px;margin:0 auto">The Reconnected Man is a small investment, but there is an application to be accepted. This is important work. We take it seriously, and we ask that you give it the respect it deserves. <strong style="color:#1E2A3D;font-weight:600">Not everyone will be accepted.</strong></p>
-
-    <div class="px-price px-fade">
-      <div style="padding:34px 38px 24px;border-bottom:1px solid #EDE7DC;text-align:center">
-        <div class="amt"><sup>€</sup>59</div>
-        <div style="font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:#A6968A;margin-top:12px;font-weight:700">Per month · Cancel anytime</div>
-      </div>
-      <ul style="padding:16px 38px">
-        <li><span class="d">·</span>Weekly group containers (4-week cycles)</li>
-        <li><span class="d">·</span>Live facilitation &amp; hot-seat coaching</li>
-        <li><span class="d">·</span>Brotherhood community access</li>
-        <li><span class="d">·</span>First access to new frameworks &amp; resources</li>
-        <li><span class="d">·</span>Flexible. Join at any point in the cycle</li>
-      </ul>
-      <div style="padding:6px 38px 34px">
+    <!-- NO HEAD, ON PURPOSE · 13 Aug. The label, the "small entry fee /
+         enormous return" pair and the paragraph under them all came out
+         together: the paragraph argued the price was reasonable and asked
+         to be taken seriously, which is the tell of a page defending its
+         own number. The ticket states the number and what it buys, and
+         lets that be the argument. The ticket carries its own top margin
+         so the section still opens with air. -->
+    <div id="inv-ticket" class="px-fade">
+      <div class="pay">
+        <div class="amt"><sup>&euro;</sup>59</div>
+        <div class="per">Per month &middot; Cancel anytime</div>
         <button class="px-btn full" data-prm-modal>Apply now <span aria-hidden="true">&#8594;</span></button>
-        <p style="font-size:.8rem;line-height:1.6;color:#A6968A;text-align:center;margin-top:14px">Monthly rollover. Join at any point in the cycle.</p>
+        <p class="roll">Monthly rollover once accepted.</p>
+      </div>
+      <div class="inc">
+        <ul>
+          <li>Weekly group containers (4-week cycles)</li>
+          <li>Live facilitation &amp; hot-seat coaching</li>
+          <li>Brotherhood community access</li>
+          <li>First access to new frameworks &amp; resources</li>
+        </ul>
+        <!-- The bonus lives INSIDE the ticket now. As its own card below it
+             arrived after the reader had already been asked to decide, which
+             made it read as a second pitch rather than as something included. -->
+        <sc-if value="{{ showBonus }}" hint-placeholder-val="{{ true }}">
+        <div class="bonus">
+          <span class="k">Included when you're accepted</span>
+          <p class="t">Your Identity 2.0</p>
+          <p class="d">A complete online program for successful entrepreneurs and salespeople ready to architect the next version of themselves.</p>
+          <p class="p"><span style="text-decoration:line-through">Normally $597</span> &nbsp;&middot;&nbsp; <strong style="color:#FF501F;font-weight:700">Yours free</strong></p>
+        </div>
+        </sc-if>
       </div>
     </div>
-
-    <!-- ── Bonus ─────────────────────────────────────────────── -->
-    <sc-if value="{{ showBonus }}" hint-placeholder-val="{{ true }}">
-    <div class="px-fade" style="max-width:740px;margin:44px auto 0;text-align:left;background:#FBF8F2;border:1px solid #E2DACB;border-radius:18px;padding:28px 32px;box-shadow:0 18px 40px -30px rgba(30,42,61,.45)">
-      <p style="font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:#A08A5E;margin-bottom:10px">Included when you're accepted</p>
-      <h3 class="px-serif" style="font-size:clamp(21px,2.2vw,29px);font-weight:300;color:#1E2A3D;line-height:1.2;margin-bottom:10px">Your Identity 2.0</h3>
-      <p style="font-size:.95rem;line-height:1.7;color:#5E5850;margin-bottom:16px">A complete online program for successful entrepreneurs and salespeople ready to architect the next version of themselves.</p>
-      <p style="font-size:.86rem;color:#A6968A"><span style="text-decoration:line-through">Normally $597</span> &nbsp;·&nbsp; <strong style="color:#FF501F;font-weight:700">Yours free</strong></p>
-    </div>
-    </sc-if>
   </div>
 </section>
 </sc-if>
@@ -969,7 +1261,7 @@
      ═══════════════════════════════════════════════════════════════════ -->
 <section class="px-sec" style="background:#0A1D3C">
   <div class="px-head" style="max-width:1080px">
-    <p class="px-label px-fade" style="margin-bottom:16px">04. People who did it</p>
+    <p class="px-label px-fade" style="margin-bottom:16px">03. People who did it</p>
 
     <h2 class="px-serif" style="font-size:clamp(26px,3.2vw,42px);line-height:1.2;color:#F1ECE1;margin-bottom:40px">
       <span class="px-line"><span>Direct from</span></span>
@@ -1063,13 +1355,17 @@
 <!-- ══════════════ 08 · COMMON QUESTIONS ════════════════════════════════ -->
 <section class="px-sec" style="background:#04122A">
   <div class="px-head" style="max-width:860px">
-    <p class="px-label px-fade" style="margin-bottom:16px">05. Before you apply</p>
+    <p class="px-label px-fade" style="margin-bottom:16px">04. Before you apply</p>
 
     <h2 class="px-serif" style="font-size:clamp(26px,3.2vw,42px);line-height:1.2;color:#F1ECE1;margin-bottom:38px">
       <span class="px-line"><span>Common questions.</span></span>
     </h2>
 
     <div class="faq-wrap px-fade">
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false"><span class="faq-q">I&rsquo;ve already done the inner work. Why would this be different?</span><span class="faq-ico" aria-hidden="true">+</span></button>
+        <div class="faq-body" role="region"><div class="faq-body-inner">Maybe you&rsquo;ve read the books, done a retreat, had the honest conversation once, and a few weeks later you were back to handling everything on your own again. No judgment, that&rsquo;s most of us. Reading about connection is a head thing. This is where we get you out of your head and back into your heart, in a room of men doing the same work every week, until it&rsquo;s just who you are. That&rsquo;s the part a book was never going to do for you.</div></div>
+      </div>
       <div class="faq-item">
         <button class="faq-btn" aria-expanded="false"><span class="faq-q">Do you offer a trial period first?</span><span class="faq-ico" aria-hidden="true">+</span></button>
         <div class="faq-body" role="region"><div class="faq-body-inner">No, we don't offer a trial. We've found that the man who commits, who shows up and takes responsibility for extracting the value he's looking for, gets the best experience. If you can gamble money on dates but aren't willing to take a small risk investing in yourself, this probably isn't your crew.</div></div>
@@ -1127,6 +1423,8 @@
     <p class="px-fade" style="font-size:1.02rem;line-height:1.7;color:#5E5850;margin-bottom:28px;max-width:52ch">Applications are reviewed individually. Not everyone is accepted. If this resonates, don't wait.</p>
 
     <button class="px-btn px-fade" data-prm-modal>Apply now <span aria-hidden="true">&#8594;</span></button>
+
+    <p class="px-fade" style="font-size:.86rem;line-height:1.6;color:#A08A5E;font-weight:600;margin:20px 0 0;max-width:46ch">We open the doors once a month. The next time is <strong style="font-weight:700">September 8th</strong>, 4:30pm Bali / 10:30am CET.</p>
 
     <!-- ▸ PARKED: the two-door fork (Reconnected Woman / Reconnect 1:1) used to
          sit here. Removed on request. The .px-doors and .px-door class kit is

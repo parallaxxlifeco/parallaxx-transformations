@@ -12,6 +12,7 @@ Never hand-edit a generated `.js` bundle; edit the source and rerun its build.
 | Home, men | `Parallaxx Home Men.dc.html` | `build-home-men-bundle.py` | `parallaxx-home-men.js` · `parallaxx-home-men` | `index.html` |
 | The Reconnected Man | `The Reconnected Man.dc.html` | `build-reconnected-man-bundle.py` | `parallaxx-reconnected-man.js` · `parallaxx-reconnected-man` | `reconnected-man.html` |
 | Home, women | `Parallaxx Home Women.dc.html` | `build-home-women-bundle.py` | `parallaxx-home-women.js` · `parallaxx-home-women` | `home-women.html` |
+| The Reconnected Woman | `reconnected-woman-v9-preview.html` | `build_bundle_v9.py` | `parallaxx-reconnected-woman.js` · `parallaxx-reconnected-woman` | `reconnected-woman.html` |
 | The Priority Audit | `Priority Audit.dc.html` | `build-priority-audit-bundle.py` | `parallaxx-priority-audit.js` · `parallaxx-priority-audit` | `priority-audit.html` |
 
 ## The Source URLs
@@ -30,6 +31,7 @@ Base: `https://parallaxxlifeco.github.io/parallaxx-transformations/`
 | Home, men | `…/parallaxx-home-men.js` | `parallaxx-home-men` |
 | The Reconnected Man | `…/parallaxx-reconnected-man.js` | `parallaxx-reconnected-man` |
 | Home, women | `…/parallaxx-home-women.js` | `parallaxx-home-women` |
+| The Reconnected Woman | `…/parallaxx-reconnected-woman.js` | `parallaxx-reconnected-woman` |
 | The Priority Audit | `…/parallaxx-priority-audit.js` | `parallaxx-priority-audit` |
 
 The preview harnesses render as real pages at the same base, so
@@ -49,6 +51,7 @@ python3 build-home-bundle.py
 python3 build-home-men-bundle.py
 python3 build-reconnected-man-bundle.py
 python3 build-home-women-bundle.py
+python3 build_bundle_v9.py
 python3 build-priority-audit-bundle.py
 ```
 
@@ -147,6 +150,35 @@ of the fifteen statements is live in the intro, so answering it starts the run
 in place. That single tap is the whole activation cost, and spending it on a
 page load was the largest leak in the funnel. `Priority Audit.dc.html` is the standalone,
 and as of 14 Aug it no longer diverges: see below.
+
+## The Reconnected Woman, and why its source is not a .dc.html
+
+This page is the exception to the rule at the top of this file. Its source of
+record is `reconnected-woman-v9-preview.html`, a plain page, and
+`build_bundle_v9.py` publishes it **as-is** into the light DOM rather than
+compiling it into a shadow root. That is deliberate: the page's CSS is scoped
+to `#trw-page` and its script uses `document.querySelector` throughout, so a
+shadow root would need every selector re-pointed, and a port is where details
+get lost. `The Reconnected Woman.dc.html` is the older chain and is superseded.
+
+Edit the preview file. It IS the page.
+
+**The apply CTAs open a LeadConnector form in a modal, not a new tab.** All
+four of them — the hero, both pricing cards and the closing block — carry
+`data-trw-modal` and open the same dialog. The form ID appears three times in
+that markup: `src` is what loads, and `id="form-<ID>"` plus `data-form-id` are
+what GHL's `form_embed.js` matches on when it posts a height back. Miss either
+of the last two on a swap and the right form loads at the wrong height and
+never resizes.
+
+One thing in there is load-bearing and looks like it should not be.
+`form_embed.js` parks its iframe offscreen — `left:-9999px`, hidden, zero
+opacity, all as inline styles — until it decides the form is ready, and it
+never un-parks a form inside an element that started `display:none`. The form
+loaded fine and sat 9999px to the left of a box that measured 76px tall: a
+header with nothing under it. `unparkForm()` undoes that on open and twice
+more on a timer, because the script re-applies the parking if it initialises
+after the first click. Do not remove it.
 
 ## The Priority Audit, and which copy is the real one
 

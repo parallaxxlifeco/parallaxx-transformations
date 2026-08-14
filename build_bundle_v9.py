@@ -17,8 +17,15 @@ where a port loses details.
 """
 import re, pathlib
 
-SRC = pathlib.Path("/tmp/rw/reconnected-woman-v9-preview.html")
-OUT = pathlib.Path("/tmp/rw/parallaxx-reconnected-woman-v9.js")
+# Both of these were absolute /tmp paths, which is where this script was
+# first written and is nobody's checkout. It meant the build could not be
+# run from the repo at all, and its output name did not match the file the
+# site actually loads, so shipping took a copy and a rename by hand -- the
+# exact shape of mistake that put a stale source on main last week.
+# Resolved against this file's own directory now, writing the deployed name.
+HERE = pathlib.Path(__file__).parent
+SRC = HERE / "reconnected-woman-v9-preview.html"
+OUT = HERE / "parallaxx-reconnected-woman.js"
 TAG = "parallaxx-reconnected-woman"
 
 s = SRC.read_text(encoding="utf-8")

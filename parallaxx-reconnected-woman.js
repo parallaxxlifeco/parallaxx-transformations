@@ -1479,13 +1479,17 @@ parallaxx-reconnected-woman {
       <button class="modal-close" aria-label="Close form">&times;</button>
     </div>
     <div class="modal-body">
-      <!-- WIX: replace iframe src and form ID with the new LeadConnector form for The Reconnected Woman -->
+      <!-- THE ID APPEARS THREE TIMES AND ALL THREE MATTER · 14 Aug.
+           src is what loads. id="form-<ID>" and data-form-id are what GHL's
+           form_embed.js matches on when it posts a height back, so a swap
+           that misses either one loads the right form at the wrong height
+           and never resizes it. Change all three together. -->
       <iframe
-        src="https://api.leadconnectorhq.com/widget/form/TowKVXREz7wCk7AWO4jG"
+        src="https://api.leadconnectorhq.com/widget/form/0RT5EVaTlGxo6QBjyIPT"
         height="1439"
         title="The Reconnected Woman Application Form"
-        id="form-TowKVXREz7wCk7AWO4jG"
-        data-form-id="TowKVXREz7wCk7AWO4jG"
+        id="form-0RT5EVaTlGxo6QBjyIPT"
+        data-form-id="0RT5EVaTlGxo6QBjyIPT"
         data-form-name="The Reconnected Woman Application Form"
       ></iframe>
     </div>

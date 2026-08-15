@@ -1,25 +1,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
 
 <style>
   :root {
     --trw-black:      #061938;
-    --trw-dark:       #112030;
-    --trw-card:       #162638;
-    --trw-border:     #1E3347;
-    --trw-gold:       #D4B84A;
-    --trw-gold-light: #E8CF72;
-    --trw-gold-dark:  #A8912E;
-    --trw-orange:     #E8451C;
-    --trw-orange-dk:  #C43715;
+    --trw-dark:       #04122A;
+    --trw-card:       #0A1D3C;
+    --trw-border:     #1B2C46;
+    /* ── ALIGNED TO THE v4 SYSTEM · 14 Aug ──────────────────────────
+       These were the May-era values and they are the reason this page
+       and The Reconnected Man do not read as the same site. The gold was
+       #D4B84A, which predates v4 by a whole revision, and the orange,
+       cream and text greys were each a step off their v4 counterparts.
+       Close enough to look like a mistake rather than a choice.
+
+       THE TWO FONTS ARE SWAPPED, AND THAT IS THE LARGEST SINGLE CHANGE
+       HERE. This page set Montserrat as display and Poppins as body. The
+       system does the opposite: Poppins is the display face and
+       Montserrat is the body. Nothing downstream needed touching -- the
+       variables are named for their ROLE, so exchanging the two values
+       re-cast all thirty-three usages at once. */
+    --trw-gold:       #E8C65F;
+    --trw-gold-light: #F3DD93;
+    --trw-gold-dark:  #C9A227;
+    --trw-orange:     #FF501F;
+    --trw-orange-dk:  #FF6A3D;
     --trw-white:      #ffffff;
-    --trw-cream:      #F0EDE6;
-    --trw-muted:      #5A7A96;
-    --trw-text:       #8AADCA;
-    --trw-head:       'Montserrat', system-ui, sans-serif;
-    --trw-body:       'Poppins', system-ui, sans-serif;
+    --trw-cream:      #F1ECE1;
+    --trw-muted:      #7C89A3;
+    --trw-text:       #B1BFD7;
+    --trw-head:       'Poppins', system-ui, sans-serif;
+    --trw-body:       'Montserrat', system-ui, sans-serif;
   }
 
   #trw-page *, #trw-page *::before, #trw-page *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,13 +48,19 @@
     overflow-x: clip;
   }
 
+  /* WEIGHT COMES DOWN WITH THE FONT SWAP, or the page reads as shouting.
+     700 was right for Montserrat as a display face. Poppins at 700 is a
+     different animal, and the system's note on this is explicit: Poppins
+     at 300 goes weak and spindly at large sizes, so display sits at
+     400/500 and the tracking goes slightly negative. */
   #trw-page h1, #trw-page h2, #trw-page h3, #trw-page h4 {
     font-family: var(--trw-head);
     line-height: 1.15;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.018em;
     color: var(--trw-cream);
-    font-weight: 700;
+    font-weight: 400;
   }
+  #trw-page #hero h1, #trw-page #cta-final h2 { font-weight: 500; }
 
   #trw-page p { color: var(--trw-text); font-weight: 300; }
   #trw-page strong { color: var(--trw-cream); font-weight: 600; }
@@ -72,32 +91,44 @@
   #trw-page section { padding: 64px 0; }
 
   /* BUTTONS */
+  /* .px-btn, rebuilt here. A square 12px tracked-uppercase slab is the
+     one component that gave this page away at a glance: the rest of the
+     site uses a coral pill in sentence case with a soft coral shadow
+     under it, and hover goes LIGHTER and lifts rather than darker. The
+     shadow is carried at rest, not only on hover, which is what makes
+     the button sit above the page instead of on it. */
   #trw-page .btn {
-    display: inline-block;
-    padding: 17px 46px;
+    display: inline-flex; align-items: center; justify-content: center; gap: .55em;
+    padding: 1.05em 2.2em;
     font-family: var(--trw-body);
-    font-size: 12px;
+    font-size: .98rem;
     font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    letter-spacing: 0;
+    text-transform: none;
     text-decoration: none;
     cursor: pointer;
-    border: none;
-    transition: all 0.25s ease;
+    border: none; border-radius: 999px;
+    transition: background .3s, transform .3s, box-shadow .3s;
     white-space: nowrap;
   }
-  #trw-page .btn--gold { background: var(--trw-orange); color: var(--trw-white); }
+  #trw-page .btn--gold {
+    background: var(--trw-orange); color: var(--trw-white);
+    box-shadow: 0 10px 30px -12px rgba(255,80,31,.5);
+  }
   #trw-page .btn--gold:hover {
     background: var(--trw-orange-dk);
     transform: translateY(-2px);
-    box-shadow: 0 10px 32px rgba(232,69,28,0.35);
+    box-shadow: 0 16px 38px -14px rgba(255,80,31,.6);
   }
+  /* .px-ghost: the system's secondary is a gold-outlined pill on navy,
+     not a coral-outlined square. */
   #trw-page .btn--outline {
     background: transparent;
-    color: var(--trw-orange);
-    border: 1px solid var(--trw-orange);
+    color: var(--trw-text);
+    border: 1px solid rgba(232,198,95,.4);
+    font-weight: 600; font-size: .94rem; padding: 1em 2em;
   }
-  #trw-page .btn--outline:hover { background: var(--trw-orange); color: var(--trw-white); }
+  #trw-page .btn--outline:hover { background: rgba(232,198,95,.08); border-color: var(--trw-gold); color: var(--trw-cream); }
   #trw-page .btn--full { display: block; text-align: center; width: 100%; }
 
   /* HERO */
@@ -132,25 +163,45 @@
   }
   #trw-page .hero-inner { position: relative; z-index: 1; }
   #trw-page .hero-kicker {
-    font-size: 11px; font-weight: 700;
-    letter-spacing: 0.35em; text-transform: uppercase;
+    font-size: .66rem; font-weight: 700;
+    letter-spacing: .22em; text-transform: uppercase;
     color: var(--trw-gold); margin-bottom: 32px;
     animation: trwFadeUp 0.7s ease 0.1s both;
   }
+  /* 800 was a Montserrat weight. At 108px in Poppins it is a wall, and
+     the system runs its hero at 500 that size: composure rather than a
+     shout, which is also the argument the copy is making. Cream instead
+     of pure white for the same reason -- #fff on navy was the one value
+     on this page that never appeared in the palette. Line-height comes
+     off 0.95, which was set to stop a heavy face colliding with itself
+     and now just looks cramped. */
   #trw-page #hero h1 {
     font-size: clamp(40px, 11vw, 108px);
-    font-weight: 800; color: var(--trw-white);
-    line-height: 0.95; margin-bottom: 28px;
+    font-weight: 500; color: var(--trw-cream);
+    line-height: 1.02; margin-bottom: 28px;
     overflow-wrap: break-word;
     animation: trwFadeUp 0.7s ease 0.25s both;
   }
   #trw-page #hero h1 .accent { color: var(--trw-gold); }
+  /* THE SECOND LINE WAS THE LOUDER OF THE TWO AND IT IS THE QUIETER
+     CLAIM · 14 Aug. Both lines sat at the same size and the second was
+     wrapped in <strong>, so the setup read light and the payoff read
+     bold -- the wrong way round for a line whose whole move is "you
+     don't have to". It steps down to 0.84 of the line above and takes a
+     normal weight, and holds the reader with colour instead: cream
+     against the muted blue over it. #6B91AE was also off-palette, one
+     of the last May-era values on the page. */
   #trw-page .hero-tagline {
     font-size: clamp(18px, 2.4vw, 22px);
-    font-weight: 300; color: #6B91AE;
+    font-weight: 300; color: var(--trw-muted);
     max-width: 520px; margin: 0 auto 52px;
     letter-spacing: 0.02em;
     animation: trwFadeUp 0.7s ease 0.4s both;
+  }
+  #trw-page .hero-tagline strong {
+    display: inline-block; margin-top: .5em;
+    font-size: .84em; font-weight: 400;
+    color: var(--trw-cream); letter-spacing: 0;
   }
   #trw-page #hero .btn { animation: trwFadeUp 0.7s ease 0.55s both; }
   #trw-page .hero-rule {
@@ -247,7 +298,7 @@
     background: linear-gradient(90deg, var(--trw-gold-dark), var(--trw-gold));
   }
   #trw-page .archetype-num {
-    font-family: var(--trw-head); font-size: 32px; font-weight: 700;
+    font-family: var(--trw-head); font-size: 32px; font-weight: 300;
     color: var(--trw-gold); opacity: 0.5; line-height: 1.2;
     flex-shrink: 0; min-width: 36px;
   }
@@ -256,10 +307,10 @@
   #trw-page .archetype-body p { padding-top: 0; }
   #trw-page .archetype-label {
     display: block;
-    font-family: var(--trw-head);
-    font-size: 12px;
+    font-family: var(--trw-body);
+    font-size: .66rem;
     font-weight: 700;
-    letter-spacing: 0.2em;
+    letter-spacing: .22em;
     text-transform: uppercase;
     color: var(--trw-gold);
     margin-bottom: 10px;
@@ -301,7 +352,7 @@
     transform: scaleX(0); transform-origin: left; transition: transform 0.35s ease;
   }
   #trw-page .value-card:hover::after { transform: scaleX(1); }
-  #trw-page .value-card h3 { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--trw-gold); margin-bottom: 16px; }
+  #trw-page .value-card h3 { font-size: .66rem; letter-spacing: .22em; text-transform: uppercase; color: var(--trw-gold); margin-bottom: 16px; }
   #trw-page .value-card p { font-size: 16px; }
 
   #trw-page .innercircle-box {
@@ -325,7 +376,7 @@
     background: linear-gradient(90deg, var(--trw-gold-dark), var(--trw-gold), var(--trw-gold-dark));
   }
   #trw-page .price-top { padding: 28px 36px 20px; border-bottom: 1px solid var(--trw-border); }
-  #trw-page .price-amount { font-family: var(--trw-head); font-size: 80px; font-weight: 700; color: var(--trw-white); line-height: 1; }
+  #trw-page .price-amount { font-family: var(--trw-head); font-size: 80px; font-weight: 300; color: var(--trw-white); line-height: 1; }
   #trw-page .price-amount sup { font-size: 30px; vertical-align: top; margin-top: 14px; display: inline-block; color: var(--trw-gold); }
   #trw-page .price-note { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--trw-muted); margin-top: 10px; }
   #trw-page .price-features { list-style: none; padding: 16px 36px; }
@@ -354,7 +405,7 @@
     align-items: center; justify-content: center; text-align: center; gap: 6px;
   }
   #trw-page .bonus-left .tag { font-family: var(--trw-head); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(0,0,0,0.55); }
-  #trw-page .bonus-left .title { font-family: var(--trw-head); font-size: 20px; font-weight: 700; color: var(--trw-black); line-height: 1.2; }
+  #trw-page .bonus-left .title { font-family: var(--trw-head); font-size: 20px; font-weight: 400; color: var(--trw-black); line-height: 1.2; }
   #trw-page .bonus-right { background: var(--trw-card); padding: 24px 32px; }
   #trw-page .bonus-right h3 { font-size: 22px; color: var(--trw-white); margin-bottom: 14px; }
   #trw-page .bonus-right p { font-size: 16px; margin-bottom: 20px; }
@@ -433,10 +484,10 @@
     transform: translateY(-1px);
   }
   #trw-page .trw-brand .trw-brand-name {
-    font-family: var(--trw-head);
-    font-size: 13px;
+    font-family: var(--trw-body);
+    font-size: .66rem;
     font-weight: 700;
-    letter-spacing: 0.18em;
+    letter-spacing: .22em;
     text-transform: uppercase;
     color: var(--trw-cream);
   }
@@ -477,19 +528,52 @@
   }
 
   /* MODAL */
-  #trw-apply-modal { display: none; position: fixed; inset: 0; z-index: 9999; align-items: center; justify-content: center; padding: 20px; }
+  #trw-apply-modal { display: none; position: fixed; inset: 0; z-index: 9999; align-items: center; justify-content: center; padding: 16px; }
   #trw-apply-modal.is-open { display: flex; }
   #trw-apply-modal .modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); cursor: pointer; }
+  /* THE NAVY TAIL UNDER THE FORM · 14 Aug.
+     The iframe carried height="1439" and the box was max-height:90vh with
+     overflow-y:auto, so the box scrolled through 1439px of iframe. The form
+     inside is shorter than that and its background is transparent, so
+     everything past the last field was the card's own navy showing through
+     the empty part of the frame: several hundred pixels of blue to scroll
+     past, underneath a form that had already ended.
+
+     Fixed by making the box a panel rather than a scroller. It is a flex
+     column, it no longer scrolls itself, and the body fills whatever is
+     left under the header. The iframe fills the body, so its height is the
+     panel's height by construction and can never exceed its own content:
+     a long form scrolls inside its own frame, which is what an embedded
+     form should do anyway.
+
+     Nothing here depends on knowing how tall the form is, and that is the
+     point. That number belongs to GHL and changes whenever the form does,
+     so any fix written against today's value is a fix with an expiry date
+     on it. */
+  /* CORRECTION · 14 Aug, second pass. Making the box a fixed-height panel
+     removed the SCROLLING tail and replaced it with a standing one: the
+     panel was min(90vh,880px) whatever the form measured, so a form that
+     ends at 460px left 420px of navy under it with nothing to scroll.
+     Same blue, now permanent.
+
+     The box hugs the frame instead. GHL's form_embed.js posts a height
+     back and writes it as an inline style on the iframe, and an inline
+     style beats anything here, so the frame is the height of the form and
+     the box is the height of the frame. Capped at the viewport, and the
+     cap is the only case where the box scrolls: a form taller than the
+     screen has to go somewhere. */
   #trw-apply-modal .modal-box {
     position: relative; z-index: 1; background: var(--trw-card);
     border: 1px solid var(--trw-border); border-top: 2px solid var(--trw-gold);
-    width: 100%; max-width: 580px; max-height: 90vh;
+    width: 100%; max-width: 580px;
+    max-height: min(92vh, 940px);
+    display: flex; flex-direction: column;
     overflow-y: auto; -webkit-overflow-scrolling: touch;
   }
   #trw-apply-modal .modal-header {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 20px 28px; border-bottom: 1px solid var(--trw-border);
-    position: sticky; top: 0; background: var(--trw-card); z-index: 2;
+    padding: 15px 22px; border-bottom: 1px solid var(--trw-border);
+    background: var(--trw-card); z-index: 2; flex-shrink: 0;
   }
   #trw-apply-modal .modal-title { font-family: var(--trw-head); font-size: 14px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--trw-cream); }
   #trw-apply-modal .modal-close {
@@ -499,6 +583,12 @@
     transition: color 0.2s, border-color 0.2s; flex-shrink: 0;
   }
   #trw-apply-modal .modal-close:hover { color: var(--trw-cream); border-color: var(--trw-gold); }
+  /* NO height ON THE FRAME. It was height:100% in the first pass, which
+     overrode nothing -- GHL sets an inline height and inline wins -- but
+     it did stop the frame shrinking when there was no inline height yet,
+     and it made the body claim the panel's full height regardless. The
+     frame's height is GHL's to set; the attribute in the markup is only
+     the value before its script runs. */
   #trw-apply-modal .modal-body { padding: 0; }
   #trw-apply-modal .modal-body iframe { display: block; width: 100%; border: none; }
 
@@ -882,9 +972,11 @@
     padding: 28px 36px 20px; border-bottom: 1px solid var(--trw-border);
     text-align: center;
   }
+  /* Same correction as .price-amount. These are display figures, and the
+     system sets display figures light -- the size carries the weight. */
   #trw-page .open-amount {
-    font-family: var(--trw-head); font-size: 64px; font-weight: 700;
-    color: var(--trw-white); line-height: 1;
+    font-family: var(--trw-head); font-size: 64px; font-weight: 300;
+    color: var(--trw-cream); line-height: 1;
   }
   #trw-page .open-when {
     font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
@@ -958,8 +1050,8 @@
   }
   #trw-page .dif-cell { display: flex; align-items: flex-start; gap: 20px; }
   #trw-page .dif-fig {
-    flex: 0 0 auto; font-family: var(--trw-head); font-size: 46px; font-weight: 700;
-    line-height: 0.9; letter-spacing: -0.02em;
+    flex: 0 0 auto; font-family: var(--trw-head); font-size: 46px; font-weight: 300;
+    line-height: 0.95; letter-spacing: -0.02em;
     color: transparent; -webkit-text-stroke: 1px rgba(212, 184, 74, 0.95);
     transition: color 0.3s ease, -webkit-text-stroke-color 0.3s ease;
   }
@@ -1037,6 +1129,465 @@
 <style>
 parallaxx-nav{display:block;position:relative;z-index:200}
 parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   v4 ALIGNMENT LAYER · 14 Aug
+   -----------------------------------------------------------------------
+   The re-skin before this changed the tokens, the two fonts and the
+   button, and left every section's LAYOUT exactly as it was. That was
+   scoped deliberately and it was the wrong call: the ask was to align the
+   designs, and a page can wear the right typeface and still be built out
+   of components the rest of the site retired. The recognition list is the
+   clearest case -- a two-column run of em-dashed lines with a hairline
+   under each is not a pattern that exists on The Reconnected Man.
+
+   This layer re-cuts the sections onto the patterns that page actually
+   uses. It sits last in the sheet on purpose: this file has accumulated
+   several rounds of mobile patches that come after the base rules, so
+   anything earlier would lose to them at exactly the widths that matter.
+
+   Copy is untouched throughout. Structure is CSS-only wherever it can be,
+   which is why the numerals are counters rather than new markup.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+  /* ── THE SHELL ─────────────────────────────────────────────────────
+     .px-sec: the system's section is padded on all four sides and scales
+     with the viewport. This page had a flat 64px vertical and relied on
+     .container for the horizontal, which is why its rhythm never matched. */
+  #trw-page section { padding: clamp(52px,6.5vw,92px) clamp(20px,4vw,52px); }
+  #trw-page #hero { padding: clamp(90px,10vw,130px) clamp(20px,4vw,52px) clamp(52px,6.5vw,92px); }
+
+  /* .px-label. Four different label sizes existed on this page; the
+     system has one. */
+  #trw-page .overline {
+    font-size: .66rem; letter-spacing: .22em; font-weight: 700;
+    color: var(--trw-gold); margin-bottom: 16px;
+  }
+  /* The centred 48px gold bar under every section head has no counterpart
+     in the system, which marks sections with the label alone and saves
+     rules for where they carry meaning. */
+  #trw-page .divider { display: none; }
+  #trw-page .section-head { margin-bottom: clamp(26px,3vw,38px); }
+
+  /* ── HORIZON LINES ─────────────────────────────────────────────────
+     Fourteen navy sections back to back is the exact fault the man's page
+     was rebuilt to cure: with no change of ground the eye has nothing to
+     measure progress against and the page reads as one long column. Three
+     cream breaks, spaced so they land as a rhythm rather than a stripe. */
+  #trw-page #distinction,
+  #trw-page #bio { background: var(--trw-cream); color: #3A3630; }
+  #trw-page #distinction  h1, #trw-page #distinction  h2, #trw-page #distinction  h3,
+  #trw-page #bio h1, #trw-page #bio h2, #trw-page #bio h3 { color: #1E2A3D; }
+  /* #A08A5E on cream is 2.83:1, and these are 10.5px tracked uppercase --
+     the least legible shape text takes. The system's bronze is a rule and
+     border colour; for a LABEL on cream it has to come down to ink. */
+  #trw-page #distinction  .overline,
+  #trw-page #bio .overline { color: #7A6742; }
+  /* CONTRAST ON CREAM · corrected 14 Aug.
+     Every value here was taken from the light end of the system's cream
+     range at once -- #5E5850 body, a .55-alpha numeral stroke, a
+     .35-alpha chip border with grey type inside it -- and the result is a
+     large field where nothing has any weight and reading it is work. On
+     his page #5E5850 is the SECONDARY colour and #3A3630 carries the
+     body; the outlined numerals sit against a much smaller area of cream
+     than they do here, so the same alpha reads as far fainter. Body goes
+     to #3A3630, the numerals and the chips come up, and the ink stays
+     for anything that was already ink. */
+  #trw-page #distinction p, #trw-page #bio p { color: #3A3630; }
+  #trw-page #distinction .under-quote {
+    color: #3A3630; text-align: left; max-width: 62ch;
+    margin: clamp(20px,2.4vw,28px) auto 0;
+    padding: 18px 24px 18px 22px;
+    border-left: 2px solid #A08A5E; border-radius: 0 14px 14px 0;
+    background: linear-gradient(100deg, rgba(255,255,255,.9), rgba(255,255,255,.2) 62%, transparent);
+    font-family: var(--trw-head); font-style: italic; font-weight: 300;
+    font-size: clamp(16px,1.5vw,20px); line-height: 1.45;
+  }
+  /* The outline came off. Hollow figures worked against navy on his
+     page; on cream they were the palest thing in the section. */
+  #trw-page #bio .tag { color: #4A443C; border-color: rgba(160,138,94,.55); }
+  /* Two elements inside the bio carry an explicit cream or white of their
+     own, which beat the generic p rule above and rendered invisible the
+     moment the section changed ground. Caught by walking the cream
+     sections for any text lighter than its background rather than by
+     eye, because this is exactly the kind of thing an eye skips. */
+  #trw-page #bio .bio-role { color: #1E2A3D; }
+  #trw-page #bio strong, #trw-page #bio b { color: #1E2A3D; }
+  #trw-page #distinction strong { color: #1E2A3D; }
+
+  /* ── RECOGNITION ───────────────────────────────────────────────────
+     THE NUMERALS ARE GONE AND THEY WERE A MISREAD OF THE PATTERN.
+     On his page the outlined figures label THREE CATEGORIES of man --
+     an enumerated set, where the number is doing real work. These are
+     six recognitions, and she is meant to scan them and have one or two
+     land, not read a numbered indictment of six things wrong with her.
+     Numbering turned a mirror into a charge sheet. Borrowing a pattern
+     is not the same as borrowing its semantics.
+
+     THIS SECTION GOES BACK TO NAVY, TOO. It was made cream for rhythm,
+     which put the hardest copy on the page into the lowest-contrast
+     block on the page: warm grey body text spread across a wide cream
+     field, with a white wash over it that cream cannot show. Cream is
+     right for the sections that explain; this one lands. Distinction and
+     the bio still change ground, so the horizon lines survive.
+
+     What is kept from the system: the hairline grid, the lit wash, the
+     column rhythm, and the gold-ruled closing statement. The structure
+     is the pattern. The numerals were decoration on top of it. */
+  /* NO LINE OVER TWO ROWS, AND THE COLUMN COUNT IS WHAT DELIVERS IT.
+     The longest recognition is 78 characters. Two lines means roughly 39
+     per line, which at this size wants about 320px of text width, so a
+     three-column row needs ~1240px of viewport before it can hold them.
+     Below that the answer is fewer columns, not smaller type: shrinking
+     the type to fit three columns is how a section ends up unreadable at
+     the exact widths most people are on.
+
+     Measured at 1600, 1360, 1240, 1100, 900, 780, 600 and 390 rather than
+     reasoned about -- the wrap point moves with the font's actual metrics
+     and no arithmetic here is worth trusting over the browser. */
+  /* max-width on the list did nothing until this: the list sits inside
+     .container, which is 860px, so three columns were 268px wide no
+     matter what the list asked for. That 268 is why every measurement
+     came back at three and four lines. */
+  #trw-page #recognition .container { max-width: 1320px; }
+  #trw-page .recog-list {
+    grid-template-columns: repeat(3,1fr);
+    column-gap: 0; row-gap: 0;
+    border-top: 1px solid rgba(232,198,95,.22);
+    max-width: 1320px; margin: clamp(26px,3vw,34px) auto 0;
+  }
+  @media (max-width: 1240px) {
+    #trw-page .recog-list { grid-template-columns: repeat(2,1fr); max-width: 900px; }
+    #trw-page .recog-line:not(:nth-child(3n+1)) { border-left: none; }
+    #trw-page .recog-line:nth-child(3n+1) { padding-left: 28px; }
+    #trw-page .recog-line:nth-child(3n)   { padding-right: 28px; }
+    #trw-page .recog-line:nth-child(even)  { border-left: 1px solid rgba(232,198,95,.16); }
+    #trw-page .recog-line:nth-child(odd)   { padding-left: 0; }
+    #trw-page .recog-line:nth-child(even)  { padding-right: 0; }
+    #trw-page .recog-line:nth-child(n+3)   { border-top: 1px solid rgba(232,198,95,.16); }
+    #trw-page .recog-line:nth-child(n+4)::before { top: 1px; }
+    #trw-page .recog-line:nth-child(odd)::before  { left: 0; }
+    #trw-page .recog-line:nth-child(even)::before { left: 28px; }
+  }
+  @media (max-width: 780px) {
+    #trw-page .recog-list { grid-template-columns: 1fr; max-width: 560px; }
+    #trw-page .recog-line { border-left: none !important; padding-left: 0 !important; padding-right: 0 !important; }
+    #trw-page .recog-line::before { left: 0 !important; }
+    #trw-page .recog-line + .recog-line { border-top: 1px solid rgba(232,198,95,.16); }
+  }
+  #trw-page .recog-line {
+    position: relative; isolation: isolate;
+    padding: 26px 28px 26px; border-bottom: none;
+    font-size: clamp(16px,1.1vw,17.5px); line-height: 1.55;
+    /* Full cream, not the muted body blue. Six short lines carrying the
+       whole recognition need to read at a glance, and this is the one
+       block on the page where the reader is looking for herself. */
+    color: var(--trw-cream); font-weight: 300;
+    transition: transform .45s cubic-bezier(.2,.7,.3,1);
+  }
+  /* The em-dash marker goes with the numerals. A gold hairline above each
+     line marks it without counting it. */
+  #trw-page .recog-line::before {
+    content: ""; position: absolute; top: 0; left: 28px; width: 22px; height: 2px;
+    background: rgba(232,198,95,.55); border: none; border-radius: 0;
+    transition: width .45s cubic-bezier(.2,.7,.3,1), background .45s ease;
+  }
+  #trw-page .recog-line:nth-child(3n+1)::before { left: 0; }
+  #trw-page .recog-line::after {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(180deg, rgba(18,35,63,.85), rgba(18,35,63,0) 76%);
+    opacity: .5; transition: opacity .45s ease;
+  }
+  #trw-page .recog-line:hover { transform: translateY(-4px); }
+  #trw-page .recog-line:hover::after { opacity: 1; }
+  #trw-page .recog-line:hover::before { width: 40px; background: var(--trw-gold); }
+  #trw-page .recog-line:not(:nth-child(3n+1)) { border-left: 1px solid rgba(232,198,95,.16); }
+  #trw-page .recog-line:nth-child(3n+1) { padding-left: 0; }
+  #trw-page .recog-line:nth-child(3n)   { padding-right: 0; }
+  #trw-page .recog-line:nth-child(n+4) { border-top: 1px solid rgba(232,198,95,.16); }
+  #trw-page .recog-line:nth-child(n+4)::before { top: 1px; }
+  /* The closer, gold-ruled on navy rather than on cream. */
+  #trw-page .recog-closer {
+    text-align: left; max-width: 74ch;
+    margin: clamp(26px,3vw,38px) 0 0;
+    padding: 22px 28px 22px 26px;
+    border-left: 2px solid var(--trw-gold); border-radius: 0 14px 14px 0;
+    background: linear-gradient(100deg, rgba(18,35,63,.9), rgba(18,35,63,.35) 62%, transparent);
+    box-shadow: 0 24px 48px -36px rgba(3,12,28,.9);
+    font-family: var(--trw-head); font-style: italic; font-weight: 300;
+    font-size: clamp(18px,1.7vw,24px); line-height: 1.4;
+    color: var(--trw-cream);
+  }
+
+  /* ── DISTINCTION → THE SAME TRIPTYCH ───────────────────────────────
+     The cards go. Same reason they went on his page: a rounded box with a
+     border is the component the system retired, and these already carry
+     their own numerals so the pattern fits without touching the markup. */
+  /* The grid itself was drawing the cards' 1px separators by showing its
+     own border colour through a 1px gap -- a navy sheet behind the whole
+     block. On cream that sheet IS the block. Background and border off,
+     gap closed, and the separators become real hairlines on the cards. */
+  #trw-page .archetype-grid {
+    border-top: 1px solid rgba(160,138,94,.34);
+    background: none; border: none; gap: 0;
+    margin-top: clamp(26px,3vw,34px); margin-bottom: 0;
+  }
+  /* Numeral over the text, not beside it. The card was a flex row with
+     the figure in a fixed gutter, which is a card's anatomy; the pattern
+     stacks them so the figure reads as the column's mark. */
+  #trw-page .archetype-card {
+    background: none; border: none; border-radius: 0;
+    padding: 22px 26px 18px; position: relative; isolation: isolate;
+    display: block;
+    transition: transform .45s cubic-bezier(.2,.7,.3,1);
+  }
+  #trw-page .archetype-card::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; top: 0; left: 0;
+    width: auto; height: auto; border: none; border-radius: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,255,255,0) 72%);
+    opacity: .55; transition: opacity .45s ease;
+  }
+  #trw-page .archetype-card:hover { transform: translateY(-4px); }
+  #trw-page .archetype-card:hover::before { opacity: 1; }
+  #trw-page .archetype-card + .archetype-card { border-left: 1px solid rgba(160,138,94,.22); }
+  /* HIGHLIGHT. The section was three shades of the same warm grey and
+     nothing in it asked to be looked at. Three additions, all from the
+     system rather than new: a gold rule over each column, the numerals
+     filled instead of hollow so they read as marks rather than ghosts,
+     and the column the eye lands on lifting on hover. */
+  #trw-page .archetype-card::after {
+    content: ""; position: absolute; top: 0; left: 26px; width: 26px; height: 2px;
+    background: rgba(160,138,94,.75);
+    transition: width .45s cubic-bezier(.2,.7,.3,1), background .45s ease;
+  }
+  #trw-page .archetype-card:first-child::after { left: 0; }
+  #trw-page .archetype-card:hover::after { width: 46px; background: #A08A5E; }
+  #trw-page .archetype-num {
+    font-size: clamp(30px,2.9vw,42px); font-weight: 300; opacity: 1;
+    color: rgba(160,138,94,.62); margin-bottom: 10px;
+  }
+  @supports (-webkit-text-stroke: 1px currentColor) {
+    #trw-page .archetype-num { color: transparent; -webkit-text-stroke: 1.1px rgba(160,138,94,.55); }
+  }
+  #trw-page .archetype-label { color: #1E2A3D; }
+  #trw-page .archetype-card p { color: #5E5850; }
+  /* The chips were the weakest thing in the section: #8A8073 on cream is
+     about 2.4:1, which is under the floor for text this small even before
+     it is set in tracked uppercase. Ink at .55 border instead. */
+  #trw-page .chip {
+    border-color: rgba(160,138,94,.55); color: #5E5850; background: none;
+    border-radius: 999px; font-weight: 700;
+  }
+
+  /* ── VALUES → THE SPINE ────────────────────────────────────────────
+     The five value cards become the lit vertical spine his page uses for
+     exactly this content: a standard, stated. Name at display size rather
+     than as a 13px label, a node at each one, and no boxes. Rows here, and
+     columns in the two triptychs above, so no two sections repeat a shape. */
+  /* THE SPLIT, same .82fr/1.12fr as his page. On a 1360 screen the spine
+     alone used the left half and left the right empty, which is the
+     wasted-space complaint arriving by another route. The head sits in a
+     sticky rail and the five standards travel past it. */
+  #trw-page #values .container-wide {
+    display: grid; grid-template-columns: .88fr 1.12fr;
+    gap: clamp(38px,5vw,84px); align-items: start; max-width: 1180px;
+  }
+  #trw-page #values .section-head {
+    position: sticky; top: clamp(88px,12vh,132px);
+    text-align: left; margin-bottom: 0;
+  }
+  #trw-page #values .section-head h2 { text-align: left; }
+  @media (max-width: 900px) {
+    #trw-page #values .container-wide { grid-template-columns: 1fr; gap: 26px; }
+    #trw-page #values .section-head { position: static; }
+  }
+  #trw-page .values-grid {
+    display: block; position: relative;
+    margin-top: clamp(26px,3vw,34px);
+    padding-left: clamp(30px,4vw,52px);
+  }
+  #trw-page .values-grid::before {
+    content: ""; position: absolute; left: 0; top: .7em; bottom: 16%;
+    width: 2px;
+    background: linear-gradient(180deg, rgba(232,198,95,.85), rgba(232,198,95,.32) 58%, rgba(232,198,95,0));
+  }
+  #trw-page .value-card {
+    background: none; border: none; border-radius: 0;
+    padding: 0 0 clamp(16px,1.7vw,22px); position: relative;
+    /* The card was overflow:hidden to clip its old underline sweep. The
+       node hangs 57px outside the card onto the spine, so hidden ate it. */
+    overflow: visible;
+  }
+  #trw-page .value-card:last-child { padding-bottom: 0; }
+  #trw-page .value-card::after {
+    content: ""; position: absolute;
+    left: calc(-1 * clamp(30px,4vw,52px) - 4px); top: .38em;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--trw-black); border: 2px solid var(--trw-gold);
+    box-shadow: 0 0 0 5px rgba(232,198,95,.10), 0 0 18px rgba(232,198,95,.45);
+    transform: none; transition: transform .5s cubic-bezier(.2,.7,.3,1), box-shadow .5s ease;
+  }
+  #trw-page .value-card:hover::after {
+    transform: scale(1.18);
+    box-shadow: 0 0 0 7px rgba(232,198,95,.14), 0 0 26px rgba(232,198,95,.7);
+  }
+  /* DOWN FROM 44px. Display size was right on his page, where the three
+     values carry a section on their own. Five short standards at 44px
+     turn a list into a full screen of scrolling for about twenty words,
+     and the size stopped being emphasis and became volume. 30px still
+     reads as display against 15px body -- the ratio does the work, not
+     the absolute. Spacing and the node come down with it. */
+  #trw-page .value-card h3 {
+    font-family: var(--trw-head);
+    font-size: clamp(21px,2.1vw,30px); font-weight: 300;
+    letter-spacing: -.015em; line-height: 1.1; text-transform: none;
+    color: var(--trw-gold); margin: 0 0 10px;
+    transition: transform .55s cubic-bezier(.2,.7,.3,1);
+  }
+  #trw-page .value-card:hover h3 { transform: translateX(7px); }
+  #trw-page .value-card p {
+    font-size: clamp(14px,1vw,15.5px); line-height: 1.65;
+    color: #9FB0CB; max-width: 44ch;
+  }
+
+  /* ── FAQ ───────────────────────────────────────────────────────────
+     The system's accordion: coral ring that rotates to a cross, cream
+     hairlines at .12, and the question in body weight rather than heavy. */
+  #trw-page .faq-ico { border-color: rgba(255,80,31,.4); color: var(--trw-orange); }
+  #trw-page .faq-item.open .faq-ico,
+  #trw-page .faq-item.is-open .faq-ico { border-color: var(--trw-orange); background: rgba(255,80,31,.12); }
+
+
+  /* ── PRICING: ONE CARD ─────────────────────────────────────────────
+     The inclusions move inside the open-session card and the price
+     becomes a line under the button. .price-card, .price-top,
+     .price-amount, .step-label and .step-then are unused now; their
+     rules are left in place rather than hunted through five media
+     blocks, since nothing renders them. */
+  #trw-page .open-card { max-width: 620px; margin: clamp(26px,3vw,36px) auto 0; }
+  #trw-page .open-card .price-features { padding: 4px 0 2px; margin: 0; }
+  #trw-page .open-card .price-features li { border-bottom-color: rgba(232,198,95,.14); }
+  #trw-page .open-card .price-features li:last-child { border-bottom: none; }
+  #trw-page .open-action { margin-top: clamp(18px,2vw,24px); }
+  #trw-page .open-gate { margin-top: 14px; font-size: .8rem; line-height: 1.55; text-align: center; }
+  /* The price is the consequence of saying yes, not a second offer, so
+     it sits at footnote size under the button in the muted grey rather
+     than at 80px in its own card. */
+  #trw-page .price-after {
+    margin-top: 8px; text-align: center;
+    font-size: .84rem; line-height: 1.6; color: var(--trw-muted);
+  }
+  #trw-page .price-after strong { color: var(--trw-cream); font-weight: 600; }
+
+  /* The inclusions sit on the card's own 36px gutter rather than flush to
+     its edge, and the card carries the bottom padding the footnote was
+     standing on. Before this the last line touched the border. */
+  #trw-page .open-card { padding-bottom: clamp(20px,2.2vw,26px); }
+  #trw-page .open-card .price-features { padding: 18px 36px 2px; }
+  #trw-page .open-card .open-action { padding: 0 36px; margin-top: clamp(16px,1.6vw,20px); }
+  #trw-page .open-card .price-after { padding: 0 36px; }
+  @media (max-width: 700px) {
+    #trw-page .open-card .price-features,
+    #trw-page .open-card .open-action,
+    #trw-page .open-card .price-after { padding-left: 24px; padding-right: 24px; }
+  }
+
+  /* THE MARKER IS DRAWN, NOT TYPED. It was an em dash, which is banned in
+     copy and read as one here even though it is a bullet. This is the
+     man's ticket marker: a coral dot with a soft ring, set on the cap
+     height of the first line rather than the baseline. */
+  #trw-page .open-card .price-features li { position: relative; display: block; padding-left: 22px; }
+  #trw-page .open-card .price-features li::before {
+    content: ''; position: absolute; left: 0; top: .95em;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--trw-orange); box-shadow: 0 0 0 3px rgba(255,80,31,.14);
+    margin: 0; transition: box-shadow .4s ease;
+  }
+  #trw-page .open-card .price-features li:hover::before { box-shadow: 0 0 0 5px rgba(255,80,31,.2); }
+
+  /* ── INTERACTION LAYER ─────────────────────────────────────────────
+     Light, not motion. Everything here is a shadow or a colour change
+     on the six things that are actually pressable, and the transforms
+     that already existed keep the distances they had. Nothing new moves
+     more than 2px, because a page that lifts everywhere reads as a demo
+     rather than as a product.
+
+     All of it sits behind (hover:hover) and (pointer:fine), so a phone
+     never inherits a sticky :hover state from a tap, and all of it drops
+     under prefers-reduced-motion. */
+  @media (hover: hover) and (pointer: fine) {
+
+    /* THE PRIMARY. The bloom is a third shadow on the same element, so
+       there is no pseudo and no stacking context to get wrong: the drop
+       stays, a 1px warm rim appears at the edge, and a wide soft coral
+       haze opens behind it. The scale is 1.2%, which reads as pressure
+       rather than as growth. */
+    #trw-page .btn--gold:hover {
+      transform: translateY(-2px) scale(1.012);
+      box-shadow:
+        0 16px 38px -14px rgba(255,80,31,.62),
+        0 0 0 1px rgba(255,138,90,.34),
+        0 0 30px rgba(255,80,31,.34);
+    }
+    #trw-page .btn--gold:active { transform: translateY(0) scale(.994); }
+
+    /* THE SECONDARY glows in gold rather than coral, so the two buttons
+       never compete for the same eye. */
+    #trw-page .btn--outline:hover {
+      box-shadow: 0 0 0 1px rgba(232,198,95,.34), 0 0 22px rgba(232,198,95,.16);
+    }
+
+    /* THE CARD. No lift: it is 620px of content and moving it moves the
+       whole section. It warms at the edge instead, and the gold top rule
+       is what carries the change. */
+    #trw-page .open-card { transition: box-shadow .45s ease, border-color .45s ease; }
+    #trw-page .open-card:hover {
+      box-shadow: 0 34px 74px -46px rgba(0,0,0,.95), 0 0 0 1px rgba(232,198,95,.20);
+    }
+    #trw-page .open-card .price-features li:hover::before {
+      box-shadow: 0 0 0 5px rgba(255,80,31,.2), 0 0 14px rgba(255,80,31,.6);
+    }
+
+    /* THE FAQ. Ten rows with no hover state at all read as text; the ring
+       is the affordance, so it is the ring that answers. */
+    #trw-page .faq-btn .faq-q { transition: color .28s ease; }
+    #trw-page .faq-btn:hover .faq-q { color: var(--trw-gold-light); }
+    #trw-page .faq-btn:hover .faq-ico {
+      border-color: var(--trw-orange);
+      background: rgba(255,80,31,.10);
+      box-shadow: 0 0 16px rgba(255,80,31,.28);
+    }
+
+    /* THE PLAY BUTTON gets the same coral halo as the primary, since it
+       is the primary of its own section. */
+    #trw-page .video-play-overlay svg { transition: transform .25s ease, filter .3s ease; }
+    #trw-page .video-play-overlay:hover svg {
+      filter: drop-shadow(0 8px 24px rgba(0,0,0,.5)) drop-shadow(0 0 18px rgba(255,80,31,.5));
+    }
+
+    /* THE RECOGNITION LINES already lift 4px and grow their rule. Colour
+       is not available here: they are already full cream, and dimming the
+       resting state to make room for a hover would undo the contrast pass.
+       So the hover is light rather than ink, a soft gold bloom behind the
+       line she is on. */
+    #trw-page .recog-line { transition: transform .45s cubic-bezier(.2,.7,.3,1), text-shadow .35s ease; }
+    #trw-page .recog-line:hover { text-shadow: 0 0 24px rgba(232,198,95,.28); }
+
+    /* THE DISTINCTION COLUMNS. The numeral already fills on hover; the
+       gold rule under it now carries a short glow so the column reads as
+       one object rather than as two effects. */
+    #trw-page .archetype-card:hover::after { box-shadow: 0 0 14px rgba(232,198,95,.45); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #trw-page .btn--gold:hover,
+    #trw-page .btn--gold:active,
+    #trw-page .recog-line:hover,
+    #trw-page .archetype-card:hover,
+    #trw-page .value-card:hover h3,
+    #trw-page .video-play-overlay:hover svg { transform: none; }
+  }
+
 </style>
 
 <div id="trw-page" data-open-at="2026-09-08T08:30:00+02:00">
@@ -1049,7 +1600,6 @@ parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
     <p class="hero-tagline">You've competed with men. Led men. Carried men.<br><strong>The masculine is provided. You don't have to, for a change.</strong></p>
     <button class="btn btn--gold" data-trw-modal>Come To The Open Session</button>
     <p class="hero-open">Next open session &nbsp;&middot;&nbsp; Tuesday 8 September <span class="ho-time">&nbsp;&middot;&nbsp; 08:30 CET</span> &nbsp;&middot;&nbsp; <span class="js-open-count"></span></p>
-    <p class="cta-secondary">Free to attend. &euro;59 a month if you stay. Or <a href="https://www.parallaxxtransformations.com/priority-audit" target="_top">take the Priority Audit</a> first.</p>
     <p class="hero-rule">Real Integrity &nbsp;&middot;&nbsp; Deep Self-Trust &nbsp;&middot;&nbsp; True Connection</p>
   </div>
 </section>
@@ -1068,8 +1618,8 @@ parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
       </video>
       <button class="video-play-overlay" id="trw-vsl-play" type="button" aria-label="Play video">
         <svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle cx="48" cy="48" r="46" fill="rgba(6,25,56,0.85)" stroke="#D4B84A" stroke-width="2"/>
-          <polygon points="40,30 68,48 40,66" fill="#D4B84A"/>
+          <circle cx="48" cy="48" r="46" fill="rgba(6,25,56,0.85)" stroke="#E8C65F" stroke-width="2"/>
+          <polygon points="40,30 68,48 40,66" fill="#E8C65F"/>
         </svg>
       </button>
     </div>
@@ -1136,21 +1686,21 @@ parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
     <p class="under-quote anim anim-d2" style="margin-top:24px;">Nobody's asking you to soften or surrender.<br>This is somewhere your competence has nothing to do.</p>
     <div class="archetype-grid trw-mt">
       <div class="archetype-card anim anim-d1">
-        <div class="archetype-num">01</div>
+        <div class="archetype-num" aria-hidden="true">01</div>
         <div class="archetype-body">
           <h3 class="archetype-label">Not A Women's Circle</h3>
           <p>No performance of it.</p>
         </div>
       </div>
       <div class="archetype-card anim anim-d2">
-        <div class="archetype-num">02</div>
+        <div class="archetype-num" aria-hidden="true">02</div>
         <div class="archetype-body">
           <h3 class="archetype-label">Not A Sisterhood</h3>
           <p>No loyalty pact, no comfort without change.</p>
         </div>
       </div>
       <div class="archetype-card anim anim-d3">
-        <div class="archetype-num">03</div>
+        <div class="archetype-num" aria-hidden="true">03</div>
         <div class="archetype-body">
           <h3 class="archetype-label">Not A Coaching Program</h3>
           <p>Except the coaching you give yourself.</p>
@@ -1185,28 +1735,28 @@ parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
     <p class="under-quote anim anim-d2">You've been over-functioning your masculinity to make up for the masculine you didn't get from the men in your world. Put it down for a change.</p>
     <div class="dif-set">
       <div class="dif-cell">
-        <span class="dif-fig">01</span>
+        <span class="dif-fig" aria-hidden="true">01</span>
         <div>
           <h3>Structure is held</h3>
           <p>Someone else facilitates the room, the logistics, the pace.</p>
         </div>
       </div>
       <div class="dif-cell">
-        <span class="dif-fig">02</span>
+        <span class="dif-fig" aria-hidden="true">02</span>
         <div>
           <h3>It's taken care of</h3>
           <p>Nothing here for you to do.</p>
         </div>
       </div>
       <div class="dif-cell">
-        <span class="dif-fig">03</span>
+        <span class="dif-fig" aria-hidden="true">03</span>
         <div>
           <h3>Nothing to manage</h3>
           <p>Say the true thing. No cleaning up after it.</p>
         </div>
       </div>
       <div class="dif-cell">
-        <span class="dif-fig">04</span>
+        <span class="dif-fig" aria-hidden="true">04</span>
         <div>
           <h3>No scorecard</h3>
           <p>Nothing to win, so your competence has nothing to do.</p>
@@ -1242,8 +1792,8 @@ parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
           </video>
           <button class="video-play-overlay" id="trw-bio-play" type="button" aria-label="Play bio video">
             <svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="48" cy="48" r="46" fill="rgba(6,25,56,0.85)" stroke="#D4B84A" stroke-width="2"/>
-              <polygon points="40,30 68,48 40,66" fill="#D4B84A"/>
+              <circle cx="48" cy="48" r="46" fill="rgba(6,25,56,0.85)" stroke="#E8C65F" stroke-width="2"/>
+              <polygon points="40,30 68,48 40,66" fill="#E8C65F"/>
             </svg>
           </button>
         </div>
@@ -1316,31 +1866,24 @@ parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
 
 <section id="pricing">
   <div class="container">
-    <span class="overline">The Investment</span>
-    <h2>Come Once, For Nothing</h2>
-    <p class="lead">The first session of every month is open. Experience the value then decide.</p>
+    <h2>First Session On Us</h2>
+    <p class="lead">The first session of every month is open.<br>Experience the value then decide.</p>
 
-    <div style="height:44px"></div>
-    <span class="step-label">Step One &mdash; The Open Session</span>
+    <!-- ONE CARD, ONE ASK. Two cards asked her to choose between the
+         free session and the paid month before she had been to either,
+         and both buttons went to the same form -- so the choice was
+         presented and then not honoured. The open session is the only
+         decision on this page; the price is what happens afterwards, so
+         it is subtext under the button rather than a second offer with
+         its own headline. Every word here already existed on the page. -->
     <div class="open-card anim-scale">
       <div class="open-top">
         <div class="open-amount">Free</div>
         <div class="open-when">Tuesday 8 September &middot; 08:30 CET &middot; 14:30 Bali</div>
         <span class="open-count js-open-count"></span>
       </div>
-      <p class="open-body">One live session, run exactly as it always runs. Nothing staged for visitors, and nothing owed at the end of it.</p>
-      <p class="open-gate">There's a short application form as spaces are limited, and we want to ensure best mutual fit for everyone.</p>
-      <div class="open-action">
-        <button class="btn btn--gold btn--full" data-trw-modal>Register For The Open Session</button>
-      </div>
-    </div>
 
-    <p class="step-then">Step Two &mdash; If It's Home</p>
-    <div class="price-card anim-scale">
-      <div class="price-top">
-        <div class="price-amount"><sup>&euro;</sup>59</div>
-        <div class="price-note">Per Month &nbsp;&middot;&nbsp; Cancel Anytime</div>
-      </div>
+
       <ul class="price-features">
         <li>One live session a week, in four-week cycles</li>
         <li>Live facilitation and hot seat work</li>
@@ -1348,9 +1891,13 @@ parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
         <li>First access to new frameworks and resources</li>
         <li>Complimentary 1:1 call on week 6</li>
       </ul>
-      <div class="price-action">
-        <button class="btn btn--gold btn--full" data-trw-modal>Come To The Open Session First</button>
+
+      <div class="open-action">
+        <button class="btn btn--gold btn--full" data-trw-modal>Register For The Open Session</button>
       </div>
+
+      <p class="open-gate">There's a short application form as spaces are limited, and we want to ensure best mutual fit for everyone.</p>
+      <p class="price-after"><strong>&euro;59 per month</strong> if you stay after the open session. Cancel anytime.</p>
     </div>
   </div>
 </section>
@@ -1375,7 +1922,7 @@ parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
           <span class="faq-q">Why is a man hosting it?</span>
           <span class="faq-ico">+</span>
         </button>
-        <div class="faq-body"><div class="faq-body-inner"><p>Because someone has to run it, and if it were another woman like you, you'd find a way to help inside ten minutes. Nothing to prove, nobody to be careful with. I've got the room.</p></div></div>
+        <div class="faq-body"><div class="faq-body-inner"><p>Because the women who join want a healthy masculine presence in their life, one they are not being led by, competing with, or taking instruction from. Just the masculine holding the room, so they can stop for a change.</p></div></div>
       </div>
       <div class="faq-item anim">
         <button class="faq-btn" type="button">
@@ -1393,24 +1940,24 @@ parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
       </div>
       <div class="faq-item anim">
         <button class="faq-btn" type="button">
-          <span class="faq-q">Online or in person?</span>
+          <span class="faq-q">Where does it run?</span>
           <span class="faq-ico">+</span>
         </button>
-        <div class="faq-body"><div class="faq-body-inner"><p>Both, depending on where you are. Tell us your preference on the form.</p></div></div>
+        <div class="faq-body"><div class="faq-body-inner"><p>Online, so you can join from wherever you are. Nothing to travel to and nothing to arrange around it.</p></div></div>
       </div>
       <div class="faq-item anim">
         <button class="faq-btn" type="button">
           <span class="faq-q">Do I need to attend every session?</span>
           <span class="faq-ico">+</span>
         </button>
-        <div class="faq-body"><div class="faq-body-inner"><p>No. But if you're already planning around not being there, it may not be the right fit.</p></div></div>
+        <div class="faq-body"><div class="faq-body-inner"><p>No. Life moves and the group knows it. Come when you can, and know that the women who turn up regularly are the ones who feel it shift.</p></div></div>
       </div>
       <div class="faq-item anim">
         <button class="faq-btn" type="button">
           <span class="faq-q">When do sessions run?</span>
           <span class="faq-ico">+</span>
         </button>
-        <div class="faq-body"><div class="faq-body-inner"><p>Two sitting times for global coverage, and we stay fluid with what the group asks for. Come to the open session and we'll find yours.</p></div></div>
+        <div class="faq-body"><div class="faq-body-inner"><p>One sitting time, set so it works across the time zones the group is spread over, and we stay fluid with what the group asks for. Come to the open session and you'll see how it sits with your week.</p></div></div>
       </div>
       <div class="faq-item anim">
         <button class="faq-btn" type="button">
@@ -1436,7 +1983,7 @@ parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
     <h2 class="anim anim-d1">Come back to you.</h2>
     <p class="sub anim anim-d2">Next open session Tuesday 8 September. Free to attend, short application form first.</p>
     <button class="btn btn--gold anim anim-d3" data-trw-modal>Register For The Open Session</button>
-    <p class="cta-secondary anim anim-d3">Not ready? <a href="https://www.parallaxxtransformations.com/priority-audit" target="_top">Take the Priority Audit</a>. Ten minutes, and you'll see where you're actually spending yourself.</p>
+    <p class="cta-secondary anim anim-d3">Not ready? <a href="https://www.parallaxxtransformations.com/priority-audit" target="_top">Take the Priority Audit</a>. Ten minutes to find out which priority will give you the most return.</p>
   </div>
 </section>
 <parallaxx-footer></parallaxx-footer>
@@ -1453,7 +2000,7 @@ parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
   <div class="modal-backdrop"></div>
   <div class="modal-box">
     <div class="modal-header">
-      <span class="modal-title">The Reconnected Woman &mdash; Registration</span>
+      <span class="modal-title">Registration</span>
       <button class="modal-close" aria-label="Close form">&times;</button>
     </div>
     <div class="modal-body">
@@ -1464,7 +2011,7 @@ parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
            and never resizes it. Change all three together. -->
       <iframe
         src="https://api.leadconnectorhq.com/widget/form/0RT5EVaTlGxo6QBjyIPT"
-        height="1439"
+        height="700"
         title="The Reconnected Woman Application Form"
         id="form-0RT5EVaTlGxo6QBjyIPT"
         data-form-id="0RT5EVaTlGxo6QBjyIPT"

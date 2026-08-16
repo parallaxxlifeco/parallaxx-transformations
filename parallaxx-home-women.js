@@ -1416,9 +1416,9 @@
   #px-rcs-state .sym-p{font-family:'Poppins',Montserrat,sans-serif;font-weight:300;
     font-size:.88rem;line-height:1.45;color:#B1BFD7;margin:0;
     padding-left:11px;border-left:2px solid color-mix(in srgb,var(--sa) 45%,transparent)}
-  /* the combination read-out sits under the symptom, and the rule
-     between them is what says one is the sign and the other the state. */
-  #px-rcs-state .sym.on + .lab{margin-top:13px;padding-top:13px;
+  /* the rule sits over the symptom now: above it is the state she is in,
+     below it is the sign of the one thing that is missing. */
+  #px-rcs-state .sym.on{margin-top:14px;padding-top:14px;
     border-top:1px solid rgba(255,255,255,.09)}
 }
 
@@ -1431,7 +1431,7 @@
    so a big phone in landscape gets the same treatment for the same
    reason and a tall one never loses the line. */
 @media(max-width:700px) and (max-height:620px){
-  #px-rcs-state .sym.on ~ .txt + .txt{display:none}
+  #px-rcs-state.has-sym .txt + .txt{display:none}
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -3345,17 +3345,28 @@
            Two or three missing and it goes neutral, because there is no
            single thing to point at any more. -->
       <div id="px-rcs-state" class="px-fade" aria-live="polite">
-        <!-- THE SYMPTOM. Empty here and filled by the script from the back
-             of whichever card is switched off, so the copy lives in exactly
-             one place and cannot drift. It is written on every state change
-             regardless of viewport and hidden by CSS above 700, where the
-             card itself is showing it and a second copy would be a repeat. -->
-        <div class="sym"><p class="sym-q"></p><p class="sym-p"></p></div>
         <p class="lab">All three dialled in</p>
         <p class="txt">Your life, and nothing about you has been toned down. You know what you want, you
           hear yourself decline easily, and every no teaches people your values.</p>
         <p class="txt">Everything in front of you is yours, a reflection of you, and you keep choosing
           you, for you. Success, presence and peace, felt in ordinary moments.</p>
+        <!-- THE SYMPTOM, AND IT IS LAST FOR A REASON. Empty here and filled by
+             the script from the back of whichever card is switched off, so the
+             copy lives in one place and cannot drift.
+
+             IT SITS UNDER THE READ-OUT RATHER THAN OVER IT BECAUSE OF WHAT
+             MOVES. Above, it pushed the combination copy down by its own
+             height every time a dimension went off, so the one paragraph she
+             was reading walked off the bottom of a phone as she used the
+             thing. Underneath, the read-out is anchored: it occupies the same
+             place in all eight states and new copy only ever ARRIVES below it.
+             The recognition line lands after the explanation instead of
+             before it, which is the price, and it is worth paying for a panel
+             that holds still.
+
+             Hidden by CSS above 700, where the card is showing this and the
+             panel would only be repeating it. -->
+        <div class="sym"><p class="sym-q"></p><p class="sym-p"></p></div>
       </div>
     </div>
   </div>
@@ -4124,7 +4135,11 @@
           sym.querySelector('.sym-p').textContent =
             solo.querySelector('.px-rcs-face.back .p').textContent.trim();
         }
+        /* the class goes on the PANEL as well as the block, because the
+           short-screen rule has to reach a paragraph that now sits ABOVE
+           the symptom and a sibling combinator only walks forwards. */
         sym.classList.toggle('on', !!solo);
+        out.classList.toggle('has-sym', !!solo);
         out.classList.remove('swap');
       }, reduce ? 0 : 230);
     };

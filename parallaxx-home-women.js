@@ -1258,8 +1258,9 @@
   letter-spacing:-.01em;font-size:clamp(1rem,1.6vw,1.18rem);line-height:1.55;
   color:#F1ECE1;margin:0;max-width:54ch}
 #px-rcs-state .txt + .txt{margin-top:.85em}
-#px-rcs-state .lab,#px-rcs-state .txt{transition:opacity .26s ease,color .45s ease}
-#px-rcs-state.swap .lab,#px-rcs-state.swap .txt{opacity:0}
+#px-rcs-state .sym{display:none}
+#px-rcs-state .lab,#px-rcs-state .txt,#px-rcs-state .sym{transition:opacity .26s ease,color .45s ease}
+#px-rcs-state.swap .lab,#px-rcs-state.swap .txt,#px-rcs-state.swap .sym{opacity:0}
 @media(max-width:560px){#px-rcs-state{min-height:0}}
 /* ══════════════════════════════════════════════════════════════════
    MOBILE: THE READ-OUT GOES FIRST, AND IT STICKS.
@@ -1309,96 +1310,128 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   PHONE: THE CARDS STOP BEING CARDS. THE SWITCHBOARD.
+   PHONE: THREE SWITCHES AND ONE PANEL.
    ------------------------------------------------------------------
-   WHAT WAS WRONG. A flip card has to reserve the height of its TALLER
-   face at all times, and the taller face is the back. So three cards
-   that show two lines each were 635px tall on a phone to hold copy
-   that was not on screen. Add the read-out and the section wanted
-   917px inside the 760 a handset has under the nav. The panel was
-   pinned to solve that and pinning is overlay: it sat on top of the
-   middle card and covered it outright. Moving it to the bottom moves
-   the overlap, it does not remove it. There is no position for a
-   pinned panel that works, because the problem is not where the panel
-   is. It is that the stack is taller than the screen.
+   THE MEASUREMENT THAT DECIDES THIS SECTION. A handset is not 844 tall.
+   Safari keeps the address bar and the toolbar, so an iPhone 15 gives
+   659, and this page's nav is fixed and never hides, which takes 66
+   more. The real budget is 593. Every earlier attempt was sized against
+   the device height and every one of them failed on the phone while
+   passing in a narrow desktop window. Size against 593, and check 487
+   for an SE.
 
-   SO THE STACK GETS SHORTER, AND NOTHING IS PINNED. Below 700 the
-   flip is gone and the three cards become three rows that switch.
-   A row that is ON is one line of definition, about 82px. A row that
-   is OFF grows in place to carry its missing-state paragraph. Three
-   rows on is 266px against 635, and the read-out sits directly under
-   them in normal flow, in view, overlapping nothing.
+   WHY THE STACK COULD NOT BE MADE TO FIT. A flip card reserves the
+   height of its taller face at all times and the taller face is the
+   back, so three stacked cards were 635 before the panel. Turned into
+   rows that expand in place, one row open came to 632 against 593: the
+   card read fine and the panel it was supposed to be driving was 39px
+   below the fold. Half the feature, which is the half that makes it a
+   system rather than three definitions.
 
-   THE METAPHOR SURVIVES THE CHANGE, AND ARGUABLY IMPROVES. The
-   comment on the section says the flip IS switching the dimension off,
-   one gesture rather than two things to learn. A switch says that
-   without needing to be taught it at all. Nothing about the model,
-   the copy or the eight read-out states moves: this is the same
-   aria-pressed toggle the desktop card uses, drawn flat. The script
-   is untouched and does not know which one it is driving.
+   SO THE SWITCHES GO SIDEWAYS. Three tiles across one row is about 120
+   tall against 340, and every one of the eight states then lands near
+   500. The tile carries what a tile can carry: the mark, the name, the
+   definition, and whether it is on. Everything that changes is in the
+   panel underneath, which is the point of the section and now the only
+   thing on the screen that moves.
 
-   AND THE MARK STILL BREAKS. That was the reason the flip was worth
-   watching, and it is the reason a row is worth tapping. The glyph
-   swaps to its broken state and the spine segment goes dark, both in
-   the same tick the copy unfolds.
+   AND THE SPINE COMES BACK AS A RULE. The desktop comment records that
+   the horizontal rule under three cards became a vertical spine when
+   they stacked. Turned sideways again it is a rule again: one dim line
+   over the three, each tile lighting its own segment and going dark the
+   moment it is switched off. Same object, ninety degrees back.
+
+   THE PANEL CARRIES THE SYMPTOM NOW. It has to: the tile has no room
+   for a paragraph and the paragraph is what the section runs on, since
+   she recognises herself in a failure state and never in a definition.
+   It appears only when exactly one dimension is off, which is the rule
+   the accent colour already follows, and it is read off the card rather
+   than stored twice.
    ══════════════════════════════════════════════════════════════════ */
 @media(max-width:700px){
 
-  /* The panel goes back into the flow, under the rows. Below the stack
-     rather than above it: tapping a row expands that row and pushes the
-     panel DOWN by its own height, which keeps the thing she just
-     changed and the answer to it moving together. Above the stack the
-     panel is stationary and off the top of the screen by the time the
-     third row is reachable, which is how it ended up pinned. */
-  #px-rcs-state{order:0;position:static;top:auto;z-index:auto;min-height:0;
-    padding:18px 20px 20px}
+  .px-rcs-say-d{display:none}
+  .px-rcs-say-m{display:inline}
 
-  /* Auto rows. 1fr made all three the height of the tallest, which is
-     the whole reason an expanded row would otherwise drag the other two
-     up with it. */
-  #px-rcs-grid{grid-auto-rows:auto;gap:10px;padding-left:22px}
-  #px-rcs-grid:before{left:9px}
-  .px-rcs-card:before{left:-13px}
+  /* ── THE SWITCH ROW ─────────────────────────────────────────────── */
+  #px-rcs-grid{grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:1fr;
+    gap:7px;padding-left:0;margin-top:11px}
+  /* the spine, laid back down. Above the tiles rather than beside them. */
+  #px-rcs-grid:before{left:0;right:0;top:-11px;bottom:auto;width:auto;height:2px}
+  .px-rcs-card:before{left:0;right:0;top:-11px;bottom:auto;width:auto;height:3px}
 
-  /* Flat, not 3D. perspective and preserve-3d both go, or a phone keeps
-     compositing a rotation that no longer happens. */
   .px-rcs-card{perspective:none}
   .px-rcs-inner{transform:none!important;transition:none;transform-style:flat}
-  /* The sizer exists only to give an absolutely positioned face a
-     height. The faces are in flow here and size themselves. */
   .px-rcs-sizewrap{display:none}
 
+  /* One column, stacked and centred: a 111px tile has no room for a
+     glyph beside text. Height 100% so all three match whichever is
+     tallest, which keeps an off tile level with the two beside it. */
   .px-rcs-face{position:relative;inset:auto;transform:none!important;
-    opacity:1;pointer-events:auto;
+    opacity:1;pointer-events:auto;height:100%;
     -webkit-backface-visibility:visible;backface-visibility:visible;
-    grid-template-rows:auto auto auto;column-gap:13px;
-    padding:14px 16px;border-radius:14px}
+    grid-template-columns:1fr;grid-template-rows:auto auto 1fr auto;
+    column-gap:0;justify-items:center;text-align:center;align-content:start;
+    padding:11px 8px 9px;border-radius:12px}
 
-  /* One face at a time, and display rather than opacity, so the row
-     takes the height of whichever face is showing. */
   .px-rcs-face.back{display:none}
   .px-rcs-card[aria-pressed="true"] .px-rcs-face.front{display:none}
   .px-rcs-card[aria-pressed="true"] .px-rcs-face.back{display:grid;opacity:1}
 
-  /* 30, and pinned to the top of the row rather than centred. Centred,
-     it drifted to the middle of a five line paragraph on an expanded row
-     and stopped reading as that row's mark. */
-  .px-rcs-glyph{width:30px;height:30px;grid-row:1 / span 3;align-self:start;margin-top:2px}
+  .px-rcs-glyph{width:25px;height:25px;grid-column:1;grid-row:1;
+    align-self:center;margin:0 0 7px}
 
-  .px-rcs-face .px-label{font-size:.6rem;letter-spacing:.16em;margin-bottom:2px}
-  .px-rcs-face .h{font-size:.97rem;line-height:1.3;margin-bottom:0}
-  .px-rcs-face .p{font-size:.87rem;line-height:1.5;margin-top:5px}
+  .px-rcs-face .px-label{grid-column:1;grid-row:2;margin-bottom:3px;
+    font-size:.55rem;letter-spacing:.1em;line-height:1.2}
+  /* the tile shows the name. The question it asks is a sentence and
+     belongs with the paragraph it introduces, which is in the panel. */
+  .px-rcs-face.back .px-label .qq{display:none}
 
-  /* The cue is the state read-out as well as the affordance: a row that
-     offers to be switched back on is a row that is off. */
-  .px-rcs-say-d{display:none}
-  .px-rcs-say-m{display:inline}
+  .px-rcs-face .h{grid-column:1;grid-row:3;font-size:.66rem;line-height:1.3;
+    font-weight:400;margin:0;color:#93A3BF}
+  .px-rcs-face.front .h{color:color-mix(in srgb,var(--ac) 55%,#93A3BF)}
+  .px-rcs-face .p{display:none}
+
+  /* status, not a button. The dot is the state and the word names it. */
   .px-rcs-face .cue{display:none}
-  .px-rcs-face .cue-m{display:block;grid-column:2;padding-top:7px;
-    font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;
+  .px-rcs-face .cue-m{display:flex;align-items:center;gap:.4em;
+    grid-column:1;grid-row:4;padding-top:8px;
+    font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;
     font-weight:800;color:#6C7C97}
-  .px-rcs-face.front .cue-m{color:color-mix(in srgb,var(--ac) 62%,#6C7C97)}
-  .px-rcs-face.back .cue-m{color:#4E5B75}
+  .px-rcs-face .cue-m:before{content:'';width:5px;height:5px;border-radius:50%;
+    background:currentColor}
+  .px-rcs-face.front .cue-m{color:var(--ac)}
+  .px-rcs-face.back .cue-m{color:#55637E}
+  .px-rcs-face.back .cue-m:before{background:none;
+    box-shadow:inset 0 0 0 1px currentColor}
+
+  /* ── THE PANEL ──────────────────────────────────────────────────── */
+  /* Back in the flow, under the switches, pinned to nothing. It is the
+     only tall thing left in the section, so there is room for it. */
+  #px-rcs-state{order:0;position:static;top:auto;z-index:auto;min-height:0;
+    padding:16px 18px 18px}
+  #px-rcs-state .sym.on{display:block}
+  #px-rcs-state .sym-q{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+    font-weight:800;color:var(--sa);margin:0 0 6px;line-height:1.4}
+  #px-rcs-state .sym-p{font-family:'Poppins',Montserrat,sans-serif;font-weight:300;
+    font-size:.88rem;line-height:1.45;color:#B1BFD7;margin:0;
+    padding-left:11px;border-left:2px solid color-mix(in srgb,var(--sa) 45%,transparent)}
+  /* the combination read-out sits under the symptom, and the rule
+     between them is what says one is the sign and the other the state. */
+  #px-rcs-state .sym.on + .lab{margin-top:13px;padding-top:13px;
+    border-top:1px solid rgba(255,255,255,.09)}
+}
+
+/* A SHORT PHONE, WHICH IS THE ONLY STATE THAT STILL DOES NOT FIT.
+   An SE is 553 in Safari, so 487 under the nav, and one dimension off
+   with its symptom showing comes to 542. The closing line of the
+   combination copy goes on that screen only. It is the flourish rather
+   than the explanation: the symptom is the recognition and the first
+   paragraph is the mechanism, and both stay. Keyed to viewport HEIGHT,
+   so a big phone in landscape gets the same treatment for the same
+   reason and a tall one never loses the line. */
+@media(max-width:700px) and (max-height:620px){
+  #px-rcs-state .sym.on ~ .txt + .txt{display:none}
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -3263,13 +3296,13 @@
             <svg class="px-rcs-glyph" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 34 H42"/><path d="M6 34 L28 18.5"/><circle class="fill" cx="32" cy="16" r="3.4"/></svg>
             <span class="px-label">Vision</span>
             <span class="h px-serif">How you experience your life</span>
-            <span class="cue">Flip it over</span><span class="cue cue-m">Switch it off</span>
+            <span class="cue">Flip it over</span><span class="cue cue-m">On</span>
           </span>
           <span class="px-rcs-face back">
             <svg class="px-rcs-glyph off" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 34 H42"/><path class="stub" d="M6 34 L14 28.4"/></svg>
-            <span class="px-label">Vision &middot; whose are you living?</span>
+            <span class="px-label"><span class="nm">Vision</span><span class="qq"> &middot; whose are you living?</span></span>
             <span class="p">Somebody asks what you want and you answer with what needs doing. Given a genuinely open week, you are lost for how to enjoy it.</span>
-            <span class="cue">Flip it back</span><span class="cue cue-m">Switch it back on</span>
+            <span class="cue">Flip it back</span><span class="cue cue-m">Off</span>
           </span>
         </span>
       </button>
@@ -3279,13 +3312,13 @@
             <svg class="px-rcs-glyph" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 34 H38"/><path d="M10 27 H38"/><path class="lift" d="M14 14 H34"/></svg>
             <span class="px-label">Values</span>
             <span class="h px-serif">Who you need to become to live that</span>
-            <span class="cue">Flip it over</span><span class="cue cue-m">Switch it off</span>
+            <span class="cue">Flip it over</span><span class="cue cue-m">On</span>
           </span>
           <span class="px-rcs-face back">
             <svg class="px-rcs-glyph off" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 34 H38"/><path d="M10 27 H38"/><path d="M10 20 H38"/></svg>
-            <span class="px-label">Values &middot; whose are you carrying?</span>
+            <span class="px-label"><span class="nm">Values</span><span class="qq"> &middot; whose are you carrying?</span></span>
             <span class="p">You know better. You respond the way you always do, then tell yourself you need to change that. You have told yourself that before.</span>
-            <span class="cue">Flip it back</span><span class="cue cue-m">Switch it back on</span>
+            <span class="cue">Flip it back</span><span class="cue cue-m">Off</span>
           </span>
         </span>
       </button>
@@ -3295,13 +3328,13 @@
             <svg class="px-rcs-glyph" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 24 H34"/><path d="M29.5 19 L35 24 L29.5 29"/></svg>
             <span class="px-label">Velocity</span>
             <span class="h px-serif">The speed of real change</span>
-            <span class="cue">Flip it over</span><span class="cue cue-m">Switch it off</span>
+            <span class="cue">Flip it over</span><span class="cue cue-m">On</span>
           </span>
           <span class="px-rcs-face back">
             <svg class="px-rcs-glyph off" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 24 H20"/><path class="stub" d="M26 24 H36"/></svg>
-            <span class="px-label">Velocity &middot; whose are you running for?</span>
+            <span class="px-label"><span class="nm">Velocity</span><span class="qq"> &middot; whose are you running for?</span></span>
             <span class="p">You know what needs to change and you have taken action. Some of it helped. It hasn&rsquo;t made the difference you want.</span>
-            <span class="cue">Flip it back</span><span class="cue cue-m">Switch it back on</span>
+            <span class="cue">Flip it back</span><span class="cue cue-m">Off</span>
           </span>
         </span>
       </button>
@@ -3312,6 +3345,12 @@
            Two or three missing and it goes neutral, because there is no
            single thing to point at any more. -->
       <div id="px-rcs-state" class="px-fade" aria-live="polite">
+        <!-- THE SYMPTOM. Empty here and filled by the script from the back
+             of whichever card is switched off, so the copy lives in exactly
+             one place and cannot drift. It is written on every state change
+             regardless of viewport and hidden by CSS above 700, where the
+             card itself is showing it and a second copy would be a repeat. -->
+        <div class="sym"><p class="sym-q"></p><p class="sym-p"></p></div>
         <p class="lab">All three dialled in</p>
         <p class="txt">Your life, and nothing about you has been toned down. You know what you want, you
           hear yourself decline easily, and every no teaches people your values.</p>
@@ -4065,10 +4104,27 @@
       if (L.textContent === lab) return;
       out.style.setProperty('--sa', off.length === 1 ? AC[off[0]] : '#7C89A3');
       out.classList.add('swap');
+      /* The symptom follows the SAME rule the accent already follows:
+         exactly one dimension missing and there is a single thing to point
+         at, so the panel points at it. Two or three missing and there is
+         not, so it says nothing and the combination copy carries the state
+         on its own. Read off the card rather than held in a second table,
+         because two copies of the same paragraph is how the two Priority
+         Audits drifted. */
+      const sym  = out.querySelector('.sym');
+      const solo = off.length === 1
+        ? cards.find(c => c.dataset.k === off[0]) : null;
       setTimeout(() => {
         L.textContent = lab;
         T[0].textContent = p1;
         if (T[1]) T[1].textContent = p2;
+        if (solo) {
+          sym.querySelector('.sym-q').textContent =
+            solo.querySelector('.px-rcs-face.back .px-label').textContent.trim();
+          sym.querySelector('.sym-p').textContent =
+            solo.querySelector('.px-rcs-face.back .p').textContent.trim();
+        }
+        sym.classList.toggle('on', !!solo);
         out.classList.remove('swap');
       }, reduce ? 0 : 230);
     };

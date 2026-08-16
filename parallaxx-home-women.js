@@ -1221,6 +1221,13 @@
   margin-top:12px;padding-left:13px;border-left:2px solid rgba(232,198,95,.55)}
 .px-rcs-face .cue{display:block;padding-top:10px;font-size:.58rem;grid-column:2;
   letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:#6C7C97}
+.px-rcs-say-m{display:none}
+/* The card says "flip it over" because on a pointer it turns over. On a
+   phone it does not turn over any more, it switches, so it says so. Two
+   spans rather than one rewritten by script: the cue is the affordance,
+   and an affordance that reads correctly only after JS has run is a
+   cue that is wrong for the first paint. */
+.px-rcs-face .cue-m{display:none}
 .px-rcs-card:hover .cue{color:var(--ac)}
 /* the sizer: the front face cloned, kept in flow so it gives the card
    its height, and hidden from sight and from screen readers. It keeps
@@ -1274,13 +1281,21 @@
    ══════════════════════════════════════════════════════════════════ */
 @media(max-width:900px){
   #px-rcs-cols{grid-template-columns:1fr;gap:18px}
+  #px-rcs-state .lab{margin-bottom:7px}
+  #px-rcs-state .txt{font-size:.98rem;line-height:1.5;max-width:none}
+  #px-rcs-state .txt + .txt{margin-top:.7em}
+}
+/* TABLET ONLY. Between 700 and 900 the cards are still cards: wide
+   enough that the back face runs three lines rather than five, so the
+   stack is around 530 and a 1024-tall screen carries it. The panel is
+   pinned there because it is the one thing that must not scroll away.
+   Below 700 this is actively harmful and the switchboard replaces it,
+   so the rule is fenced at both ends rather than left open downward. */
+@media(min-width:701px) and (max-width:900px){
   #px-rcs-state{order:-1;position:sticky;top:84px;z-index:5;min-height:0;
     background:#0A1D3C;border-radius:0 14px 14px 0;
     box-shadow:0 18px 30px -22px rgba(0,0,0,.9);
     padding:clamp(16px,4vw,20px) clamp(18px,4.5vw,22px)}
-  #px-rcs-state .lab{margin-bottom:7px}
-  #px-rcs-state .txt{font-size:.98rem;line-height:1.5;max-width:none}
-  #px-rcs-state .txt + .txt{margin-top:.7em}
 }
 @media(prefers-reduced-motion:reduce){
   /* no rotation. The back simply replaces the front. */
@@ -1291,6 +1306,99 @@
   .px-rcs-card[aria-pressed="true"] .px-rcs-face.front{opacity:0}
   .px-rcs-card[aria-pressed="true"] .px-rcs-face.back{opacity:1}
   #px-rcs-state span{transition:none}
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   PHONE: THE CARDS STOP BEING CARDS. THE SWITCHBOARD.
+   ------------------------------------------------------------------
+   WHAT WAS WRONG. A flip card has to reserve the height of its TALLER
+   face at all times, and the taller face is the back. So three cards
+   that show two lines each were 635px tall on a phone to hold copy
+   that was not on screen. Add the read-out and the section wanted
+   917px inside the 760 a handset has under the nav. The panel was
+   pinned to solve that and pinning is overlay: it sat on top of the
+   middle card and covered it outright. Moving it to the bottom moves
+   the overlap, it does not remove it. There is no position for a
+   pinned panel that works, because the problem is not where the panel
+   is. It is that the stack is taller than the screen.
+
+   SO THE STACK GETS SHORTER, AND NOTHING IS PINNED. Below 700 the
+   flip is gone and the three cards become three rows that switch.
+   A row that is ON is one line of definition, about 82px. A row that
+   is OFF grows in place to carry its missing-state paragraph. Three
+   rows on is 266px against 635, and the read-out sits directly under
+   them in normal flow, in view, overlapping nothing.
+
+   THE METAPHOR SURVIVES THE CHANGE, AND ARGUABLY IMPROVES. The
+   comment on the section says the flip IS switching the dimension off,
+   one gesture rather than two things to learn. A switch says that
+   without needing to be taught it at all. Nothing about the model,
+   the copy or the eight read-out states moves: this is the same
+   aria-pressed toggle the desktop card uses, drawn flat. The script
+   is untouched and does not know which one it is driving.
+
+   AND THE MARK STILL BREAKS. That was the reason the flip was worth
+   watching, and it is the reason a row is worth tapping. The glyph
+   swaps to its broken state and the spine segment goes dark, both in
+   the same tick the copy unfolds.
+   ══════════════════════════════════════════════════════════════════ */
+@media(max-width:700px){
+
+  /* The panel goes back into the flow, under the rows. Below the stack
+     rather than above it: tapping a row expands that row and pushes the
+     panel DOWN by its own height, which keeps the thing she just
+     changed and the answer to it moving together. Above the stack the
+     panel is stationary and off the top of the screen by the time the
+     third row is reachable, which is how it ended up pinned. */
+  #px-rcs-state{order:0;position:static;top:auto;z-index:auto;min-height:0;
+    padding:18px 20px 20px}
+
+  /* Auto rows. 1fr made all three the height of the tallest, which is
+     the whole reason an expanded row would otherwise drag the other two
+     up with it. */
+  #px-rcs-grid{grid-auto-rows:auto;gap:10px;padding-left:22px}
+  #px-rcs-grid:before{left:9px}
+  .px-rcs-card:before{left:-13px}
+
+  /* Flat, not 3D. perspective and preserve-3d both go, or a phone keeps
+     compositing a rotation that no longer happens. */
+  .px-rcs-card{perspective:none}
+  .px-rcs-inner{transform:none!important;transition:none;transform-style:flat}
+  /* The sizer exists only to give an absolutely positioned face a
+     height. The faces are in flow here and size themselves. */
+  .px-rcs-sizewrap{display:none}
+
+  .px-rcs-face{position:relative;inset:auto;transform:none!important;
+    opacity:1;pointer-events:auto;
+    -webkit-backface-visibility:visible;backface-visibility:visible;
+    grid-template-rows:auto auto auto;column-gap:13px;
+    padding:14px 16px;border-radius:14px}
+
+  /* One face at a time, and display rather than opacity, so the row
+     takes the height of whichever face is showing. */
+  .px-rcs-face.back{display:none}
+  .px-rcs-card[aria-pressed="true"] .px-rcs-face.front{display:none}
+  .px-rcs-card[aria-pressed="true"] .px-rcs-face.back{display:grid;opacity:1}
+
+  /* 30, and pinned to the top of the row rather than centred. Centred,
+     it drifted to the middle of a five line paragraph on an expanded row
+     and stopped reading as that row's mark. */
+  .px-rcs-glyph{width:30px;height:30px;grid-row:1 / span 3;align-self:start;margin-top:2px}
+
+  .px-rcs-face .px-label{font-size:.6rem;letter-spacing:.16em;margin-bottom:2px}
+  .px-rcs-face .h{font-size:.97rem;line-height:1.3;margin-bottom:0}
+  .px-rcs-face .p{font-size:.87rem;line-height:1.5;margin-top:5px}
+
+  /* The cue is the state read-out as well as the affordance: a row that
+     offers to be switched back on is a row that is off. */
+  .px-rcs-say-d{display:none}
+  .px-rcs-say-m{display:inline}
+  .px-rcs-face .cue{display:none}
+  .px-rcs-face .cue-m{display:block;grid-column:2;padding-top:7px;
+    font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;
+    font-weight:800;color:#6C7C97}
+  .px-rcs-face.front .cue-m{color:color-mix(in srgb,var(--ac) 62%,#6C7C97)}
+  .px-rcs-face.back .cue-m{color:#4E5B75}
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -2394,6 +2502,15 @@
    ══════════════════════════════════════════════════════════════════ */
 @media(max-width:700px){
 
+  /* ── BASE MEASURE ─────────────────────────────────────────────── */
+  /* 15/1.6, not 16/1.7. The page reads long on a handset and this is
+     most of why: 16px at 1.7 on a 390 screen is a 27px line pitch, set
+     for a document, on a page that is a sequence of short paragraphs.
+     Everything without an explicit size inherits this, which is nearly
+     all the body copy. The steps below are the pieces that carry their
+     own size in rem and so do not come down with it. */
+  #px-root{font-size:15px;line-height:1.6}
+
   /* ── HERO ─────────────────────────────────────────────────────── */
   /* Full width, and clear of the fixed nav. The copy is bottom-aligned
      on a phone, so the padding only bites when the block is tall
@@ -2401,7 +2518,7 @@
      under it. */
   #px-hero-copy{padding-top:96px}
   #px-hero-copy .inner > *{max-width:none}
-  #px-hero .px-fade.px-serif{font-size:1.06rem}
+  #px-hero .px-fade.px-serif{font-size:1rem}
 
   /* ── DISPLAY TYPE ─────────────────────────────────────────────── */
   /* One step down across the board. Every headline on the page lost a
@@ -2413,13 +2530,16 @@
      four lines while the rule sat there doing nothing. */
   .px-sec h2.px-serif,#pa-intro h2.pa-serif,#pa-turn h2.pa-serif,
   #pa-result h2.pa-serif,#pa-items h2.pa-serif,
-  #px-hero h1{font-size:21px!important;line-height:1.2!important}
-  .px-pull,.px-verdict{font-size:17px!important;line-height:1.36!important}
-  #px-cost h2.px-serif,#px-rcs h2.px-serif{font-size:20px!important}
+  #px-hero h1{font-size:19px!important;line-height:1.22!important}
+  .px-pull,.px-verdict{font-size:16px!important;line-height:1.4!important}
+  #px-cost h2.px-serif,#px-rcs h2.px-serif{font-size:18px!important}
+  /* The section labels were set against 16px body and now sit a shade
+     large next to it. */
+  .px-label{font-size:.62rem;letter-spacing:.18em}
 
   /* The quote is the one piece of handwriting long enough to wrap.
      Wider column and a step down takes it from four lines to three. */
-  #px-machine-quote{max-width:34ch;font-size:1rem;line-height:1.38}
+  #px-machine-quote{max-width:34ch;font-size:.95rem;line-height:1.4}
 
   /* ── BUTTONS ──────────────────────────────────────────────────── */
   /* Smaller pills, and every one of them on a single line. The two
@@ -2434,12 +2554,17 @@
      word of it. Tighter box, tighter pills, and the scale runs two up
      instead of ragged threes. */
   .pa-live-row{padding:18px 16px;border-radius:12px}
-  .pa-live-row .q,#pa-stmt{font-size:1rem;line-height:1.4}
+  .pa-live-row .q,#pa-stmt{font-size:.95rem;line-height:1.42}
   .pa-scale{gap:6px}
   .pa-opt{padding:10px 10px;font-size:.78rem;border-radius:999px;flex:1 1 46%}
-  .pa-promise{font-size:.86rem;line-height:1.5}
-  .pa-fine{font-size:.74rem}
-  #pa-intro .lede{font-size:.95rem;line-height:1.55}
+  .pa-promise{font-size:.82rem;line-height:1.5}
+  .pa-fine{font-size:.72rem}
+  #pa-intro .lede{font-size:.92rem;line-height:1.5}
+  /* The read-out under the switchboard. It is the longest single block
+     in the section and it is now in flow rather than pinned, so its
+     height is the section's height. */
+  #px-rcs-state .txt{font-size:.93rem;line-height:1.5}
+  #px-rcs-state .lab{font-size:.62rem}
 
   /* ── SECTION RHYTHM ───────────────────────────────────────────── */
   /* 32, not 40. The inherited sheet sets this with !important at its
@@ -3122,7 +3247,11 @@
       </p>
       <p class="px-fade" style="margin:0">
         Everyone has all three. Two of them are inherited rather than uniquely theirs, by design.
-        Flip the cards to discover the signs.
+        <!-- The instruction has to match the gesture. Below 700 the cards
+             do not flip, they switch, and an instruction that names the
+             wrong action is worse than none. -->
+        <span class="px-rcs-say-d">Flip the cards to discover the signs.</span><span
+              class="px-rcs-say-m">Switch one off to see the signs.</span>
       </p>
     </div>
 
@@ -3134,13 +3263,13 @@
             <svg class="px-rcs-glyph" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 34 H42"/><path d="M6 34 L28 18.5"/><circle class="fill" cx="32" cy="16" r="3.4"/></svg>
             <span class="px-label">Vision</span>
             <span class="h px-serif">How you experience your life</span>
-            <span class="cue">Flip it over</span>
+            <span class="cue">Flip it over</span><span class="cue cue-m">Switch it off</span>
           </span>
           <span class="px-rcs-face back">
             <svg class="px-rcs-glyph off" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 34 H42"/><path class="stub" d="M6 34 L14 28.4"/></svg>
             <span class="px-label">Vision &middot; whose are you living?</span>
             <span class="p">Somebody asks what you want and you answer with what needs doing. Given a genuinely open week, you are lost for how to enjoy it.</span>
-            <span class="cue">Flip it back</span>
+            <span class="cue">Flip it back</span><span class="cue cue-m">Switch it back on</span>
           </span>
         </span>
       </button>
@@ -3150,13 +3279,13 @@
             <svg class="px-rcs-glyph" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 34 H38"/><path d="M10 27 H38"/><path class="lift" d="M14 14 H34"/></svg>
             <span class="px-label">Values</span>
             <span class="h px-serif">Who you need to become to live that</span>
-            <span class="cue">Flip it over</span>
+            <span class="cue">Flip it over</span><span class="cue cue-m">Switch it off</span>
           </span>
           <span class="px-rcs-face back">
             <svg class="px-rcs-glyph off" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 34 H38"/><path d="M10 27 H38"/><path d="M10 20 H38"/></svg>
             <span class="px-label">Values &middot; whose are you carrying?</span>
             <span class="p">You know better. You respond the way you always do, then tell yourself you need to change that. You have told yourself that before.</span>
-            <span class="cue">Flip it back</span>
+            <span class="cue">Flip it back</span><span class="cue cue-m">Switch it back on</span>
           </span>
         </span>
       </button>
@@ -3166,13 +3295,13 @@
             <svg class="px-rcs-glyph" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 24 H34"/><path d="M29.5 19 L35 24 L29.5 29"/></svg>
             <span class="px-label">Velocity</span>
             <span class="h px-serif">The speed of real change</span>
-            <span class="cue">Flip it over</span>
+            <span class="cue">Flip it over</span><span class="cue cue-m">Switch it off</span>
           </span>
           <span class="px-rcs-face back">
             <svg class="px-rcs-glyph off" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 24 H20"/><path class="stub" d="M26 24 H36"/></svg>
             <span class="px-label">Velocity &middot; whose are you running for?</span>
             <span class="p">You know what needs to change and you have taken action. Some of it helped. It hasn&rsquo;t made the difference you want.</span>
-            <span class="cue">Flip it back</span>
+            <span class="cue">Flip it back</span><span class="cue cue-m">Switch it back on</span>
           </span>
         </span>
       </button>

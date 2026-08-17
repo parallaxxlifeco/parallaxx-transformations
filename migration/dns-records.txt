@@ -1,0 +1,107 @@
+PARALLAXXTRANSFORMATIONS.COM — DNS records to recreate in Namecheap
+Read from ns14.wixdns.net (authoritative) on 16 Aug 2026, before migration.
+
+Nine records. Host "@" means the bare domain.
+
+IMPORTANT — why this list is shorter than a lookup suggests
+----------------------------------------------------------
+A normal DNS lookup chases CNAMEs. Ask for the MX of mail.parallaxxtransformations.com
+and the resolver follows the CNAME to privateemail.com and returns THAT domain's
+MX records as if they were yours. Same for the A record and SPF under vault
+(Teachable's) and members (LeadConnector's).
+
+A CNAME cannot coexist with any other record at the same host. So recreating
+those inherited entries alongside the CNAME will either be rejected or will
+break the subdomain. Create the CNAME and nothing else.
+
+
+WEBSITE — the only records that actually change
+-----------------------------------------------
+A       @                   <take from Vercel; 76.76.21.21 unless your domain card differs>
+CNAME   www                 <take from Vercel; project-specific, e.g. d1d4fc829fe7bc7c.vercel-dns-017.com>
+
+  Replaces Wix's apex A records 185.230.63.107 / .171 / .186
+  and www -> cdn1.wixdns.net.
+
+  Vercel no longer issues everyone the same cname.vercel-dns.com. Copy both
+  values from Settings -> Domains in your own project.
+
+
+EMAIL — Namecheap Private Email. Get these wrong and mail stops arriving.
+------------------------------------------------------------------------
+MX      @                   mx1.privateemail.com          priority 10
+MX      @                   mx2.privateemail.com          priority 20
+TXT     @                   v=spf1 include:spf.privateemail.com ~all
+CNAME   mail                privateemail.com
+
+TXT     default._domainkey
+v=DKIM1;k=rsa;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu+KXqZ+AR/6ZXiCcS4KQ/Sn9dSDw4MXl8fcCXnZfFIlTYbzY3y8fXrVgxSFHECJ0+Fh8mr+ivCf9u4EW+vfVJG6QM5qeUG2ZKlRcG7LejpKPJ42d8qV2BLNVZnZ9wzFctPXECLAajrJgcSgmwboZC4iZI+Mse7EbJbDt6C/F10ZraIDNlBgyVomXjmb7+lWf0h3QlmBobCGq1jPhrvzeaoOjXv64Wa4WH29p5PBOh6/1lt0MvJW84ZnTLn6t2G4uyTQOi9lilz7HyOSoHAiWpgWRgxwm6+nUt80KwINNdLcJyD+ZC94OMKluOHRifs7I7bY5oCK3AQOBWSr756u8jwIDAQAB
+
+  The DKIM value is ONE line. If your editor wraps it, or a space creeps in,
+  outbound mail stops being signed and starts landing in spam. Paste it, then
+  read the last characters back to confirm it ends ...IDAQAB
+
+
+SUBDOMAIN — one CNAME, nothing more
+-----------------------------------
+CNAME   vault               school.teachable.com
+
+  vault = Teachable, your course platform. VERIFIED LIVE 17 Aug 2026 — it
+  serves "Welcome to The Vault of Transformations!" right now. Omit this record
+  and the vault goes dark at cutover.
+
+  Do NOT also add:
+    TXT vault   v=spf1 include:mailgun.org ~all     <- Teachable's, arrives via CNAME
+    A   vault   34.54.192.65                        <- Teachable's current IP
+  Hardcoding that IP is worse than useless: it changes without notice and you
+  would be pinning the vault to an address Teachable has moved off.
+
+  Do NOT add vault as a domain in your Vercel project. Vercel owns the apex
+  and www only.
+
+DROPPED — members.parallaxxtransformations.com
+----------------------------------------------
+  Was: CNAME members -> preview.clientclub.net (LeadConnector)
+
+  Confirmed dead 17 Aug 2026: the name still resolves, but the host answers
+  with a self-signed certificate, so every browser refuses the connection.
+  Nothing is being served. Do not recreate it.
+
+  This is why the record is listed here rather than silently deleted — if the
+  members area ever comes back, this is the record it had.
+
+
+VERIFICATION
+------------
+TXT     @                   google-site-verification=P9B0bV6Xik_cuCNmaBzhB6FAlDcS32xDJGS1_Zv8Wvs
+
+  Do NOT recreate these three, which a lookup shows under "mail" but which
+  belong to Namecheap and arrive with the CNAME:
+    google-site-verification=U7HaXt95Ldm2wLdsiC78Pe9SJzW65QiA2Hdo63hdjAI
+    google-site-verification=PfY0lyNaWDFXDYY1LJnJVtqDTuwBAKPfPu0brQdnUYA
+    v=spf1 include:spf-nc.privateemail.com include:spf-ep-nc.jellyfish.systems -all
+
+
+OPTIONAL, ONCE STABLE
+---------------------
+TXT     _dmarc              v=DMARC1; p=none; rua=mailto:parallaxxlifeco@gmail.com
+
+  There is no DMARC record today. With SPF and DKIM already in place this is a
+  cheap deliverability win. Start at p=none so it only reports, never rejects.
+
+
+AFTER THE SWITCH — verify in this order
+---------------------------------------
+1. dig NS parallaxxtransformations.com          -> registrar-servers.com (Namecheap)
+2. dig www.parallaxxtransformations.com         -> your Vercel CNAME target
+3. dig MX parallaxxtransformations.com          -> mx1/mx2.privateemail.com
+4. dig TXT default._domainkey.parallaxxtransformations.com  -> the DKIM key, intact
+5. dig vault.parallaxxtransformations.com       -> school.teachable.com
+   Then open it in a browser and confirm the vault actually loads.
+6. Send mail IN from an outside address. Then send one OUT and check the
+   headers show dkim=pass and spf=pass. This is the test that matters most,
+   and the one most often skipped.
+
+Rollback while the Wix plan is still active: set nameservers back to
+ns14.wixdns.net and ns15.wixdns.net. This is why you cut over BEFORE the
+renewal date, not after it.

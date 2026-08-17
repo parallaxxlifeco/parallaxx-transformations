@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+# Downloads every Wix-hosted image and video the Parallaxx site depends on.
+# Run this on your Mac (Terminal), NOT inside Claude. Requires nothing but curl.
+set -u
+cd "$(dirname "$0")"
+mkdir -p wix-assets/img wix-assets/video
+ok=0; fail=0
+dl(){
+  local url="$1" out="wix-assets/$2"
+  if [ -s "$out" ]; then echo "skip  $2"; ok=$((ok+1)); return; fi
+  if curl -fsSL --retry 3 --retry-delay 2 -A "Mozilla/5.0" "$url" -o "$out"; then
+    echo "ok    $2  ($(du -h "$out" | cut -f1))"; ok=$((ok+1))
+  else
+    echo "FAIL  $2  <- $url"; rm -f "$out"; fail=$((fail+1))
+  fi
+}
+
+dl "https://static.wixstatic.com/media/111174_02c371279b93485ebbae695ecd18686d~mv2.jpg/v1/fill/w_1400,h_1400,al_c,q_90,enc_auto/system-reachable.jpg" "img/system-reachable.jpg"
+dl "https://static.wixstatic.com/media/111174_05c7360ab71a442ca1d13ffc8340bb18~mv2.jpg/v1/fill/w_1600,h_900,al_c,q_90,enc_auto/hero.jpg" "img/hero.jpg"
+dl "https://static.wixstatic.com/media/111174_05c7360ab71a442ca1d13ffc8340bb18~mv2.jpg/v1/fill/w_1800,h_1100,al_c,q_90,enc_auto/hero-daniel-behind-glass.jpg" "img/hero-daniel-behind-glass.jpg"
+dl "https://static.wixstatic.com/media/111174_0c88555d1fd14867a5ee171ca191ca0b~mv2.png" "img/img-0c88555d1f.png"
+dl "https://static.wixstatic.com/media/111174_107f479d04e9492189d6c7928e1ae8e5~mv2.jpg" "img/img-107f479d04.jpg"
+dl "https://static.wixstatic.com/media/111174_113a5b75e82e4904bea5b4ffdfaad34e~mv2.jpg" "img/img-113a5b75e8.jpg"
+dl "https://static.wixstatic.com/media/111174_1a662637c401475aaf4083137ace47f3~mv2.jpg/v1/fill/w_1200,h_630,al_c/og-testimonials-page.jpg" "img/og-testimonials-page.jpg"
+dl "https://static.wixstatic.com/media/111174_1c14cd1cd5e5427dbd6cd38ac773a70a~mv2.jpg" "img/img-1c14cd1cd5.jpg"
+dl "https://static.wixstatic.com/media/111174_2283c9d739b843ee8b0c1ab57a5ae2ea~mv2.jpg" "img/img-2283c9d739.jpg"
+dl "https://static.wixstatic.com/media/111174_288c16dbd5a94db8a6e6cc043ed2fc74~mv2.png" "img/img-288c16dbd5.png"
+dl "https://static.wixstatic.com/media/111174_2bcac7e4975a4a7685ec8662d7ff67ac~mv2.jpg" "img/img-2bcac7e497.jpg"
+dl "https://static.wixstatic.com/media/111174_2dffbdbb5c39422fa780ca9042446a92~mv2.jpg/v1/fill/w_2600,h_867,al_c,q_90,enc_auto/divider-after.jpg" "img/divider-after.jpg"
+dl "https://static.wixstatic.com/media/111174_31841433a355493593556033672b9403~mv2.jpg" "img/img-31841433a3.jpg"
+dl "https://static.wixstatic.com/media/111174_36d2347a86fd4315b960a3f1082c14af~mv2.jpg" "img/img-36d2347a86.jpg"
+dl "https://static.wixstatic.com/media/111174_392b733e816548dcbfadab2fe214e05c~mv2.png/v1/crop/x_300,y_555,w_290,h_290,q_90,enc_auto/f.png" "img/img-392b733e81-crop290x290-300-555.png"
+dl "https://static.wixstatic.com/media/111174_392b733e816548dcbfadab2fe214e05c~mv2.png/v1/crop/x_84,y_490,w_664,h_442,q_90,enc_auto/file.png" "img/img-392b733e81-crop664x442-84-490.png"
+dl "https://static.wixstatic.com/media/111174_3ba24482bf4e4fd496262d3b0b11dc20~mv2.jpg/v1/fill/w_1200,h_630,al_c/og-priority-audit.jpg" "img/og-priority-audit.jpg"
+dl "https://static.wixstatic.com/media/111174_3db56c0e87c84875a9f6d059a2a768eb~mv2.png/v1/crop/x_370,y_10,w_260,h_260,q_90,enc_auto/f.png" "img/img-3db56c0e87-crop260x260-370-10.png"
+dl "https://static.wixstatic.com/media/111174_5104ff2da2e0456a80264bc62d635fa4~mv2.jpg/v1/fill/w_1200,h_1500,al_c,q_90,enc_auto/daniel-conversation.jpg" "img/daniel-conversation.jpg"
+dl "https://static.wixstatic.com/media/111174_52bb7073da274289b13738d153e1334e~mv2.jpg" "img/img-52bb7073da.jpg"
+dl "https://static.wixstatic.com/media/111174_5cda9ea93a0040a091beb7caebdde4b7~mv2.png/v1/crop/x_60,y_30,w_600,h_420,q_90,enc_auto/f.png" "img/img-5cda9ea93a-crop600x420-60-30.png"
+dl "https://static.wixstatic.com/media/111174_5d232c6e2ed0463499fbd833bb902247~mv2.jpg/v1/fill/w_1200,h_630,al_c/og-home.jpg" "img/og-home.jpg"
+dl "https://static.wixstatic.com/media/111174_607c1b06261f47cf889c337ae45a20ed~mv2.png" "img/img-607c1b0626.png"
+dl "https://static.wixstatic.com/media/111174_62486f734c3144e296824e16df173d83~mv2.jpg" "img/img-62486f734c.jpg"
+dl "https://static.wixstatic.com/media/111174_7a60aa68544a411783b1bffd0d38cbaa~mv2.png/v1/crop/x_70,y_455,w_600,h_420,q_90,enc_auto/f.png" "img/img-7a60aa6854-crop600x420-70-455.png"
+dl "https://static.wixstatic.com/media/111174_7d71d9f7ee10418197e30585d5fba84b~mv2.png/v1/fill/w_1200,h_630,al_c/og-reconnected-woman.png" "img/og-reconnected-woman.png"
+dl "https://static.wixstatic.com/media/111174_827a070fed144480bcaa80bd1759de68~mv2.jpg/v1/fill/w_1200,h_630,al_c/og-women.jpg" "img/og-women.jpg"
+dl "https://static.wixstatic.com/media/111174_87a6895c57c24b39a19c1272352e7e85~mv2.png/v1/crop/x_205,y_70,w_380,h_380,q_90,enc_auto/f.png" "img/img-87a6895c57-crop380x380-205-70.png"
+dl "https://static.wixstatic.com/media/111174_9257e03b4d344d0b93e276ef36847e16~mv2.jpg" "img/img-9257e03b4d.jpg"
+dl "https://static.wixstatic.com/media/111174_9ce3cda44fc94dd1bcb2fbd1d5c69721~mv2.jpg" "img/img-9ce3cda44f.jpg"
+dl "https://static.wixstatic.com/media/111174_9dda2b35c46647a4b1c394be6146a0c7~mv2.jpg" "img/img-9dda2b35c4.jpg"
+dl "https://static.wixstatic.com/media/111174_a3f5997b71f849919d8289c75250784b~mv2.jpg/v1/fill/w_2600,h_867,al_c,q_90,enc_auto/divider-before.jpg" "img/divider-before.jpg"
+dl "https://static.wixstatic.com/media/111174_a475a5e5caa34053b1377af317e5d4fe~mv2.jpg" "img/img-a475a5e5ca.jpg"
+dl "https://static.wixstatic.com/media/111174_a64bc5404f47411e9aff0233e908ba21~mv2.jpg/v1/fill/w_1200,h_630,al_c/og-men.jpg" "img/og-men.jpg"
+dl "https://static.wixstatic.com/media/111174_a9a3ee79bb13414582e4f2390f945548~mv2.jpg" "img/img-a9a3ee79bb.jpg"
+dl "https://static.wixstatic.com/media/111174_ab54167a61fe4c188544389f7f4e9d1f~mv2.jpg" "img/img-ab54167a61.jpg"
+dl "https://static.wixstatic.com/media/111174_abf2f5363f7e4262ba1812cb7844c6d3~mv2.jpg" "img/img-abf2f5363f.jpg"
+dl "https://static.wixstatic.com/media/111174_ad3e5fa47d294ff890516b996bbd2d3c~mv2.jpg" "img/img-ad3e5fa47d.jpg"
+dl "https://static.wixstatic.com/media/111174_ae318f43a9d9450a9ae0806285100f2c~mv2.png" "img/img-ae318f43a9.png"
+dl "https://static.wixstatic.com/media/111174_b98cf690891f444587d740029b22c892~mv2.jpg" "img/img-b98cf69089.jpg"
+dl "https://static.wixstatic.com/media/111174_bd111cf841a04c98b8d3c7bf51d5f339~mv2.png/v1/fill/w_1200,h_630,al_c/og-about.png" "img/og-about.png"
+dl "https://static.wixstatic.com/media/111174_c7c9f30e0ec4421c8967e82239e45ce7~mv2.jpg/v1/fill/w_1600,h_900,al_c,q_85,enc_auto/cover-benjamin-w.jpg" "img/cover-benjamin-w.jpg"
+dl "https://static.wixstatic.com/media/111174_ce5791c7c8674391b63950af0ac087b2~mv2.png/v1/fill/w_1200,h_630,al_c/og-reconnected-man.png" "img/og-reconnected-man.png"
+dl "https://static.wixstatic.com/media/111174_cf1cabe1fd064e459f2317f9d009da0c~mv2.jpg" "img/img-cf1cabe1fd.jpg"
+dl "https://static.wixstatic.com/media/111174_e25884f8c6bb492c9dea0f85b614c441~mv2.jpg/v1/fill/w_1280,h_720,al_c,q_90,enc_auto/proof-poster.jpg" "img/proof-poster.jpg"
+dl "https://static.wixstatic.com/media/111174_e59465cb13ff4fb4beb4bc538c525fe3~mv2.png/v1/crop/x_215,y_35,w_370,h_370,q_90,enc_auto/f.png" "img/img-e59465cb13-crop370x370-215-35.png"
+dl "https://static.wixstatic.com/media/111174_ef86dba130b04d0fabc8fee6eaea726d~mv2.jpg/v1/fill/w_1600,h_900,al_c,q_85,enc_auto/cover-brian-b.jpg" "img/cover-brian-b.jpg"
+dl "https://static.wixstatic.com/media/111174_f25a4bdb39fa49b5a3d84cefb56f8337~mv2.jpg/v1/fill/w_1600,h_900,al_c,q_85,enc_auto/cover-silja-t.jpg" "img/cover-silja-t.jpg"
+dl "https://static.wixstatic.com/media/111174_fca924bae4e6495493e7e4e0364ed87b~mv2.jpg/v1/fill/w_1600,h_900,al_c,q_85,enc_auto/cover-gary-m.jpg" "img/cover-gary-m.jpg"
+dl "https://static.wixstatic.com/media/e1784d_0d18023878014cd193fca1e69ee17a39~mv2.webp/v1/fill/w_130,h_68,al_c,q_85,enc_avif,quality_auto/e1784d_0d18023878014cd193fca1e69ee17a39~mv2.webp" "img/e1784d-0d18023878014cd193fca1e69ee17a39-mv2.webp"
+dl "https://static.wixstatic.com/media/e1784d_2eeefa7c508d4983b0836638f833db50~mv2.png/v1/crop/x_0,y_358,w_1080,h_309/fill/w_210,h_60,al_c,q_85,enc_avif,quality_auto/contier.png" "img/contier-crop1080x309-0-358.png"
+dl "https://static.wixstatic.com/media/e1784d_8540d4c3c9b94831a4e2a8533ed1d15b~mv2.png/v1/crop/x_0,y_463,w_1080,h_166/fill/w_300,h_46,al_c,q_85,enc_avif,quality_auto/contier%20(1).png" "img/contier-20-1-crop1080x166-0-463.png"
+dl "https://static.wixstatic.com/media/e1784d_978cc98b14a14a548387e10c1a1accb0~mv2.png/v1/crop/x_86,y_0,w_8304,h_4418/fill/w_220,h_117,al_c,q_85,enc_avif,quality_auto/1-02.png" "img/img-logo-978cc-crop8304x4418-86-0.png"
+dl "https://static.wixstatic.com/media/e1784d_b79c8e912d16444584b8a4726542b886~mv2.png/v1/crop/x_828,y_138,w_1046,h_1225/fill/w_900,h_1400,al_c,q_90,enc_avif,quality_auto/What%20you%20resist%20persists_%20(3).png" "img/what-20you-20resist-20persists-20-3-crop1046x1225-828-138.png"
+dl "https://static.wixstatic.com/media/e1784d_fe3c841c471f47d088f0cd631a89d883~mv2.png" "img/img-logo-fe3c8.png"
+dl "https://static.wixstatic.com/media/e1784d_fe3c841c471f47d088f0cd631a89d883~mv2.png/v1/fill/w_260,h_57,al_c,q_90,enc_auto/Parallaxx%20Transformation%20Logo%20Design%20White%20(1).png" "img/parallaxx-20transformation-20logo-20design-20white-20-1.png"
+dl "https://static.wixstatic.com/media/e1784d_fe3c841c471f47d088f0cd631a89d883~mv2.png/v1/fill/w_260,h_57,al_c,q_90,enc_avif,quality_auto/Parallaxx%20Transformation%20Logo%20Design%20White%20(1).png" "img/parallaxx-20transformation-20logo-20design-20white-20-1-2.png"
+dl "https://video.wixstatic.com/video/111174_0c316e5ec9a44931a1f94fe8f9bac6a6/480p/mp4/file.mp4" "video/video-0c316e5ec9-480p.mp4"
+dl "https://video.wixstatic.com/video/111174_2dd20e0c35d3467e8957b2e57cd6d9d9/480p/mp4/file.mp4" "video/video-2dd20e0c35-480p.mp4"
+dl "https://video.wixstatic.com/video/111174_469a5c83d5ae49ddb30780eb2ca3a85d/480p/mp4/file.mp4" "video/video-469a5c83d5-480p.mp4"
+dl "https://video.wixstatic.com/video/111174_495d92c709a74ae199756df31216a61e/480p/mp4/file.mp4" "video/video-495d92c709-480p.mp4"
+dl "https://video.wixstatic.com/video/111174_4e1bcc7d4c634401adae988048a9cb1b/1080p/mp4/file.mp4" "video/video-4e1bcc7d4c-1080p.mp4"
+dl "https://video.wixstatic.com/video/111174_59a18a858df34f798fbeb5ae8d5b19b8/1080p/mp4/file.mp4" "video/video-59a18a858d-1080p.mp4"
+dl "https://video.wixstatic.com/video/111174_7af3a35d66374744965fbdaa2f9a3a9b/1080p/mp4/file.mp4" "video/video-7af3a35d66-1080p.mp4"
+dl "https://video.wixstatic.com/video/111174_863af1d4805a4c24ad33cb35ff088881/480p/mp4/file.mp4" "video/video-863af1d480-480p.mp4"
+dl "https://video.wixstatic.com/video/111174_96f86443b9e244999b01cd1e8172bd81/720p/mp4/file.mp4" "video/video-96f86443b9-720p.mp4"
+dl "https://video.wixstatic.com/video/111174_a6961c80d0464fbe8437a38fa69071da/720p/mp4/file.mp4" "video/video-a6961c80d0-720p.mp4"
+dl "https://video.wixstatic.com/video/111174_c76bb418f85d49579bd90c14e6addf79/1080p/mp4/file.mp4" "video/video-c76bb418f8-1080p.mp4"
+
+echo
+echo "=============================="
+echo "downloaded/present: $ok"
+echo "failed:             $fail"
+echo "=============================="
+echo "Now tell Claude the script has finished."

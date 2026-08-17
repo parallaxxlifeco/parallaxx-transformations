@@ -1,0 +1,149 @@
+PARALLAXXTRANSFORMATIONS.COM — DNS on Cloudflare
+Supersedes dns-records.txt, which was written for Namecheap BasicDNS.
+
+WHY THIS CHANGED
+----------------
+Cloudflare Pages only supports external DNS for SUBdomains. An apex domain —
+parallaxxtransformations.com itself — has to be a Cloudflare zone. So the
+nameservers move to Cloudflare rather than Namecheap. Namecheap stays your
+registrar and keeps running your Private Email; it just stops being where DNS
+would have lived.
+
+Net effect: you are swapping Wix as your DNS single point of failure for
+Cloudflare. Better company for the job, but be clear that it is a swap.
+
+
+STEP 1 — ADD THE ZONE, BEFORE TOUCHING NAMESERVERS
+--------------------------------------------------
+In Cloudflare: Add a site -> parallaxxtransformations.com -> Free plan.
+
+Cloudflare scans your current DNS and imports what it finds. That is convenient
+and it is also where the mistakes happen. Import reliably mangles long TXT
+values, and your DKIM key is a single 408-character string. Check every record
+against the table below before going near the nameservers.
+
+Delete anything Cloudflare imported that is not in the table. Specifically the
+three Wix A records (185.230.63.107 / .171 / .186), the www CNAME to
+cdn1.wixdns.net, and the members record.
+
+
+STEP 2 — THE RECORD SET
+-----------------------
+Nine records. The Proxy column is not decoration — see the warning below it.
+
+TYPE   NAME                VALUE                                    PROXY
+-----------------------------------------------------------------------------
+CNAME  @                   <project>.pages.dev                      Proxied
+CNAME  www                 <project>.pages.dev                      Proxied
+MX     @                   mx1.privateemail.com   (priority 10)     DNS only
+MX     @                   mx2.privateemail.com   (priority 20)     DNS only
+TXT    @                   v=spf1 include:spf.privateemail.com ~all  n/a
+TXT    @                   google-site-verification=P9B0bV6Xik_cuCNmaBzhB6FAlDcS32xDJGS1_Zv8Wvs
+TXT    default._domainkey  (the DKIM key — see below, one line)      n/a
+CNAME  mail                privateemail.com                         DNS only
+CNAME  vault               school.teachable.com                     DNS only
+
+The two Pages records are created for you when you add the custom domain in the
+Pages project (Step 3), so add the domain there rather than typing these by
+hand. Cloudflare flattens the apex CNAME automatically — that is why an apex
+CNAME is legal here when it would not be at most registrars.
+
+
+*** THE ORANGE CLOUD WILL BREAK YOUR VAULT ***
+Cloudflare proxies new records by default — the orange cloud icon. Proxying a
+CNAME that points at Teachable breaks it: Teachable issues the certificate for
+vault.parallaxxtransformations.com, and Cloudflare sitting in the middle means
+it cannot complete the challenge. Same for mail and Namecheap.
+
+Click the orange cloud on `vault` and `mail` until it goes grey (DNS only).
+
+This is the single most common way people break things when moving to
+Cloudflare, and it fails as a certificate error rather than a DNS error, so it
+is slow to recognise. Check it twice.
+
+
+THE DKIM RECORD
+---------------
+TXT   default._domainkey
+
+v=DKIM1;k=rsa;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu+KXqZ+AR/6ZXiCcS4KQ/Sn9dSDw4MXl8fcCXnZfFIlTYbzY3y8fXrVgxSFHECJ0+Fh8mr+ivCf9u4EW+vfVJG6QM5qeUG2ZKlRcG7LejpKPJ42d8qV2BLNVZnZ9wzFctPXECLAajrJgcSgmwboZC4iZI+Mse7EbJbDt6C/F10ZraIDNlBgyVomXjmb7+lWf0h3QlmBobCGq1jPhrvzeaoOjXv64Wa4WH29p5PBOh6/1lt0MvJW84ZnTLn6t2G4uyTQOi9lilz7HyOSoHAiWpgWRgxwm6+nUt80KwINNdLcJyD+ZC94OMKluOHRifs7I7bY5oCK3AQOBWSr756u8jwIDAQAB
+
+One unbroken line. If it wraps, or a space creeps in, outbound mail silently
+stops being signed and starts landing in spam — with no error anywhere. After
+saving, open the record again and confirm it still ends ...IDAQAB
+
+
+DO NOT RECREATE
+---------------
+These show up in a DNS lookup but belong to other people's domains and arrive
+automatically via the CNAMEs. Adding them breaks things, because a CNAME cannot
+legally coexist with other records at the same name.
+
+  under mail:   v=spf1 include:spf-nc.privateemail.com ... -all
+                google-site-verification=U7HaXt95Ldm2wLdsiC78Pe9SJzW65QiA2Hdo63hdjAI
+                google-site-verification=PfY0lyNaWDFXDYY1LJnJVtqDTuwBAKPfPu0brQdnUYA
+  under vault:  v=spf1 include:mailgun.org ~all
+  any A record for mail / vault — those IPs belong to Namecheap and Teachable
+  and change without notice
+
+DROPPED: members -> preview.clientclub.net (LeadConnector). Confirmed dead
+17 Aug 2026 — it resolves but answers with a self-signed certificate, so no
+browser will connect. Recorded here only in case it ever comes back.
+
+
+STEP 3 — CONNECT PAGES
+----------------------
+Cloudflare dashboard -> Workers & Pages -> Create -> Pages -> Connect to Git
+  Repository:        parallaxxlifeco/parallaxx-transformations
+  Build command:     python3 migration/build-site.py --local
+  Output directory:  dist
+  Root directory:    /  (leave as is)
+
+Deploy. You get a <project>.pages.dev URL. Test everything there BEFORE the
+nameserver switch — see MIGRATION.md section 2d.
+
+Then Pages project -> Custom domains -> add both parallaxxtransformations.com
+and www.parallaxxtransformations.com. Cloudflare writes the two CNAMEs itself.
+
+
+STEP 4 — SWITCH THE NAMESERVERS
+-------------------------------
+Only when the pages.dev URL is fully tested.
+
+Namecheap -> Domain List -> Manage -> Nameservers -> Custom DNS, and enter the
+two Cloudflare nameservers shown in your Cloudflare dashboard (they are unique
+to your account, something like alice.ns.cloudflare.com).
+
+Do it on a weekday morning, not a Friday evening. If mail breaks you want
+Namecheap support awake.
+
+ROLLBACK: set the nameservers back to ns14.wixdns.net and ns15.wixdns.net. This
+only works while the Wix plan is still active — which is exactly why the cutover
+happens BEFORE the renewal date, not after it. Keep Wix paid until the new setup
+has been stable for several days.
+
+
+STEP 5 — VERIFY, IN THIS ORDER
+------------------------------
+1. dig NS parallaxxtransformations.com          -> your two Cloudflare servers
+2. Open https://www.parallaxxtransformations.com — all ten pages, HTTPS valid
+3. dig MX parallaxxtransformations.com          -> mx1/mx2.privateemail.com
+4. dig TXT default._domainkey.parallaxxtransformations.com -> ends IDAQAB
+5. Open https://vault.parallaxxtransformations.com — must load with a VALID
+   certificate. A certificate warning here means the orange cloud is still on.
+6. Send mail IN from an outside address and confirm it arrives.
+   Then send one OUT and check the headers show dkim=pass and spf=pass.
+   This is the test most often skipped and the one that costs most when wrong.
+7. Google Search Console: submit
+   https://www.parallaxxtransformations.com/sitemap.xml
+   and watch Coverage for a fortnight.
+
+Only after all seven: cancel Wix.
+
+
+OPTIONAL, ONCE STABLE
+---------------------
+TXT   _dmarc   v=DMARC1; p=none; rua=mailto:parallaxxlifeco@gmail.com
+
+You have no DMARC record today. With SPF and DKIM already in place this is a
+cheap deliverability win. Start at p=none so it reports and never rejects.

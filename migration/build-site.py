@@ -272,8 +272,22 @@ STATIC_DIRS = ["covers"]
 
 def head_html(r: dict) -> str:
     canonical = ORIGIN + ("" if r["path"] == "/" else r["path"])
+    # Resolve the share image against what actually shipped. Localised assets
+    # land under /assets/, but a few OG images are repo-root files copied to the
+    # root of dist — so a single hardcoded prefix gets one of the two wrong.
+    # Getting it wrong is invisible on the site and only shows up as a blank
+    # thumbnail when someone shares the link, which is the worst place to find
+    # out. Warn loudly rather than emit a URL that 404s.
     og_img = r["og_img"]
-    og_abs = f"{ORIGIN}/{og_img}" if not og_img.startswith("http") else og_img
+    if og_img.startswith("http"):
+        og_abs = og_img
+    elif (DIST / "assets" / og_img).exists():
+        og_abs = f"{ORIGIN}/assets/{og_img}"
+    elif (DIST / og_img).exists():
+        og_abs = f"{ORIGIN}/{og_img}"
+    else:
+        og_abs = f"{ORIGIN}/{og_img}"
+        print(f"WARNING: og:image for {r['path']} not found in dist — {og_img}")
     robots = "noindex,nofollow" if r.get("noindex") else "index,follow,max-image-preview:large"
     return f"""<!DOCTYPE html>
 <html lang="en">

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>As Seen In — preview</title>
+<style>
+  html,body{margin:0;padding:0;background:#04122A}
+  /* Preview harness only, and it is the deployed arrangement exactly: ONE
+     custom element with PtNav v3 and PtFooter v3 baked inside it.
+
+       Source URL             parallaxx-as-seen-in.js
+       Tag                    parallaxx-as-seen-in
+       Site Header + Footer   OFF
+
+     THE COVER ART WILL LOOK BROKEN IF YOU OPEN THIS FILE DIRECTLY and the
+     eight thumbnails have been localised, because they resolve to /assets/…
+     which only exists inside a built dist/. Serve the built site, or expect
+     eight empty squares here and nothing else wrong.
+
+     EVERY ROW LEAVES THE SITE ON PURPOSE. Eight external links, all
+     target="_blank" with rel="noopener", and the build fails if any row is
+     internal or same-tab -- the page's whole promise is that the reader can
+     go and check, and it should not lose its place doing it.
+
+     Links last verified 24 August 2026. Re-check before any deploy much
+     later than that: one of the nine on the old Wix page was already a 404
+     when this was built. */
+  parallaxx-as-seen-in{display:block}
+</style>
+</head>
+<body>
+  <parallaxx-as-seen-in></parallaxx-as-seen-in>
+  <script src="./parallaxx-as-seen-in.js"></script>
+</body>
+</html>

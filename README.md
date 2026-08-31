@@ -14,6 +14,11 @@ Never hand-edit a generated `.js` bundle; edit the source and rerun its build.
 | Home, women | `Parallaxx Home Women.dc.html` | `build-home-women-bundle.py` | `parallaxx-home-women.js` · `parallaxx-home-women` | `home-women.html` |
 | The Reconnected Woman | `reconnected-woman-v9-preview.html` | `build_bundle_v9.py` | `parallaxx-reconnected-woman.js` · `parallaxx-reconnected-woman` | `reconnected-woman.html` |
 | The Priority Audit | `Priority Audit.dc.html` | `build-priority-audit-bundle.py` | `parallaxx-priority-audit.js` · `parallaxx-priority-audit` | `priority-audit.html` |
+| Contact | `Parallaxx Contact v4.dc.html` | `build-contact-bundle.py` | `parallaxx-contact.js` · `parallaxx-contact` | `contact.html` |
+| Privacy Policy | `Parallaxx Legal.dc.html` | `build-legal-bundles.py` | `parallaxx-privacy.js` · `parallaxx-privacy` | `privacy.html` |
+| Terms of Use | `Parallaxx Legal.dc.html` | `build-legal-bundles.py` | `parallaxx-terms.js` · `parallaxx-terms` | `terms.html` |
+| Speaking & Facilitating | `Parallaxx Speaking.dc.html` | `build-speaking-bundle.py` | `parallaxx-speaking.js` · `parallaxx-speaking` | `speaking.html` |
+| As Seen In | `Parallaxx As Seen In.dc.html` | `build-as-seen-in-bundle.py` | `parallaxx-as-seen-in.js` · `parallaxx-as-seen-in` | `as-seen-in.html` |
 
 ## The Source URLs
 
@@ -33,6 +38,11 @@ Base: `https://parallaxxlifeco.github.io/parallaxx-transformations/`
 | Home, women | `…/parallaxx-home-women.js` | `parallaxx-home-women` |
 | The Reconnected Woman | `…/parallaxx-reconnected-woman.js` | `parallaxx-reconnected-woman` |
 | The Priority Audit | `…/parallaxx-priority-audit.js` | `parallaxx-priority-audit` |
+| Contact | `…/parallaxx-contact.js` | `parallaxx-contact` |
+| Privacy Policy | `…/parallaxx-privacy.js` | `parallaxx-privacy` |
+| Terms of Use | `…/parallaxx-terms.js` | `parallaxx-terms` |
+| Speaking & Facilitating | `…/parallaxx-speaking.js` | `parallaxx-speaking` |
+| As Seen In | `…/parallaxx-as-seen-in.js` | `parallaxx-as-seen-in` |
 
 The preview harnesses render as real pages at the same base, so
 `…/home.html` is the front door as Wix will show it, without touching Wix.
@@ -53,6 +63,10 @@ python3 build-reconnected-man-bundle.py
 python3 build-home-women-bundle.py
 python3 build_bundle_v9.py
 python3 build-priority-audit-bundle.py
+python3 build-contact-bundle.py
+python3 build-legal-bundles.py     # builds BOTH legal pages
+python3 build-speaking-bundle.py   # add --ship to block on empty image slots
+python3 build-as-seen-in-bundle.py
 ```
 
 All four refuse to build rather than ship a bundle that fails silently in a
@@ -232,3 +246,236 @@ Rebuilt onto the v4 system from the older Give It All-skinned page.
 `RECONNECTED-MAN-AUDIT.md` records what changed and why, and lists the work
 still open, the largest being that the testimonial screenshots are still
 flattened PNGs and need transcribing into real text.
+
+## Contact
+
+The most linked page on the site: the coral pill in the nav on every page, the
+footer utility row, and 24 links in all. Every one of them 301'd to the home
+page until 24 August.
+
+**There is no form, and that is the decision rather than an omission.** The
+page this replaces, `Parallaxx Contact.dc.html`, carried one that called
+`preventDefault()`, threw all four fields away and redirected to a booking
+page. It never sent anything, on Wix or anywhere. A direct `mailto` to
+**daniel@parallaxxtransformations.com** cannot silently swallow an enquiry and
+there is nothing to maintain. `build-contact-bundle.py` fails the build on a
+`<form>` element, so one cannot come back without somebody deciding, out loud,
+where the submissions go. A LeadConnector embed can be added later and should
+sit beside the address rather than replace it.
+
+The old file was also on the **Give It All skin** — `#08090F`, `#E6C463`,
+Archivo, a custom cursor and a film-grain overlay — which is why this is a
+rebuild rather than a build script over the existing source. It is moved to
+`_to_delete/` so nobody builds the wrong one. `Parallaxx Speaker.dc.html` was
+in the same state and has gone the same way — superseded by
+`Parallaxx Speaking.dc.html`.
+
+**Its build loads no libraries**, for the same reason the front door's does
+not. The page exists to hand over an address, and an address waiting on two
+CDN round trips is an address that can fail to arrive. Every reveal is a CSS
+keyframe on a delay, so `boot()` runs on the tick the element connects. The
+build fails if GSAP or Lenis is ever loaded or called in the source.
+
+PtNav v3 and PtFooter v3 are baked in, so site Header and Footer go **off**,
+same as every other row in the table. The nav's path table already maps
+`/contact-daniel-lawson` to `contact`, so the pill lights up with nothing to
+configure — which also means the active state looks wrong when you open
+`contact.html` directly, and correct at the real path.
+
+`migration/build-site.py` carries the route and its `<head>`. This is the one
+route whose metadata is not the harvested Wix copy: Wix promised "Schedule a
+call today" and there is no call to schedule here. The URL is unchanged, so
+the link equity is kept either way.
+
+It carries its own share card, `img/og-contact.jpg`, generated from
+`migration/og-contact-card.html` the same way the rest of the set was: render
+that file at 1200x630 at 2x and downsample to 1200x630. Keep the source rather
+than only the image, so the card can be regenerated when the address or the
+byline changes. Note it is not in `asset-map.json` and does not need to be —
+that map exists to repoint Wix CDN URLs, and this file never lived on Wix. It
+reaches `dist/assets/` because the whole of `wix-assets/` is copied.
+
+The portrait is `daniel-conversation.jpg` from the Wix archive, referenced by
+its **Wix CDN URL** in the source so `migration/build-site.py` can rewrite it
+to `/assets/`. Change that URL by hand and the deployed page ships a broken
+portrait while the preview looks perfect. The archive's other portraits are
+the home page hero, which is Daniel behind glass and deliberately
+unreachable, and one with his arms folded — both the wrong posture for the
+page that says he is reachable.
+
+## The two legal pages, and why they share a source
+
+`Parallaxx Legal.dc.html` is one file holding both documents, and
+`build-legal-bundles.py` slices it on the two `<section>` ids to emit
+`parallaxx-privacy.js` and `parallaxx-terms.js`. **Editing either page means
+editing that file and rerunning the build, which rebuilds both.**
+
+Everything about the two is identical except their words: same chrome, same
+header block, same 68ch measure, same closing block. Authored as two
+`.dc.html` files they would share a stylesheet by copy, and the first fix to
+one would silently stop applying to the other. That is not hypothetical — it
+is exactly what `parallaxx-footer.js` is doing right now, where the committed
+bundle is ahead of `PtFooter v3.dc.html` and its own build reverts it.
+
+The cost is that each bundle ships the full stylesheet including the rules
+only the other document uses. A few hundred bytes per page, against a
+guarantee the two pages cannot drift. Take the trade.
+
+**Every sentence in both documents is the copy harvested off the live Wix
+pages, unchanged.** What changed is the typesetting: Wix's export flattened
+its lists into loose paragraphs, so the collection types, the usage purposes,
+the sharing cases and the six GDPR rights are lists again. Nothing was added,
+removed or rephrased — nobody here is the lawyer. The build fails if either
+document loses its `Last updated` line or its governing-entity line, because a
+legal page that has quietly lost its date is worse than one that is out of
+date.
+
+They sit on cream rather than navy, which is the one deliberate departure.
+These are the only two pages on the site somebody reads top to bottom instead
+of scanning, and dark type on cream at 1.75 leading is the setting for that.
+Navy brackets them, header and closing block, so the alternation still holds.
+
+Both stay **indexable**. Meta and Google fetch the privacy policy during an ad
+account review, and a `noindex` on one is a flag rather than a tidy-up.
+
+### What the copy does not cover
+
+Worth knowing before the next ad review, and none of it is ours to write:
+
+- **No cookies or analytics section.** The policy names "Usage Information"
+  but never says cookies, pixels or analytics. Meta's and Google's reviews
+  both look for that language specifically.
+- **No processors named.** Nothing about GoHighLevel/LeadConnector, Teachable,
+  Stripe, Google or the hosting, all of which handle personal data today.
+- **No retention period**, and no address or process for a data request beyond
+  the email address the closing block adds.
+- **"ACN 66 631 353 752" is eleven digits.** An ACN is nine; that number is
+  the shape of an ABN. Carried across verbatim because changing a company
+  identifier is not a typesetting decision.
+- **Dated 13 June 2023**, and it predates every funnel currently running.
+
+## Speaking & Facilitating, and its four image slots
+
+**This is a credibility page, not a sales page,** and the difference is
+structural. Daniel's two live doors are the men's and women's avatars; an
+event organiser is a third buyer he is not currently chasing. So the page runs
+no sales arc — no urgency, no offer stack, no price, and one quiet address at
+the end instead of the gold ENQUIRE NOW pill the old page closed on, which was
+the loudest thing on a page nobody had asked to be sold on.
+
+The proof is other people's words. Three organiser briefs, verbatim, set as
+the largest type after the headline. The headline itself — *Strangers arrive.
+Friends leave.* — is a client's brief, not a claim about himself.
+
+`/facilitating` redirects here rather than getting a page of its own. Same
+offer described a second way, and splitting thin material across two URLs
+makes both worse.
+
+### The slots
+
+`build-speaking-bundle.py` has a `--ship` mode, and this is why. **The page it
+replaces pointed its hero at `assets/stage-3.jpg` and a second section at
+`assets/connecting.jpg`. Neither file has ever existed in this repo.** It
+shipped a broken image above the fold and stayed that way, because nothing
+anywhere failed loudly about it — a missing `<img>` renders as a gap, and a
+gap looks like design.
+
+So photographs are declared. Four `IMAGE_SLOT_*` tokens, each with its brief
+in the `SLOTS` table in the build script:
+
+| Slot | Size | What it is |
+|---|---|---|
+| `HERO` | 2400 × 1350 | Mid-session, audience in frame, Daniel off-centre |
+| `WORK` | 1200 × 1500 | Closer and portrait — a handful of people, not an audience |
+| `ROOM` | 2400 × 1050 | The audience, not him. Carries a caption naming the event |
+| `AFTER` | 1600 × 1200 | People talking to each other. The photograph that proves the headline |
+
+A draft build renders each as a dashed box carrying its own brief, **at the
+true aspect ratio of the final photograph**, so the page lays out at full
+height with no images at all and nothing shifts when they land.
+`--ship` fails while any remain, and names them.
+
+To fill one: put the file in `migration/wix-assets/img/`, replace the token in
+the `.dc.html` with `/assets/img/<filename>` — root-relative, because
+`build-site.py` copies `wix-assets/` to `dist/assets/` and leaves relative
+paths alone — and rerun.
+
+Two open `[CLIENT]` markers in the source: the caption under the ROOM band
+wants an event name and a year or it should be deleted, and Joe Moose's title
+("Co-Founder, Solarcon") came off the old build rather than off the harvested
+page, which named him only in an image filename.
+
+The share card `img/og-speaking.jpg` is type-led like the rest of the set,
+source at `migration/og-speaking-card.html`. It is the one card in the set
+where a photograph would earn its keep — re-cut it once `HERO` is filled.
+
+## As Seen In, and the link-rot problem
+
+Eight podcast appearances, every one a URL on somebody else's platform. That
+is the whole value of the page: every other page on this site is Daniel
+describing Daniel, and this is eight other people putting him in front of
+their audience with a link the reader can open.
+
+Which means **a dead link costs more here than anywhere else on the site.**
+All nine appearances listed on the Wix page were opened and checked on
+24 Aug 2026, and the result is recorded in a comment beside each row:
+
+- **Seven resolved** to a live episode, several with a verifiable date —
+  Peak Performance Life EPI 113 (26 Sep 2023), Goals DO Come True S2E21
+  (12 Sep 2023), Freedom Chasers ep 378 (22 Sep 2023).
+- **One could not be confirmed.** `businesscreatorsradioshow.com` serves no
+  HTML to a fetch, at the episode URL or the site root. It is marked
+  `[CLIENT]` in the source. Open it in a browser; if it does not load, delete
+  the row rather than leaving it.
+- **One was a hard 404 and has been pulled.** "Life of an Adventurepreneur"
+  at `dougbennett.co.uk/episode-88-…` is gone, and the episode is not on the
+  Goals DO Come True feed either. It is Doug Bennett's second appearance with
+  Daniel, so it happened; the link is what is gone. The source carries a note
+  so it can go back in if a working URL turns up.
+
+The Freedom Chasers URL slug still reads `coming-soon-with-daniel-lawson`.
+**That is not a placeholder.** The episode is published; the host just never
+changed the slug. Leave it exactly as it is.
+
+`build-as-seen-in-bundle.py` cannot check links, so it checks the shape of the
+arrangement instead: every row has to be external, `target="_blank"` and
+`rel="noopener"`; the row count has to match the number written out in words
+in the headline *and* in the lede, so the page cannot say "Eight of them"
+above seven rows; and the verification date has to be present on the page, so
+the claim stays attached to a date a reader can judge.
+
+**Re-verify before any deploy much later than the last check**, and move the
+date when you do. One of nine was already rotten by the time this was built.
+
+### migration/map-new-assets.py
+
+Written while building this page, and worth knowing about for the next one.
+`asset-map.json` was generated once, from the ten bundles that existed then,
+and `build-site.py --local` only rewrites Wix URLs it finds in that map.
+Anything a newer page introduces is left pointing at `static.wixstatic.com`
+and keeps working right up until the subscription lapses, at which point the
+image vanishes and nothing in the build ever said a word about it. This page
+introduced eight in one go — the podcast cover art.
+
+Run it on any new source that brings in old-site imagery:
+
+```
+python3 migration/map-new-assets.py "../Parallaxx As Seen In.dc.html"          # report
+python3 migration/map-new-assets.py "../Parallaxx As Seen In.dc.html" --apply  # do it
+```
+
+It finds the original in `wix-archive/` by media hash, names the local copy
+from the `<img alt>` on the same tag, and appends to the map. It never
+overwrites an existing file or an existing entry.
+
+**One thing it learned the hard way.** Its first version matched URLs with a
+character class that excluded `)`, which is right for a URL inside CSS
+`url(...)` and wrong here: Wix names media after the uploaded filename, and
+those have brackets in them — `Square Daniel (20).png`,
+`Daniel Lawson Thumbnail (1).png`, `contier (1).png`. Two of the first eight
+were cut at the `(` and registered half-length, and `build-site.py` then
+replaced the half it recognised and left the rest, producing
+`src="/assets/img/the-choice-effect.png).png"`. Every check short of actually
+rendering the page said it was fine. It now matches inside the attribute
+quotes, where a URL cannot be truncated, and refuses to register anything
+that does not end in a file extension.

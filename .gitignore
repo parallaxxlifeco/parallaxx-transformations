@@ -11,3 +11,7 @@ dist/
 
 # 1080p video masters, kept locally as an upgrade path. Never pushed.
 _originals/
+
+# Wix image archive: 185MB of full-resolution originals, kept locally as
+# redesign source material. Never pushed.
+migration/wix-archive/

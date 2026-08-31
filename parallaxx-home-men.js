@@ -2254,9 +2254,16 @@
         <h4>For Men</h4>
         <a href="https://www.parallaxxtransformations.com/men">Start here</a>
         <a href="https://www.parallaxxtransformations.com/the-reconnected-man">The Reconnected Man</a>
-        <!-- /reconnect is the five-archetype quiz, not a programme.
-             It is his free way in, so it belongs beside the door. -->
-        <a href="https://www.parallaxxtransformations.com/reconnect">The Archetype Quiz</a>
+        <!-- THE ARCHETYPE QUIZ LIVES AT /the-archetype-quiz.
+             This pointed at /reconnect until 24 Aug 2026, with a comment
+             above it asserting that /reconnect WAS the quiz. It never was.
+             /reconnect was the Reconnect programme -- a fourteen week,
+             invitation-only pathway -- and it 301s to the home page. So the
+             footer on every page of the site carried a link labelled "The
+             Archetype Quiz" that landed on the home page, and a comment
+             that would have talked the next person out of fixing it. The
+             label was always right; the URL was always wrong. -->
+        <a href="https://www.parallaxxtransformations.com/the-archetype-quiz">The Archetype Quiz</a>
       </nav>
 
       <nav class="pt-door" aria-label="For women">

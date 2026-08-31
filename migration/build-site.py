@@ -176,6 +176,101 @@ ROUTES = [
         og_img="img/og-testimonials-page.jpg",
     ),
     dict(
+        path="/contact-daniel-lawson",
+        tag="parallaxx-contact",
+        bundle="parallaxx-contact.js",
+        bg="#04122A",
+        # THE ONLY ROUTE WHOSE METADATA IS NOT THE HARVESTED WIX COPY.
+        # Wix served "Book Now - Contact Daniel Lawson" with a description
+        # promising "Schedule a call today". There is no call to schedule on
+        # this page and no form to submit; it hands over an address. Carrying
+        # that description across intact would carry a lie across intact, and
+        # a description that misdescribes the page costs more in click-through
+        # than the rewrite costs in rankings. The URL is unchanged, so the
+        # link equity is kept either way.
+        title="Contact Daniel Lawson | Parallaxx Transformations",
+        desc="Write to Daniel Lawson about facilitating your retreat, a stage or a "
+             "podcast, or the group work. It comes to his own inbox and he answers it "
+             "himself.",
+        og_title="Write to me.",
+        og_desc="Email, Instagram or LinkedIn. It comes to Daniel's own inbox.",
+        og_img="img/og-contact.jpg",
+    ),
+    dict(
+        path="/privacy-policy",
+        tag="parallaxx-privacy",
+        bundle="parallaxx-privacy.js",
+        bg="#04122A",
+        # Wix served this page with an EMPTY meta description, so there is no
+        # existing SEO to carry across and these words are written rather than
+        # harvested. Both legal pages stay indexable on purpose: Meta and Google
+        # fetch them during an ad account review, and a noindex on a privacy
+        # policy is a flag rather than a tidy-up.
+        title="Privacy Policy | Parallaxx Transformations",
+        desc="How Parallaxx Transformations collects, uses and safeguards your "
+             "information, and the rights you have over it. Written to the "
+             "Australian Privacy Principles and the GDPR.",
+        og_title="Privacy Policy | Parallaxx Transformations",
+        og_desc="How we collect, use and safeguard your information, and the rights "
+                "you have over it.",
+        og_img="img/og-home.jpg",
+    ),
+    dict(
+        path="/terms-of-use",
+        tag="parallaxx-terms",
+        bundle="parallaxx-terms.js",
+        bg="#04122A",
+        # Wix's title was truncated mid-word -- "Terms of Use | Parallaxx
+        # Transforma" -- and the description was empty. Nothing worth keeping.
+        title="Terms of Use | Parallaxx Transformations",
+        desc="The terms that govern use of the Parallaxx Transformations website "
+             "and services, and the law they are read under.",
+        og_title="Terms of Use | Parallaxx Transformations",
+        og_desc="The terms that govern use of the website and services.",
+        og_img="img/og-home.jpg",
+    ),
+    dict(
+        path="/daniel-lawson-speaking",
+        tag="parallaxx-speaking",
+        bundle="parallaxx-speaking.js",
+        bg="#04122A",
+        # The TITLE is the harvested Wix one and stays: it is accurate, and it
+        # is the ranking signal on a URL that has one. The DESCRIPTION does not
+        # survive. Wix's read "Collaborate with Daniel Lawson, a renowned
+        # Personal Leadership Retreat Facilitator, to transform your life ...
+        # Book now" -- it described an attendee's experience, on a page for
+        # organisers, and pointed at a booking that no longer exists. A
+        # description that misdescribes the page costs more in click-through
+        # than a rewrite costs in rankings.
+        title="Event and Retreat Facilitation | Parallaxx Transformations",
+        desc="Daniel Lawson facilitates other people's retreats, offsites and stages "
+             "across Europe, the US and Australia. Event design, group facilitation, "
+             "and one to one coaching for attendees.",
+        og_title="Strangers arrive. Friends leave.",
+        og_desc="Daniel Lawson facilitates other people's retreats, offsites and "
+                "stages. Mostly multi-day.",
+        og_img="img/og-speaking.jpg",
+    ),
+    dict(
+        path="/daniel-lawson-as-seen-in",
+        tag="parallaxx-as-seen-in",
+        bundle="parallaxx-as-seen-in.js",
+        bg="#04122A",
+        # Wix's title was truncated mid-word -- "AS SEEN IN | Parallaxx
+        # Transforma" -- which is what a Wix page-settings field does when
+        # nobody counts the characters. Its description is kept almost intact,
+        # because it was accurate: this page really is podcast appearances.
+        # "Peak Performance coach" is dropped from it, since that is the old
+        # positioning and every other page on the site now says facilitator.
+        title="As Seen In | Podcast Appearances | Daniel Lawson",
+        desc="Eight podcast appearances by Daniel Lawson, every one of them linked. "
+             "Mornings, how we spend time, and what hustle culture actually costs.",
+        og_title="Other people's shows.",
+        og_desc="Eight conversations Daniel Lawson has been a guest on. Every one of "
+                "them linked, so you can check rather than take his word for it.",
+        og_img="img/og-as-seen-in.jpg",
+    ),
+    dict(
         path="/the-archetype-quiz",
         tag="parallaxx-quiz",
         bundle="parallaxx-quiz.js",
@@ -238,18 +333,14 @@ REDIRECTS = {
     "/ptjournal": "/",
     "/parallaxx-perspectives-podcast": "/",
     "/reconnect-you-podcast-with-daniel-lawson": "/",
-    "/daniel-lawson-as-seen-in": "/",
-    "/daniel-lawson-speaking": "/",
-    "/facilitating": "/",
-    # Contact and booking. TODO: these want real pages. 'Parallaxx Contact.dc.html'
-    # is already authored in this repo and is a short build away; until then the
-    # nav's Contact item lands on the home page.
-    "/contact-daniel-lawson": "/",
-    "/contact-form-start-today": "/",
-    "/book-a-call-with-daniel-lawson": "/",
-    # Legal. Also want real pages before any ad platform audits the site.
-    "/privacy-policy": "/",
-    "/terms-of-use": "/",
+    "/facilitating": "/daniel-lawson-speaking",
+    # Contact is a real page again as of 24 Aug -- see ROUTES above. The old
+    # form-and-redirect version is superseded by 'Parallaxx Contact v4.dc.html'.
+    # Booking still has nowhere to go: point it at the calendar URL when there
+    # is one, rather than at the contact page, or the two CTAs collapse into one.
+    "/contact-form-start-today": "/contact-daniel-lawson",
+    "/book-a-call-with-daniel-lawson": "/contact-daniel-lawson",
+    # Legal is real again as of 24 Aug -- see ROUTES above.
     # Thank-you pages, which only ever had meaning mid-funnel.
     "/thankyou": "/",
     "/giveitallthankyou": "/",

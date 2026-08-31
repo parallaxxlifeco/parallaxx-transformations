@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speaking &amp; Facilitating — preview</title>
+<style>
+  html,body{margin:0;padding:0;background:#04122A}
+  /* Preview harness only, and it is the deployed arrangement exactly: ONE
+     custom element with PtNav v3 and PtFooter v3 baked inside it.
+
+       Source URL             parallaxx-speaking.js
+       Tag                    parallaxx-speaking
+       Site Header + Footer   OFF
+
+     THIS PAGE HAS FOUR IMAGE SLOTS AND THEY RENDER AS SLOTS. That is the
+     draft build doing its job, not a bug. Each dashed box carries the brief
+     for the photograph that belongs in it and the size it wants. Fill them
+     by putting files in migration/wix-assets/img/ and replacing the
+     IMAGE_SLOT_* tokens in "Parallaxx Speaking.dc.html" with
+     /assets/img/<filename>, then rerun the build.
+
+     Run  python3 build-speaking-bundle.py --ship  before deploying. It
+     fails while any slot is still empty, which is the whole point: the page
+     this replaced pointed its hero at a file that never existed and shipped
+     a broken image above the fold for months, because nothing failed.
+
+     /facilitating redirects here. It is the same offer described a second
+     way and does not want a URL of its own. */
+  parallaxx-speaking{display:block}
+</style>
+</head>
+<body>
+  <parallaxx-speaking></parallaxx-speaking>
+  <script src="./parallaxx-speaking.js"></script>
+</body>
+</html>

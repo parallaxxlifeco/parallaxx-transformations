@@ -361,6 +361,129 @@ STATIC_FILES = [
 STATIC_DIRS = ["covers"]
 
 
+# ── STRUCTURED DATA (JSON-LD) ───────────────────────────────────────────
+# Google reported "URL has no enhancements" for every page: there was no
+# structured data anywhere on the site, on Wix or here. This adds it.
+#
+# WHAT IS DELIBERATELY ABSENT
+# No aggregateRating and no Review markup, despite the testimonials page being
+# full of real client stories. Google requires ratings to be genuine, collected
+# from real users, and visible on the page. There are no star ratings anywhere
+# on this site to reflect, so inventing a rating value would be fabricated
+# markup — a manual-action risk, not a clever shortcut. If star ratings are ever
+# collected properly, that is the moment to add it.
+#
+# No `offers.price` either. The €59/month figure is on the Reconnected Man page
+# in prose, but Daniel is raising prices incrementally, and a published price in
+# structured data is a public commitment that is awkward to walk back. The offer
+# is declared without a figure, which is valid and honest.
+#
+# No hasCredential. It drives no rich result; it only feeds entity
+# understanding, which is speculative at this size.
+
+ORG_ID = f"{ORIGIN}/#organization"
+PERSON_ID = f"{ORIGIN}/#daniel"
+
+SAME_AS = [
+    "https://www.linkedin.com/in/daniel-reconnect-you",
+    "https://www.instagram.com/daniel.lawson__",
+    "https://www.facebook.com/Kiwi.Daniel",
+    "https://www.youtube.com/@ReconnectYou1",
+]
+
+ORGANIZATION = {
+    "@type": "Organization",
+    "@id": ORG_ID,
+    "name": "Parallaxx Transformations",
+    "legalName": "Parallax Life Co Pty Ltd",
+    "url": ORIGIN + "/",
+    "logo": {"@type": "ImageObject", "url": f"{ORIGIN}/favicon.png"},
+    "foundingDate": "2019",
+    "address": {"@type": "PostalAddress", "addressCountry": "AU"},
+    "founder": {"@id": PERSON_ID},
+    "sameAs": SAME_AS,
+}
+
+PERSON = {
+    "@type": "Person",
+    "@id": PERSON_ID,
+    "name": "Daniel Lawson",
+    "jobTitle": "Personal Leadership Facilitator",
+    "worksFor": {"@id": ORG_ID},
+    "url": f"{ORIGIN}/about-daniel-lawson",
+    "sameAs": SAME_AS,
+}
+
+
+def page_entity(r: dict):
+    """The page-specific node, if the page is more than a plain WebPage."""
+    path = r["path"]
+    if path in ("/the-reconnected-man", "/the-reconnected-woman"):
+        return {
+            "@type": "Service",
+            "name": r["og_title"].split("|")[0].strip(),
+            "serviceType": "Group coaching programme",
+            "provider": {"@id": ORG_ID},
+            "description": r["desc"],
+            "url": ORIGIN + path,
+            # No price: see the note above.
+            "offers": {"@type": "Offer", "availability": "https://schema.org/InStock"},
+        }
+    if path in ("/priority-audit", "/the-archetype-quiz", "/wheel-of-reconnect"):
+        return {
+            "@type": "WebApplication",
+            "name": r["og_title"].split("|")[0].strip(),
+            "applicationCategory": "LifestyleApplication",
+            "operatingSystem": "Any",
+            "url": ORIGIN + path,
+            "description": r["desc"],
+            "publisher": {"@id": ORG_ID},
+            "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"},
+        }
+    if path == "/daniel-lawson-speaking":
+        return {
+            "@type": "Service",
+            "name": "Event and retreat facilitation",
+            "provider": {"@id": ORG_ID},
+            "description": r["desc"],
+            "url": ORIGIN + path,
+        }
+    return None
+
+
+def jsonld(r: dict) -> str:
+    canonical = ORIGIN + ("" if r["path"] == "/" else r["path"])
+    page_type = "WebPage"
+    if r["path"] == "/":
+        page_type = "WebPage"
+    elif r["path"] == "/about-daniel-lawson":
+        page_type = "AboutPage"
+    elif r["path"] == "/contact-daniel-lawson":
+        page_type = "ContactPage"
+
+    graph = [ORGANIZATION, PERSON, {
+        "@type": page_type,
+        "@id": canonical + "#webpage",
+        "url": canonical,
+        "name": r["title"],
+        "description": r["desc"],
+        "isPartOf": {"@id": ORG_ID},
+        "about": {"@id": PERSON_ID} if r["path"] == "/about-daniel-lawson" else {"@id": ORG_ID},
+        "primaryImageOfPage": {"@type": "ImageObject", "url": f"{ORIGIN}/assets/{r['og_img']}"}
+        if not r["og_img"].startswith("http") else None,
+    }]
+    graph[-1] = {k: v for k, v in graph[-1].items() if v is not None}
+
+    extra = page_entity(r)
+    if extra:
+        graph.append(extra)
+
+    payload = {"@context": "https://schema.org", "@graph": graph}
+    return ('<script type="application/ld+json">'
+            + json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
+            + "</script>")
+
+
 def head_html(r: dict) -> str:
     canonical = ORIGIN + ("" if r["path"] == "/" else r["path"])
     # Resolve the share image against what actually shipped. Localised assets
@@ -407,6 +530,8 @@ def head_html(r: dict) -> str:
 <link rel="icon" href="/favicon.png">
 <link rel="apple-touch-icon" href="/favicon.png">
 <meta name="theme-color" content="{r['bg']}">
+
+{jsonld(r)}
 
 <style>html,body{{margin:0;padding:0;background:{r['bg']}}} {r['tag']}{{display:block}}</style>
 </head>

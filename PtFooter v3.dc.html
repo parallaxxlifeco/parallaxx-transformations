@@ -212,6 +212,46 @@
 
 #pt-foot a:focus-visible{outline:2px solid rgba(232,198,95,.7);outline-offset:3px}
 @media(prefers-reduced-motion:reduce){#pt-foot,#pt-foot *{transition:none!important}}
+
+/* ═══ PHONE COLUMNS · ported from the home page copy, 12 Aug ══════
+   The home page carries its own built-in copy of this footer because
+   PtFooter would not load in the Wix footer strip, and that copy got a
+   phone fix this one never received. Held at three columns a 390px
+   phone gives each 109px, and at .92rem "The Reconnected" cannot share
+   a line with anything, so every column broke to one word per line and
+   the block read as loose words rather than three lists.
+
+   Two things fix it. Each column becomes a SUBGRID of the footer's own
+   rows, so row 2 is the same height in all three whether its link
+   wrapped once or three times. And the type is sized in cqw against
+   the footer's own width rather than the viewport, because inside a
+   Wix widget the viewport is not what we were given. 3.2cqw lands on
+   11.2px, under the 11.75px that "The Reconnected" needs to hold a
+   line.
+
+   THIS BLOCK MUST STAY LAST. The existing max-width:440 rule sits
+   ABOVE the base .pt-door a declaration, and a media query does not
+   raise specificity, so its .78rem never won at any width. From down
+   here these rules do.
+
+   Browsers without subgrid ignore the declaration and get the previous
+   layout, which is the right fallback. */
+@media(max-width:560px){
+  #pt-foot-top{grid-template-rows:auto repeat(5,auto);row-gap:22px;
+    container-type:inline-size;column-gap:14px}
+  .pt-door{display:grid;grid-template-rows:subgrid;grid-row:2/span 5;
+    row-gap:9px;align-content:start}
+  .pt-door h4{font-size:clamp(8.5px,2.6cqw,10px);letter-spacing:.1em;padding-bottom:8px;
+    margin-bottom:0;align-self:end}
+  .pt-door a{font-size:clamp(8.8px,3.2cqw,12.6px);line-height:1.32;padding:3px 0;
+    margin-bottom:0;align-self:start}
+  #pt-social{gap:14px}
+  #pt-social a{font-size:.78rem}
+  #pt-util{display:grid;grid-template-columns:1fr 1fr;gap:2px 14px;
+    align-items:start}
+  #pt-util a{white-space:normal;line-height:1.35;padding:5px 0}
+  #pt-util a:not(:last-child)::after{content:none}
+}
 </style>
 </helmet>
 

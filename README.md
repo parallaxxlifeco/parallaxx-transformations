@@ -564,3 +564,55 @@ nav still over the top of them. They do, on every handset size checked:
 
 The opening section went from 831px to about 700 on a phone, and 888 to 750
 on desktop. The grid and the card still share both outer edges.
+
+## The placeholder that shipped, 25 Aug
+
+`/daniel-lawson-speaking` went live carrying **four dashed boxes printing
+their own photo briefs, addressed to Daniel in the second person** — *"You
+mid-session with the audience in the frame"* — plus a caption reading
+*"[CLIENT] Name the event and the year here."* All of it visible on the
+public site.
+
+There was a guard for this. It did not fire, and the reason matters more than
+the incident:
+
+> `build-speaking-bundle.py --ship` refuses to build while any slot is empty.
+> It is **opt-in**, and nobody ran it. The script that actually runs on every
+> deploy is `migration/build-site.py`, and that never looked.
+>
+> **A guard outside the deploy path is documentation, not a guard.**
+
+### What changed
+
+`build-site.py` now refuses to build any route whose bundle still contains
+visible placeholder content, and it is the one script Cloudflare Pages calls
+on every push, so nothing can route around it. It checks for `IMAGE_SLOT_`,
+a rendered `class="sp-slot"` box, and a visible `[CLIENT]` note.
+
+Two details in that check are load-bearing, and both came from getting it
+wrong first:
+
+- **It scopes to the HTML template, not the whole bundle.** The first version
+  scanned the file and failed the build on a CSS *comment* explaining the slot
+  mechanism. A guard should fire on what a visitor would read.
+- **It strips HTML comments before looking for `[CLIENT]`.** That marker
+  appears legitimately inside `<!-- -->` in the nav and footer as a note to
+  whoever maintains them. The same string in visible copy is the defect.
+
+`LUMIOS_MARKER_WOFF2_URL` is deliberately **not** a marker. It is in every
+bundle on purpose and `FONTFACE_RE` strips the rule a few lines later. Listing
+it failed all fifteen routes on the first attempt — a fair reminder that a
+guard broad enough to catch everything catches the things it should not.
+
+### And the page itself
+
+Rebuilt around the **two real photographs the archive actually holds** —
+Daniel mid-session with the audience, and the audience on its own. The other
+two sections lost their images rather than keep a brief sitting where a
+photograph should be, and both are a single measured column now. The CSS note
+in §02 says how to widen them back out when there is real material.
+
+The audience band has no caption. A captioned photograph is evidence and an
+uncaptioned one is decoration, so it is worth adding — but nobody in this repo
+knows which event it is, and guessing was how the placeholder got there in the
+first place.

@@ -47,9 +47,29 @@
    of them worse.
 
    ═══════════════════════════════════════════════════════════════════
-   THE IMAGE SLOTS
+   TWO PHOTOGRAPHS, NOT FOUR -- AND WHY THAT CHANGED
    -------------------------------------------------------------------
-   Four photographs are marked IMAGE_SLOT_* in the source. The build
+   This page went live carrying four dashed placeholder boxes, each
+   printing its own brief, addressed to Daniel in the second person:
+   'You mid-session with the audience in the frame.' Visible on the
+   public site.
+
+   The slot system was built to prevent exactly that, and it failed for
+   a reason worth writing down. The guard lived in
+   build-speaking-bundle.py --ship, which is opt-in, and which nobody
+   ran. THE THING THAT ACTUALLY DEPLOYS IS migration/build-site.py, and
+   it never looked. A guard that is not in the deploy path is not a
+   guard. build-site.py refuses to build a route whose bundle still
+   contains a slot now, so no page can repeat this.
+
+   The page is built around the two real photographs the archive holds:
+   Daniel mid-session with the audience, and the audience on its own.
+   The other two sections lost their images rather than keep a brief
+   sitting where a photograph should be.
+
+   THE SLOT MECHANISM, STILL HERE
+   -------------------------------------------------------------------
+   Any remaining slot is written IMAGE_SLOT_<NAME> in the source. The build
    renders each one as a labelled slot carrying its own brief, and
    REFUSES TO SHIP while any of them is still a slot -- run
    build-speaking-bundle.py with --ship to check. The old page pointed
@@ -244,27 +264,13 @@
   }
 
   /* ── THE TWO SPLIT SECTIONS ──────────────────────────────────────
-     §02 and §07 both run text left, photograph right. Kept as one
-     rule rather than two, because when the ratio changes it has to
-     change in both places or the page develops a wobble down its
-     right edge that nobody can name. */
-  #sp-what .grid,#sp-close .grid{max-width:1080px;margin:0 auto;display:grid;
-    grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
-    gap:clamp(34px,5vw,68px);align-items:center}
-  #sp-work,#sp-work .sp-slot{border-radius:20px}
-  #sp-work{border:1px solid var(--line)}
-  #sp-work img{aspect-ratio:4/5}
-  #sp-work .sp-slot{aspect-ratio:4/5;border:1px dashed rgba(232,198,95,.4)}
-  #sp-after,#sp-after .sp-slot{border-radius:20px}
-  #sp-after{border:1px solid var(--line)}
-  #sp-after img{aspect-ratio:4/3}
-  #sp-after .sp-slot{aspect-ratio:4/3;border:1px dashed rgba(232,198,95,.4)}
-
-  @media(max-width:900px){
-    #sp-what .grid,#sp-close .grid{grid-template-columns:1fr;gap:clamp(30px,6vw,42px)}
-    #sp-work img,#sp-work .sp-slot{aspect-ratio:3/2}
-    #sp-after img,#sp-after .sp-slot{aspect-ratio:3/2}
-  }
+     Both ran text left, photograph right, until the photographs that
+     were supposed to fill them turned out not to exist. A two-column
+     grid with one column empty is not a layout, it is a hole -- so
+     both are a single measured column now. To widen them back out
+     when there is real material, restore the two-column grid here and
+     put the figure back in the markup. */
+  #sp-what .grid,#sp-close .grid{max-width:720px;margin:0 auto}
 
 /* ═══════════════════════════════════════════════════════════════════
    PtNav v3 + PtFooter v3, BAKED IN · 14 Aug
@@ -901,7 +907,7 @@
 <section id="sp-hero">
 
   <figure class="shot sp-shot">
-    <div class="sp-slot" role="img" aria-label="Photograph still to come: You mid-session with the audience in the frame. Wide, taken from the side or the back, and you off-centre -- the headline sits over the left third and the bottom third goes dark under the gradient."><p class="tag">Image slot &middot; HERO</p><p class="brief">You mid-session with the audience in the frame. Wide, taken from the side or the back, and you off-centre -- the headline sits over the left third and the bottom third goes dark under the gradient.</p><p class="dim">2400 x 1350 &middot; replace IMAGE_SLOT_HERO in the source</p></div>
+    <img src="https://static.wixstatic.com/media/111174_107f479d04e9492189d6c7928e1ae8e5~mv2.jpg" alt="Daniel Lawson facilitating, the audience in frame" width="2400" height="1350">
   </figure>
   <div class="veil"></div>
   <div class="veil2"></div>
@@ -939,10 +945,6 @@
         <p>The work is interactive and it moves. People get out of their heads and back into their hearts, and they do it in front of each other, which is the part that changes things.</p>
       </div>
     </div>
-
-    <figure class="sp-shot" id="sp-work">
-      <div class="sp-slot" role="img" aria-label="Photograph still to come: Closer, and portrait. You working with a handful of people rather than presenting to a full audience. Faces, hands, somebody mid-sentence."><p class="tag">Image slot &middot; WORK</p><p class="brief">Closer, and portrait. You working with a handful of people rather than presenting to a full audience. Faces, hands, somebody mid-sentence.</p><p class="dim">1200 x 1500 &middot; replace IMAGE_SLOT_WORK in the source</p></div>
-    </figure>
 
   </div></div>
 </section>
@@ -983,17 +985,21 @@
 
 <!-- ══════════════════════════════════════════════════════════════
      04 · THE ROOM
-     A full-width band between the claim and the proof. The caption is
-     a [CLIENT] slot: name the event and the year, or delete the line.
-     An uncaptioned photograph of an audience is decoration; a
-     captioned one is evidence.
+     A full-width band between the claim and the proof. It carried a
+     caption reading '[CLIENT] Name the event and the year here' -- a
+     note to Daniel, live on the public site, exactly like the four
+     image slots above it. Removed rather than guessed at: nobody in
+     this repo knows which event this is.
+
+     A captioned photograph is evidence and an uncaptioned one is
+     decoration, so this is worth coming back to. Add the caption when
+     the event and the year are confirmed.
      ══════════════════════════════════════════════════════════════ -->
 <section id="sp-band">
   <figure>
     <div class="sp-shot">
-      <div class="sp-slot" role="img" aria-label="Photograph still to come: The audience, not you. Faces absorbed, phones down. Wide enough to read as a real event. This one carries a caption naming the event and the year, so pick a photograph you can name."><p class="tag">Image slot &middot; ROOM</p><p class="brief">The audience, not you. Faces absorbed, phones down. Wide enough to read as a real event. This one carries a caption naming the event and the year, so pick a photograph you can name.</p><p class="dim">2400 x 1050 &middot; replace IMAGE_SLOT_ROOM in the source</p></div>
+      <img src="https://static.wixstatic.com/media/e1784d_c305d407e8e046b6b9f20129ebf7ee40~mv2.jpg/v1/fill/w_147,h_67,al_c,q_80,usm_0.66_1.00_0.01,blur_2,enc_avif,quality_auto/e1784d_c305d407e8e046b6b9f20129ebf7ee40~mv2.jpg" alt="An audience during one of Daniel Lawson's sessions" width="2400" height="1050">
     </div>
-    <figcaption>[CLIENT] Name the event and the year here, or delete this line.</figcaption>
   </figure>
 </section>
 
@@ -1116,10 +1122,6 @@
       <h2>Write to me about it.</h2>
       <p>Tell me who is coming, how long you have got, and what you want them walking out with. <a href="mailto:daniel@parallaxxtransformations.com">daniel@parallaxxtransformations.com</a> &mdash; it comes to my own inbox.</p>
     </div>
-
-    <figure class="sp-shot" id="sp-after">
-      <div class="sp-slot" role="img" aria-label="Photograph still to come: The end of it. People talking to each other rather than to you -- this is the photograph that proves the headline, so it matters more than it looks like it does."><p class="tag">Image slot &middot; AFTER</p><p class="brief">The end of it. People talking to each other rather than to you -- this is the photograph that proves the headline, so it matters more than it looks like it does.</p><p class="dim">1600 x 1200 &middot; replace IMAGE_SLOT_AFTER in the source</p></div>
-    </figure>
 
   </div></div>
 </section>

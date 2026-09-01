@@ -79,10 +79,12 @@ the v4 system, from `Parallaxx Speaking.dc.html`. `/facilitating` now
 redirects to it rather than to `/`, because it is the same offer described a
 second way.
 
-**It carries four empty image slots and will not ship until they are filled.**
-Run `python3 build-speaking-bundle.py --ship` — it fails and names them. See
-the README for the briefs. The page it replaced pointed its hero at a file
-that has never existed in this repo, which is exactly why the guard is there.
+**It shipped with those four slots visible, and that is fixed.** The page now
+uses the two real photographs the archive holds and the other two sections
+have no image. `migration/build-site.py` refuses to build any route carrying a
+visible placeholder, so it cannot recur — see the README. Two briefs remain in
+the `SLOTS` table in `build-speaking-bundle.py` as the spec for better
+material when it exists.
 
 **The mislabelled quiz link is FIXED, 24 Aug 2026.** The footer's "The
 Archetype Quiz" pointed at `/reconnect` on every page of the site, and

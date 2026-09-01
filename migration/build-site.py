@@ -544,6 +544,63 @@ def head_html(r: dict) -> str:
 """
 
 
+# ── THE PLACEHOLDER GUARD ───────────────────────────────────────────────
+# Added 25 Aug, after /daniel-lawson-speaking went live carrying four dashed
+# boxes that printed their own photo briefs, addressed to Daniel in the second
+# person, on the public site.
+#
+# The guard for that already existed -- build-speaking-bundle.py --ship, which
+# refuses while any slot is empty. It never fired, because it is opt-in and
+# nobody runs it. THE ONLY SCRIPT GUARANTEED TO RUN BEFORE A DEPLOY IS THIS
+# ONE: Cloudflare Pages calls it on every push. So the check belongs here, not
+# beside the thing it is checking.
+#
+# The lesson generalises past this page. A guard that sits outside the deploy
+# path is documentation, not a guard.
+# NOT 'LUMIOS_MARKER_WOFF2_URL'. That string is in every bundle on purpose --
+# the sources keep the TODO and FONTFACE_RE strips the rule a few lines below,
+# so it never reaches a browser. Listing it here failed every build on the
+# first attempt, which is a fair reminder that a guard broad enough to catch
+# everything catches the things it should not.
+#
+# Only markers that would RENDER go here.
+PLACEHOLDER_MARKERS = (
+    "IMAGE_SLOT_",        # an unfilled slot token that survived a build
+    'class="sp-slot"',    # a rendered slot box, which is what actually shipped
+    "[CLIENT]",           # a note to Daniel, in visible copy. The Speaking
+                          # page shipped one under its audience photograph
+                          # reading 'Name the event and the year here'.
+)
+
+
+def check_placeholders(name: str, text: str) -> list:
+    """Return the placeholder markers found in a bundle's RENDERED markup.
+
+    Scoped to the HTML template rather than the whole file on purpose. Every
+    bundle is `var CSS = \`...\`` followed by `var HTML = \`...\``, and the
+    CSS carries long authoring comments -- including, on the Speaking page,
+    a comment explaining the slot mechanism and naming the token. Checking the
+    whole file flagged that comment and failed the build over a sentence
+    nobody can see.
+
+    A guard should fire on what a visitor would read. Anything outside the
+    HTML template is not that. Where the template cannot be located -- the
+    Reconnected Woman ships into the light DOM and is shaped differently --
+    it falls back to the whole file, which is the safe direction to fail.
+    """
+    start = text.find("var HTML = `")
+    if start != -1:
+        end = text.find("`;", start)
+        if end != -1:
+            text = text[start:end]
+    # HTML comments are stripped before the check. '[CLIENT]' appears inside
+    # <!-- --> in the nav and footer markup as a note to whoever maintains
+    # them, and those are invisible to a visitor -- it is the same string in
+    # visible copy that is the defect.
+    text = re.sub(r"<!--.*?-->", "", text, flags=re.S)
+    return [m for m in PLACEHOLDER_MARKERS if m in text]
+
+
 def detach(text: str) -> tuple:
     """Cut every tie to the hosts we are leaving: Wix for the domain, GitHub
     Pages for the chrome. Returns the text plus the counts, so the build says
@@ -608,7 +665,17 @@ def main() -> int:
                 continue
             print(f"ERROR: missing bundle {name}")
             return 1
-        text, n_wix, n_gh, n_font = detach(b.read_text(encoding="utf-8"))
+        raw = b.read_text(encoding="utf-8")
+        # Check BEFORE detach(), which strips the font-face placeholder and
+        # would hide one of the three markers from us.
+        found = check_placeholders(name, raw)
+        if found:
+            print(f"ERROR: {name} still contains placeholder content: "
+                  f"{', '.join(found)}")
+            print("       A page with a visible placeholder on it must not")
+            print("       deploy. Fill it, or drop the route from ROUTES.")
+            return 1
+        text, n_wix, n_gh, n_font = detach(raw)
         total_links += n_wix
         total_gh += n_gh
         total_font += n_font

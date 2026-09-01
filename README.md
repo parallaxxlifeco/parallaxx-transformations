@@ -616,3 +616,33 @@ The audience band has no caption. A captioned photograph is evidence and an
 uncaptioned one is decoration, so it is worth adding — but nobody in this repo
 knows which event it is, and guessing was how the placeholder got there in the
 first place.
+
+## The legal closings, 25 Aug
+
+Both pages ended in a full section: a gold label, a headline
+("Ask, and it gets handled." / "Something here unclear?") and two pill links.
+That gave the least important thing on the page the loudest treatment on it —
+a call to action at the end of a document nobody reads for pleasure.
+
+Each now ends in **one line of subtext**, Daniel's own wording. The pills went
+with the headings: each page's header already cross-links to the other, and
+the site footer carries both, so they were a third route to somewhere the
+reader could already get.
+
+### They were always two pages
+
+Worth stating plainly, because the source file makes it look otherwise.
+`Parallaxx Legal.dc.html` holds **both** documents stacked, which is what you
+see if you open it — but it is the authoring file, not a page.
+`build-legal-bundles.py` slices it on the two `<section>` ids and emits two
+separate bundles at two separate routes:
+
+| URL | Tag | Bundle | Ends with |
+|---|---|---|---|
+| `/privacy-policy` | `parallaxx-privacy` | `parallaxx-privacy.js` | Data Security |
+| `/terms-of-use` | `parallaxx-terms` | `parallaxx-terms.js` | 9. Governing Law |
+
+Neither bundle contains a word of the other — `grep 'Governing Law'
+parallaxx-privacy.js` returns nothing, and so does the reverse. The one-file
+arrangement exists so the shared stylesheet cannot drift between them; see the
+section above on why.

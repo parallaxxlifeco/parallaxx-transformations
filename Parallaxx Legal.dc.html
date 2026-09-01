@@ -122,21 +122,21 @@
   .lg-doc a{color:var(--coral-ink);text-decoration:underline;text-underline-offset:3px;font-weight:600}
   .lg-doc a:hover{color:var(--coral)}
 
-  /* ── CLOSING ─────────────────────────────────────────────────── */
-  .lg-close{background:var(--navy-ink);padding:clamp(48px,6vw,76px) 0}
-  .lg-close h2{font-family:'Poppins','Montserrat',sans-serif;font-weight:400;letter-spacing:-.018em;
-    color:var(--cream);font-size:clamp(1.24rem,2.8vw,1.65rem);margin:14px 0 0;line-height:1.26}
-  .lg-close p{margin:14px 0 0;color:var(--slate);font-size:.97rem;max-width:52ch}
-  .lg-close p a{color:var(--mist);text-decoration:underline;text-underline-offset:3px;
-    text-decoration-color:rgba(255,80,31,.6);font-weight:600;transition:color .25s}
-  .lg-close p a:hover{color:var(--cream);text-decoration-color:var(--coral)}
-  .lg-close p a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-  .lg-other{margin:clamp(24px,3vw,32px) 0 0;display:flex;flex-wrap:wrap;gap:10px}
-  .lg-other a{font-size:.76rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-    color:var(--mist);border:1px solid rgba(241,236,225,.18);border-radius:999px;
-    padding:.72em 1.24em;text-decoration:none;transition:border-color .25s,color .25s,background .25s}
-  .lg-other a:hover{border-color:var(--gold);color:var(--cream);background:rgba(232,198,95,.08)}
-  .lg-other a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+  /* CLOSING -- A LINE OF SUBTEXT, NOT A SECTION.
+     It carried a gold label, a headline and two pill links, which gave the
+     least important thing on the page the loudest treatment on it: a call
+     to action at the end of a document nobody reads for pleasure.
+
+     One small line now, with the padding down to match, so it reads as a
+     footnote to the policy rather than a new section after it. The pills
+     went with it -- each page's header already cross-links to the other,
+     and the site footer carries both. */
+  .lg-close{background:var(--navy-ink);padding:clamp(24px,3vw,34px) 0}
+  .lg-sub{color:var(--label);font-size:.82rem;line-height:1.65;max-width:64ch}
+  .lg-sub a{color:var(--slate);text-decoration:underline;text-underline-offset:3px;
+    text-decoration-color:rgba(255,80,31,.55);transition:color .25s}
+  .lg-sub a:hover{color:var(--cream);text-decoration-color:var(--coral)}
+  .lg-sub a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 
   @media(max-width:560px){
     .lg-head{padding-top:calc(36px + var(--lg-nav));padding-bottom:40px}
@@ -844,13 +844,7 @@
 
   <div class="lg-close">
     <div class="lg-wrap"><div class="lg-col">
-      <p class="lg-label">Exercising a right</p>
-      <h2>Ask, and it gets handled.</h2>
-      <p>To request a copy of your data, correct it, or have it erased, write to <a href="mailto:daniel@parallaxxtransformations.com">daniel@parallaxxtransformations.com</a>. It comes to Daniel&rsquo;s own inbox.</p>
-      <nav class="lg-other" aria-label="More">
-        <a href="https://www.parallaxxtransformations.com/terms-of-use">Terms of Use</a>
-        <a href="https://www.parallaxxtransformations.com/contact-daniel-lawson">Contact</a>
-      </nav>
+      <p class="lg-sub">To request a copy of your information, change, update or request it to be removed please contact <a href="mailto:daniel@parallaxxtransformations.com">daniel@parallaxxtransformations.com</a></p>
     </div></div>
   </div>
 
@@ -914,13 +908,7 @@
 
   <div class="lg-close">
     <div class="lg-wrap"><div class="lg-col">
-      <p class="lg-label">Questions</p>
-      <h2>Something here unclear?</h2>
-      <p>Write to <a href="mailto:daniel@parallaxxtransformations.com">daniel@parallaxxtransformations.com</a>. It comes to Daniel&rsquo;s own inbox.</p>
-      <nav class="lg-other" aria-label="More">
-        <a href="https://www.parallaxxtransformations.com/privacy-policy">Privacy Policy</a>
-        <a href="https://www.parallaxxtransformations.com/contact-daniel-lawson">Contact</a>
-      </nav>
+      <p class="lg-sub">Contact <a href="mailto:daniel@parallaxxtransformations.com">daniel@parallaxxtransformations.com</a></p>
     </div></div>
   </div>
 

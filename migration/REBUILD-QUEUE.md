@@ -53,6 +53,16 @@ One source of record, `Parallaxx Legal.dc.html`, built by
 routed in `migration/build-site.py` and both indexable.
 
 The copy is the harvested Wix text verbatim; only the typesetting changed.
+
+**Both pages are dated 1 September 2026**, moved off the original 13 June 2023
+on Daniel's instruction. Worth knowing what that date now asserts: it tells a
+reader, and an ad-platform reviewer, that the policy was current as of that
+day. The five gaps listed in the README -- no cookies or analytics section, no
+named processors, no retention period, an ACN that is eleven digits -- were
+all still open when the date moved. A policy dated today that does not mention
+cookies reads worse in a review than the same policy honestly dated 2023,
+because the recent date asserts a review that has not happened yet. The fix is
+the lawyer's half hour, not the date.
 See the README for the five gaps in what that copy actually covers — cookies
 and analytics, named processors, retention, the ACN that is eleven digits, and
 the June 2023 date. All five are for a lawyer, not for this repo, and all five

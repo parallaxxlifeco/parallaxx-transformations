@@ -8,21 +8,21 @@ Written 18 Aug 2026.
 
 ---
 
-## 1. Identity 2.0 Challenge — was `start.parallaxxtransformations.com`
+## 1. Identity 2.0 Challenge
 
-**Status: DNS record deleted. The page is gone as of the cutover.**
+**Status: BUILT, 1 Sep 2026, at `/your-identity-challenge`.**
 
-It was a LeadConnector-hosted funnel (`sites.ludicrous.cloud`) serving
-*"Your Blueprint to Evolve into Your Identity 2.0 Challenge"* — full landing
-page with testimonials and enrolment. Daniel's call to drop it and rebuild
-inside the main site rather than keep a subdomain pointing at GoHighLevel.
+Not from the harvested GoHighLevel funnel — Daniel supplied the current page,
+which is a different and better offer: a **free 7-day challenge** rather than
+the paid course that was harvested. The harvest in
+`harvested/harvested-identity-2-0-challenge.html` is the 2023 paid programme
+and is superseded, though it is worth keeping as the record of what that offer
+was.
 
-To rebuild: it becomes a route in `build-site.py` like any other page. Copy
-needs recovering from the LeadConnector builder before that account is touched
-— **do this before cancelling anything at GHL**, or the copy goes with it.
-
-Suggested route: `/identity-2-0` or `/challenge`. Add a redirect from
-`/your-identity-challenge` (currently 301s to `/the-archetype-quiz`).
+Two things are unresolved and both are in the README: the enrol button points
+at a subdomain the migration dropped, and the video and poster are still
+served from Wix. `migration/download-identity-video.sh` handles the second.
+The first needs Daniel to confirm where enrolment actually lives.
 
 ## 2. Contact — `/contact-daniel-lawson`
 

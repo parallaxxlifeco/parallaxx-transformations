@@ -272,6 +272,25 @@ ROUTES = [
         og_img="img/og-as-seen-in.jpg",
     ),
     dict(
+        path="/your-identity-challenge",
+        tag="parallaxx-identity",
+        bundle="parallaxx-identity.js",
+        bg="#04122A",
+        # Built here rather than at /identity-2-0 because this is the URL the
+        # footer already links and the one any old inbound link points at.
+        # Nothing to redirect and nothing to repoint.
+        title="Identity 2.0 Challenge | Free 7-Day Challenge | Parallaxx",
+        desc="A free seven day challenge with Daniel Lawson. A short guided practice "
+             "each day, action worksheets, and a one to one identity accelerator call "
+             "included when you enrol.",
+        og_title="Identity 2.0 Challenge",
+        og_desc="Because the version of you that got you here is not yet the one to "
+                "lead you to your meaning-driven impact. A free 7-day challenge.",
+        # [OPEN] Borrowing the home card. This page wants one of its own before
+        # it is used in an ad or shared deliberately.
+        og_img="img/og-home.jpg",
+    ),
+    dict(
         path="/the-archetype-quiz",
         tag="parallaxx-quiz",
         bundle="parallaxx-quiz.js",
@@ -308,7 +327,6 @@ REDIRECTS = {
     "/what-is-your-archetype": "/the-archetype-quiz",
     "/archetype-quiz-form-follow": "/the-archetype-quiz",
     "/assesment-page": "/the-archetype-quiz",
-    "/your-identity-challenge": "/the-archetype-quiz",
     "/vault": "https://vault.parallaxxtransformations.com",
     # Offers and funnels that no longer have a page of their own.
     "/reconnect": "/",
@@ -602,6 +620,26 @@ def check_placeholders(name: str, text: str) -> list:
     return [m for m in PLACEHOLDER_MARKERS if m in text]
 
 
+# ── THE UNMAPPED-WIX WARNING ────────────────────────────────────────────
+# localise() only rewrites URLs it finds in asset-map.json. Anything a newer
+# page introduces is left pointing at Wix and keeps working perfectly right up
+# until the subscription lapses, at which point the image or video vanishes
+# and nothing in the build ever said a word about it.
+#
+# That is how the Identity 2.0 page arrived: a 1080p VSL and its poster, both
+# served from Wix, neither in the map, on a page that had never been through
+# this script. A warning rather than an error, because it is currently true of
+# a page we want to ship -- but a loud one, listed by file, so it cannot sit
+# unnoticed the way it did.
+WIX_HOST_RE = re.compile(r"https://(?:static|video)\.wixstatic\.com/[^\"'\s)]+")
+
+
+def unmapped_wix(text: str) -> list:
+    """Wix URLs still in a bundle after localisation. Each one dies with the
+    subscription."""
+    return sorted(set(WIX_HOST_RE.findall(text)))
+
+
 def detach(text: str) -> tuple:
     """Cut every tie to the hosts we are leaving: Wix for the domain, GitHub
     Pages for the chrome. Returns the text plus the counts, so the build says
@@ -658,6 +696,7 @@ def main() -> int:
 
     # Bundles: cut the host ties, optionally localise assets.
     total_links = total_gh = total_font = total_assets = 0
+    still_on_wix = []
     bundles = [r["bundle"] for r in ROUTES] + ["parallaxx-nav.js", "parallaxx-footer.js"]
     for name in dict.fromkeys(bundles):
         b = REPO / name
@@ -683,6 +722,9 @@ def main() -> int:
         if local:
             text, n = localise(text, asset_map)
             total_assets += n
+            left = unmapped_wix(text)
+            if left:
+                still_on_wix.append((name, left))
         (DIST / name).write_text(text, encoding="utf-8")
 
     for f in STATIC_FILES:
@@ -782,6 +824,17 @@ def main() -> int:
     print(f"fonts    {total_font} broken Lumios @font-face rules removed")
     if local:
         print(f"assets   {total_assets} Wix CDN references repointed at /assets/")
+    if still_on_wix:
+        n = sum(len(v) for _, v in still_on_wix)
+        print()
+        print(f"WARNING  {n} asset(s) are STILL SERVED FROM WIX and will die with")
+        print( "         the subscription. They are not in asset-map.json:")
+        for name, urls in still_on_wix:
+            print(f"           {name}")
+            for u in urls:
+                print(f"             {u}")
+        print( "         Download them, then: python3 migration/map-new-assets.py <source> --apply")
+        print()
     else:
         print("assets   left on the Wix CDN (run with --local once wix-assets/ exists)")
     print(f"redirect {len(redirects)} rules written to dist/_redirects")

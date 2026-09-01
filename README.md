@@ -19,6 +19,7 @@ Never hand-edit a generated `.js` bundle; edit the source and rerun its build.
 | Terms of Use | `Parallaxx Legal.dc.html` | `build-legal-bundles.py` | `parallaxx-terms.js` · `parallaxx-terms` | `terms.html` |
 | Speaking & Facilitating | `Parallaxx Speaking.dc.html` | `build-speaking-bundle.py` | `parallaxx-speaking.js` · `parallaxx-speaking` | `speaking.html` |
 | As Seen In | `Parallaxx As Seen In.dc.html` | `build-as-seen-in-bundle.py` | `parallaxx-as-seen-in.js` · `parallaxx-as-seen-in` | `as-seen-in.html` |
+| Identity 2.0 Challenge | `Parallaxx Identity 2.0.dc.html` | `build-identity-bundle.py` | `parallaxx-identity.js` · `parallaxx-identity` | `identity.html` |
 
 ## The Source URLs
 
@@ -43,6 +44,7 @@ Base: `https://parallaxxlifeco.github.io/parallaxx-transformations/`
 | Terms of Use | `…/parallaxx-terms.js` | `parallaxx-terms` |
 | Speaking & Facilitating | `…/parallaxx-speaking.js` | `parallaxx-speaking` |
 | As Seen In | `…/parallaxx-as-seen-in.js` | `parallaxx-as-seen-in` |
+| Identity 2.0 Challenge | `…/parallaxx-identity.js` | `parallaxx-identity` |
 
 The preview harnesses render as real pages at the same base, so
 `…/home.html` is the front door as Wix will show it, without touching Wix.
@@ -67,6 +69,7 @@ python3 build-contact-bundle.py
 python3 build-legal-bundles.py     # builds BOTH legal pages
 python3 build-speaking-bundle.py   # add --ship to block on empty image slots
 python3 build-as-seen-in-bundle.py
+python3 build-identity-bundle.py
 ```
 
 All four refuse to build rather than ship a bundle that fails silently in a
@@ -696,3 +699,63 @@ ACN can be added beside it.
   Meta or Google pixel goes on, the cookies section stops being true and EU
   visitors likely need a consent banner before it fires. That is a policy
   change to make *before* the pixel, not after.
+
+## Identity 2.0 Challenge, and the one page with no chrome
+
+**This is the only route in the build with no PtNav and no PtFooter**, and it
+is deliberate. It is a VSL funnel page: the whole job is to get somebody to
+press play and then enrol, and a full site nav on a page like that is ten ways
+to leave before the video starts. It carries a slim header and a one-line
+footer of its own instead. `build-identity-bundle.py` therefore has no
+"chrome must be present" guard — what replaces it is a pair of guards on the
+two things this page cannot ship without, the video and the enrol link.
+
+It lives at **`/your-identity-challenge`** because that is the URL the footer
+already links and the one old inbound links point at. Nothing to redirect.
+
+### What changed from the version that was live
+
+Layout, copy and structure are as they were. Three things were fixed:
+
+1. **The palette is the site's now.** It was `#0A1A2F` against the site's
+   `#04122A`, and `#C9A55B` against `#E8C65F`. Close-but-not-quite is worse
+   than either matching or clearly differing — it reads as a page built at a
+   different time, which is what it was.
+2. **The enrol button is coral, not gold.** Gold is Daniel's voice on this
+   site and coral is the visitor's move. There are two actions here and they
+   are not the same size: **play** stays gold because watching costs nothing,
+   **enrol** is coral because it is the commitment. The old page made both
+   gold and flattened the distinction.
+3. **Three pieces of mojibake.** The title, the bonus heading and the footer
+   copyright each carried UTF-8 read as Latin-1 — the em dashes and the
+   copyright sign rendered as literal garbage on the live page. The build now
+   fails on those byte sequences.
+
+Two smaller repairs: the play overlay was a `div` with a click handler, so the
+only control on the page could not be reached by keyboard at all — it is a
+`button` now. And every section starts at `opacity:0` and is revealed by an
+IntersectionObserver, which means anything that stops the observer firing does
+not degrade the page, it erases it. There is a four-second fallback that
+reveals everything regardless.
+
+### Still open
+
+- **The enrol URL is unconfirmed.** It points at
+  `members.parallaxxtransformations.com`, which was `CNAME members →
+  preview.clientclub.net` (LeadConnector) and was **dropped in the migration**.
+  Verified 17 Aug 2026: the host answers with a self-signed certificate, so no
+  browser connects. Either restore that CNAME or repoint the button.
+- **The video and poster are the last two Wix dependencies on the site.** Run
+  `migration/download-identity-video.sh` before Wix is cancelled, then
+  `map-new-assets.py`. A 1080p VSL cannot be reconstructed from a harvest the
+  way copy can.
+- No share card of its own; it borrows the home page's.
+
+### build-site.py now warns about unmapped Wix assets
+
+`localise()` only rewrites URLs it finds in `asset-map.json`, so anything a
+newer page introduces stays pointed at Wix and works perfectly until the
+subscription lapses. That is exactly how this page arrived. The build now
+lists every surviving `wixstatic.com` URL by bundle at the end of its output.
+A warning rather than an error, because it is currently true of a page we want
+to ship — but a loud one.

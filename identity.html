@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Identity 2.0 Challenge — preview</title>
+<style>
+  html,body{margin:0;padding:0;background:#04122A}
+  /* Preview harness only, and it is the deployed arrangement exactly:
+     ONE custom element, no site chrome around it.
+
+       Source URL             parallaxx-identity.js
+       Tag                    parallaxx-identity
+       Site Header + Footer    n/a
+
+     THIS IS THE ONE PAGE IN THE REPO WITH NO PtNav AND NO PtFooter, and
+     that is deliberate. It is a VSL funnel page: its whole job is to get
+     somebody to press play and then enrol, and a full site nav on a page
+     like that is ten ways to leave before the video starts. It carries a
+     slim header and a one-line footer of its own instead.
+
+     TWO THINGS ARE UNRESOLVED, both flagged in the source:
+       · The enrol button points at members.parallaxxtransformations.com,
+         a CNAME the migration dropped. Confirm the live URL.
+       · The video and poster are still served from Wix and are not in
+         asset-map.json, so they are not localised. Run
+         migration/download-identity-video.sh before Wix is cancelled. */
+  parallaxx-identity{display:block}
+</style>
+</head>
+<body>
+  <parallaxx-identity></parallaxx-identity>
+  <script src="./parallaxx-identity.js"></script>
+</body>
+</html>

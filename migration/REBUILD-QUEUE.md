@@ -57,9 +57,10 @@ The copy is the harvested Wix text verbatim; only the typesetting changed.
 **Both pages are dated 1 September 2026**, moved off the original 13 June 2023
 on Daniel's instruction. Worth knowing what that date now asserts: it tells a
 reader, and an ad-platform reviewer, that the policy was current as of that
-day. The five gaps listed in the README -- no cookies or analytics section, no
-named processors, no retention period, an ACN that is eleven digits -- were
-all still open when the date moved. A policy dated today that does not mention
+day. The gaps that were open when the date moved have since been closed --
+cookies and tracking, named service providers, retention, international
+transfers, and the ACN/ABN mix-up. See the README. What has NOT happened is a
+lawyer reading any of it. A policy dated today that does not mention
 cookies reads worse in a review than the same policy honestly dated 2023,
 because the recent date asserts a review that has not happened yet. The fix is
 the lawyer's half hour, not the date.

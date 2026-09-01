@@ -344,8 +344,10 @@ The cost is that each bundle ships the full stylesheet including the rules
 only the other document uses. A few hundred bytes per page, against a
 guarantee the two pages cannot drift. Take the trade.
 
-**Every sentence in both documents is the copy harvested off the live Wix
-pages, unchanged.** What changed is the typesetting: Wix's export flattened
+**That was true until 1 September 2026, and is now true of the Terms only.**
+The Privacy Policy has four sections that were written rather than harvested —
+see below. Everything that came off Wix is still unchanged; nothing harvested
+was rewritten. What changed is the typesetting: Wix's export flattened
 its lists into loose paragraphs, so the collection types, the usage purposes,
 the sharing cases and the six GDPR rights are lists again. Nothing was added,
 removed or rephrased — nobody here is the lawyer. The build fails if either
@@ -646,3 +648,51 @@ Neither bundle contains a word of the other — `grep 'Governing Law'
 parallaxx-privacy.js` returns nothing, and so does the reverse. The one-file
 arrangement exists so the shared stylesheet cannot drift between them; see the
 section above on why.
+
+## Closing the privacy policy's gaps, 1 September 2026
+
+Four sections were added to the Privacy Policy. They are marked in the source
+with `ADDED 1 Sep 2026` and `PENDING LEGAL REVIEW`, and nobody here is a
+lawyer — they are accurate about the business, not certified.
+
+**Cookies and tracking.** Every claim in this section was verified against the
+shipped bundles rather than assumed, and the finding was better than expected:
+**there is no tracking on this site at all.** No Google Analytics, no
+advertising pixel, no tag manager, and no first-party cookies. The Priority
+Audit and the Archetype Quiz keep answers in memory only — their build scripts
+*fail* if browser storage is added, so that is enforced rather than promised.
+The section names the five third parties a visitor's browser does contact:
+Google Fonts, cdnjs, unpkg, YouTube (already `youtube-nocookie`), and
+LeadConnector on the two application pages only.
+
+**Service providers.** Cloudflare, GoHighLevel, Stripe, Teachable, Namecheap
+PrivateEmail, Google. Named, with what each one does.
+
+**Retention.** Written to describe what actually happens — records kept, not
+routinely deleted, removed on request — rather than a period nobody follows. A
+policy that states a 24-month deletion cycle no one performs is worse than one
+that admits to keeping things.
+
+**International transfers.** An Australian business using US and EU providers,
+serving people in the EEA and UK, needs this for GDPR. It was missing.
+
+### The company number
+
+The policy said `ACN 66 631 353 752`. That is eleven digits; an ACN is nine
+and an ABN is eleven. Running the ABN checksum on it **validates**, so it is a
+genuine ABN that was labelled ACN. Corrected to `ABN`.
+
+An Australian company's ABN is normally its nine-digit ACN with two check
+digits in front, which makes the ACN almost certainly **631 353 752** — but
+"almost certainly" is not good enough to print as a company identifier, so
+only the verified ABN is on the page. Confirm against the ASIC record and the
+ACN can be added beside it.
+
+### Still open
+
+- **A lawyer has not seen any of this.** The four new sections are marked in
+  the source so they are easy to find.
+- **No pixel is on the site today.** Daniel expects to run ads later. The day a
+  Meta or Google pixel goes on, the cookies section stops being true and EU
+  visitors likely need a consent banner before it fires. That is a policy
+  change to make *before* the pixel, not after.

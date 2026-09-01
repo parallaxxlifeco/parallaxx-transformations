@@ -287,6 +287,29 @@ route whose metadata is not the harvested Wix copy: Wix promised "Schedule a
 call today" and there is no call to schedule here. The URL is unchanged, so
 the link equity is kept either way.
 
+**Rebuilt as a card, 25 Aug.** The first version led with the email address
+at headline size beside a tall portrait, under the headline "Write to me." It
+was loud, and loud is the wrong register for the page somebody opens once they
+have already decided to make contact. It is now a business card: identity
+left, details right, a hairline where the fold would be, and **four channels
+at one weight** -- the copy says "your preferred channel", so ranking them
+would argue with the sentence they sit under. That is also what removed the
+coral arrow that made the first version shout. Colour is almost absent: gold
+labels, cream values, and coral only on the hover underline.
+
+The portrait is `daniel-lawson.jpg` (the archive's "Daniel Lawson Presence"),
+square, because a square crop is what a card wants. **It is 300px and takes
+its own half of the card**, not the 112px thumbnail a printed business card
+would use: somebody on this page is deciding whether to approach a person, and
+a person the size of a favicon does not help them do that. On a phone it drops
+back to 96px inline with the name, because a full-width square there is 350px
+tall and pushes all four contact details below the fold — the exact opposite
+of what a page called Contact is for. The previous one --
+`daniel-conversation.jpg` -- is still in `wix-assets/` and in the asset map,
+unused.
+
+The lede is Daniel's own words, used as written.
+
 It carries its own share card, `img/og-contact.jpg`, generated from
 `migration/og-contact-card.html` the same way the rest of the set was: render
 that file at 1200x630 at 2x and downsample to 1200x630. Keep the source rather
@@ -479,3 +502,65 @@ replaced the half it recognised and left the rest, producing
 rendering the page said it was fine. It now matches inside the attribute
 quotes, where a URL cannot be truncated, and refuses to register anything
 that does not end in a file extension.
+
+## Seeing the site before it goes anywhere
+
+```
+python3 migration/preview.py
+```
+
+Builds `dist/` exactly as the deploy does, serves it at
+`http://localhost:8000`, prints every route and opens a browser. Ctrl-C stops
+it.
+
+**Use this rather than opening a `*-preview.html` file off the disk.** Those
+files reference `static.wixstatic.com` for their images, on purpose — that is
+what lets `build-site.py` find those URLs and rewrite them to `/assets/`.
+Anything that blocks the request (offline, a content blocker, a proxy, or Wix
+itself once the plan lapses) takes the images with it, and the failure does
+not look like a preview problem. It looks like a design problem:
+
+**The logo is a Wix image, so when it fails the header renders as a nearly
+empty bar and the footer loses its mark, and the page reads as though the
+chrome is missing.** It is not. `preview.py` loads nothing from Wix at all,
+which is also the only honest way to check the migration actually worked.
+
+### Where the header and footer come from
+
+Nothing is added at hosting. There is no site-level chrome on Cloudflare or
+Vercel the way there was on Wix. Every route is a standalone HTML file with a
+real `<head>`, a single custom-element tag and one `<script>`, and **PtNav v3
+and PtFooter v3 are compiled into that bundle**. That is the whole reason the
+table above says to switch the Wix Header and Footer OFF for every row: leave
+them on during the overlap and the page renders two navs and two footers.
+
+### Contact and Speaking, 25 Aug: the two-doors block is gone from both
+
+Contact's "Still looking" section and Speaking's "Here for yourself rather
+than for an event?" aside were the same device — a third route to the men's
+and women's doors, sitting at the bottom of a page that should say one thing.
+**The footer already carries both doors on every page of the site**, so
+neither block was reaching anybody who could not already get there. Removed
+from the markup and the stylesheets of both.
+
+### Contact's vertical rhythm, same pass
+
+The page was built at the site's standard section padding, which is tuned for
+pages people scroll through. This one is a lookup: somebody arrives knowing
+what they want, and the four channels are the entire payload. So every
+vertical measure came down — section padding, card padding, the gap between
+detail rows, the heading sizes — and the phone breakpoint steps down again
+rather than reusing the desktop numbers squeezed.
+
+**The test is that all four channels clear the fold on a phone**, with the
+nav still over the top of them. They do, on every handset size checked:
+
+| Viewport | Fourth channel ends at |
+|---|---|
+| 390 × 844 (iPhone 14/15) | 613px |
+| 375 × 667 (iPhone SE) | 634px |
+| 430 × 932 (Pro Max) | 620px |
+| 360 × 800 (Android) | 631px |
+
+The opening section went from 831px to about 700 on a phone, and 888 to 750
+on desktop. The grid and the card still share both outer edges.

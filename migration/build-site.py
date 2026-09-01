@@ -189,11 +189,12 @@ ROUTES = [
         # than the rewrite costs in rankings. The URL is unchanged, so the
         # link equity is kept either way.
         title="Contact Daniel Lawson | Parallaxx Transformations",
-        desc="Write to Daniel Lawson about facilitating your retreat, a stage or a "
-             "podcast, or the group work. It comes to his own inbox and he answers it "
-             "himself.",
-        og_title="Write to me.",
-        og_desc="Email, Instagram or LinkedIn. It comes to Daniel's own inbox.",
+        desc="Reach Daniel Lawson through your preferred channel -- email, Instagram, "
+             "LinkedIn or YouTube. Tell him what you have in mind and start a "
+             "conversation about it.",
+        og_title="Contact Daniel Lawson",
+        og_desc="Reach out through your preferred channel. Email, Instagram, LinkedIn "
+                "or YouTube.",
         og_img="img/og-contact.jpg",
     ),
     dict(

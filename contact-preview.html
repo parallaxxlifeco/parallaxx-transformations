@@ -24,28 +24,47 @@
    -------------------------------------------------------------------
    The most linked page on the site. It is in the nav on every page, it
    is the coral pill in the top right of every page, it is in the
-   footer utility row, and it was the in-body CTA on the old site:
-   24 links in all. Until now every one of them 301'd to the home page.
+   footer utility row: 24 links in all.
 
    WHAT THIS PAGE IS NOT ANY MORE
    The old 'Parallaxx Contact.dc.html' carried a form that called
    preventDefault(), threw all four fields away and redirected to a
    booking page. It never sent anything, on Wix or anywhere. So there
    is no form here. A direct mailto cannot silently swallow an
-   enquiry, and there is nothing to maintain. If a LeadConnector embed
-   is wanted later it is a ten-minute change, and it should sit
-   BESIDE the address rather than replace it.
+   enquiry, and there is nothing to maintain.
 
-   THE ACCENT RULE, SAME AS EVERY OTHER PAGE
-   GOLD  #E8C65F  everything Daniel says: labels, hairlines, the
-                  handwriting, the small print under his name.
-   CORAL #FF501F  the visitor's move. Here that is one thing only —
-                  the email address. The socials are a quieter row
-                  underneath it, because a DM is a worse channel for
-                  the thing this page exists to catch.
+   THE SECOND PASS, 25 AUG: A CARD, NOT A HERO
+   The first version put the email address on the page at headline
+   size with a coral arrow beside it, and a tall portrait next to it.
+   It was loud, and loud is the wrong register for the page somebody
+   opens when they have already decided to get in touch. Daniel's note
+   was 'make the contact links minimalistic, how you'd imagine a
+   business card'.
 
-   THREE SECTIONS, ALTERNATING. Navy reach-out, cream what-people-
-   write-about, navy two-doors. Never two creams adjacent.
+   So the whole reach block is now a card, and the card behaves the
+   way a real one does:
+
+     - IDENTITY LEFT, DETAILS RIGHT, hairline between them. That is
+       the fold of the card, and on a phone it stacks.
+     - NO PRIMARY CHANNEL. Four rows, one weight, one colour. The
+       copy says 'reach out through your preferred channel', so
+       ranking them would argue with the sentence they sit under.
+       This is also what removed the coral arrow that made the first
+       version shout.
+     - LABEL AND VALUE, like the back of a card: a fixed label column
+       in small caps, the value beside it. Nothing is a button.
+     - THE ONLY MOVEMENT IS ON HOVER, and it is one line of colour
+       plus a small mark appearing. No sliding, no lift, no shadow.
+
+   COLOUR IS DELIBERATELY ALMOST ABSENT HERE. Gold for the labels,
+   because labels are Daniel's voice, and cream for the values. Coral
+   appears on this page in exactly two places -- the rule across the
+   top of the card, and the underline that arrives on hover. On a page
+   whose job is to be easy rather than persuasive, restraint IS the
+   design.
+
+   THREE SECTIONS, ALTERNATING. Navy card, cream what-people-write-
+   about, navy two-doors. Never two creams adjacent.
    ═══════════════════════════════════════════════════════════════════ */
 
   :where(#pc-root) *,:where(#pc-root) *::before,:where(#pc-root) *::after{box-sizing:border-box;margin:0;padding:0}
@@ -67,7 +86,6 @@
   }
 
   .pc-serif{font-family:'Poppins','Montserrat',sans-serif;font-weight:400;letter-spacing:-.018em;line-height:1.18;color:var(--cream)}
-  .pc-hand{font-family:'Lumios Marker','Permanent Marker',cursive;color:var(--gold);line-height:1.35}
   .pc-wrap{max-width:1240px;margin:0 auto;padding-left:clamp(20px,4vw,52px);padding-right:clamp(20px,4vw,52px)}
   .pc-col{max-width:660px;margin-left:auto;margin-right:auto}
   .pc-label{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--label)}
@@ -87,148 +105,186 @@
     #pc-root *,#pc-root *::before,#pc-root *::after{animation:none!important;transition:none!important}
   }
 
-  /* ── 01 · REACH ────────────────────────────────────────────────
-     TWO COLUMNS ON DESKTOP, AND THE PORTRAIT IS NOT DECORATION.
-     This page asks somebody to write to a person, and the version
-     without a photograph asked them to write to an address. The rest
-     of the page keeps the 660px measure the Priority Audit uses; only
-     this section opens out, which reads as an editorial hero rather
-     than an inconsistency.
-
-     THE FRAME IS 'daniel-conversation.jpg' ON PURPOSE. The archive's
-     other portraits are the home page hero -- Daniel behind glass,
-     lit from inside, deliberately unreachable -- and one with his arms
-     folded. Both are the wrong posture for the one page whose whole
-     proposition is that he is reachable. This one is him mid
-     conversation, looking straight out.
-
-     The URL below is the Wix CDN original. migration/build-site.py
-     rewrites it to /assets/img/daniel-conversation.jpg from
-     asset-map.json, so it must stay in that exact form or the
-     deployed page ships a broken portrait. */
+  /* ── 01 · THE CARD ───────────────────────────────────────────── */
   #pc-reach{background:var(--navy);
-    padding:calc(clamp(56px,9vw,104px) + var(--pc-nav)) 0 clamp(56px,9vw,104px)}
-  #pc-reach .grid{max-width:1080px;margin:0 auto;display:grid;
-    grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr);
-    gap:clamp(34px,5vw,68px);align-items:center}
-  #pc-portrait{position:relative;border-radius:20px;overflow:hidden;
-    border:1px solid var(--line);background:var(--navy-2)}
-  /* height:auto is load bearing. The <img> carries width/height attributes so
-     the browser reserves the box before the file arrives, and that height wins
-     over aspect-ratio unless it is released -- the portrait rendered 1500px
-     tall and pushed the whole section off the screen. */
-  #pc-portrait img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center 20%}
-  #pc-portrait::after{content:'';position:absolute;inset:0;pointer-events:none;
-    background:linear-gradient(180deg,rgba(4,18,42,0) 58%,rgba(4,18,42,.5) 100%)}
-  #pc-reach h1{font-size:clamp(2.1rem,6.4vw,3.5rem);font-weight:400;margin:16px 0 0}
-  #pc-reach h1 em{font-style:normal;color:var(--gold);font-family:'Lumios Marker','Permanent Marker',cursive;
-    font-weight:400;letter-spacing:0}
-  #pc-reach .lede{margin:22px 0 0;font-size:1.02rem;color:var(--mist);max-width:52ch;line-height:1.66}
+    padding:calc(clamp(30px,4.4vw,60px) + var(--pc-nav)) 0 clamp(40px,5.5vw,68px)}
+  #pc-reach .pc-col{max-width:900px}
+  #pc-reach h1{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:400;margin:0;letter-spacing:-.022em}
+  #pc-reach .lede{margin:14px 0 0;font-size:1rem;color:var(--mist);max-width:54ch;line-height:1.62}
 
-  /* ── THE ROWS ────────────────────────────────────────────────────
-     The old page had this shape and it was the one thing worth keeping:
-     a stack of full-width rows that slide right on hover. Restyled onto
-     the v4 palette. The email row is the only coral thing on the page. */
-  .pc-rows{margin:clamp(34px,5vw,52px) 0 0;border-top:1px solid var(--line)}
-  .pc-row{display:flex;align-items:center;justify-content:space-between;gap:18px;
-    padding:22px 0;border-bottom:1px solid var(--line);text-decoration:none;
-    transition:padding-left .3s ease,border-color .3s ease}
-  .pc-row:hover,.pc-row:focus-visible{padding-left:12px;border-color:rgba(232,198,95,.42)}
-  .pc-row:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-  .pc-row .what{display:block;font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;
-    font-weight:700;color:var(--label);margin-bottom:8px}
-  .pc-row .who{display:block;font-family:'Poppins','Montserrat',sans-serif;font-weight:400;
-    letter-spacing:-.015em;font-size:clamp(1.12rem,3.1vw,1.62rem);color:var(--cream);
-    line-height:1.2;overflow-wrap:break-word}
-  .pc-row .go{flex:none;font-size:1.2rem;color:var(--slate);transition:color .3s,transform .3s}
-  .pc-row:hover .go{color:var(--gold);transform:translateX(4px)}
+  /* THE RATIO IS 0.68 / 1.32, NOT HALF AND HALF. The identity side is a
+     portrait and two short lines; the details side has to hold a
+     36-character email address on ONE line, and at 50/50 it does not --
+     it broke at the @ and the card immediately looked like a form again.
+     Everything about this split is downstream of that one string.
 
-  /* The address is the move, so it is the only row carrying coral. */
-  .pc-row.is-primary .what{color:var(--gold);opacity:.9}
-  .pc-row.is-primary .who{color:var(--cream);font-size:clamp(1.24rem,4vw,2rem)}
-  .pc-row.is-primary .go{color:var(--coral)}
-  .pc-row.is-primary:hover .go{color:var(--coral-lift)}
-  .pc-row.is-primary:hover{border-color:rgba(255,80,31,.5)}
+     align-items:center rather than start, because the two halves are
+     within about thirty pixels of each other in height and topping them
+     out left a visible hole under the details. */
+  /* THE PORTRAIT IS A COLUMN, NOT A THUMBNAIL. First pass had it at 112px
+     inside the identity block, which is correct for a printed business card
+     and wrong for this business: somebody on this page is deciding whether to
+     approach a person, and a person the size of a favicon does not help them
+     do that. It is 300px now and it holds its own half of the card.
 
-  .pc-social{display:flex;flex-wrap:wrap;gap:10px;margin:clamp(26px,4vw,36px) 0 0}
-  .pc-social a{font-size:.76rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-    color:var(--mist);border:1px solid rgba(241,236,225,.18);border-radius:999px;
-    padding:.72em 1.24em;text-decoration:none;transition:border-color .25s,color .25s,background .25s}
-  .pc-social a:hover{border-color:var(--gold);color:var(--cream);background:rgba(232,198,95,.08)}
-  .pc-social a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+     A fixed track rather than a fraction, because the details side has a
+     36-character email address to fit on one line and a fractional split
+     hands it whatever is left over. This way the portrait takes what it
+     needs and the address always has the rest. */
+  .pc-card{margin:clamp(24px,3.2vw,34px) 0 0;
+    border:1px solid var(--line);border-radius:6px;
+    background:linear-gradient(180deg,rgba(10,29,60,.7),rgba(10,29,60,.3));
+    padding:clamp(20px,2.8vw,32px);
+    display:grid;grid-template-columns:minmax(180px,290px) minmax(0,1fr);
+    gap:clamp(22px,2.8vw,36px);align-items:center}
 
-  .pc-where{margin:clamp(26px,4vw,34px) 0 0;font-size:.78rem;letter-spacing:.06em;color:var(--label)}
+  .pc-id{display:flex;flex-direction:column;gap:16px}
+  .pc-shot{width:100%;aspect-ratio:1;border-radius:4px;overflow:hidden;
+    border:1px solid rgba(232,198,95,.28);background:var(--navy-2);flex:none}
+  /* height:auto releases the height attribute so aspect-ratio can win --
+     the same trap the first version of this page hit, where the portrait
+     rendered at its full intrinsic height and pushed the section apart. */
+  .pc-shot img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;object-position:center 18%}
+  .pc-name{font-family:'Poppins','Montserrat',sans-serif;font-weight:400;letter-spacing:-.015em;
+    font-size:clamp(1.18rem,2.4vw,1.42rem);color:var(--cream);line-height:1.2}
+  /* .14em, not .2em. At the wider tracking this ran to three lines in a
+     230px column -- PERSONAL / LEADERSHIP / FACILITATOR -- which turned
+     a job title into a stack. */
+  .pc-role{margin-top:8px;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;
+    font-weight:700;color:var(--gold);opacity:.9;line-height:1.7}
+  /* This sits UNDER the card, not inside it. Inside, it made the identity
+     column taller than the details column and put a hole in the layout;
+     it is a footnote, so it reads as one. */
+  .pc-where{margin:16px 0 0;font-size:.78rem;color:var(--label);line-height:1.6}
 
-  /* ── 02 · WHAT PEOPLE WRITE ABOUT ────────────────────────────── */
-  #pc-about{background:var(--cream);color:var(--ink-soft);padding:clamp(56px,8vw,96px) 0}
+  /* ── THE DETAILS ─────────────────────────────────────────────────
+     Label column fixed so the four values line up on one axis, which is
+     the whole visual idea of the back of a card. Nothing here is styled
+     as a button. */
+  .pc-named{margin-bottom:16px}
+  .pc-idtext{display:none}
+  .pc-details{border-top:1px solid var(--line)}
+  .pc-detail{display:grid;grid-template-columns:84px minmax(0,1fr) auto;gap:14px;
+    align-items:baseline;padding:12px 2px;border-bottom:1px solid var(--line);
+    text-decoration:none;transition:background .25s ease}
+  .pc-detail:first-child{border-top:0}
+  .pc-detail .k{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;
+    color:var(--gold);opacity:.75;transition:opacity .25s ease}
+  .pc-detail .v{font-size:.95rem;color:var(--mist);line-height:1.45;overflow-wrap:break-word;
+    transition:color .25s ease;border-bottom:1px solid transparent;padding-bottom:1px}
+  .pc-detail .go{font-size:.82rem;color:transparent;transition:color .25s ease}
+  .pc-detail:hover .k,.pc-detail:focus-visible .k{opacity:1}
+  .pc-detail:hover .v,.pc-detail:focus-visible .v{color:var(--cream);border-bottom-color:var(--coral)}
+  .pc-detail:hover .go,.pc-detail:focus-visible .go{color:var(--coral)}
+  .pc-detail:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:2px}
+
+  /* ── 02 · WHAT PEOPLE WRITE ABOUT ──────────────────────────────
+     Same 900px measure as the card above it, so the grid's outer edges
+     land on the card's outer edges. At the default 660 the two blocks
+     were centred on the same axis but a hundred and twenty pixels apart
+     at the margins, which reads as a wobble rather than as a change of
+     rhythm. */
+  #pc-about{background:var(--cream);color:var(--ink-soft);padding:clamp(40px,5.5vw,68px) 0}
+  #pc-about .pc-col{max-width:900px}
   #pc-about .pc-label{color:var(--bronze)}
   #pc-about h2{font-family:'Poppins','Montserrat',sans-serif;font-weight:400;letter-spacing:-.018em;
-    line-height:1.18;color:var(--ink);font-size:clamp(1.5rem,3.4vw,2.15rem);margin:14px 0 0}
-  .pc-list{margin:clamp(28px,4vw,40px) 0 0;border-top:1px solid var(--line-cream)}
-  .pc-list li{list-style:none;padding:20px 0;border-bottom:1px solid var(--line-cream);
-    display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:baseline}
-  .pc-list .n{font-family:'Poppins','Montserrat',sans-serif;font-size:.8rem;font-weight:600;
+    line-height:1.2;color:var(--ink);font-size:clamp(1.3rem,2.7vw,1.8rem);margin:12px 0 0}
+  /* ── THE FOUR, AS A GRID ─────────────────────────────────────────
+     Was a stacked list, which made four equal options read as a ranked
+     one -- the eye takes a vertical run of numbered rows as an order of
+     preference, and only the first one really gets read. Two by two,
+     they read as four doors instead, which is what they are.
+
+     Hairlines rather than boxes, and the same construction as .sp-three
+     on the Speaking page: a border-bottom on every cell and a
+     border-left on the right-hand column only. Four cards on cream
+     would fight the card in the section above it; this is quieter and
+     it already exists elsewhere on the site.
+
+     THE ORDER IS THE BUSINESS, NOT THE INBOX. Group work and 1:1 leads
+     because the two doors are what the site actually sells; facilitation
+     follows, and it is a credibility page rather than a sales page by
+     Daniel's own call. */
+  .pc-grid{margin:clamp(22px,3vw,32px) 0 0;display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    border-top:1px solid var(--line-cream)}
+  .pc-grid > div{padding:clamp(18px,2.4vw,26px) clamp(18px,2.4vw,28px) clamp(18px,2.4vw,26px) 0;
+    border-bottom:1px solid var(--line-cream)}
+  .pc-grid > div:nth-child(2n){border-left:1px solid var(--line-cream);
+    padding-left:clamp(20px,2.6vw,30px);padding-right:0}
+  .pc-grid .n{font-family:'Poppins','Montserrat',sans-serif;font-size:.78rem;font-weight:600;
     letter-spacing:.08em;color:var(--bronze)}
-  .pc-list p{color:var(--ink-soft);font-size:1rem;line-height:1.6;max-width:52ch}
-  .pc-list b{font-weight:600;color:var(--ink);display:block;font-family:'Poppins','Montserrat',sans-serif;
-    font-size:1.06rem;letter-spacing:-.01em;margin-bottom:4px}
-  #pc-about .after{margin:clamp(26px,4vw,34px) 0 0;color:var(--ink-soft);max-width:54ch;font-size:.99rem}
+  .pc-grid h3{margin:12px 0 8px;font-family:'Poppins','Montserrat',sans-serif;font-weight:500;
+    letter-spacing:-.012em;font-size:1.08rem;color:var(--ink);line-height:1.28}
+  .pc-grid p{color:var(--ink-soft);font-size:.94rem;line-height:1.62;max-width:38ch}
+  #pc-about .after{margin:clamp(20px,2.8vw,28px) 0 0;color:var(--ink-soft);max-width:54ch;font-size:.99rem}
   #pc-about .after a{color:var(--coral-ink);text-decoration:underline;text-underline-offset:3px;font-weight:600}
   #pc-about .after a:hover{color:var(--coral)}
 
-  /* ── 03 · STILL LOOKING ──────────────────────────────────────── */
-  #pc-doors{background:var(--navy-ink);padding:clamp(52px,7vw,84px) 0}
-  #pc-doors h2{font-family:'Poppins','Montserrat',sans-serif;font-weight:400;letter-spacing:-.018em;
-    color:var(--cream);font-size:clamp(1.32rem,3vw,1.8rem);margin:14px 0 0;line-height:1.24}
-  #pc-doors p{margin:14px 0 0;color:var(--slate);font-size:.97rem;max-width:50ch}
-  .pc-doors-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-    gap:14px;margin:clamp(28px,4vw,38px) 0 0}
-  .pc-door{display:block;text-decoration:none;background:rgba(18,35,63,.5);
-    border:1px solid var(--line);border-radius:16px;padding:26px 26px 24px;
-    transition:border-color .3s,background .3s,transform .3s}
-  .pc-door:hover{border-color:rgba(232,198,95,.45);background:rgba(18,35,63,.85);transform:translateY(-2px)}
-  .pc-door:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-  .pc-door .k{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--gold);opacity:.9}
-  .pc-door .t{display:block;margin-top:12px;font-family:'Poppins','Montserrat',sans-serif;
-    font-size:1.2rem;color:var(--cream);letter-spacing:-.01em;line-height:1.25}
-  .pc-door .d{display:block;margin-top:10px;font-size:.9rem;color:var(--slate);line-height:1.55}
-
-  /* ── PHONE ───────────────────────────────────────────────────── */
-  /* THE ADDRESS IS 36 CHARACTERS AND IT IS THE PAGE.
-     At any readable size it cannot sit on one line on a phone, so the
-     question is only where it breaks. Left alone the browser breaks it
-     mid-word -- 'parallaxxtransformation / s.com' -- which reads as a
-     typo in the one string on the site that has to look exact. A <wbr>
-     after the @ gives it a legal break point, overflow-wrap:break-word
-     makes it prefer that point over an arbitrary one, and the size steps
-     down so the domain half clears 320px on its own line. */
-  @media(max-width:400px){
-    .pc-row.is-primary .who{font-size:clamp(.95rem,4.4vw,1.24rem)}
+  /* ── PHONE ─────────────────────────────────────────────────────── */
+  /* A card folds. Below 720 the two halves stack, the portrait and the
+     name sit on one line so the identity block stays a single band
+     rather than a tall column, and the label moves above its value --
+     which is what gives the 36-character address the full width of the
+     card and keeps it on one line down to 360. */
+  /* BETWEEN 720 AND 980 THE PORTRAIT GIVES WAY FIRST. The card is still two
+     columns here but the page has lost ~150px, and with the portrait holding
+     its full 300px the details column drops to about 280 -- ten pixels under
+     what the email address needs, so it broke to two lines through this band
+     only. The portrait is the flexible one: it reads fine at 220, and the
+     address has nowhere to go. */
+  @media(max-width:980px){
+    .pc-card{grid-template-columns:minmax(140px,24%) minmax(0,1fr)}
   }
 
-  /* AT DESKTOP THE ADDRESS SHARES ITS ROW WITH THE PORTRAIT, so the column
-     it sits in is about 530px and the full 2rem size breaks it over two
-     lines. It is the one string on the page that should read as a single
-     object, so it steps down to fit. Below 900 the layout is one column,
-     the row gets the full measure back, and the clamp above takes over. */
-  @media(min-width:901px){
-    .pc-row.is-primary .who{font-size:1.55rem}
+  /* ON A PHONE THE PORTRAIT SHRINKS BACK. A full-width square here is 350px
+     tall and pushes all four contact details below the fold, which is the
+     exact opposite of what a page called Contact is for. It goes back to
+     sitting inline with the name, where it reads as identity rather than as
+     a picture. */
+  @media(max-width:720px){
+    .pc-card{grid-template-columns:1fr;gap:clamp(22px,4vw,28px)}
+    .pc-id{flex-direction:row;align-items:center;gap:18px}
+    .pc-shot{width:96px;flex:none}
+    .pc-named{display:none}
+    .pc-idtext{display:block}
+    .pc-role{max-width:none}
+    .pc-where{margin-top:10px;max-width:none}
+    .pc-detail{grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:14px 2px}
+    .pc-detail .k{grid-column:1/-1;margin-bottom:2px}
+  }
+  /* Below 420 the address stops fitting even at .9rem: the card loses its
+     padding, the row loses the label column, and 36 characters still have to
+     land on one line -- broken across two it reads as a typo in the one
+     string on the site that has to look exact. It scales with the viewport
+     from here down and clears 320 with room to spare. */
+  @media(max-width:680px){
+    .pc-grid{grid-template-columns:1fr}
+    .pc-grid > div{padding:22px 0}
+    .pc-grid > div:nth-child(2n){border-left:0;padding-left:0}
   }
 
-  /* Under 900 the two columns become one and the portrait falls to the
-     bottom of the section, where a 4:5 crop would be a wall of image
-     under the fine print. It becomes a band instead. */
-  @media(max-width:900px){
-    #pc-reach .grid{grid-template-columns:1fr;gap:clamp(30px,6vw,42px)}
-    #pc-portrait img{aspect-ratio:3/2;object-position:center 22%}
+  @media(max-width:420px){
+    .pc-detail .v{font-size:min(.9rem,3.9vw)}
+    .pc-shot{width:70px}
   }
-
+  /* ON A PHONE THE WHOLE OPENING HAS TO FIT ONE SCREEN. Headline, the two
+     lines of copy and all four channels, above the fold on a 390x844 handset
+     with the nav still over the top of it. Everything below is a step down
+     from the desktop rhythm rather than the same numbers squeezed: the
+     heading loses four points, the card loses its outer padding, and the
+     detail rows tighten from 12px to 9px, which is the difference between
+     the fourth channel being on the screen and being under it. */
   @media(max-width:560px){
-    #pc-reach{padding-top:calc(40px + var(--pc-nav));padding-bottom:52px}
-    #pc-reach .lede{font-size:.97rem}
-    .pc-row{padding:18px 0}
-    .pc-list li{grid-template-columns:1fr;gap:0}
-    .pc-list .n{margin-bottom:8px;display:block}
+    #pc-reach{padding-top:calc(22px + var(--pc-nav));padding-bottom:34px}
+    #pc-reach h1{font-size:1.5rem}
+    #pc-reach .lede{font-size:.94rem;margin-top:11px;line-height:1.58}
+    .pc-card{margin-top:20px;padding:18px 16px}
+    .pc-detail{padding:9px 2px}
+    .pc-named,.pc-idtext{margin-bottom:0}
+    .pc-where{margin-top:12px;font-size:.74rem}
+    #pc-about h2{font-size:1.3rem}
+    .pc-grid p{max-width:none}
   }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -855,60 +911,79 @@
 
   </div>
 </header>
-
 <!-- ══════════════════════════════════════════════════════════════
-     01 · REACH
-     The address, above the fold, at the size of a headline. This is
-     the whole page. Everything below it is there so somebody knows
-     they are in the right place before they write.
+     01 · THE CARD
+     Rebuilt 25 Aug. The first version led with the email address at
+     headline size beside a tall portrait, under the headline "Write to
+     me." It was loud, and loud is the wrong register for the page
+     somebody opens once they have already decided to make contact.
 
-     THE MAILTO CARRIES NO SUBJECT PARAMETER. A prefilled subject
-     saves Daniel a second of triage and costs the sender the first
-     line they were going to write, which is the line that says what
-     they actually want. Leave it plain.
+     This is a business card. Identity on the left, details on the
+     right, a hairline where the fold would be. FOUR CHANNELS AT ONE
+     WEIGHT, because the copy says "your preferred channel" and
+     ranking them would argue with the sentence they sit under.
+
+     The lede is Daniel's own words, used as written.
      ══════════════════════════════════════════════════════════════ -->
 <section id="pc-reach">
-  <div class="pc-wrap"><div class="grid"><div>
+  <div class="pc-wrap"><div class="pc-col">
 
-    <p class="pc-label pc-gold-label pc-up">Contact</p>
-    <h1 class="pc-serif pc-up" style="animation-delay:.08s">Write to me.</h1>
-    <p class="lede pc-up" style="animation-delay:.16s">It comes to my own inbox and I answer it myself. If you would rather message me where you already are, I read Instagram and LinkedIn too.</p>
+    <h1 class="pc-serif pc-up">Contact</h1>
+    <p class="lede pc-up" style="animation-delay:.1s">I am easy to contact, reach out through your preferred channel. Let me know what you&rsquo;ve got in mind, and let&rsquo;s have a conversation about it.</p>
 
-    <div class="pc-rows pc-up" style="animation-delay:.26s">
+    <div class="pc-card pc-up" style="animation-delay:.2s">
 
-      <a class="pc-row is-primary" href="mailto:daniel@parallaxxtransformations.com">
-        <span>
-          <span class="what">Email</span>
-          <span class="who">daniel@<wbr>parallaxxtransformations.com</span>
-        </span>
-        <span class="go" aria-hidden="true">&#8594;</span>
-      </a>
+      <div class="pc-id">
+        <figure class="pc-shot">
+          <img src="https://static.wixstatic.com/media/e1784d_6f9d4aa43725445babf0c30004223730~mv2.jpg/v1/crop/x_0,y_48,w_1080,h_984/fill/w_280,h_255,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Daniel%20IG%20and%20Templates%20(1).jpg"
+               alt="Daniel Lawson" width="1080" height="1080" loading="lazy" decoding="async">
+        </figure>
+        <div class="pc-idtext">
+          <p class="pc-name">Daniel Lawson</p>
+          <p class="pc-role">Personal Leadership &middot; Coaching &amp; Facilitation</p>
+        </div>
+      </div>
 
-      <a class="pc-row" href="https://www.instagram.com/daniel.lawson__/" target="_blank" rel="noopener">
-        <span>
-          <span class="what">Instagram</span>
-          <span class="who">&#64;daniel.lawson__</span>
-        </span>
-        <span class="go" aria-hidden="true">&#8599;</span>
-      </a>
+      <div>
+
+      <div class="pc-named">
+        <p class="pc-name">Daniel Lawson</p>
+        <p class="pc-role">Personal Leadership &middot; Coaching &amp; Facilitation</p>
+      </div>
+
+      <div class="pc-details">
+
+        <a class="pc-detail" href="mailto:daniel@parallaxxtransformations.com">
+          <span class="k">Email</span>
+          <span class="v">daniel@<wbr>parallaxxtransformations.com</span>
+          <span class="go" aria-hidden="true">&#8594;</span>
+        </a>
+
+        <a class="pc-detail" href="https://www.instagram.com/daniel.lawson__/" target="_blank" rel="noopener">
+          <span class="k">Instagram</span>
+          <span class="v">&#64;daniel.lawson__</span>
+          <span class="go" aria-hidden="true">&#8599;</span>
+        </a>
+
+        <a class="pc-detail" href="https://www.linkedin.com/in/daniel-reconnect-you/" target="_blank" rel="noopener">
+          <span class="k">LinkedIn</span>
+          <span class="v">Daniel Lawson</span>
+          <span class="go" aria-hidden="true">&#8599;</span>
+        </a>
+
+        <a class="pc-detail" href="https://www.youtube.com/@ReconnectYou1/featured" target="_blank" rel="noopener">
+          <span class="k">YouTube</span>
+          <span class="v">Reconnect You</span>
+          <span class="go" aria-hidden="true">&#8599;</span>
+        </a>
+
+      </div>
+
+      </div>
 
     </div>
 
-    <nav class="pc-social pc-up" style="animation-delay:.34s" aria-label="Elsewhere">
-      <a href="https://www.linkedin.com/in/daniel-reconnect-you/" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://www.youtube.com/@ReconnectYou1/featured" target="_blank" rel="noopener">YouTube</a>
-      <a href="https://www.facebook.com/Kiwi.Daniel" target="_blank" rel="noopener">Facebook</a>
-    </nav>
-
-    <p class="pc-where pc-up" style="animation-delay:.42s">Clients across Europe, the US and Australia.</p>
-
-    </div>
-
-    <figure id="pc-portrait" class="pc-up" style="animation-delay:.3s">
-      <img src="https://static.wixstatic.com/media/111174_5104ff2da2e0456a80264bc62d635fa4~mv2.jpg/v1/fill/w_1200,h_1500,al_c,q_90,enc_auto/daniel-conversation.jpg"
-           alt="Daniel Lawson, mid conversation, looking at the camera"
-           width="1200" height="1500" loading="lazy" decoding="async">
-    </figure>
+    <p class="pc-where pc-up" style="animation-delay:.3s">Clients across Europe, the US and Australia.</p>
 
   </div></div>
 </section>
@@ -926,60 +1001,35 @@
     <p class="pc-label">Before you write</p>
     <h2>Most of what comes in is one of four things.</h2>
 
-    <ul class="pc-list">
-      <li>
-        <span class="n">01</span>
-        <p><b>An event that needs facilitating</b>You are running a retreat or an offsite and you want people leaving different from how they arrived. Tell me who is coming, how long you have got, and what you want them walking out with.</p>
-      </li>
-      <li>
-        <span class="n">02</span>
-        <p><b>A stage or a podcast</b>Same thing, shorter. Who is listening, and what do you want them holding at the end of it.</p>
-      </li>
-      <li>
-        <span class="n">03</span>
-        <p><b>The group work, or the one to one</b>You have been reading and you want to know whether it is for you before you apply. Ask me. I would rather you asked than guessed.</p>
-      </li>
-      <li>
-        <span class="n">04</span>
-        <p><b>Something else</b>A partnership, a press question, or something that fits nowhere above. Send it anyway.</p>
-      </li>
-    </ul>
+    <div class="pc-grid">
 
-    <p class="after">If this is you, write to me &mdash; <a href="mailto:daniel@parallaxxtransformations.com">daniel@parallaxxtransformations.com</a></p>
+      <div>
+        <p class="n">01</p>
+        <h3>Group work and 1:1</h3>
+        <p>Tell me what you&rsquo;re seeking, and let&rsquo;s find out what will be the best fit.</p>
+      </div>
 
-  </div></div>
-</section>
+      <div>
+        <p class="n">02</p>
+        <h3>Event Host / Facilitation</h3>
+        <p>From design consulting to experience curation, through the lens of creating deep transformational value for a wide range of audiences.</p>
+      </div>
 
+      <div>
+        <p class="n">03</p>
+        <h3>Podcasts / Panel Talks</h3>
+        <p>Stories, frameworks and examples for personal leadership and intentional lifestyle design.</p>
+      </div>
 
-<!-- ══════════════════════════════════════════════════════════════
-     03 · STILL LOOKING
-     Contact sits in the nav on every page, so a share of the people
-     landing here are still working out what this site is. Sending
-     them back to the home page would be the same dead end the old
-     301 was. Both doors carry a free instrument, so they get one.
-     ══════════════════════════════════════════════════════════════ -->
-<section id="pc-doors">
-  <div class="pc-wrap"><div class="pc-col">
-
-    <p class="pc-label pc-gold-label">Still looking</p>
-    <h2>Working out where you fit?</h2>
-    <p>Both doors carry something free, and you get the answer on the screen when you finish.</p>
-
-    <div class="pc-doors-grid">
-
-      <a class="pc-door" href="https://www.parallaxxtransformations.com/the-archetype-quiz">
-        <span class="k">For Men</span>
-        <span class="t">The Archetype Quiz</span>
-        <span class="d">Five patterns. Find which one you are running, and what it is costing the people closest to you.</span>
-      </a>
-
-      <a class="pc-door" href="https://www.parallaxxtransformations.com/priority-audit">
-        <span class="k">For Women</span>
-        <span class="t">The Priority Audit</span>
-        <span class="d">Fifteen statements about an ordinary week, and the three things they were measuring. About ninety seconds.</span>
-      </a>
+      <div>
+        <p class="n">04</p>
+        <h3>Something else?</h3>
+        <p>A partnership, a press question, or something that fits nowhere above. Ask about it anyway.</p>
+      </div>
 
     </div>
+
+    <p class="after">If this is you, write to me &mdash; <a href="mailto:daniel@parallaxxtransformations.com">daniel@parallaxxtransformations.com</a></p>
 
   </div></div>
 </section>

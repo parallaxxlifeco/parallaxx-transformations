@@ -230,14 +230,6 @@
     text-decoration-color:rgba(255,80,31,.6);font-weight:600;transition:color .25s}
   #sp-close p a:hover{color:var(--cream);text-decoration-color:var(--coral)}
   #sp-close p a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-  .sp-aside{margin:clamp(30px,4vw,42px) 0 0;padding-top:clamp(24px,3vw,32px);border-top:1px solid var(--line)}
-  .sp-aside p{color:var(--label);font-size:.9rem;margin:0 0 14px}
-  .sp-pills{display:flex;flex-wrap:wrap;gap:10px}
-  .sp-pills a{font-size:.76rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-    color:var(--mist);border:1px solid rgba(241,236,225,.18);border-radius:999px;
-    padding:.72em 1.24em;text-decoration:none;transition:border-color .25s,color .25s,background .25s}
-  .sp-pills a:hover{border-color:var(--gold);color:var(--cream);background:rgba(232,198,95,.08)}
-  .sp-pills a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 
   /* ── PHONE ───────────────────────────────────────────────────── */
   @media(max-width:760px){
@@ -1109,9 +1101,12 @@
      ENQUIRE NOW. The old page ended in exactly that, in gold, and it
      was the loudest thing on a page nobody had asked to be sold on.
 
-     The aside underneath exists because this URL is linked from the
-     footer of every page on the site, so a share of the people
-     reading it arrived for themselves rather than for an event.
+     It used to carry an aside underneath sending anyone who arrived
+     for themselves rather than for an event over to the two doors.
+     Removed 25 Aug, along with the same block on the Contact page:
+     the footer already carries both doors on every page of the site,
+     so it was a third route to somewhere the reader could already
+     get, sitting on the one block that should say a single thing.
      ══════════════════════════════════════════════════════════════ -->
 <section id="sp-close">
   <div class="sp-wrap"><div class="grid">
@@ -1120,15 +1115,6 @@
       <p class="sp-label sp-gold-label">If you are putting something together</p>
       <h2>Write to me about it.</h2>
       <p>Tell me who is coming, how long you have got, and what you want them walking out with. <a href="mailto:daniel@parallaxxtransformations.com">daniel@parallaxxtransformations.com</a> &mdash; it comes to my own inbox.</p>
-
-      <div class="sp-aside">
-        <p>Here for yourself rather than for an event?</p>
-        <nav class="sp-pills" aria-label="The two doors">
-          <a href="https://www.parallaxxtransformations.com/men">For Men</a>
-          <a href="https://www.parallaxxtransformations.com/women">For Women</a>
-          <a href="https://www.parallaxxtransformations.com/about-daniel-lawson">About Daniel</a>
-        </nav>
-      </div>
     </div>
 
     <figure class="sp-shot" id="sp-after">

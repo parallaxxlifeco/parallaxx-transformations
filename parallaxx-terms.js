@@ -883,7 +883,6 @@
          then the proof. Seven of these are linked from nowhere else on
          the site, which is exactly why the row exists. ══ -->
     <nav id="pt-util" aria-label="More">
-      <a href="https://www.parallaxxtransformations.com/contact-daniel-lawson">Contact</a>
       <a href="https://www.parallaxxtransformations.com/book-a-call-with-daniel-lawson">Book a Call</a>
       <a href="https://www.parallaxxtransformations.com/reconnect-you-podcast-with-daniel-lawson">Reconnect You Podcast</a>
       <a href="https://www.parallaxxtransformations.com/parallaxx-perspectives-podcast">Perspectives Podcast</a>

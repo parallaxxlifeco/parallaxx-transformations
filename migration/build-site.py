@@ -333,7 +333,8 @@ REDIRECTS = {
     "/blog": "/",
     "/ptjournal": "/",
     "/parallaxx-perspectives-podcast": "/",
-    "/reconnect-you-podcast-with-daniel-lawson": "/",
+    # The podcast lives on YouTube; there was never a page worth rebuilding.
+    "/reconnect-you-podcast-with-daniel-lawson": "https://www.youtube.com/@ReconnectYou1/featured",
     "/facilitating": "/daniel-lawson-speaking",
     # Contact is a real page again as of 24 Aug -- see ROUTES above. The old
     # form-and-redirect version is superseded by 'Parallaxx Contact v4.dc.html'.

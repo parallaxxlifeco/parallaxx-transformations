@@ -319,7 +319,15 @@
            louder and more reliable route than a small link in a utility row.
            Book a Call stays. -->
       <a href="https://www.parallaxxtransformations.com/book-a-call-with-daniel-lawson">Book a Call</a>
-      <a href="https://www.parallaxxtransformations.com/reconnect-you-podcast-with-daniel-lawson">Reconnect You Podcast</a>
+      <!-- POINTS STRAIGHT AT YOUTUBE, 1 Sep 2026. It used to point at
+           /reconnect-you-podcast-with-daniel-lawson, which 301s to the home
+           page -- so the link sat dead while the thing it names was one row
+           above it in the socials. There is no podcast page to build: all the
+           old Wix page ever held was a description and a be-a-guest form. The
+           podcast lives on YouTube, so the link goes there and is marked
+           external like GIVE IT ALL. The old URL still redirects there too,
+           for anything linking it from show notes. -->
+      <a class="ext" href="https://www.youtube.com/@ReconnectYou1/featured" target="_blank" rel="noopener">Reconnect You Podcast<span class="mk" aria-hidden="true">&#8599;</span></a>
       <a href="https://www.parallaxxtransformations.com/parallaxx-perspectives-podcast">Perspectives Podcast</a>
       <a href="https://www.parallaxxtransformations.com/blog">Blog</a>
       <a href="https://www.parallaxxtransformations.com/ptjournal">Progress Journal</a>

@@ -1594,6 +1594,140 @@ parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
   }
 
 
+
+  /* ══════════════ v10 additions · 2 September 2026 ══════════════════════
+     Four new sections and one new block inside the offer card. Nothing
+     here invents a component: The Promise and One Intention share a
+     single device used exactly twice, and How It Works and After Four
+     Weeks both reuse .archetype-grid, the numbered card row that What
+     This Isn't already uses. Two identical grids in one scroll is a
+     rhythm; three different ones is a page that cannot decide.
+     ═══════════════════════════════════════════════════════════════════ */
+
+  /* THE PROMISE and ONE INTENTION. One display sentence, one lighter
+     line under it. The Promise sits between the hero and the VSL, so it
+     runs on black and leans on the hero above it rather than opening
+     with its own eyebrow. One Intention sits between two dark sections,
+     so it takes the bracketed treatment The Trap uses. */
+  #trw-page #promise   { background: var(--trw-black); text-align: center; padding: 60px 0 56px; }
+  #trw-page #intention { background: var(--trw-dark); text-align: center; padding: 64px 0;
+                         border-top: 1px solid var(--trw-border);
+                         border-bottom: 1px solid var(--trw-border); }
+  #trw-page .promise-line {
+    font-family: var(--trw-head); font-size: clamp(25px, 3.8vw, 40px); font-weight: 400;
+    color: var(--trw-cream); line-height: 1.18; letter-spacing: -0.018em;
+    max-width: 800px; margin: 0 auto; text-wrap: balance;
+  }
+  #trw-page .promise-sub {
+    font-family: var(--trw-head); font-size: clamp(16px, 1.9vw, 21px); font-weight: 300;
+    color: var(--trw-muted); line-height: 1.4; margin: 18px auto 0; max-width: 640px;
+  }
+  #trw-page #intention .overline { margin-bottom: 18px; }
+
+  /* HOW IT WORKS · THE ROUTE ROW.
+     Not .archetype-grid. That component reads as navy at the top of this
+     file and is re-themed for cream several hundred lines further down,
+     where What This Isn't and the bio now live -- so on navy it renders
+     as a white card wash with bronze numerals and ink labels, which is
+     to say invisible. This is the same anatomy for the ground it is
+     actually on: a hairline over the row, a gold segment over each
+     column, an outlined numeral, a tracked label. Same structure, other
+     side of the horizon line. */
+  #trw-page #how { background: var(--trw-black); padding: 72px 0;
+                   border-bottom: 1px solid var(--trw-border); }
+  #trw-page #how .section-head { text-align: center; margin-bottom: 6px; }
+  #trw-page #how .pull-line { margin-top: 38px; }
+  #trw-page .route-row {
+    list-style: none; margin: clamp(26px,3vw,34px) 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid rgba(232,198,95,.26);
+  }
+  #trw-page .route-step {
+    position: relative; padding: 24px 26px 6px;
+    transition: transform .45s cubic-bezier(.2,.7,.3,1);
+  }
+  #trw-page .route-step + .route-step { border-left: 1px solid rgba(232,198,95,.14); }
+  #trw-page .route-step::after {
+    content: ""; position: absolute; top: 0; left: 26px; width: 26px; height: 2px;
+    background: rgba(232,198,95,.7);
+    transition: width .45s cubic-bezier(.2,.7,.3,1), background .45s ease;
+  }
+  #trw-page .route-step:first-child::after { left: 0; }
+  #trw-page .route-step:hover { transform: translateY(-4px); }
+  #trw-page .route-step:hover::after { width: 46px; background: var(--trw-gold); }
+  #trw-page .route-fig {
+    display: block; font-family: var(--trw-head);
+    font-size: clamp(30px,2.9vw,42px); font-weight: 300; line-height: 1.1;
+    color: rgba(232,198,95,.5); margin-bottom: 10px;
+  }
+  @supports (-webkit-text-stroke: 1px currentColor) {
+    #trw-page .route-fig { color: transparent; -webkit-text-stroke: 1.1px rgba(232,198,95,.5); }
+  }
+  #trw-page .route-step h3 {
+    font-family: var(--trw-body); font-size: .7rem; font-weight: 700;
+    letter-spacing: .2em; text-transform: uppercase; line-height: 1.35;
+    color: var(--trw-gold); margin: 0 0 10px;
+  }
+  #trw-page .route-step p { font-size: 15px; line-height: 1.7; color: var(--trw-text); }
+  #trw-page .how-system {
+    margin-top: 22px; text-align: center;
+    font-family: var(--trw-body); font-size: 12px; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--trw-muted);
+  }
+
+  /* AFTER FOUR WEEKS · THE SPINE.
+     The Standard's lit vertical spine, reused. It is the current navy
+     component for a list of stated things, and it carries no numerals --
+     which is right here, because these are three parallel ways on rather
+     than three ordered steps. The offer sits between the two spines. */
+  #trw-page #after { background: var(--trw-black); padding: 72px 0;
+                     border-bottom: 1px solid var(--trw-border); }
+  #trw-page #after .section-head { text-align: center; margin-bottom: 6px; }
+  #trw-page #after h2 { font-size: clamp(23px, 3vw, 34px); }
+  #trw-page #after .values-grid { max-width: 620px; margin-left: auto; margin-right: auto; }
+  #trw-page #after .value-card h3 { font-size: clamp(19px,1.8vw,26px); }
+
+  /* THE FOUR WEEKS, INSIDE THE OPEN CARD. The open session is the only
+     decision on this page, so what happens if she stays is stated here,
+     above the inclusions, rather than as a second offer with a headline
+     of its own. */
+  #trw-page .open-stay { padding: 22px 36px 0; text-align: center; }
+  #trw-page .open-stay-h {
+    font-family: var(--trw-head); font-size: 21px; font-weight: 400;
+    color: var(--trw-cream); line-height: 1.25;
+  }
+  #trw-page .open-stay-s {
+    font-family: var(--trw-body); font-size: 14px; font-weight: 500;
+    color: var(--trw-gold); line-height: 1.5; margin-top: 8px;
+  }
+  /* The lead grew from two short lines to one sentence. 480px broke it
+     into four. */
+  #trw-page #pricing .lead { max-width: 580px; }
+  #trw-page .pa-roll { display: block; margin-top: 7px; color: var(--trw-muted); }
+
+  /* THE CLOSE IS NOW A SENTENCE, not three words, and 64px put it on
+     four lines on a laptop. */
+  #trw-page #cta-final h2 { font-size: clamp(27px, 4vw, 44px); line-height: 1.16; }
+
+  @media (max-width: 760px) {
+    #trw-page #promise, #trw-page #intention { padding: 46px 0; }
+    #trw-page #how, #trw-page #after { padding: 52px 0; }
+    #trw-page .route-row { grid-template-columns: 1fr; }
+    #trw-page .route-step { padding: 20px 0 6px; }
+    #trw-page .route-step + .route-step { border-left: none; }
+    #trw-page .route-step::after { left: 0; }
+    #trw-page .route-fig { font-size: 30px; }
+    #trw-page .open-stay { padding: 18px 24px 0; }
+    #trw-page .open-stay-h { font-size: 18px; }
+    #trw-page .open-stay-s { font-size: 13px; }
+    #trw-page .how-system { font-size: 10.5px; letter-spacing: 0.1em; }
+  }
+  @media (max-width: 560px) {
+    #trw-page #cta-final h2 { font-size: 25px; }
+    #trw-page .promise-line { font-size: 22px; }
+    #trw-page .promise-sub { font-size: 15px; }
+  }
+
 #trw-page .anim, #trw-page .anim-scale, #trw-page .anim-left, #trw-page .anim-right,
 #trw-page .hero-kicker, #trw-page #hero h1, #trw-page .hero-tagline,
 #trw-page #hero .btn, #trw-page .hero-rule {
@@ -1612,7 +1746,7 @@ parallaxx-reconnected-woman {
   max-height: none !important;
 }
 `;
-  var HTML = `<div id="trw-page" data-open-at="2026-09-08T08:30:00+02:00">
+  var HTML = `<div id="trw-page" data-open-at="2026-09-15T08:30:00+02:00">
 <parallaxx-nav active="women"></parallaxx-nav>
 
 
@@ -1621,8 +1755,15 @@ parallaxx-reconnected-woman {
     <h1>The<br><span class="accent">Reconnected</span><br>Woman</h1>
     <p class="hero-tagline">You've competed with men. Led men. Carried men.<br><strong>The masculine is provided. You don't have to, for a change.</strong></p>
     <button class="btn btn--gold" data-trw-modal>Come To The Open Session</button>
-    <p class="hero-open">Next open session &nbsp;&middot;&nbsp; Tuesday 8 September <span class="ho-time">&nbsp;&middot;&nbsp; 08:30 CET</span> &nbsp;&middot;&nbsp; <span class="js-open-count"></span></p>
-    <p class="hero-rule">Real Integrity &nbsp;&middot;&nbsp; Deep Self-Trust &nbsp;&middot;&nbsp; True Connection</p>
+    <p class="hero-open">Next open session &nbsp;&middot;&nbsp; Tuesday 15 September <span class="ho-time">&nbsp;&middot;&nbsp; 08:30 CET</span> &nbsp;&middot;&nbsp; <span class="js-open-count"></span></p>
+  </div>
+</section>
+
+
+<section id="promise">
+  <div class="container">
+    <p class="promise-line anim">Work out what you want, and ask for it in four weeks.</p>
+    <p class="promise-sub anim anim-d1">Without slowing down or doing less.</p>
   </div>
 </section>
 
@@ -1687,6 +1828,36 @@ parallaxx-reconnected-woman {
       </div>
     </div>
     <p class="pull-line anim anim-d3">So this is about doing different.</p>
+    <p class="cta-secondary anim anim-d3">Not ready? <a href="https://www.parallaxxtransformations.com/priority-audit" target="_top">Take the Priority Audit</a>. Ten minutes to find out which priority gives you the most return.</p>
+  </div>
+</section>
+
+
+<section id="how">
+  <div class="container-wide">
+    <div class="section-head anim">
+      <span class="overline">How It Works</span>
+      <div class="divider"></div>
+    </div>
+    <ol class="route-row">
+      <li class="route-step anim anim-d1">
+        <span class="route-fig" aria-hidden="true">01</span>
+        <h3>Work Out What You Want</h3>
+        <p>The personal unmet values and needs.</p>
+      </li>
+      <li class="route-step anim anim-d2">
+        <span class="route-fig" aria-hidden="true">02</span>
+        <h3>Prioritising Yourself</h3>
+        <p>Asking for, and declining, with real intention.</p>
+      </li>
+      <li class="route-step anim anim-d3">
+        <span class="route-fig" aria-hidden="true">03</span>
+        <h3>Your Outcome In Reality</h3>
+        <p>Not your assumption of it.</p>
+      </li>
+    </ol>
+    <p class="pull-line anim">A simple outcome you already know you should have.<br>So why haven't you?</p>
+    <p class="how-system anim">The Relational Connection System&trade; &mdash; vision, values, velocity.</p>
   </div>
 </section>
 
@@ -1724,8 +1895,8 @@ parallaxx-reconnected-woman {
       <div class="archetype-card anim anim-d3">
         <div class="archetype-num" aria-hidden="true">03</div>
         <div class="archetype-body">
-          <h3 class="archetype-label">Not A Coaching Program</h3>
-          <p>Except the coaching you give yourself.</p>
+          <h3 class="archetype-label">Not A Friendly Coffee Chat</h3>
+          <p>No deflection into talking about other people.</p>
         </div>
       </div>
     </div>
@@ -1832,7 +2003,6 @@ parallaxx-reconnected-woman {
           <span class="tag">ICG Accredited</span>
           <span class="tag">6 Years Coaching</span>
           <span class="tag">Global Facilitator</span>
-          <span class="tag">Relational Connection System&trade;</span>
         </div>
       </div>
     </div>
@@ -1886,10 +2056,19 @@ parallaxx-reconnected-woman {
 </section>
 
 
+<section id="intention">
+  <div class="container">
+    <span class="overline anim">One Intention</span>
+    <p class="promise-line anim anim-d1">An outcome specifically for you.</p>
+    <p class="promise-sub anim anim-d2">And the line you'll hold to meet it.</p>
+  </div>
+</section>
+
+
 <section id="pricing">
   <div class="container">
-    <h2>First Session On Us</h2>
-    <p class="lead">The first session of every month is open.<br>Experience the value then decide.</p>
+    <h2>The Open Session</h2>
+    <p class="lead">The first session of every month is open. Come, sit in it, and decide from the session rather than from this page.</p>
 
     <!-- ONE CARD, ONE ASK. Two cards asked her to choose between the
          free session and the paid month before she had been to either,
@@ -1901,10 +2080,14 @@ parallaxx-reconnected-woman {
     <div class="open-card anim-scale">
       <div class="open-top">
         <div class="open-amount">Free</div>
-        <div class="open-when">Tuesday 8 September &middot; 08:30 CET &middot; 14:30 Bali</div>
+        <div class="open-when">Tuesday 15 September &middot; 08:30 CET / 14:30 GMT+8<br>Online, wherever you are</div>
         <span class="open-count js-open-count"></span>
       </div>
 
+      <div class="open-stay">
+        <p class="open-stay-h">Stay, and here's the four weeks.</p>
+        <p class="open-stay-s">Work out what you want, and ask for it.</p>
+      </div>
 
       <ul class="price-features">
         <li>One live session a week, in four-week cycles</li>
@@ -1918,11 +2101,36 @@ parallaxx-reconnected-woman {
         <button class="btn btn--gold btn--full" data-trw-modal>Register For The Open Session</button>
       </div>
 
-      <p class="open-gate">There's a short application form as spaces are limited, and we want to ensure best mutual fit for everyone.</p>
-      <p class="price-after"><strong>&euro;59 per month</strong> if you stay after the open session. Cancel anytime.</p>
+      <p class="open-gate">The short application first is to ensure a strong mutual fit, for you and for our community.</p>
+      <p class="price-after"><strong>&euro;89 a month</strong>, and your membership price is grandfathered. It never increases as long as you stay.<span class="pa-roll">Memberships roll over monthly. Cancel anytime.</span></p>
     </div>
   </div>
 </section>
+
+<section id="after">
+  <div class="container">
+    <div class="section-head anim">
+      <span class="overline">After Four Weeks</span>
+      <h2>You'll own a new experience of your life.</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="values-grid">
+      <div class="value-card anim anim-d1">
+        <h3>Continue to build upon it</h3>
+        <p>Build the reps, with the same one or a different one.</p>
+      </div>
+      <div class="value-card anim anim-d2">
+        <h3>Continue more personalised</h3>
+        <p>Credit your membership to personal 1:1 access.</p>
+      </div>
+      <div class="value-card anim anim-d3">
+        <h3>Continue alone</h3>
+        <p>Take what you've gained, and celebrate your wins.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <section id="faq">
   <div class="container-wide">
@@ -1958,7 +2166,7 @@ parallaxx-reconnected-woman {
           <span class="faq-q">Can I come once before I decide?</span>
           <span class="faq-ico">+</span>
         </button>
-        <div class="faq-body"><div class="faq-body-inner"><p>Yes. The first session of every month is open and there's no charge for it. Come, sit in it, and decide from the room rather than from this page. After that it's &euro;59 a month, and the women who commit and turn up get the most out of it.</p></div></div>
+        <div class="faq-body"><div class="faq-body-inner"><p>Yes. The first session of every month is open and there's no charge for it. Come, sit in it, and decide from the room rather than from this page. After that it's &euro;89 a month, and you're grandfathered: your price never increases as long as you stay.</p></div></div>
       </div>
       <div class="faq-item anim">
         <button class="faq-btn" type="button">
@@ -1993,7 +2201,7 @@ parallaxx-reconnected-woman {
           <span class="faq-q">Are there upsells coming?</span>
           <span class="faq-ico">+</span>
         </button>
-        <div class="faq-body"><div class="faq-body-inner"><p>No. There's a deeper path through 1:1 work in the Reconnect Program if you ever want it, and your time here comes off the cost.</p></div></div>
+        <div class="faq-body"><div class="faq-body-inner"><p>No. There's the 1:1 Reconnect Program if you decide you want more, faster, deeper, and your membership investment is discounted from that. Same work, same direction. More personal.</p></div></div>
       </div>
     </div>
   </div>
@@ -2002,10 +2210,9 @@ parallaxx-reconnected-woman {
 <section id="cta-final">
   <div class="container">
     <span class="overline anim">Ready?</span>
-    <h2 class="anim anim-d1">Come back to you.</h2>
-    <p class="sub anim anim-d2">Next open session Tuesday 8 September. Free to attend, short application form first.</p>
+    <h2 class="anim anim-d1">Work out what you want,<br>and ask for it in four weeks.</h2>
+    <p class="sub anim anim-d2">Next open session Tuesday 15 September. Free to attend, short application form first.</p>
     <button class="btn btn--gold anim anim-d3" data-trw-modal>Register For The Open Session</button>
-    <p class="cta-secondary anim anim-d3">Not ready? <a href="https://www.parallaxxtransformations.com/priority-audit" target="_top">Take the Priority Audit</a>. Ten minutes to find out which priority will give you the most return.</p>
   </div>
 </section>
 <parallaxx-footer></parallaxx-footer>

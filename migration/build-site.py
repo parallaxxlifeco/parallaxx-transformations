@@ -129,11 +129,14 @@ ROUTES = [
         bundle="parallaxx-reconnected-woman.js",
         bg="#04122A",
         title="RECONNECTED WOMAN | Parallaxx Transformations",
-        desc="For women done abandoning themselves to keep it all together. An Inner Circle for "
-             "high-achieving women coming back into integrity. By application only.",
+        # "By application only" was the old offer. The page now leads with a
+        # free open session on the first Tuesday of each month, and the
+        # application is a short form behind it rather than the gate.
+        desc="Work out what you want, and ask for it in four weeks. A room of high-performing "
+             "women, held by Daniel Lawson. Come to the free open session first.",
         og_title="RECONNECTED WOMAN | Parallaxx Transformations",
-        og_desc="For women done abandoning themselves to keep it all together. An Inner Circle for "
-                "high-achieving women coming back into integrity. By application only.",
+        og_desc="Work out what you want, and ask for it in four weeks. A room of high-performing "
+                "women, held by Daniel Lawson. Come to the free open session first.",
         og_img="img/og-reconnected-woman.png",
     ),
     dict(

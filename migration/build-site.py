@@ -381,7 +381,7 @@ STATIC_FILES = [
     "og-priority-audit.jpg",
     "og-quiz.jpg",
 ]
-STATIC_DIRS = ["covers"]
+STATIC_DIRS = ["covers", "audio"]
 
 
 # ── STRUCTURED DATA (JSON-LD) ───────────────────────────────────────────

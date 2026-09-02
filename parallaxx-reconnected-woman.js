@@ -1705,6 +1705,91 @@ parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
   #trw-page #pricing .lead { max-width: 580px; }
   #trw-page .pa-roll { display: block; margin-top: 7px; color: var(--trw-muted); }
 
+  /* LISTEN · A TRANSPORT, NOT <audio controls>.
+     The native widget is a light grey pill that Chrome, Safari and Firefox
+     each draw differently and none of them let you restyle past the edges.
+     On this ground it reads as a browser artefact dropped into the page.
+     The page already has a play affordance -- the gold ring over both
+     videos -- so the audio borrows it, and the section stops announcing
+     that it is a different kind of media from the two above it. */
+  #trw-page #listen {
+    background: var(--trw-dark); padding: 72px 0;
+    border-top: 1px solid var(--trw-border);
+    border-bottom: 1px solid var(--trw-border);
+  }
+  #trw-page #listen .section-head { text-align: center; margin-bottom: 16px; }
+  #trw-page #listen h2 { font-size: clamp(24px,3.2vw,38px); }
+  #trw-page #listen .preframe { color: var(--trw-muted); font-size: 16px; }
+
+  #trw-page .aud {
+    margin: clamp(26px,3vw,34px) 0 0;
+    background: var(--trw-card); border: 1px solid var(--trw-border);
+    padding: clamp(20px,2.4vw,26px);
+    position: relative; overflow: hidden;
+  }
+  #trw-page .aud::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--trw-gold-dark), var(--trw-gold), var(--trw-gold-dark));
+  }
+  #trw-page .aud-row { display: flex; align-items: center; gap: clamp(16px,2vw,22px); }
+  #trw-page .aud-play {
+    flex: 0 0 auto; width: 62px; height: 62px; padding: 0;
+    background: none; border: none; border-radius: 50%; cursor: pointer;
+    transition: transform .3s ease;
+  }
+  #trw-page .aud-play svg { display: block; width: 100%; height: 100%; }
+  #trw-page .aud-play:hover { transform: scale(1.06); }
+  #trw-page .aud-play:focus-visible { outline: 2px solid var(--trw-gold); outline-offset: 3px; }
+  /* Pause bars swap in for the triangle while it plays, so the one control
+     says what it will do next rather than what it is. */
+  #trw-page .aud .aud-bars { display: none; }
+  #trw-page .aud.is-playing .aud-tri { display: none; }
+  #trw-page .aud.is-playing .aud-bars { display: block; }
+
+  #trw-page .aud-body { flex: 1 1 auto; min-width: 0; }
+  #trw-page .aud-title {
+    font-family: var(--trw-body); font-size: 14px; font-weight: 500;
+    color: var(--trw-cream); line-height: 1.45; margin-bottom: 6px;
+  }
+  /* THE BAR IS 4px. THE THING YOU CLICK IS 22px.
+     Drawn at 4 and hit at 22, with the rail as a ::before rather than the
+     element's own background. A 4px-tall seek target is roughly a fifth of
+     the 24px minimum a thumb can reliably land on, and in a headless click
+     test at the midpoint it seeked to 0:00 -- which is what it would do to
+     anyone on a phone trying to skip forward. */
+  #trw-page .aud-track {
+    position: relative; height: 22px; cursor: pointer; background: none;
+  }
+  #trw-page .aud-track::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 50%;
+    transform: translateY(-50%); height: 4px; border-radius: 2px;
+    background: rgba(232,198,95,.16);
+  }
+  #trw-page .aud-track:focus-visible { outline: 2px solid var(--trw-gold); outline-offset: 2px; }
+  #trw-page .aud-fill {
+    position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+    height: 4px; width: 0; border-radius: 2px; background: var(--trw-gold);
+  }
+  /* The play head, so the bar says where you are and not only how far. */
+  #trw-page .aud-fill::after {
+    content: ""; position: absolute; right: -4px; top: 50%;
+    transform: translateY(-50%); width: 9px; height: 9px; border-radius: 50%;
+    background: var(--trw-gold); box-shadow: 0 0 0 4px rgba(232,198,95,.16);
+    opacity: 0; transition: opacity .25s ease;
+  }
+  #trw-page .aud.is-playing .aud-fill::after,
+  #trw-page .aud-track:hover .aud-fill::after { opacity: 1; }
+  #trw-page .aud-meta {
+    font-family: var(--trw-body); font-size: 11px; font-weight: 600;
+    letter-spacing: .16em; text-transform: uppercase;
+    color: var(--trw-muted); margin-top: 6px;
+  }
+  #trw-page #listen .vsl-caption cite {
+    display: block; margin-top: 10px; font-style: normal;
+    font-family: var(--trw-body); font-size: 10.5px; font-weight: 700;
+    letter-spacing: .18em; text-transform: uppercase; color: var(--trw-muted);
+  }
+
   /* THE CLOSE IS NOW A SENTENCE, not three words, and 64px put it on
      four lines on a laptop. */
   #trw-page #cta-final h2 { font-size: clamp(27px, 4vw, 44px); line-height: 1.16; }
@@ -1723,6 +1808,11 @@ parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
     #trw-page .how-system { font-size: 10.5px; letter-spacing: 0.1em; }
   }
   @media (max-width: 560px) {
+    #trw-page #listen { padding: 52px 0; }
+    #trw-page .aud-row { gap: 14px; }
+    #trw-page .aud-play { width: 52px; height: 52px; }
+    #trw-page .aud-title { font-size: 13px; }
+    #trw-page .aud-meta { font-size: 10px; letter-spacing: .1em; }
     #trw-page #cta-final h2 { font-size: 25px; }
     #trw-page .promise-line { font-size: 22px; }
     #trw-page .promise-sub { font-size: 15px; }
@@ -2006,6 +2096,53 @@ parallaxx-reconnected-woman {
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+
+<section id="listen">
+  <div class="container">
+    <div class="section-head anim">
+      <span class="overline">Listen</span>
+      <h2>What kind of conversation to expect?</h2>
+      <div class="divider"></div>
+    </div>
+    <p class="preframe anim anim-d1">Here's a recent summary of us together.</p>
+
+    <figure class="aud anim anim-d1">
+      <audio id="trw-listen" preload="none" src="/audio/reconnected-woman-summary.mp3"></audio>
+      <div class="aud-row">
+        <button class="aud-play" id="trw-listen-play" type="button" aria-label="Play the session summary">
+          <svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="48" cy="48" r="46" fill="rgba(6,25,56,0.85)" stroke="#E8C65F" stroke-width="2"/>
+            <polygon class="aud-tri" points="40,30 68,48 40,66" fill="#E8C65F"/>
+            <g class="aud-bars" fill="#E8C65F">
+              <rect x="37" y="31" width="8" height="34" rx="1"/>
+              <rect x="51" y="31" width="8" height="34" rx="1"/>
+            </g>
+          </svg>
+        </button>
+        <div class="aud-body">
+          <p class="aud-title">The Reconnected Woman &mdash; a summary of a recent session</p>
+          <div class="aud-track" id="trw-listen-track" role="slider" tabindex="0"
+               aria-label="Seek through the summary"
+               aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <span class="aud-fill" id="trw-listen-fill"></span>
+          </div>
+          <p class="aud-meta"><span id="trw-listen-now">0:00</span> / 10:45 &nbsp;&middot;&nbsp; 5.2 MB</p>
+        </div>
+      </div>
+    </figure>
+
+    <p class="vsl-caption anim anim-d2">"Life is not about trying to feel better. Life is about feeling more."<cite>Daniel, in the session</cite></p>
+
+    <!-- TWO PARTICIPANT EXCERPTS BELONG HERE, one or two lines each, for the
+         reader who will not press play. They are NOT in the markup yet and
+         deliberately so: a visible "pending" box is a placeholder, and a
+         placeholder that reaches main reaches the live site -- which is
+         exactly what happened on the Speaking page. The build now fails on
+         that class of thing rather than shipping it. Add the quotes when the
+         consent is in, as .vsl-caption blocks alongside the one above. -->
   </div>
 </section>
 
@@ -2394,6 +2531,62 @@ parallaxx-reconnected-woman {
   }
   watch('parallaxx-nav');
   watch('parallaxx-footer');
+})();
+
+;
+
+(function () {
+  var a = document.getElementById('trw-listen');
+  if (!a) return;
+  var wrap  = document.querySelector('#trw-page .aud');
+  var btn   = document.getElementById('trw-listen-play');
+  var track = document.getElementById('trw-listen-track');
+  var fill  = document.getElementById('trw-listen-fill');
+  var now   = document.getElementById('trw-listen-now');
+  if (!wrap || !btn || !track || !fill || !now) return;
+
+  function fmt(s) {
+    if (!isFinite(s) || s < 0) s = 0;
+    var m = Math.floor(s / 60), r = Math.floor(s % 60);
+    return m + ':' + (r < 10 ? '0' : '') + r;
+  }
+  function paint() {
+    var d = a.duration;
+    var p = (isFinite(d) && d > 0) ? (a.currentTime / d) * 100 : 0;
+    fill.style.width = p + '%';
+    track.setAttribute('aria-valuenow', String(Math.round(p)));
+    now.textContent = fmt(a.currentTime);
+  }
+  function toggle() { if (a.paused) { a.play(); } else { a.pause(); } }
+
+  btn.addEventListener('click', toggle);
+  a.addEventListener('play',  function () { wrap.classList.add('is-playing');
+    btn.setAttribute('aria-label', 'Pause the session summary'); });
+  a.addEventListener('pause', function () { wrap.classList.remove('is-playing');
+    btn.setAttribute('aria-label', 'Play the session summary'); });
+  a.addEventListener('ended', function () { wrap.classList.remove('is-playing');
+    a.currentTime = 0; paint(); });
+  a.addEventListener('timeupdate', paint);
+
+  /* preload="none" means the 5MB file is not fetched until she asks for it,
+     which also means duration is NaN until then -- so the total in the meta
+     line is written into the markup and only the elapsed side is live. */
+  track.addEventListener('click', function (e) {
+    var d = a.duration;
+    if (!isFinite(d) || d <= 0) return;
+    var r = track.getBoundingClientRect();
+    var p = (e.clientX - r.left) / r.width;
+    a.currentTime = (p < 0 ? 0 : (p > 1 ? 1 : p)) * d;
+    paint();
+  });
+  track.addEventListener('keydown', function (e) {
+    var d = a.duration;
+    if (e.key === ' ' || e.key === 'Enter') { toggle(); e.preventDefault(); return; }
+    if (!isFinite(d) || d <= 0) return;
+    if (e.key === 'ArrowRight') { a.currentTime = Math.min(d, a.currentTime + 15); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft') { a.currentTime = Math.max(0, a.currentTime - 15); e.preventDefault(); }
+    paint();
+  });
 })();
 
   }

@@ -1605,7 +1605,36 @@ parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
      runs on black and leans on the hero above it rather than opening
      with its own eyebrow. One Intention sits between two dark sections,
      so it takes the bracketed treatment The Trap uses. */
-  #trw-page #promise   { background: var(--trw-black); text-align: center; padding: 60px 0 56px; }
+  /* THE PROMISE, IN THE HERO. Sized to hold one line down to tablet --
+     the standalone band capped it at 800px and the sentence wants about
+     890 at that size, so it was breaking every time. The rule above it
+     is the beat change: title and tagline are who you are, this is what
+     you get, and the button is directly under it. */
+  #trw-page .hero-div {
+    width: 40px; height: 1px; background: rgba(232,198,95,.55);
+    margin: 0 auto 26px;
+    animation: trwFadeUp 0.7s ease 0.45s both;
+  }
+  #trw-page .hero-promise {
+    font-family: var(--trw-head); font-weight: 400;
+    font-size: clamp(18px, 2.2vw, 31px); line-height: 1.2;
+    letter-spacing: -0.018em; color: var(--trw-cream);
+    max-width: 900px; margin: 0 auto; text-wrap: balance;
+    animation: trwFadeUp 0.7s ease 0.5s both;
+  }
+  #trw-page .hero-promise-sub {
+    font-family: var(--trw-head); font-weight: 300;
+    font-size: clamp(14px, 1.15vw, 17px); line-height: 1.4;
+    color: var(--trw-muted); max-width: 520px; margin: 12px auto 42px;
+    animation: trwFadeUp 0.7s ease 0.58s both;
+  }
+  /* The tagline gives up some of its bottom margin to the rule, and the
+     button steps back in the sequence to stay last. */
+  #trw-page .hero-tagline { margin-bottom: 30px; }
+  #trw-page #hero .btn { animation: trwFadeUp 0.7s ease 0.68s both; }
+
+  /* .promise-line and .promise-sub are NOT removed with the band. One
+     Intention is the pair to this sentence and still uses both. */
   #trw-page #intention { background: var(--trw-dark); text-align: center; padding: 64px 0;
                          border-top: 1px solid var(--trw-border);
                          border-bottom: 1px solid var(--trw-border); }
@@ -1791,7 +1820,10 @@ parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
   #trw-page #cta-final h2 { font-size: clamp(27px, 4vw, 44px); line-height: 1.16; }
 
   @media (max-width: 760px) {
-    #trw-page #promise, #trw-page #intention { padding: 42px 0; }
+    #trw-page #intention { padding: 42px 0; }
+    #trw-page .hero-tagline { margin-bottom: 24px; }
+    #trw-page .hero-div { margin-bottom: 20px; }
+    #trw-page .hero-promise-sub { margin-bottom: 34px; }
     #trw-page #how, #trw-page #after { padding: 46px 0; }
     #trw-page .route-row { grid-template-columns: 1fr; }
     #trw-page .route-step { padding: 20px 0 6px; }
@@ -1836,7 +1868,7 @@ parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
     /* VERTICAL. Recognition, The Trap, What This Isn't and Friends were
        tuned already and keep exactly what they were given -- 30 to 36.
        These are the ten that were still carrying the desktop 52. */
-    #trw-page #promise, #trw-page #vsl, #trw-page #how,
+    #trw-page #vsl, #trw-page #how,
     #trw-page #bio, #trw-page #listen, #trw-page #values,
     #trw-page #intention, #trw-page #pricing, #trw-page #after,
     #trw-page #faq { padding-top: 38px; padding-bottom: 38px; }
@@ -1892,16 +1924,11 @@ parallaxx-footer{display:block;position:relative;z-index:2;text-align:left}
   <div class="hero-inner">
     <h1>The<br><span class="accent">Reconnected</span><br>Woman</h1>
     <p class="hero-tagline">You've competed with men. Led men. Carried men.<br><strong>The masculine is provided. You don't have to, for a change.</strong></p>
+    <div class="hero-div" aria-hidden="true"></div>
+    <p class="hero-promise">Work out what you want, and ask for it in four weeks.</p>
+    <p class="hero-promise-sub">Without slowing down or doing less.</p>
     <button class="btn btn--gold" data-trw-modal>Come To The Open Session</button>
     <p class="hero-open">Next open session &nbsp;&middot;&nbsp; Tuesday 15 September <span class="ho-time">&nbsp;&middot;&nbsp; 08:30 CET</span> &nbsp;&middot;&nbsp; <span class="js-open-count"></span></p>
-  </div>
-</section>
-
-
-<section id="promise">
-  <div class="container">
-    <p class="promise-line anim">Work out what you want, and ask for it in four weeks.</p>
-    <p class="promise-sub anim anim-d1">Without slowing down or doing less.</p>
   </div>
 </section>
 

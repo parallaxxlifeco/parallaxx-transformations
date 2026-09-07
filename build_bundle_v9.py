@@ -43,7 +43,12 @@ CSS = "\n".join(styles)
 CSS += """
 #trw-page .anim, #trw-page .anim-scale, #trw-page .anim-left, #trw-page .anim-right,
 #trw-page .hero-kicker, #trw-page #hero h1, #trw-page .hero-tagline,
-#trw-page #hero .btn, #trw-page .hero-rule {
+#trw-page #hero .btn,
+/* The promise moved into the hero on 7 Sep and has to be listed here with
+   the rest of it, or it is the one element in the hero that fades in while
+   nothing around it does. .hero-rule came off the same day: that element no
+   longer exists, and a dead selector here reads as a rule still doing work. */
+#trw-page .hero-div, #trw-page .hero-promise, #trw-page .hero-promise-sub {
   opacity: 1 !important; transform: none !important; animation: none !important;
 }
 

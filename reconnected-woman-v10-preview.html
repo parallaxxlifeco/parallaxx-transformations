@@ -220,6 +220,18 @@
 /* ═══ 02 · VSL ═══ */
 .vidwrap{position:relative; aspect-ratio:16/9; margin-top:24px; background:#000; overflow:hidden}
 .vidwrap video{width:100%; height:100%; object-fit:cover; display:block}
+/* BIO — the reel is sized in HEIGHT, to sit near the height of the words, and
+   takes its width from that through aspect-ratio. Centred rather than top-
+   aligned, so the small residual difference reads as deliberate rather than as
+   a column that ran out of text. */
+.biogrid{display:flex; align-items:center; gap:clamp(26px,4vw,52px)}
+.biogrid > :first-child{flex:0 0 auto}
+.biogrid .reelwrap{height:clamp(280px,30vw,340px); width:auto}
+.biogrid > :last-child{flex:1 1 auto; min-width:0}
+@media(max-width:820px){
+  .biogrid{display:block}
+  .biogrid .reelwrap{height:auto; width:100%; max-width:280px; margin:0 0 26px}
+}
 .reelwrap{position:relative; aspect-ratio:9/16; background:#000; overflow:hidden; border-radius:2px}
 .reelwrap video{width:100%; height:100%; object-fit:cover; display:block}
 /* The gold play mark, same as the one already on the live page. */
@@ -871,7 +883,8 @@
     <p class="ey" data-r="far">Watch This First</p>
     <div data-r="mid">
      <div class="vidwrap" data-par="0.10">
-      <video id="rw-vsl" playsinline preload="metadata">
+      <video id="rw-vsl" playsinline preload="metadata"
+             poster="https://static.wixstatic.com/media/RW_VSL_POSTER~mv2.jpg">
         <source src="https://video.wixstatic.com/video/111174_c76bb418f85d49579bd90c14e6addf79/1080p/mp4/file.mp4" type="video/mp4">
       </video>
       <button class="vplay" type="button" aria-label="Play video"><svg viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="48" r="46" fill="rgba(6,25,56,0.85)" stroke="#E8C65F" stroke-width="2"/><polygon points="40,30 68,48 40,66" fill="#E8C65F"/></svg></button>
@@ -1040,7 +1053,7 @@
 <!-- ═══════════ 10 · BIO ═══════════ -->
 <section class="sec cream-2" id="bio">
   <div class="in">
-    <div style="display:grid; grid-template-columns:minmax(0,340px) minmax(0,1fr); gap:clamp(26px,5vw,64px); align-items:start" class="biogrid">
+    <div class="biogrid">
       <div data-r="mid">
        <div data-par="0.13">
         <div class="reelwrap">

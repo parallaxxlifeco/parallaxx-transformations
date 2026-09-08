@@ -12,7 +12,7 @@ Never hand-edit a generated `.js` bundle; edit the source and rerun its build.
 | Home, men | `Parallaxx Home Men.dc.html` | `build-home-men-bundle.py` | `parallaxx-home-men.js` · `parallaxx-home-men` | `index.html` |
 | The Reconnected Man | `The Reconnected Man.dc.html` | `build-reconnected-man-bundle.py` | `parallaxx-reconnected-man.js` · `parallaxx-reconnected-man` | `reconnected-man.html` |
 | Home, women | `Parallaxx Home Women.dc.html` | `build-home-women-bundle.py` | `parallaxx-home-women.js` · `parallaxx-home-women` | `home-women.html` |
-| The Reconnected Woman | `reconnected-woman-v9-preview.html` | `build_bundle_v9.py` | `parallaxx-reconnected-woman.js` · `parallaxx-reconnected-woman` | `reconnected-woman.html` |
+| The Reconnected Woman | `reconnected-woman-v10-preview.html` | `build_bundle_v10.py` | `parallaxx-reconnected-woman.js` · `parallaxx-reconnected-woman` | `reconnected-woman.html` |
 | The Priority Audit | `Priority Audit.dc.html` | `build-priority-audit-bundle.py` | `parallaxx-priority-audit.js` · `parallaxx-priority-audit` | `priority-audit.html` |
 | Contact | `Parallaxx Contact v4.dc.html` | `build-contact-bundle.py` | `parallaxx-contact.js` · `parallaxx-contact` | `contact.html` |
 | Privacy Policy | `Parallaxx Legal.dc.html` | `build-legal-bundles.py` | `parallaxx-privacy.js` · `parallaxx-privacy` | `privacy.html` |
@@ -63,7 +63,7 @@ python3 build-home-bundle.py
 python3 build-home-men-bundle.py
 python3 build-reconnected-man-bundle.py
 python3 build-home-women-bundle.py
-python3 build_bundle_v9.py
+python3 build_bundle_v10.py
 python3 build-priority-audit-bundle.py
 python3 build-contact-bundle.py
 python3 build-legal-bundles.py     # builds BOTH legal pages
@@ -82,9 +82,23 @@ needed a build of its own.
 
 ## Deploy
 
-In the Wix editor, place a Custom Element widget with the Source URL and Tag
-from the table above. Bump the `?v=` query in the preview harness on every
-deploy so the CDN and browser caches let go.
+**The site is no longer on Wix.** Cloudflare Pages builds every route from
+`migration/build-site.py --local` on each push to `main` and serves `dist/`,
+which is gitignored because the host builds it. So a deploy is a push:
+
+```
+python3 build_bundle_v10.py          # or whichever bundle you changed
+git add -A && git commit && git push
+```
+
+`build-site.py` is the only script guaranteed to run before a deploy, which is
+why the placeholder guard lives there rather than beside the thing it guards.
+It refuses to build while a page still carries an unfilled slot, a photo-brief
+box or a note addressed to Daniel.
+
+The old Wix instructions below are kept because the Custom Element wrapper is
+still how each bundle mounts — each route is a standalone page whose whole body
+is the element plus its bundle. Nothing is placed by hand in an editor any more.
 
 Header and footer differ by page. The men's home page and The Reconnected Man
 carry their own chrome, so the site Header and Footer are turned **off** for
@@ -171,8 +185,8 @@ and as of 14 Aug it no longer diverges: see below.
 ## The Reconnected Woman, and why its source is not a .dc.html
 
 This page is the exception to the rule at the top of this file. Its source of
-record is `reconnected-woman-v9-preview.html`, a plain page, and
-`build_bundle_v9.py` publishes it **as-is** into the light DOM rather than
+record is `reconnected-woman-v10-preview.html`, a plain page, and
+`build_bundle_v10.py` publishes it **as-is** into the light DOM rather than
 compiling it into a shadow root. That is deliberate: the page's CSS is scoped
 to `#trw-page` and its script uses `document.querySelector` throughout, so a
 shadow root would need every selector re-pointed, and a port is where details

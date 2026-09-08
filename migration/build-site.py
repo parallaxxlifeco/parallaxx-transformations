@@ -589,6 +589,14 @@ def head_html(r: dict) -> str:
 PLACEHOLDER_MARKERS = (
     "IMAGE_SLOT_",        # an unfilled slot token that survived a build
     'class="sp-slot"',    # a rendered slot box, which is what actually shipped
+    'class="ph"',         # the dashed photo-brief box used while a page is
+                          # being designed. Same shape of mistake as sp-slot:
+                          # it renders a coral box printing a brief addressed
+                          # to Daniel. Added 8 Sep with the v10 Reconnected
+                          # Woman port, which carried six of them.
+    'class="note"',       # the build-time annotation layer on the v10 source.
+                          # Hidden by CSS, which is exactly why it would ship
+                          # unnoticed if that CSS ever changed.
     "[CLIENT]",           # a note to Daniel, in visible copy. The Speaking
                           # page shipped one under its audience photograph
                           # reading 'Name the event and the year here'.

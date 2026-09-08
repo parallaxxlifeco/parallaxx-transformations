@@ -334,5 +334,17 @@
     "url": "https://static.wixstatic.com/media/e1784d_c305d407e8e046b6b9f20129ebf7ee40~mv2.jpg/v1/fill/w_147,h_67,al_c,q_80,usm_0.66_1.00_0.01,blur_2,enc_avif,quality_auto/e1784d_c305d407e8e046b6b9f20129ebf7ee40~mv2.jpg",
     "file": "img/an-audience-during-one-of-daniel-lawson-s-sessions.jpg",
     "src": "wix-archive/c305d407e8e046b6b9f20129ebf7ee40.jpg"
+  },
+  {
+    "url": "https://static.wixstatic.com/media/111174_74b26341d59e409799eed10e853ae4e7~mv2.png",
+    "file": "img/identity-challenge-poster.png"
+  },
+  {
+    "url": "https://video.wixstatic.com/video/111174_fe0f4187e6ec49828451a3e21ca58f1d/1080p/mp4/file.mp4",
+    "file": "video/identity-challenge.mp4"
+  },
+  {
+    "url": "https://static.wixstatic.com/media/RW_HERO_CIRCLE~mv2.jpg",
+    "file": "img/rw-hero-circle.jpg"
   }
 ]

@@ -365,9 +365,10 @@
 /* The not-ready exit sits at the objection, per your v2 note — but it is an
    exit, not part of the argument, so it is pushed clear and demoted. */
 .notready{
-  margin:clamp(38px,5vw,62px) 0 0; padding-top:20px;
+  margin:clamp(38px,5vw,62px) auto 0; padding-top:20px;
   border-top:1px solid var(--border);
   font-size:.88rem; color:var(--slate); max-width:62ch;
+  text-align:center;
 }
 .notready a{color:var(--coral-lift)}
 

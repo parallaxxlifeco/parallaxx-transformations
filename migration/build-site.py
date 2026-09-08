@@ -132,11 +132,17 @@ ROUTES = [
         # "By application only" was the old offer. The page now leads with a
         # free open session on the first Tuesday of each month, and the
         # application is a short form behind it rather than the gate.
-        desc="Work out what you want, and ask for it in four weeks. A room of high-performing "
-             "women, held by Daniel Lawson. Come to the free open session first.",
+        # "A room of high-performing women" was mine, not the page's -- the
+        # phrase appears nowhere on it. Both lines below are the page's own
+        # words now: the promise from the promise band, the og line from the
+        # hero sub.
+        desc="Work out what you want, and ask for it in four weeks, without slowing down or "
+             "doing less. A weekly online circle held by Daniel Lawson. The first session "
+             "of every month is free.",
         og_title="RECONNECTED WOMAN | Parallaxx Transformations",
-        og_desc="Work out what you want, and ask for it in four weeks. A room of high-performing "
-                "women, held by Daniel Lawson. Come to the free open session first.",
+        og_desc="You've competed with men. Led men. Carried men. The masculine is provided, and "
+                "you don't have to, for a change. Work out what you want, and ask for it in "
+                "four weeks.",
         og_img="img/og-reconnected-woman.png",
     ),
     dict(

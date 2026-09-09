@@ -627,7 +627,12 @@
    second, wider shadow is the navy the section already uses — it reads as a
    hairline of air between portrait and ring. */
 .voice img{
-  width:clamp(112px,13vw,152px); aspect-ratio:1/1; object-fit:cover;
+  /* height:auto matters. The width/height attributes on the img are there to
+     reserve the space before the file loads, but the browser maps them to
+     presentational width and height -- and with only width set in CSS, the
+     height stayed at the attribute's 280px while the width clamped to 152.
+     That is what turned the circles into ovals. */
+  width:clamp(112px,13vw,152px); height:auto; aspect-ratio:1/1; object-fit:cover;
   display:block; margin:0 auto; border-radius:50%;
   box-shadow:0 0 0 3px var(--navy), 0 0 0 4px var(--gold);
   filter:saturate(.9) brightness(.98);

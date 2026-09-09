@@ -61,7 +61,7 @@
 .ey{
   font-family:var(--head); font-size:.62rem; font-weight:800;
   letter-spacing:.24em; text-transform:uppercase;
-  color:var(--gold); margin:0 0 13px;
+  color:var(--gold); margin:0 0 13px; max-width:none;
 }
 .sec.cream .ey,.sec.cream-2 .ey{color:var(--bronze)}
 
@@ -372,6 +372,9 @@
   font-size:.88rem; color:var(--slate); max-width:62ch;
   text-align:center;
 }
+/* The second sentence is the explanation, not part of the offer, so it sits
+   under it rather than running on. */
+#rw-page .notready span{display:block; margin-top:2px}
 .notready a{color:var(--coral-lift)}
 
 /* ═══ 05 · HOW — the only earned sequence ═══ */
@@ -628,18 +631,38 @@
 #intention p{margin:0 auto; max-width:34ch; color:var(--mist)}
 
 /* ═══ 15 · PRICING ═══ */
+/* The two halves of the offer, side by side rather than stacked: what is free
+   this month on the left, what it becomes if she stays on the right. Gold marks
+   the free one; the membership is framed the same way but quieter. */
+.pricegrid{
+  display:grid; grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);
+  gap:clamp(20px,2.6vw,40px); align-items:stretch;
+  max-width:1000px; margin:clamp(28px,4vw,42px) auto 0; text-align:left;
+}
+@media(max-width:860px){ #rw-page .pricegrid{grid-template-columns:1fr; max-width:560px} }
 .opencard{
-  max-width:520px; margin:26px auto 0; background:var(--card);
+  max-width:none; margin:0; background:var(--card);
   border:1px solid var(--border); border-top:2px solid var(--gold);
   padding:26px 28px 28px; text-align:center;
+  display:flex; flex-direction:column; justify-content:center;
 }
 .opencard .free{
   font-family:var(--head); font-size:clamp(34px,5vw,54px); font-weight:700;
   color:var(--gold); line-height:1; margin-bottom:14px;
 }
 .opencard .when{font-family:var(--head); font-size:.95rem; font-weight:600; color:var(--cream)}
+/* Date on one line, clock on the next. Run together they broke after the
+   separator and left it hanging at the end of a line. */
+.opencard .when span{display:block; margin-top:3px; font-weight:500; color:var(--mist)}
 .opencard .where{font-size:.9rem; color:var(--slate); margin-top:4px}
-.stay{max-width:620px; margin:36px auto 0; padding-top:24px; border-top:1px solid var(--border)}
+.opencard .lede{
+  margin:18px 0 0; padding-top:16px; border-top:1px solid var(--border);
+  font-size:.95rem; max-width:none; text-wrap:pretty;
+}
+.stay{
+  max-width:none; margin:0; background:var(--card);
+  border:1px solid var(--border); padding:26px 28px 28px;
+}
 .stay h3{margin-bottom:8px}
 .stay{text-align:left}
 .stay ul{list-style:none; margin:22px 0 0; padding:0}
@@ -869,7 +892,7 @@
     </h1>
     <p class="sub" data-r="near"><span>You've competed with men. Led men. Carried men.</span><b>The masculine is provided.</b><b>You don't have to, for a change.</b></p>
     <button class="btn" type="button" data-trw-modal data-r="mid">Come To The Open Session</button>
-    <div class="next" data-r="far">Next open session &nbsp;&middot;&nbsp; Tuesday 15 September &nbsp;&middot;&nbsp; 08:30 CET</div>
+    <div class="next" data-r="far">Next open session &nbsp;&middot;&nbsp; Tuesday 22 September &nbsp;&middot;&nbsp; 08:30 CET</div>
 </div>
   <div class="cue">&darr;</div>
 </section>
@@ -943,7 +966,7 @@
       <p class="deadend">Same place</p>
       <p class="breakout">So this is about doing different.</p>
     </div>
-    <p class="notready">Not ready? <a href="#">Take the Priority Audit</a>. Ten minutes to find out which priority gives you the most return.</p>
+    <p class="notready">Not ready? <a href="#">Take the Priority Audit</a>.<span>Ten minutes to find out which priority gives you the most return.</span></p>
 </div>
 </section>
 
@@ -1100,14 +1123,13 @@
       </div>
     </div>
     <p class="pullquote" data-r="mid">"Life is not about trying to feel better. Life is about feeling more."</p>
-    <p class="dim" data-r="far" style="font-size:.85rem; margin-top:10px">Daniel, in the session</p>
 </div>
 </section>
 
 <!-- ═══════════ 12 · VOICES ═══════════ -->
 <section class="sec black" id="voices">
   <div class="in">
-    <h2 data-r="near">From women already in the work</h2>
+    <h2 data-r="near">From women inside</h2>
   </div>
 </section>
 
@@ -1140,13 +1162,14 @@
 <section class="sec dark" id="pricing" style="text-align:center">
   <div class="in">
     <h2 data-r="near" style="max-width:24ch; margin-left:auto; margin-right:auto">The first session of every month is open.</h2>
-    <p class="lede" data-r="mid" style="max-width:52ch; margin:0 auto">Come, sit in it, and decide from the session rather than from this page.</p>
-    <div class="opencard" data-r="mid">
+    <div class="pricegrid" data-r="mid">
+    <div class="opencard">
       <div class="free">Free</div>
-      <div class="when">Tuesday 15 September &middot; 08:30 CET / 14:30 GMT+8</div>
+      <div class="when">Tuesday 22 September<span>08:30 CET / 14:30 GMT+8</span></div>
       <div class="where">Online, wherever you are</div>
+      <p class="lede">Come, sit in it, and decide from the session rather than from this page.</p>
     </div>
-    <div class="stay" data-r="mid">
+    <div class="stay">
       <h3>Stay, and here's the four weeks.</h3>
       <p class="dim">Work out what you want, and ask for it.</p>
       <ul>
@@ -1157,6 +1180,7 @@
         <li>Complimentary 1:1 call on week 6</li>
       </ul>
       <p class="pricenote"><b>&euro;89 a month</b>, and your membership price is grandfathered. It never increases as long as you stay. Memberships roll over monthly. Cancel anytime.</p>
+    </div>
     </div>
     <div class="cta-row" data-r="mid">
       <button class="btn" type="button" data-trw-modal>Register For The Open Session</button>
@@ -1202,7 +1226,7 @@
   <div class="in">
     <p class="ey" data-r="far">Ready?</p>
     <h2 data-r="near" class="twoline">Work out what you want,<span>and ask for it in four weeks.</span></h2>
-    <p class="when" data-r="mid">Next open session Tuesday 15 September. Free to attend, short application form first.</p>
+    <p class="when" data-r="mid">Next open session Tuesday 22 September. Free to attend, short application form first.</p>
     <button class="btn" type="button" data-trw-modal data-r="mid">Register For The Open Session</button>
   </div>
 </section>

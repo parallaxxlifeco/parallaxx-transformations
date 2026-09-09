@@ -607,6 +607,53 @@
   display:flex; align-items:center; justify-content:center;
 }
 
+/* ═══ 12 · VOICES ═════════════════════════════════════════════
+   Three women, three kinds of proof: a boundary held, a thing finally
+   done, and what the ninety minutes changed. Portrait, then the words,
+   then who said them and what about. No card and no border — the page
+   has enough boxes, and a quote in a box reads as marketing rather
+   than as somebody talking. */
+.voices{
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-template-rows:auto auto auto auto;
+  column-gap:clamp(24px,3.2vw,50px); row-gap:0; margin-top:clamp(30px,4vw,46px);
+}
+@media(max-width:860px){
+  .voices{grid-template-columns:1fr; grid-template-rows:none; row-gap:40px; max-width:520px}
+  .voice{display:block !important}
+}
+/* Subgrid so the three names and the three context lines sit on the same line
+   across the row, whatever length each quote runs to. */
+.voice{margin:0; text-align:center; display:grid; grid-row:span 4; grid-template-rows:subgrid; align-content:start}
+/* Round, face-cropped, ringed in gold. The ring is a box-shadow rather than a
+   border so it sits outside the circle and never eats into the face, and the
+   second, wider shadow is the navy the section already uses — it reads as a
+   hairline of air between portrait and ring. */
+.voice img{
+  width:clamp(112px,13vw,152px); aspect-ratio:1/1; object-fit:cover;
+  display:block; margin:0 auto; border-radius:50%;
+  box-shadow:0 0 0 3px var(--navy), 0 0 0 4px var(--gold);
+  filter:saturate(.9) brightness(.98);
+}
+.voice blockquote{
+  margin:22px 0 0; font-family:var(--head); font-weight:500;
+  font-size:clamp(15px,1.5vw,17.5px); line-height:1.55; color:var(--cream);
+  text-wrap:pretty;
+}
+.voice .who{
+  margin:16px 0 0; font-family:var(--head); font-size:.62rem; font-weight:800;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--gold);
+}
+/* One line, always. The context is a caption, not a sentence to be read as
+   prose, and a caption that wraps stops looking like a caption. */
+.voice .about{
+  margin:6px auto 0; font-size:.78rem; line-height:1.5;
+  font-style:italic; color:var(--slate); max-width:32ch;
+}
+/* One line once there is room for one. No ellipsis at any width — a truncated
+   caption is worse than a wrapped one. */
+@media(min-width:1240px){ .voice .about{white-space:nowrap; max-width:100%} }
+
 /* ═══ 13 · VALUES — standards as held lines ═══ */
 .stds{margin:28px 0 0; border-top:1px solid var(--line-cream)}
 .std{
@@ -1182,16 +1229,32 @@
 </section>
 
 <!-- ═══════════ 12 · VOICES ═══════════ -->
-<!-- 12 · VOICES — held back until the three women have signed off on their
-     own words. The section shipped as a heading with nothing under it, which
-     read as a hole in the page. It goes back in, with the portraits and the
-     three quotes, the moment they say yes.
+<!-- ═══════════ 12 · VOICES ═══════════ -->
 <section class="sec black" id="voices">
   <div class="in">
     <h2 data-r="near">From women inside</h2>
+    <div class="voices" data-r="mid">
+      <figure class="voice">
+        <img src="https://static.wixstatic.com/media/RW_VOICE_CHRISTINE~mv2.jpg" alt="Christine" width="280" height="280" loading="lazy" decoding="async">
+        <blockquote>&ldquo;This time I stood my ground. He said it's the first time in fourteen years I'd really discussed something with him, and the first time he understood me.&rdquo;</blockquote>
+        <p class="who">Christine</p>
+        <p class="about">On ending a disagreement she'd normally have absorbed.</p>
+      </figure>
+      <figure class="voice">
+        <img src="https://static.wixstatic.com/media/RW_VOICE_DANI~mv2.jpg" alt="Dani" width="280" height="280" loading="lazy" decoding="async">
+        <blockquote>&ldquo;I bit the bullet. I'm not going to sit with this any longer. It's terrifying, and I feel very proud of myself.&rdquo;</blockquote>
+        <p class="who">Dani</p>
+        <p class="about">On the business she'd kept in the background for six years.</p>
+      </figure>
+      <figure class="voice">
+        <img src="https://static.wixstatic.com/media/RW_VOICE_JULIA~mv2.jpg" alt="Julia" width="280" height="280" loading="lazy" decoding="async">
+        <blockquote>&ldquo;I'm more tapped into myself, and because of that everybody around me can be more tapped into themselves.&rdquo;</blockquote>
+        <p class="who">Julia</p>
+        <p class="about">On what ninety minutes a week changed.</p>
+      </figure>
+    </div>
   </div>
 </section>
--->
 
 <!-- ═══════════ 13 · VALUES — standards as held lines ═══════════ -->
 <section class="sec cream" id="values">

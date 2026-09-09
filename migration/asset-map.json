@@ -350,5 +350,17 @@
   {
     "url": "https://static.wixstatic.com/media/RW_VSL_POSTER~mv2.jpg",
     "file": "img/rw-vsl-poster.jpg"
+  },
+  {
+    "url": "https://static.wixstatic.com/media/RW_VOICE_CHRISTINE~mv2.jpg",
+    "file": "img/voice-christine.jpg"
+  },
+  {
+    "url": "https://static.wixstatic.com/media/RW_VOICE_DANI~mv2.jpg",
+    "file": "img/voice-dani.jpg"
+  },
+  {
+    "url": "https://static.wixstatic.com/media/RW_VOICE_JULIA~mv2.jpg",
+    "file": "img/voice-julia.jpg"
   }
 ]

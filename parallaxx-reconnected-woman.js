@@ -588,7 +588,10 @@
   font-family:var(--head); font-size:1rem; font-weight:600; color:var(--cream);
   margin-bottom:16px;
 }
-#wave{display:block; width:100%; height:76px}
+#wave{display:block; width:100%; height:76px; cursor:pointer}
+#wave:focus-visible{outline:1px solid rgba(232,198,95,.7); outline-offset:4px}
+.player .play{line-height:1}
+.player.is-playing .play{background:rgba(232,198,95,.24)}
 .player .meta{
   display:flex; align-items:center; gap:16px; margin-top:14px;
   font-family:var(--head); font-size:.68rem; font-weight:700;
@@ -1117,10 +1120,13 @@
     <p class="lede" data-r="mid">Here's a recent summary of us together.</p>
     <div class="player" data-r="mid">
       <div class="t">The Reconnected Woman &mdash; a summary of a recent session</div>
-      <canvas id="wave" width="1200" height="152" aria-label="Waveform of the session summary"></canvas>
+      <audio id="rw-listen" preload="none" src="/audio/reconnected-woman-summary.mp3"></audio>
+      <canvas id="wave" width="1200" height="152" role="slider" tabindex="0"
+              aria-label="Seek through the session summary"
+              aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></canvas>
       <div class="meta">
-        <button class="play" type="button" aria-label="Play">&#9654;</button>
-        <span>0:00 / 10:45 &nbsp;&middot;&nbsp; 5.2 MB</span>
+        <button class="play" id="rw-listen-play" type="button" aria-label="Play the session summary">&#9654;</button>
+        <span><span id="rw-now">0:00</span> / 10:45 &nbsp;&middot;&nbsp; 5.2 MB</span>
       </div>
     </div>
     <p class="pullquote" data-r="mid">"Life is not about trying to feel better. Life is about feeling more."</p>
@@ -1516,47 +1522,110 @@
     ioV.observe(document.getElementById('stdList'));
   }
 
-  /* ── 11 · LISTEN · placeholder waveform ─────────────────────
-     Deterministic, so it looks like speech rather than noise.
-     Production: generate peaks from the real mp3 at build time. */
-  (function wave(){
+  /* ── 11 · LISTEN · the transport ─────────────────────────────
+     The waveform is the seek surface, not a picture of one. PEAKS are the
+     real thing: short-window RMS taken off audio/reconnected-woman-summary.mp3
+     with ffmpeg, 190 bars across 10:45, percentile-scaled so the loud
+     syllables still move at this width instead of averaging into a band.
+
+     preload="none" means the 5 MB file is not fetched until she asks for it,
+     which also means duration is NaN until then -- so the total in the meta
+     line is written into the markup and only the elapsed side is live. */
+  (function listen(){
     var c = document.getElementById('wave'); if(!c) return;
     var g = c.getContext('2d'); if(!g) return;
-    var W = c.width, H = c.height, mid = H / 2, n = 190, gap = W / n;
-    var PLAYED = 0.14;                       /* where the head sits */
+    var a    = document.getElementById('rw-listen');
+    var btn  = document.getElementById('rw-listen-play');
+    var now  = document.getElementById('rw-now');
+    var wrap = document.querySelector('#listen .player');
 
-    /* deterministic peaks, shaped so it reads as speech, not noise */
-    var s = 20250915, peaks = [];
-    for(var i = 0; i < n; i++){
-      s = (s * 1103515245 + 12345) % 2147483648;
-      var phrase = 0.55 + 0.45 * Math.sin(i / 13) * Math.sin(i / 4.5);
-      peaks.push(Math.max(3, (0.22 + (s / 2147483648) * 0.78) * phrase * (H * 0.86)));
-    }
+    var PEAKS = [0.378,0.16,0.317,0.562,0.347,0.518,0.675,0.495,0.581,0.362,0.343,0.16,0.166,0.35,0.334,0.16,0.32,0.305,0.322,0.302,0.16,0.31,0.526,0.207,0.515,0.345,0.598,0.334,0.212,0.315,0.681,0.522,0.685,0.536,0.465,0.31,0.556,1,0.583,0.831,0.644,0.638,0.562,0.607,0.451,0.503,0.544,0.266,0.568,0.34,0.569,0.266,0.802,0.477,0.552,0.572,0.846,0.877,0.419,0.377,0.412,0.16,0.687,0.483,0.67,0.512,0.914,0.51,0.5,0.573,0.304,0.48,0.416,0.736,0.494,0.681,0.812,0.656,0.896,1,0.68,1,0.387,0.24,0.459,0.283,0.408,0.692,0.662,0.51,0.603,0.395,0.821,0.319,0.468,0.624,0.604,0.839,0.812,0.498,0.661,0.298,0.835,0.537,0.601,0.616,0.45,0.305,0.263,0.569,0.16,0.326,0.704,1,0.661,0.414,0.673,0.413,0.288,0.313,0.38,0.457,0.394,0.416,0.293,0.35,0.503,0.392,0.425,0.216,0.16,0.64,0.637,0.429,0.536,0.652,0.488,0.563,0.372,0.83,0.589,0.559,0.533,0.213,0.344,0.388,0.227,0.615,0.454,0.586,0.333,0.546,1,0.726,0.562,0.516,0.813,0.317,1,0.484,0.552,0.255,0.997,0.322,0.537,0.225,0.332,0.19,0.337,0.49,0.3,0.258,0.389,0.458,0.367,0.36,0.416,0.237,0.274,0.19,0.184,0.298,0.16,0.467,0.461,0.346,0.428,0.389,0.481,0.411];
+    var W = c.width, H = c.height, mid = H / 2, n = PEAKS.length, gap = W / n;
+    var bars = [];
+    for(var i = 0; i < n; i++) bars.push(Math.max(3, PEAKS[i] * H * 0.86));
 
-    function paint(upto){
+    var grown = 0;      /* 0..1, the arrival draw */
+    var played = 0;     /* 0..1, how far she has listened */
+
+    function paint(){
       g.clearRect(0, 0, W, H);
-      var lim = Math.floor(n * upto);
+      var lim = Math.floor(n * grown);
       for(var i = 0; i < lim; i++){
-        g.fillStyle = (i < n * PLAYED) ? 'rgba(232,198,95,.85)' : 'rgba(177,191,215,.42)';
-        g.fillRect(i * gap, mid - peaks[i] / 2, Math.max(1.5, gap - 2.4), peaks[i]);
+        g.fillStyle = (i < n * played) ? 'rgba(232,198,95,.85)' : 'rgba(177,191,215,.42)';
+        g.fillRect(i * gap, mid - bars[i] / 2, Math.max(1.5, gap - 2.4), bars[i]);
       }
     }
 
-    if(reduce || noIO){ paint(1); return; }
-    paint(0);
+    function fmt(s){
+      if(!isFinite(s) || s < 0) s = 0;
+      var m = Math.floor(s / 60), r = Math.floor(s % 60);
+      return m + ':' + (r < 10 ? '0' : '') + r;
+    }
+    function sync(){
+      var d = a ? a.duration : 0;
+      played = (isFinite(d) && d > 0) ? a.currentTime / d : 0;
+      if(now) now.textContent = fmt(a ? a.currentTime : 0);
+      c.setAttribute('aria-valuenow', String(Math.round(played * 100)));
+      paint();
+    }
+    function toggle(){
+      if(!a) return;
+      if(a.paused){ var pr = a.play(); if(pr && pr.catch) pr.catch(function(){}); }
+      else { a.pause(); }
+    }
+    function seekTo(p){
+      if(!a) return;
+      var d = a.duration;
+      if(!isFinite(d) || d <= 0) return;
+      a.currentTime = (p < 0 ? 0 : (p > 1 ? 1 : p)) * d;
+      sync();
+    }
+
+    if(btn) btn.addEventListener('click', toggle);
+    if(a){
+      a.addEventListener('play', function(){
+        if(wrap) wrap.classList.add('is-playing');
+        if(btn){ btn.innerHTML = '&#10073;&#10073;'; btn.setAttribute('aria-label', 'Pause the session summary'); }
+      });
+      a.addEventListener('pause', function(){
+        if(wrap) wrap.classList.remove('is-playing');
+        if(btn){ btn.innerHTML = '&#9654;'; btn.setAttribute('aria-label', 'Play the session summary'); }
+      });
+      a.addEventListener('ended', function(){
+        if(wrap) wrap.classList.remove('is-playing');
+        if(btn){ btn.innerHTML = '&#9654;'; btn.setAttribute('aria-label', 'Play the session summary'); }
+        a.currentTime = 0; sync();
+      });
+      a.addEventListener('timeupdate', sync);
+      a.addEventListener('loadedmetadata', sync);
+    }
+    c.addEventListener('click', function(e){
+      var r = c.getBoundingClientRect();
+      seekTo((e.clientX - r.left) / r.width);
+    });
+    c.addEventListener('keydown', function(e){
+      if(e.key === ' ' || e.key === 'Enter'){ toggle(); e.preventDefault(); return; }
+      if(!a) return;
+      var d = a.duration; if(!isFinite(d) || d <= 0) return;
+      if(e.key === 'ArrowRight'){ a.currentTime = Math.min(d, a.currentTime + 15); e.preventDefault(); sync(); }
+      else if(e.key === 'ArrowLeft'){ a.currentTime = Math.max(0, a.currentTime - 15); e.preventDefault(); sync(); }
+    });
+
+    if(reduce || noIO){ grown = 1; paint(); return; }
+    paint();
     var io = obs(function(el){
       var t0 = null;
       function step(ts){
         if(!t0) t0 = ts;
-        var p = Math.min((ts - t0) / 1100, 1);
-        paint(p);
-        if(p < 1) requestAnimationFrame(step);
+        grown = Math.min((ts - t0) / 1100, 1);
+        paint();
+        if(grown < 1) requestAnimationFrame(step);
       }
       requestAnimationFrame(step);
       io.unobserve(el);
     });
     io.observe(c);
-    setTimeout(function(){ if(!g.__done) paint(1); }, 6000);   /* never leave it blank */
+    setTimeout(function(){ if(grown < 1){ grown = 1; paint(); } }, 6000);
   })();
 
   /* ── video · load on click, not on arrival ──────────────────── */

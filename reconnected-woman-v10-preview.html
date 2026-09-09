@@ -65,21 +65,21 @@
 }
 .sec.cream .ey,.sec.cream-2 .ey{color:var(--bronze)}
 
-#rw-page h1,#rw-page h2,#rw-page h3,#rw-page h4{font-family:var(--head); margin:0; text-wrap:balance}
-#rw-page h2{
+:where(#rw-page) h1,:where(#rw-page) h2,:where(#rw-page) h3,:where(#rw-page) h4{font-family:var(--head); margin:0; text-wrap:balance}
+:where(#rw-page) h2{
   font-size:clamp(27px,3.4vw,42px); font-weight:700; line-height:1.1;
   letter-spacing:-.02em; color:var(--cream); margin-bottom:16px;
 }
-#rw-page h2 .hit{color:var(--gold-lift)}
+:where(#rw-page) h2 .hit{color:var(--gold-lift)}
 .sec.cream h2,.sec.cream-2 h2{color:var(--ink)}
-#rw-page h3{font-size:clamp(19px,2vw,25px); font-weight:600; line-height:1.28; color:var(--cream)}
+:where(#rw-page) h3{font-size:clamp(19px,2vw,25px); font-weight:600; line-height:1.28; color:var(--cream)}
 .sec.cream h3,.sec.cream-2 h3{color:var(--ink)}
-#rw-page p{margin:0 0 14px; max-width:64ch}
+:where(#rw-page) p{margin:0 0 14px; max-width:64ch}
 .lede{font-size:clamp(16px,1.55vw,19px); line-height:1.55; color:var(--mist)}
 .sec.cream .lede,.sec.cream-2 .lede{color:var(--ink-soft)}
 .dim{color:var(--slate)}
 .sec.cream .dim,.sec.cream-2 .dim{color:var(--ink-soft)}
-#rw-page em{font-style:italic}
+:where(#rw-page) em{font-style:italic}
 
 .divider{width:46px; height:1px; background:var(--gold); margin:0 0 18px}
 .sec.cream .divider,.sec.cream-2 .divider{background:var(--bronze)}
@@ -234,8 +234,11 @@
    so neither one is stranded against a gutter. */
 .biogrid > :last-child{flex:0 1 500px; min-width:0}
 @media(max-width:820px){
-  .biogrid{display:block}
-  .biogrid .reelwrap{height:auto; width:100%; max-width:280px; margin:0 0 26px}
+  .biogrid{display:block; text-align:center}
+  /* Full phone width and centred: at 280px in a 350px column it read as a
+     thumbnail that had been left where the desktop layout dropped it. */
+  .biogrid .reelwrap{height:auto; width:100%; max-width:none; margin:0 auto 26px}
+  .biogrid > :last-child{text-align:left}
 }
 .reelwrap{position:relative; aspect-ratio:9/16; background:#000; overflow:hidden; border-radius:2px}
 .reelwrap video{width:100%; height:100%; object-fit:cover; display:block}
@@ -877,6 +880,51 @@
 #rw-apply-modal .modal-body{padding:0}
 #rw-apply-modal .modal-body iframe{display:block; width:100%; border:none}
 
+
+/* ═══ MOBILE ═══════════════════════════════════════════════════
+   The page was composed on a wide screen, and vertical rhythm that reads as
+   air at 1440 reads as a gap at 390. These are spacing and alignment only:
+   nothing below changes what the page says or how it behaves. */
+@media(max-width:860px){
+  /* The desktop voices grid gives each figure four subgrid rows so the names
+     and captions line up across the row. In one column that becomes twelve
+     rows and eleven gaps, which is why the three of them drifted so far
+     apart on a phone. */
+  .voice{grid-row:auto}
+}
+@media(max-width:640px){
+  /* The hero strip breaks where the sense breaks, not mid-phrase. */
+  #hero .next .sep{display:none}
+  #hero .next .nd{display:block; margin-top:6px}
+
+  /* 05 · The numeral sat 18px off its own heading and 30px off the next
+     block, so the three steps read as six separate things. */
+  .steps .row{gap:22px}
+  .step h4{margin:10px 0 5px}
+  .why-not{margin-top:34px}
+
+  /* 06 · The negations centre rather than ragging left. */
+  .nots{justify-content:center; text-align:center; gap:10px 16px}
+
+  /* 08 · The transfer rows. */
+  .lifts li{padding:14px 18px 15px}
+
+  /* 10 · The reel takes the width of the phone and sits centre; the
+     credentials centre under it. */
+  .rcs{justify-content:center; text-align:center; margin-top:24px}
+  /* the system name takes its own line so the three words below it read as
+     one centred group rather than an orphan and a pair */
+  #how .rcs .k{flex-basis:100%; margin-bottom:2px}
+
+  /* 13 · The standards. */
+  .std{padding:12px 0}
+
+  /* 15 · The application note needs air under the button. */
+  .cta-row .fine{margin-top:24px}
+
+  /* 16 · After. */
+  .after-grid > div{padding:15px 18px 16px}
+}
 </style>
 </head>
 <body>
@@ -895,7 +943,7 @@
     </h1>
     <p class="sub" data-r="near"><span>You've competed with men. Led men. Carried men.</span><b>The masculine is provided.</b><b>You don't have to, for a change.</b></p>
     <button class="btn" type="button" data-trw-modal data-r="mid">Come To The Open Session</button>
-    <div class="next" data-r="far">Next open session &nbsp;&middot;&nbsp; Tuesday 22 September &nbsp;&middot;&nbsp; 08:30 CET</div>
+    <div class="next" data-r="far">Next open session<span class="sep">&nbsp;&middot;&nbsp;</span><span class="nd">Tuesday 22 September &nbsp;&middot;&nbsp; 08:30 CET</span></div>
 </div>
   <div class="cue">&darr;</div>
 </section>
@@ -1133,11 +1181,16 @@
 </section>
 
 <!-- ═══════════ 12 · VOICES ═══════════ -->
+<!-- 12 · VOICES — held back until the three women have signed off on their
+     own words. The section shipped as a heading with nothing under it, which
+     read as a hole in the page. It goes back in, with the portraits and the
+     three quotes, the moment they say yes.
 <section class="sec black" id="voices">
   <div class="in">
     <h2 data-r="near">From women inside</h2>
   </div>
 </section>
+-->
 
 <!-- ═══════════ 13 · VALUES — standards as held lines ═══════════ -->
 <section class="sec cream" id="values">

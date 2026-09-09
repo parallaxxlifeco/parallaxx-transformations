@@ -820,10 +820,13 @@ def main() -> int:
         "/assets/*\n"
         "  Cache-Control: public, max-age=31536000, immutable\n"
         "\n"
-        "# Bundles keep their names across deploys, so they must revalidate or a\n"
-        "# push would not reach anyone still holding a cached copy.\n"
+        "# Bundles keep their names across deploys, so a cached copy is a stale\n"
+        "# PAGE, not a stale asset -- the bundle IS the body of every route. At\n"
+        "# max-age=3600 a push did not reach anyone for up to an hour, including\n"
+        "# whoever was looking at it when the fix went out. max-age=0 means every\n"
+        "# load asks; the answer is a 304 of a few hundred bytes off the edge.\n"
         "/*.js\n"
-        "  Cache-Control: public, max-age=3600, must-revalidate\n",
+        "  Cache-Control: public, max-age=0, must-revalidate\n",
         encoding="utf-8",
     )
     redirects = list(REDIRECTS) + ["/post/*"]

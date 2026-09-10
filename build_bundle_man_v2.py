@@ -14,11 +14,13 @@ the two pages now share one architecture: light DOM, stylesheet scoped to
 #rm-page, behaviour script using document.querySelector, and the nav and footer
 as custom elements that attach their own shadow roots.
 
-MEDIA IS ABSOLUTE ON PURPOSE. The bundle is injected into a page served from
-parallaxxtransformations.com, so a relative /assets/... path resolves against
-that host and 404s. Videos point at the Wix CDN ids the previous bundle already
-used; the images added for this design ride on GitHub Pages, the same origin
-this bundle is served from.
+MEDIA. The site is served from its own domain by migration/build-site.py, which
+copies migration/wix-assets/ into dist/assets/. Videos keep the Wix CDN ids the
+previous bundle used, because asset-map.json rewrites those to /assets/video/.
+Images are written as /assets/img/ directly: an absolute github.io URL gets its
+host stripped by the same build and lands on /migration/wix-assets/img/, which
+the live site does not serve -- and it answers unknown paths with a 200 HTML
+page rather than a 404, so nothing that checks status codes catches it.
 """
 import re, pathlib
 
@@ -57,10 +59,14 @@ for marker in ('class="note"', 'class="review-only"', 'class="bar-top"',
     if marker in HTML or marker in CSS:
         raise SystemExit("FAIL: %s is still in the build" % marker)
 
-# A relative asset path silently 404s on the host domain. Catch it here rather
-# than in a browser three days later.
-for bad in re.findall(r'(?:src|poster|href)="(/assets/[^"]*)"', HTML) + re.findall(r'url\((["\']?)(/assets/[^)"\']*)', CSS):
-    raise SystemExit("FAIL: relative asset path %r would 404 on the host domain" % (bad,))
+# Absolute GitHub Pages hosts do not survive build-site.py: it strips the host
+# and leaves /migration/wix-assets/... , which the live site does not serve and
+# answers with a 200 HTML page instead of a 404. Images must be relative.
+for bad in re.findall(r'https://parallaxxlifeco\.github\.io[^"\')]*', HTML + CSS):
+    raise SystemExit("FAIL: %s will be rewritten to a path the site does not serve. Use /assets/img/." % bad)
+_imgs = re.findall(r'(?:src|poster)="(/assets/img/[^"]+)"', HTML)
+if len(_imgs) != 7:
+    raise SystemExit("FAIL: expected 7 /assets/img/ references in the markup, found %d" % len(_imgs))
 
 print("media   %d wix video, %d github image, %d relative"
       % (HTML.count("video.wixstatic.com"),

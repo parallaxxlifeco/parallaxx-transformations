@@ -15,3 +15,13 @@ _originals/
 # Wix image archive: 185MB of full-resolution originals, kept locally as
 # redesign source material. Never pushed.
 migration/wix-archive/
+
+# Python bytecode. Was tracked by mistake; it is a build artifact of
+# migration/build-site.py and changes on every run.
+__pycache__/
+*.pyc
+
+# Audio and video masters for the summary track. The deployed 5MB mp3 lives
+# at audio/reconnected-woman-summary.mp3; these are the sources it came from.
+audio-source/
+/The Reconnected Woman Summary.mp3

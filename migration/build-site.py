@@ -572,10 +572,30 @@ def head_html(r: dict) -> str:
 </head>
 <body>
 <{r['tag']}></{r['tag']}>
-<script src="/{r['bundle']}"></script>
+<script src="/{r['bundle']}?v={bundle_stamp(r['bundle'])}"></script>
 </body>
 </html>
 """
+
+
+# ── CACHE BUSTING, BECAUSE THE HEADER IS NOT OURS TO SET ────────────────
+# The bundle IS the body of every route, so a cached copy is a stale page.
+# _headers asks for max-age=0 on each bundle and something above Cloudflare
+# Pages overrides it to 14400: everything _headers does not mention comes
+# back max-age=0, /assets/* keeps the immutable rule this file sets, and only
+# the JavaScript is rewritten -- so the file is being applied and the override
+# is happening above it, where this repo cannot reach.
+#
+# A content hash in the query sidesteps the argument. Change the bundle and
+# the URL changes, so every browser fetches it whatever TTL it was given.
+# Leave it unchanged and the URL is stable, so it stays cached and costs
+# nothing -- which is better than max-age=0, not a workaround for it.
+def bundle_stamp(name: str) -> str:
+    import hashlib
+    f = REPO / name
+    if not f.exists():
+        return "0"
+    return hashlib.sha256(f.read_bytes()).hexdigest()[:8]
 
 
 # ── THE PLACEHOLDER GUARD ───────────────────────────────────────────────

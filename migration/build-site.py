@@ -115,12 +115,18 @@ ROUTES = [
         bundle="parallaxx-reconnected-man.js",
         bg="#04122A",
         title="RECONNECTED MAN | Parallaxx Transformations",
-        desc="A brotherhood for men done living in disconnection and loneliness. Join The "
-             "Reconnected Man — weekly group containers, live coaching, and real connection. "
-             "Facilitated by Daniel Lawson. €59/month.",
+        # The old text described a page that no longer exists. It priced the
+        # membership at €59 when the page says €89, and sold "weekly group
+        # containers" and "deep love, true intimacy", none of which are words
+        # the page uses. Both lines below are the page's own: the promise band
+        # and the offer for desc, the hero sub and the VSL line for og_desc.
+        desc="Decide what you want, ask for it, and see what happens. A weekly online group "
+             "of men, facilitated by Daniel Lawson. Sit in an open session free, then €89 "
+             "a month.",
         og_title="RECONNECTED MAN | Parallaxx Transformations",
-        og_desc="For men done living in disconnection and loneliness. Real connection, deep love, "
-                "true intimacy — not just with women, but in every relationship that defines you.",
+        og_desc="For men who are needed, but want more from life. Decide what you want, ask "
+                "for it, and see what happens — among brothers who hold you to a higher "
+                "standard.",
         og_img="img/og-reconnected-man.png",
     ),
     dict(
@@ -402,7 +408,7 @@ STATIC_DIRS = ["covers", "audio"]
 # markup — a manual-action risk, not a clever shortcut. If star ratings are ever
 # collected properly, that is the moment to add it.
 #
-# No `offers.price` either. The €59/month figure is on the Reconnected Man page
+# No `offers.price` either. The €89/month figure is on the Reconnected Man page
 # in prose, but Daniel is raising prices incrementally, and a published price in
 # structured data is a public commitment that is awkward to walk back. The offer
 # is declared without a figure, which is valid and honest.

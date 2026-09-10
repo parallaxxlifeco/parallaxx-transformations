@@ -67,6 +67,25 @@ assert "parallaxx-nav" in HTML and "parallaxx-footer" in HTML, "chrome missing f
 assert "0RT5EVaTlGxo6QBjyIPT" in HTML, "the application form is missing"
 assert HTML.count("0RT5EVaTlGxo6QBjyIPT") == 3, "the form id must appear three times"
 
+# THE OPEN DATE. Every date on the page is printed at runtime from
+# data-open-at, but the markup still carries the date as text so a reader
+# with JS off is not left with an empty line. That text is a fallback, and
+# a fallback that has drifted from the attribute is exactly the stale date
+# this mechanism exists to prevent -- so the build checks it rather than
+# trusting whoever edited last to update both.
+_m = re.search(r'data-open-at="(\d{4})-(\d{2})-(\d{2})', HTML)
+if _m:
+    import datetime
+    _d = datetime.date(int(_m.group(1)), int(_m.group(2)), int(_m.group(3)))
+    _want = "%s %d %s" % (_d.strftime("%A"), _d.day, _d.strftime("%B"))
+    _n = HTML.count(_want)
+    if _n != 3:
+        raise SystemExit(
+            "FAIL: data-open-at says %s, but the markup fallback %r appears %d times, not 3.\n"
+            "      Update the three .js-open-date fallbacks to match the attribute."
+            % (_d.isoformat(), _want, _n))
+    print("open date  %s  (%d fallbacks match)" % (_want, _n))
+
 # The annotation layer is a build-time thing and must never reach a browser.
 for marker in ('class="note"', "noteBtn", 'class="ph"', "IMAGE_SLOT_", "[CLIENT]"):
     if marker in HTML:

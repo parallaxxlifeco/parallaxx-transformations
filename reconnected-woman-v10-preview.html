@@ -688,6 +688,25 @@
 #intention h2{margin-bottom:16px}
 #intention p{margin:0 auto; max-width:34ch; color:var(--mist)}
 
+/* ═══ THE OPEN DATE — written once, in #rw-open ═══════════════
+   Every date on this page is printed from one attribute, so moving the
+   session is a single edit and cannot leave a stale date behind in the
+   place nobody remembered to check. If the date passes without being
+   updated the page stops naming it rather than advertising a day that
+   has gone. */
+.cnt{
+  font-family:var(--head); font-size:.62rem; font-weight:800;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--gold);
+}
+#hero .next .cnt:not(:empty):before{content:'\00a0\00b7\00a0\00a0'}
+#hero .next .cnt{color:var(--mist)}
+.opencard .cnt{margin:14px 0 0}
+.opencard .cnt:empty{display:none}
+@media(max-width:640px){
+  #hero .next .cnt:not(:empty){display:block; margin-top:5px}
+  #hero .next .cnt:not(:empty):before{content:none}
+}
+
 /* ═══ 15 · PRICING ═══ */
 /* The two halves of the offer, side by side rather than stacked: what is free
    this month on the left, what it becomes if she stays on the right. Gold marks
@@ -982,6 +1001,10 @@
 <body>
 <div id="rw-page">
 <parallaxx-nav active="women"></parallaxx-nav>
+<div id="rw-open" hidden
+     data-open-at="2026-09-22T08:30:00+02:00"
+     data-open-tz="08:30 CET"
+     data-open-times="08:30 CET / 14:30 GMT+8"></div>
 <div id="rail"><div class="bar"></div><div class="pos" id="railPos"></div></div>
 <!-- ═══════════ 01 · HERO ═══════════ -->
 <section class="sec" id="hero">
@@ -995,7 +1018,7 @@
     </h1>
     <p class="sub" data-r="near"><span>You've competed with men. Led men. Carried men.</span><b>The masculine is provided.</b><b>You don't have to, for a change.</b></p>
     <button class="btn" type="button" data-trw-modal data-r="mid">Come To The Open Session</button>
-    <div class="next" data-r="far">Next open session<span class="sep">&nbsp;&middot;&nbsp;</span><span class="nd">Tuesday 22 September &nbsp;&middot;&nbsp; 08:30 CET</span></div>
+    <div class="next" data-r="far">Next open session<span class="sep">&nbsp;&middot;&nbsp;</span><span class="nd"><span class="js-open-date">Tuesday 22 September</span><span class="js-open-tz"> &nbsp;&middot;&nbsp; 08:30 CET</span></span><span class="cnt js-open-count"></span></div>
 </div>
   <div class="cue">&darr;</div>
 </section>
@@ -1292,8 +1315,9 @@
     <div class="pricegrid" data-r="mid">
     <div class="opencard">
       <div class="free">Free</div>
-      <div class="when">Tuesday 22 September<span>08:30 CET / 14:30 GMT+8</span></div>
+      <div class="when"><span class="js-open-date">Tuesday 22 September</span><span class="js-open-times">08:30 CET / 14:30 GMT+8</span></div>
       <div class="where">Online, wherever you are</div>
+      <p class="cnt js-open-count"></p>
       <p class="lede">Come, sit in it, and decide from the session rather than from this page.</p>
     </div>
     <div class="stay">
@@ -1353,7 +1377,7 @@
   <div class="in">
     <p class="ey" data-r="far">Ready?</p>
     <h2 data-r="near" class="twoline">Work out what you want,<span>and ask for it in four weeks.</span></h2>
-    <p class="when" data-r="mid">Next open session Tuesday 22 September. Free to attend, short application form first.</p>
+    <p class="when" data-r="mid">Next open session <span class="js-open-date" data-fallback="is being confirmed">Tuesday 22 September</span>. Free to attend, short application form first.</p>
     <button class="btn" type="button" data-trw-modal data-r="mid">Register For The Open Session</button>
   </div>
 </section>
@@ -1724,6 +1748,47 @@
     });
     io.observe(c);
     setTimeout(function(){ if(grown < 1){ grown = 1; paint(); } }, 6000);
+  })();
+
+  /* ── the open date ───────────────────────────────────────────
+     One attribute, every instance. The calendar date is read straight out
+     of the ISO string rather than through the viewer's clock, because a
+     reader far enough west would otherwise be shown the day before. The
+     countdown compares calendar days, not elapsed hours, so "Tomorrow"
+     means tomorrow rather than "in 23 hours". */
+  (function openDate(){
+    var src = document.getElementById('rw-open'); if(!src) return;
+    var at = src.getAttribute('data-open-at') || '';
+    var m = at.match(/^(\d{4})-(\d{2})-(\d{2})/); if(!m) return;
+
+    var evUTC = Date.UTC(+m[1], +m[2] - 1, +m[3]);
+    var now = new Date();
+    var todayUTC = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+    var days = Math.round((evUTC - todayUTC) / 86400000);
+    var past = days < 0;
+
+    var pretty = new Date(evUTC + 43200000).toLocaleDateString('en-GB', {
+      weekday:'long', day:'numeric', month:'long', timeZone:'UTC'
+    });
+
+    function set(sel, text, hideWhenPast){
+      var els = document.querySelectorAll(sel);
+      for(var i = 0; i < els.length; i++){
+        if(past && hideWhenPast){ els[i].style.display = 'none'; continue; }
+        els[i].textContent = text;
+      }
+    }
+    var dates = document.querySelectorAll('.js-open-date');
+    for(var i = 0; i < dates.length; i++){
+      dates[i].textContent = past
+        ? (dates[i].getAttribute('data-fallback') || 'date to be announced')
+        : pretty;
+    }
+    set('.js-open-tz', ' \u00a0\u00b7\u00a0 ' + (src.getAttribute('data-open-tz') || ''), true);
+    set('.js-open-times', src.getAttribute('data-open-times') || '', true);
+    set('.js-open-count',
+        days > 1 ? 'In ' + days + ' days' : days === 1 ? 'Tomorrow' : days === 0 ? 'Today' : '',
+        true);
   })();
 
   /* ── video · load on click, not on arrival ──────────────────── */

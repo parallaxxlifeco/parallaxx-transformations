@@ -23,6 +23,29 @@ WHAT THIS PAGE ADDS ON TOP OF THE HOME BUILD
      resolves a separate `stage` binding for exactly this; the guard below
      fails the build if that binding ever goes missing.
 """
+
+# ── SUPERSEDED BUILD ───────────────────────────────────────────────────
+# This script writes parallaxx-reconnected-man.js, and so does build_bundle_man_v2.py,
+# which is the current build. Running this one silently reverts the live
+# page to the Wix-editor design -- no error, no diff worth noticing until
+# someone opens the site.
+#
+# It is kept so that design can still be rebuilt if the current one has to
+# be rolled back. Do that deliberately:
+#
+#     REBUILD_SUPERSEDED=1 python3 build-reconnected-man-bundle.py
+#
+import os as _os, sys as _sys
+if not _os.environ.get("REBUILD_SUPERSEDED"):
+    _sys.exit(
+        "REFUSING: superseded build.\n"
+        "  This writes parallaxx-reconnected-man.js,\n"
+        "  which build_bundle_man_v2.py now owns. Run that instead.\n"
+        "  To rebuild the old design on purpose:\n"
+        "      REBUILD_SUPERSEDED=1 python3 build-reconnected-man-bundle.py"
+    )
+# ───────────────────────────────────────────────────────────────────────
+
 import re, sys, pathlib
 
 HERE = pathlib.Path(__file__).parent

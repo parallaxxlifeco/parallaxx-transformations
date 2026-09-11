@@ -15,6 +15,29 @@ every selector, the FAQ accordion, the modal and the video all keep working
 without a single rewrite. A shadow root would need all of it re-pointed and is
 where a port loses details.
 """
+
+# ── SUPERSEDED BUILD ───────────────────────────────────────────────────
+# This script writes parallaxx-reconnected-woman.js, and so does build_bundle_v10.py,
+# which is the current build. Running this one silently reverts the live
+# page to the v9 design -- no error, no diff worth noticing until
+# someone opens the site.
+#
+# It is kept so that design can still be rebuilt if the current one has to
+# be rolled back. Do that deliberately:
+#
+#     REBUILD_SUPERSEDED=1 python3 build_bundle_v9.py
+#
+import os as _os, sys as _sys
+if not _os.environ.get("REBUILD_SUPERSEDED"):
+    _sys.exit(
+        "REFUSING: superseded build.\n"
+        "  This writes parallaxx-reconnected-woman.js,\n"
+        "  which build_bundle_v10.py now owns. Run that instead.\n"
+        "  To rebuild the old design on purpose:\n"
+        "      REBUILD_SUPERSEDED=1 python3 build_bundle_v9.py"
+    )
+# ───────────────────────────────────────────────────────────────────────
+
 import re, pathlib
 
 # Both of these were absolute /tmp paths, which is where this script was

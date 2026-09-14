@@ -465,47 +465,6 @@ ROUTES = [
         og_img="og-quiz.jpg",
     ),
     dict(
-        path="/three-toxic-lies",
-        tag="parallaxx-toxic-lies",
-        bundle="parallaxx-toxic-lies.js",
-        bg="#04122A",
-        # The Wix page carried no meta description at all, so there is nothing
-        # to carry across here and nothing lost by writing one. The title on
-        # Wix was "Three Toxic Lies  | Parallaxx Transformations", with the
-        # double space.
-        title="Three Toxic Lies | A Short Book About Time | Parallaxx",
-        desc="Three things about time that many of us believe, and what is true instead. "
-             "A short book by Daniel Lawson, about an hour to read, with three exercises "
-             "to write your own answers into. \u20ac14.97, posted anywhere in the world.",
-        og_title="You probably believe at least one of these.",
-        og_desc="Three Toxic Lies. A short book about time and what it costs you \u2014 "
-                "named plainly, with the truth set against each one.",
-        og_img="img/og-toxic-lies.png",
-    ),
-    dict(
-        path="/ptjournal",
-        tag="parallaxx-progress-journal",
-        bundle="parallaxx-progress-journal.js",
-        bg="#04122A",
-        # The harvested Wix metadata read "Accelerate Your Momentum Parallaxx
-        # Progress Journal - your 90-day guide to becoming a 'serial winner'.
-        # The worlds most valuable personal journal guaranteed!" Two things were
-        # wrong with it: "worlds" had no apostrophe, and the guarantee claim was
-        # attached to the wrong noun -- the guarantee on the page is that Daniel
-        # coaches you through it himself if ninety days move nothing, which is a
-        # promise he can keep, not a property of the book. The superlative
-        # itself is Daniel's claim about his own product and it leads the page,
-        # so it leads the metadata too.
-        title="The World\u2019s Most Valuable Journal | Parallaxx Transformations",
-        desc="The world\u2019s most valuable journal. One page a day for ninety days, built "
-             "on eight daily rituals, with twelve focused intentions, goal pages and two "
-             "video modules included. \u20ac24.99, shipped anywhere in the world.",
-        og_title="The world\u2019s most valuable journal.",
-        og_desc="The Parallaxx Progress Journal. One page a day, ninety days, and eight "
-                "rituals reverse engineered out of the years things moved.",
-        og_img="img/og-progress-journal.png",
-    ),
-    dict(
         path="/wheel-of-reconnect",
         tag="parallaxx-wheel-of-reconnect",
         bundle="parallaxx-wheel-of-reconnect.js",

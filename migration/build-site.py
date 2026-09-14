@@ -671,6 +671,98 @@ def jsonld(r: dict) -> str:
             + "</script>")
 
 
+# ── SERVER-RENDERED COPY, FOR CRAWLERS THAT DO NOT RUN JAVASCRIPT ──────
+# Added 14 Sep 2026. Measured first: fetching any route without executing JS
+# returned ~7KB of head and ZERO words of the page's own copy, and no <h1>.
+# Googlebot renders JS but on a deferred queue, which is the likeliest reason
+# 16 pages sat in "crawled/discovered - currently not indexed". AI search
+# crawlers (OAI-SearchBot, PerplexityBot, Claude-SearchBot, Applebot) generally
+# do not execute JS at all, so to them the entire site was four lines of
+# metadata.
+#
+# Every bundle is `var CSS = ...` followed by `var HTML = ...` as template
+# literals, so the markup can be lifted at build time and emitted inside the
+# custom-element tag. It CANNOT drift from what the page renders, because it is
+# extracted from the very bundle the page then loads.
+#
+# WHY THIS IS SAFE IN BOTH MOUNT STYLES -- checked against all 20 bundles:
+#   shadow DOM (13, via attachShadow + appendChild): a shadow root suppresses
+#     rendering of the host's light-DOM children entirely. Crawlers read them,
+#     visitors never see them.
+#   light DOM (the Reconnected Man and Woman, and the two held-back pages):
+#     connectedCallback does `this.innerHTML = HTML`, which REPLACES children.
+#     The pre-rendered copy is wiped the moment the bundle boots. It is wrapped
+#     in [hidden] so there is no flash of unstyled text in the gap.
+PRERENDER_STRIP_TAGS = ("script", "style", "noscript", "iframe", "svg",
+                        "canvas", "video", "audio", "picture", "template")
+
+# Media is deliberately dropped rather than carried across. A browser will
+# fetch an <img> even when it is not rendered, so leaving them in would make
+# every visitor download every image twice -- paying a real performance cost to
+# feed a copy that only non-rendering crawlers ever read. Those crawlers do not
+# want the pictures anyway, and Googlebot still sees them in the rendered page.
+PRERENDER_VOID_TAGS = ("img", "source", "track", "embed", "object")
+
+PRERENDER_MIN_WORDS = 20
+
+
+def extract_bundle_html(bundle: str) -> str:
+    """Lift the HTML template literal out of a bundle. None if not found."""
+    src = (REPO / bundle).read_text(encoding="utf-8", errors="replace")
+    m = re.search(r"var\s+HTML\s*=\s*`", src)
+    if not m:
+        return None
+    i, out = m.end(), []
+    while i < len(src):
+        c = src[i]
+        if c == "\\":                  # keep escapes intact, skip the pair
+            out.append(src[i:i + 2])
+            i += 2
+            continue
+        if c == "`":
+            raw = "".join(out)
+            # unescape what the template literal escaped
+            return raw.replace("\\`", "`").replace("\\$", "$").replace("\\\\", "\\")
+        out.append(c)
+        i += 1
+    return None
+
+
+def prerender(r: dict) -> str:
+    """The route's copy as plain markup, for crawlers only."""
+    html = extract_bundle_html(r["bundle"])
+    if html is None:
+        raise SystemExit("PRERENDER: no HTML template found in %s" % r["bundle"])
+
+    for tag in PRERENDER_STRIP_TAGS:
+        html = re.sub(r"<%s\b[^>]*>.*?</%s\s*>" % (tag, tag), "", html,
+                      flags=re.S | re.I)
+        html = re.sub(r"<%s\b[^>]*/?>" % tag, "", html, flags=re.I)
+    for tag in PRERENDER_VOID_TAGS:
+        html = re.sub(r"<%s\b[^>]*/?>" % tag, "", html, flags=re.I)
+    html = re.sub(r"<!--.*?-->", "", html, flags=re.S)
+    html = re.sub(r"\n{3,}", "\n\n", html).strip()
+
+    # Guards. A silently empty pre-render is worse than none: it would look
+    # like the job was done while the page stayed invisible.
+    words = len(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html)).strip().split())
+    if words < PRERENDER_MIN_WORDS:
+        raise SystemExit("PRERENDER: %s yielded only %d words" % (r["bundle"], words))
+    if re.search(r"<script\b|<style\b", html, re.I):
+        raise SystemExit("PRERENDER: %s still carries script/style" % r["bundle"])
+    if "${" in html:
+        raise SystemExit("PRERENDER: %s carries an un-evaluated ${} expression"
+                         % r["bundle"])
+
+    shadow = "attachShadow" in (REPO / r["bundle"]).read_text(
+        encoding="utf-8", errors="replace")
+    if shadow:
+        # Never rendered by the browser; no wrapper needed.
+        return "\n" + html + "\n"
+    # Light DOM: hidden until connectedCallback replaces it.
+    return '\n<div data-prerender hidden>\n' + html + '\n</div>\n'
+
+
 def head_html(r: dict) -> str:
     canonical = ORIGIN + ("" if r["path"] == "/" else r["path"])
     # Resolve the share image against what actually shipped. Localised assets
@@ -724,7 +816,7 @@ def head_html(r: dict) -> str:
 {analytics_head()}
 </head>
 <body>
-<{r['tag']}></{r['tag']}>
+<{r['tag']}>{prerender(r)}</{r['tag']}>
 <script src="/{r['bundle']}?v={bundle_stamp(r['bundle'])}"></script>
 {analytics_body()}
 </body>

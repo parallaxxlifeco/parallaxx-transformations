@@ -705,6 +705,15 @@ PRERENDER_VOID_TAGS = ("img", "source", "track", "embed", "object")
 
 PRERENDER_MIN_WORDS = 20
 
+# The pre-render is lifted from the bundle in the REPO, which still carries the
+# original Wix CDN URLs -- the rewrite to /assets/ happens on the copy written
+# into dist/. Without running that same rewrite here, the pre-rendered markup
+# ships URLs the rest of the build has already migrated away from. It did
+# exactly that on 14 Sep 2026: six /men video URLs survived in data-clip
+# attributes, which the <video> strip never touches because they sit on a div.
+# Set in main() once the map is loaded.
+ASSET_MAP = []
+
 
 def extract_bundle_html(bundle: str) -> str:
     """Lift the HTML template literal out of a bundle. None if not found."""
@@ -753,6 +762,17 @@ def prerender(r: dict) -> str:
     if "${" in html:
         raise SystemExit("PRERENDER: %s carries an un-evaluated ${} expression"
                          % r["bundle"])
+
+    # Same rewrite the bundles get, so the pre-render can never point somewhere
+    # the shipped page does not.
+    html, _ = localise(html, ASSET_MAP)
+    if ASSET_MAP and re.search(r"(static|video)\.wixstatic\.com", html):
+        stale = sorted(set(re.findall(
+            r"https://(?:static|video)\.wixstatic\.com/[^\"')\s]+", html)))
+        raise SystemExit(
+            "PRERENDER: %s would ship %d Wix CDN URL(s) the bundle no longer "
+            "uses. Add them to asset-map.json.\n  %s"
+            % (r["bundle"], len(stale), "\n  ".join(stale[:6])))
 
     shadow = "attachShadow" in (REPO / r["bundle"]).read_text(
         encoding="utf-8", errors="replace")
@@ -970,6 +990,7 @@ def main() -> int:
             print("ERROR: --local needs migration/wix-assets/ — run download-wix-assets.sh first.")
             return 1
         asset_map = json.loads(mp.read_text())
+        globals()["ASSET_MAP"] = asset_map
         # Note: r["url"] is what the bundles reference and r.get("src") is where
         # the bytes came from. Only "url" is ever matched against bundle text —
         # rewriting that to a different resolution silently un-links four videos.

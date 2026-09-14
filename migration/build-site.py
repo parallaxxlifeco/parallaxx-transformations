@@ -57,6 +57,153 @@ ORIGIN = "https://www.parallaxxtransformations.com"
 # is rebuilt here but not pushed there. Made root-relative instead.
 GH_PAGES = "https://parallaxxlifeco.github.io/parallaxx-transformations/"
 
+# ── GOOGLE ANALYTICS 4 ──────────────────────────────────────────────────
+# Added 14 Sep 2026. The tag lives here, in the <head> this script owns,
+# rather than inside any bundle: the bundles are Custom Elements that mount
+# into a shadow root, and a tag inside one is invisible to the page it is
+# meant to measure. One place, every route, no exceptions.
+GA4_ID = "G-VZR17C21QY"
+
+# How consent is handled. CHANGE THIS ONE STRING to change the policy --
+# everything else keys off it, so switching stance is not a rewrite.
+#   "opt-out"  visitors are measured until they decline (Daniel's choice,
+#              14 Sep 2026). Note this is NOT valid consent under GDPR/
+#              ePrivacy for UK/EU visitors, who were ~27% of traffic when
+#              this was set. The decision is recorded, not endorsed.
+#   "opt-in"   nothing is stored until the visitor accepts.
+CONSENT_MODE = "opt-out"
+
+# Anything leaving for one of these hosts is a conversion step, and the whole
+# reason GA4 is here rather than Cloudflare's cookieless counter: the money
+# events happen off-site, so a pageview report can never answer "which page
+# produced an enquiry".
+OUTBOUND_EVENTS = [
+    (r"(^|\.)leadconnectorhq\.com$|(^|\.)msgsndr\.com$", "lead_click"),
+    (r"(^|\.)stripe\.com$", "checkout_click"),
+    (r"^members\.parallaxxtransformations\.com$", "vault_click"),
+]
+
+
+def analytics_head() -> str:
+    """The tag, with consent defaults pushed BEFORE gtag.js is fetched.
+
+    Order matters and is easy to get wrong: the consent default has to be in
+    dataLayer before the Google tag reads it. The inline block runs first and
+    the library loads async, so the queue is already correct when it arrives.
+    """
+    default = "'denied'" if CONSENT_MODE == "opt-in" else "'granted'"
+    return (
+        "\n<!-- Google Analytics 4 -- consent mode v2, policy: " + CONSENT_MODE + " -->\n"
+        "<script>\n"
+        "window.dataLayer = window.dataLayer || [];\n"
+        "function gtag(){dataLayer.push(arguments);}\n"
+        "(function(){\n"
+        "  var stored = null;\n"
+        "  try { stored = localStorage.getItem('px-analytics-consent'); } catch (e) {}\n"
+        "  var analytics = " + default + ";\n"
+        "  if (stored === 'denied') { analytics = 'denied'; }\n"
+        "  if (stored === 'granted') { analytics = 'granted'; }\n"
+        "  gtag('consent', 'default', {\n"
+        "    'ad_storage': 'denied',\n"
+        "    'ad_user_data': 'denied',\n"
+        "    'ad_personalization': 'denied',\n"
+        "    'analytics_storage': analytics\n"
+        "  });\n"
+        "})();\n"
+        "gtag('js', new Date());\n"
+        "gtag('config', '" + GA4_ID + "');\n"
+        "</script>\n"
+        '<script async src="https://www.googletagmanager.com/gtag/js?id=' + GA4_ID + '"></script>\n'
+    )
+
+
+def analytics_body() -> str:
+    """The notice, and the outbound-click listener.
+
+    SHADOW DOM IS THE WHOLE DIFFICULTY HERE. Every page except The Reconnected
+    Woman mounts inside a shadow root. Click events do cross that boundary, but
+    the browser retargets event.target to the host element -- so the obvious
+    `e.target.closest('a')` finds the custom element, never the link, and the
+    listener silently records nothing. composedPath() is the only way to see
+    the anchor that was actually clicked. GA4's own enhanced measurement has
+    exactly this blind spot, which is why these events are named rather than
+    left to its automatic outbound tracking.
+    """
+    rules = ",\n".join(
+        "      {re: /%s/, name: '%s'}" % (pattern, name)
+        for pattern, name in OUTBOUND_EVENTS
+    )
+    asks = CONSENT_MODE == "opt-in"
+    message = (
+        "We use Google Analytics to understand which pages are useful. "
+        + ("Nothing is stored until you agree." if asks
+           else "You can turn it off, and your choice is remembered on this device.")
+    )
+    yes = "Accept" if asks else "Got it"
+    return (
+        "\n<style>\n"
+        "#px-consent{position:fixed;left:0;right:0;bottom:0;z-index:2147483000;"
+        "background:#061938;color:#F3EDE3;font:400 14px/1.5 system-ui,-apple-system,'Segoe UI',sans-serif;"
+        "padding:16px 20px;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;"
+        "justify-content:center;box-shadow:0 -2px 18px rgba(0,0,0,.25)}\n"
+        "#px-consent[hidden]{display:none}\n"
+        "#px-consent p{margin:0;max-width:62ch}\n"
+        "#px-consent a{color:#F3EDE3;text-decoration:underline}\n"
+        "#px-consent button{font:inherit;cursor:pointer;border-radius:999px;padding:8px 18px;"
+        "border:1px solid #F3EDE3;background:transparent;color:#F3EDE3}\n"
+        "#px-consent button.px-yes{background:#F3EDE3;color:#061938;border-color:#F3EDE3}\n"
+        "@media (max-width:520px){#px-consent{justify-content:flex-start}}\n"
+        "</style>\n"
+        '<div id="px-consent" hidden>\n'
+        "  <p>" + message + " <a href=\"/privacy-policy\">Privacy Policy</a></p>\n"
+        '  <button type="button" class="px-yes" data-px="granted">' + yes + "</button>\n"
+        '  <button type="button" data-px="denied">Turn it off</button>\n'
+        "</div>\n"
+        "<script>\n"
+        "(function(){\n"
+        "  var KEY = 'px-analytics-consent';\n"
+        "  function read(){ try { return localStorage.getItem(KEY); } catch (e) { return null; } }\n"
+        "  function write(v){ try { localStorage.setItem(KEY, v); } catch (e) {} }\n"
+        "  var bar = document.getElementById('px-consent');\n"
+        "  if (bar && !read()) { bar.hidden = false; }\n"
+        "  if (bar) {\n"
+        "    bar.addEventListener('click', function(e){\n"
+        "      var b = e.target.closest('button[data-px]');\n"
+        "      if (!b) return;\n"
+        "      var choice = b.getAttribute('data-px');\n"
+        "      write(choice);\n"
+        "      gtag('consent', 'update', {'analytics_storage': choice});\n"
+        "      bar.hidden = true;\n"
+        "    });\n"
+        "  }\n"
+        "  var RULES = [\n" + rules + "\n  ];\n"
+        "  document.addEventListener('click', function(e){\n"
+        "    var path = e.composedPath ? e.composedPath() : [e.target];\n"
+        "    var a = null;\n"
+        "    for (var i = 0; i < path.length; i++) {\n"
+        "      var n = path[i];\n"
+        "      if (n && n.tagName === 'A' && n.getAttribute && n.getAttribute('href')) { a = n; break; }\n"
+        "    }\n"
+        "    if (!a) return;\n"
+        "    var host;\n"
+        "    try { host = new URL(a.href, location.href).hostname; } catch (err) { return; }\n"
+        "    if (host === location.hostname) return;\n"
+        "    for (var j = 0; j < RULES.length; j++) {\n"
+        "      if (RULES[j].re.test(host)) {\n"
+        "        gtag('event', RULES[j].name, {\n"
+        "          link_url: a.href,\n"
+        "          link_domain: host,\n"
+        "          source_page: location.pathname\n"
+        "        });\n"
+        "        return;\n"
+        "      }\n"
+        "    }\n"
+        "  }, true);\n"
+        "})();\n"
+        "</script>\n"
+    )
+
+
 # 'Lumios Marker' was never uploaded, so this @font-face has always pointed at
 # the literal placeholder string and 404'd on seven pages. The font stack already
 # falls through to Permanent Marker, so dropping the rule changes nothing on
@@ -318,6 +465,47 @@ ROUTES = [
         og_img="og-quiz.jpg",
     ),
     dict(
+        path="/three-toxic-lies",
+        tag="parallaxx-toxic-lies",
+        bundle="parallaxx-toxic-lies.js",
+        bg="#04122A",
+        # The Wix page carried no meta description at all, so there is nothing
+        # to carry across here and nothing lost by writing one. The title on
+        # Wix was "Three Toxic Lies  | Parallaxx Transformations", with the
+        # double space.
+        title="Three Toxic Lies | A Short Book About Time | Parallaxx",
+        desc="Three things about time that many of us believe, and what is true instead. "
+             "A short book by Daniel Lawson, about an hour to read, with three exercises "
+             "to write your own answers into. \u20ac14.97, posted anywhere in the world.",
+        og_title="You probably believe at least one of these.",
+        og_desc="Three Toxic Lies. A short book about time and what it costs you \u2014 "
+                "named plainly, with the truth set against each one.",
+        og_img="img/og-toxic-lies.png",
+    ),
+    dict(
+        path="/ptjournal",
+        tag="parallaxx-progress-journal",
+        bundle="parallaxx-progress-journal.js",
+        bg="#04122A",
+        # The harvested Wix metadata read "Accelerate Your Momentum Parallaxx
+        # Progress Journal - your 90-day guide to becoming a 'serial winner'.
+        # The worlds most valuable personal journal guaranteed!" Two things were
+        # wrong with it: "worlds" had no apostrophe, and the guarantee claim was
+        # attached to the wrong noun -- the guarantee on the page is that Daniel
+        # coaches you through it himself if ninety days move nothing, which is a
+        # promise he can keep, not a property of the book. The superlative
+        # itself is Daniel's claim about his own product and it leads the page,
+        # so it leads the metadata too.
+        title="The World\u2019s Most Valuable Journal | Parallaxx Transformations",
+        desc="The world\u2019s most valuable journal. One page a day for ninety days, built "
+             "on eight daily rituals, with twelve focused intentions, goal pages and two "
+             "video modules included. \u20ac24.99, shipped anywhere in the world.",
+        og_title="The world\u2019s most valuable journal.",
+        og_desc="The Parallaxx Progress Journal. One page a day, ninety days, and eight "
+                "rituals reverse engineered out of the years things moved.",
+        og_img="img/og-progress-journal.png",
+    ),
+    dict(
         path="/wheel-of-reconnect",
         tag="parallaxx-wheel-of-reconnect",
         bundle="parallaxx-wheel-of-reconnect.js",
@@ -359,12 +547,17 @@ REDIRECTS = {
     "/members": "/",
     "/free-guide": "/",
     "/free-gift-tmg": "/",
-    "/free-ebook-three-toxic-lies": "/",
-    "/three-toxic-lies": "/",
+    # /three-toxic-lies is a real page again as of 13 Sep -- see ROUTES above.
+    # /free-ebook-three-toxic-lies was the digital edition's own page; it points
+    # at the book rather than at home, because anyone arriving on it came
+    # looking for this exact thing and the home page is a poor answer for them.
+    "/free-ebook-three-toxic-lies": "/three-toxic-lies",
     "/personal-leadership-resources": "/",
     # Content pages.
     "/blog": "/",
-    "/ptjournal": "/",
+    # /ptjournal is a real page again as of 13 Sep -- see ROUTES above. It was
+    # parked at "/" only because the Wix page had not been rebuilt yet; the
+    # journal never stopped selling, and the footer has linked here throughout.
     "/parallaxx-perspectives-podcast": "/",
     # The podcast lives on YouTube; there was never a page worth rebuilding.
     "/reconnect-you-podcast-with-daniel-lawson": "https://www.youtube.com/@ReconnectYou1/featured",
@@ -569,10 +762,12 @@ def head_html(r: dict) -> str:
 {jsonld(r)}
 
 <style>html,body{{margin:0;padding:0;background:{r['bg']}}} {r['tag']}{{display:block}}</style>
+{analytics_head()}
 </head>
 <body>
 <{r['tag']}></{r['tag']}>
 <script src="/{r['bundle']}?v={bundle_stamp(r['bundle'])}"></script>
+{analytics_body()}
 </body>
 </html>
 """

@@ -776,7 +776,7 @@
 
       <p class="lede">Parallax Life Co Pty LTD (ABN 66 631 353 752) trading as Parallaxx Transformations, hereafter referred to as &ldquo;Parallaxx&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;, or &ldquo;our&rdquo;, is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our coaching services.</p>
 
-      <p>This Privacy Policy complies with the Australian Privacy Principles set out in the Privacy Act 1988 (Cth) (&ldquo;Australian Privacy Law&rdquo;) and the General Data Protection Regulation (EU) 2016/679 (&ldquo;GDPR&rdquo;).</p>
+      <p>This Privacy Policy is written to comply with the Australian Privacy Principles set out in the Privacy Act 1988 (Cth) (&ldquo;Australian Privacy Law&rdquo;).</p>
 
       <h2>Information Collection</h2>
       <p>When you interact with our website and services, we may collect the following information:</p>
@@ -785,16 +785,32 @@
         <li><strong>Usage Information:</strong> We automatically collect information on how you interact with our website, such as IP address, browser type, pages visited, links clicked, and other similar usage data.</li>
       </ul>
 
-      <!-- ADDED 1 Sep 2026, NOT harvested Wix copy. Every factual claim here
-           was verified against the shipped bundles rather than assumed: no
-           analytics, no pixel, no tag manager, no first-party cookies, and the
-           two instruments genuinely keep answers in memory only -- their build
-           scripts fail if browser storage is added. PENDING LEGAL REVIEW. -->
+      <!-- ADDED 1 Sep 2026. REWRITTEN 14 Sep 2026 when GA4 went in.
+           TWO tools now run, and NEITHER is visible by grepping this repo:
+             - Cloudflare Web Analytics (since 31 Aug 2026), cookieless, its
+               beacon injected at the EDGE. Verify in the Cloudflare dashboard.
+             - Google Analytics 4 (since 14 Sep 2026), which DOES set cookies.
+               Injected by migration/build-site.py into every route's <head>,
+               not by any bundle. Verify in dist/, or view-source on the site.
+           So this paragraph cannot be checked by reading the page sources
+           alone. If you change what runs, change this paragraph in the same
+           commit -- it was wrong for a fortnight because that was not done.
+           Consent posture is CONSENT_MODE in build-site.py, currently
+           "opt-out" by Daniel's decision of 14 Sep 2026. PENDING LEGAL
+           REVIEW. -->
       <h2>Cookies and tracking</h2>
-      <p>This website does not set cookies, and does not use analytics, advertising or tracking technology. There is no Google Analytics, no advertising pixel and no tag manager on this site.</p>
+      <p>This website uses two analytics tools, and you can switch the second one off:</p>
+      <ul>
+        <li><strong>Cloudflare Web Analytics</strong> counts page views and measures how quickly pages load. It is cookieless: it stores nothing on your device, does not fingerprint your browser, and cannot recognise you on a return visit.</li>
+        <li><strong>Google Analytics 4</strong> shows us which pages are read, which links are followed, and roughly where in the world visitors are. It sets first-party cookies on your device so that several page views by the same person in one sitting are counted once rather than several times.</li>
+      </ul>
+      <p>We do not use Google Analytics for advertising. Advertising storage, ad personalisation and advertising user data are switched off, so your visit is not used to target ads to you here or anywhere else.</p>
+      <p>A notice appears at the bottom of the page on your first visit with a button to turn Google Analytics off. Your choice is stored on your own device and remembered on later visits. Clearing your browser storage will bring the notice back.</p>
+      <p>There is no advertising pixel and no tag manager on this site.</p>
       <p>Some pages load resources from third parties. Those parties receive your IP address and basic browser information as a result of your browser requesting the file:</p>
       <ul>
         <li><strong>Google Fonts</strong> for typefaces, on every page.</li>
+        <li><strong>Google Analytics</strong>, on every page, unless you have turned it off as described above.</li>
         <li><strong>Cloudflare cdnjs</strong> and <strong>unpkg</strong> for animation libraries, on most pages.</li>
         <li><strong>YouTube</strong> for video, on some pages. These embeds use youtube-nocookie.com, which does not set advertising cookies unless you play the video.</li>
         <li><strong>LeadConnector (GoHighLevel)</strong> for the application forms, which load only on The Reconnected Man and The Reconnected Woman.</li>

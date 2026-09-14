@@ -127,7 +127,7 @@ ROUTES = [
         og_desc="For men who are needed, but want more from life. Decide what you want, ask "
                 "for it, and see what happens — among brothers who hold you to a higher "
                 "standard.",
-        og_img="img/og-reconnected-man.png",
+        og_img="img/og-reconnected-man-v2.png",
     ),
     dict(
         path="/the-reconnected-woman",

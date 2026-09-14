@@ -82,5 +82,5 @@ d.line([(300, 436), (900, 436)], fill=(255, 255, 255, 40), width=1)
 track(d, (W/2, 462), "FREE OPEN SESSION  ·  ONLINE  ·  WEEKLY",
       f("Bold", 13), SLATE, sp=3.2, anchor_centre=True)
 
-img.save("og-reconnected-man.png")
+img.save("og-reconnected-man-v2.png")
 print("written", img.size)

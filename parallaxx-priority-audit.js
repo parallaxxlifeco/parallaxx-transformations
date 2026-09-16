@@ -485,14 +485,15 @@
   font-family:'Montserrat',system-ui,-apple-system,sans-serif;
   border-bottom:1px solid transparent;
   background:transparent;
-  transition:background .4s ease,border-color .4s ease,backdrop-filter .4s ease;
+  transition:background .4s ease,border-color .4s ease;
   -webkit-font-smoothing:antialiased;
 }
 /* Navy on scroll. NEVER black. */
+/* Solid, no backdrop-filter: inside a shadow root Chromium composites the
+   filter against an already filtered backdrop and the page reads straight
+   through a background that is 92% opaque. */
 #pt-nav.is-stuck{
-  background:rgba(6,25,56,.92);
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
+  background:#061938;
   border-bottom-color:rgba(232,198,95,.16);
 }
 #pt-bar{
@@ -577,8 +578,7 @@
   min-width:252px;
   display:none;flex-direction:column;gap:2px;
   margin-top:14px;
-  background:rgba(4,18,42,.98);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  background:#04122A;
   border:1px solid rgba(232,198,95,.18);
   border-radius:14px;padding:10px;
   box-shadow:0 30px 60px -20px rgba(3,12,28,.8);
@@ -640,8 +640,7 @@
 /* ═══ MOBILE ══════════════════════════════════════════════════════ */
 @media(max-width:1023px){
   #pt-burger{display:flex}
-  #pt-nav{background:rgba(6,25,56,.92);backdrop-filter:blur(16px);
-    -webkit-backdrop-filter:blur(16px)}
+  #pt-nav{background:#061938}
 
   #pt-links{
     position:absolute;top:100%;left:0;right:0;

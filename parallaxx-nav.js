@@ -57,14 +57,17 @@
   font-family:'Montserrat',system-ui,-apple-system,sans-serif;
   border-bottom:1px solid transparent;
   background:transparent;
-  transition:background .4s ease,border-color .4s ease,backdrop-filter .4s ease;
+  transition:background .4s ease,border-color .4s ease;
   -webkit-font-smoothing:antialiased;
 }
-/* Navy on scroll. NEVER black. */
+/* Navy on scroll. NEVER black.
+   SOLID, AND NO BACKDROP FILTER. Same Chromium bug as the mobile panel
+   below: a backdrop-filter inside a shadow root composites this bar against
+   an already filtered backdrop, so the page reads straight through a
+   background that is 92% opaque. On the /insights articles the body copy was
+   legible through the whole bar while scrolling. Solid navy instead. */
 #pt-nav.is-stuck{
-  background:rgba(6,25,56,.92);
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
+  background:#061938;
   border-bottom-color:rgba(232,198,95,.16);
 }
 #pt-bar{
@@ -149,8 +152,8 @@
   min-width:252px;
   display:none;flex-direction:column;gap:2px;
   margin-top:14px;
-  background:rgba(4,18,42,.98);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  /* Solid. A backdrop-filter here reads through, same bug as the bar. */
+  background:#04122A;
   border:1px solid rgba(232,198,95,.18);
   border-radius:14px;padding:10px;
   box-shadow:0 30px 60px -20px rgba(3,12,28,.8);
@@ -212,20 +215,19 @@
 /* ═══ MOBILE ══════════════════════════════════════════════════════ */
 @media(max-width:1023px){
   #pt-burger{display:flex}
-  #pt-nav{background:rgba(6,25,56,.92);backdrop-filter:blur(16px);
-    -webkit-backdrop-filter:blur(16px)}
+  /* Solid here too, for the same reason as the bar above. */
+  #pt-nav{background:#061938}
 
   #pt-links{
     position:absolute;top:100%;left:0;right:0;
     flex-direction:column;align-items:stretch;gap:2px;
     margin-left:0;
-    /* SOLID, AND NO BACKDROP FILTER ON THIS ONE. The bar above keeps its
-       blur; this panel cannot have one. Nested backdrop-filters inside a
-       shadow root make Chromium composite this element against an already
+    /* SOLID, AND NO BACKDROP FILTER. Nested backdrop-filters inside a
+       shadow root make Chromium composite the element against an already
        filtered backdrop, and the page behind reads straight through a
        background that is 98.5% opaque. On the built-in version of this nav
-       the hero headline was legible through the open menu. The bar's own
-       blur still gives the effect where it matters. */
+       the hero headline was legible through the open menu. Nothing in this
+       component carries a backdrop-filter any more, for that reason. */
     background:#061938;
     border-bottom:1px solid rgba(232,198,95,.16);
     padding:10px clamp(16px,4vw,44px) 22px;

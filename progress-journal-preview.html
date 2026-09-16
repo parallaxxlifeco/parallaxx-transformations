@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Progress Journal | Parallaxx Transformations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════════════════════════════
+   PARALLAXX TRANSFORMATIONS · THE PROGRESS JOURNAL
+   ----------------------------------------------------------------------
+   Built on the v10 system the Reconnected Woman page runs: same tokens,
+   same section grounds, same [data-r] depth reveals, same motion
+   contract. Nav and footer load as shared bundles rather than being
+   baked in, so this page cannot drift from the other twelve.
+
+   WHAT CHANGED FROM THE WIX PAGE, AND WHY
+   Four typos went, two of them the brand's own name: "PARRALLAXX
+   Progress Journal" in a headline and "MORE THA JUST A JOURNAL". The
+   meta description had "the worlds most valuable personal journal"
+   without the apostrophe.
+
+   THE CLAIM STAYED. "The world's most valuable journal" is the first
+   line on the page, as it was on Wix. I had cut it as an unbacked
+   superlative; Daniel stands behind it, and it is his claim to make
+   about his own product. The only thing wrong with it was the missing
+   apostrophe, which the build now checks for.
+
+   THE VALUE STACK WENT. The old page ran "Total Value = EUR 1,033 /
+   Your Price = EUR 24.99", where 97% of that value was two video modules
+   priced at EUR 497 each. It is the same gesture we took off both circle
+   pages, for the same reason: this site now calibrates down, to a no
+   that cost nothing and a page filled in on a Tuesday. A struck value
+   stack is the loudest sales move available and it argues against
+   everything around it. The modules are still included. They are simply
+   listed rather than priced.
+
+   THE GUARANTEE STAYED, nearly verbatim. It is the most human thing on
+   the original page and it is the only part that makes a promise Daniel
+   can personally keep.
+   ══════════════════════════════════════════════════════════════════════ */
+:root{
+  --navy:#04122A; --black:#061938; --ink-navy:#030C1C; --card:#0A1D3C;
+  --border:#1B2C46;
+  --cream:#F1ECE1; --cream-2:#F7F3EA; --line-cream:#DED6C4;
+  --coral:#FF501F; --coral-lift:#FF6A3D;
+  --gold:#E8C65F; --gold-lift:#F3DD93; --gold-dark:#C9A227;
+  --bronze:#A08A5E;
+  --mist:#B1BFD7; --slate:#7C89A3;
+  --ink:#1F2A3D; --ink-soft:#5A6274;
+  --head:'Poppins',system-ui,-apple-system,sans-serif;
+  --body:'Montserrat',system-ui,-apple-system,sans-serif;
+  --hand:'Permanent Marker',cursive;
+  --gut:clamp(20px,4vw,52px);
+  --col:1240px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+#pj-page{background:var(--navy);color:var(--mist);font-family:var(--body);
+  font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:clip}
+
+#pj-rail{position:fixed;top:0;bottom:0;left:calc(var(--gut) / 2 - 1px);width:9px;
+  z-index:60;pointer-events:none;display:flex;justify-content:center}
+#pj-rail .bar{width:1px;height:100%;background:var(--slate);opacity:.22}
+@media(max-width:820px){#pj-rail{left:7px}}
+
+#pj-page .sec{padding:clamp(52px,6.5vw,92px) var(--gut);position:relative}
+#pj-page .ink{background:var(--ink-navy)}
+#pj-page .dark{background:var(--navy)}
+#pj-page .black{background:var(--black)}
+#pj-page .cream{background:var(--cream);color:var(--ink)}
+#pj-page .cream-2{background:var(--cream-2);color:var(--ink)}
+#pj-page .in{max-width:var(--col);margin:0 auto}
+#pj-page .narrow{max-width:1000px}
+
+#pj-page .ey{font-family:var(--head);font-size:.62rem;font-weight:800;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--gold);margin:0 0 13px}
+#pj-page .cream .ey,#pj-page .cream-2 .ey{color:var(--bronze)}
+#pj-page h1,#pj-page h2,#pj-page h3{font-family:var(--head);margin:0;text-wrap:balance}
+#pj-page h2{font-size:clamp(26px,3.3vw,40px);font-weight:700;line-height:1.1;
+  letter-spacing:-.02em;color:var(--cream);margin-bottom:16px}
+#pj-page .cream h2,#pj-page .cream-2 h2{color:var(--ink)}
+#pj-page h3{font-size:clamp(17px,1.8vw,21px);font-weight:600;line-height:1.3;color:var(--cream)}
+#pj-page .cream h3,#pj-page .cream-2 h3{color:var(--ink)}
+#pj-page p{margin:0 0 14px;max-width:64ch}
+#pj-page .lede{font-size:clamp(16px,1.55vw,19px);line-height:1.55;color:var(--mist)}
+#pj-page .cream .lede,#pj-page .cream-2 .lede{color:var(--ink-soft)}
+#pj-page .dim{color:var(--slate)}
+#pj-page .cream .dim,#pj-page .cream-2 .dim{color:var(--ink-soft)}
+#pj-page em{font-style:italic}
+#pj-page strong{color:var(--cream);font-weight:600}
+#pj-page .cream strong,#pj-page .cream-2 strong{color:var(--ink)}
+
+/* The marker hand, used the way the men's page uses it: lowercase, an
+   aside in his own writing, never a heading and never a claim. */
+#pj-page .hand{font-family:var(--hand);font-weight:400;text-transform:lowercase;
+  font-size:clamp(16px,1.8vw,22px);line-height:1.25;color:var(--gold);margin:0 0 14px}
+#pj-page .cream .hand,#pj-page .cream-2 .hand{color:var(--bronze)}
+
+#pj-page .btn{display:inline-block;font-family:var(--head);font-size:.76rem;font-weight:700;
+  letter-spacing:.13em;text-transform:uppercase;text-decoration:none;border:none;
+  background:var(--coral);color:#fff;padding:16px 30px;border-radius:2px;cursor:pointer;
+  transition:background .22s ease,transform .22s var(--ease)}
+#pj-page .btn:hover{background:var(--coral-lift);transform:translateY(-2px)}
+#pj-page .btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+#pj-page .fine{margin:14px 0 0;font-size:.88rem;color:var(--slate)}
+#pj-page .cream .fine,#pj-page .cream-2 .fine{color:var(--ink-soft)}
+
+#pj-page [data-r]{opacity:0;transform:translateY(var(--dy,12px));
+  transition:opacity .85s ease,transform .85s var(--ease)}
+#pj-page [data-r="far"]{--dy:4px}
+#pj-page [data-r="mid"]{--dy:12px}
+#pj-page [data-r="near"]{--dy:28px}
+#pj-page [data-r].seen{opacity:1;transform:none}
+#pj-page.no-anim [data-r]{opacity:1!important;transform:none!important}
+#pj-page .mask{overflow:hidden;display:block}
+#pj-page .mask > span{display:block;transform:translateY(104%);
+  transition:transform 1.05s var(--ease)}
+#pj-page .mask.seen > span{transform:translateY(0)}
+#pj-page.no-anim .mask > span{transform:none!important}
+
+/* ── HERO. The product is the hero. Everything else on this site opens
+      on a person or a room; this one opens on the thing you receive. ── */
+#pj-hero{background:radial-gradient(120% 90% at 50% 14%,#0A2148 0%,#061938 44%,#030C1E 100%);
+  overflow:hidden}
+#pj-hero .hatch{position:absolute;inset:0;pointer-events:none;
+  background-image:repeating-linear-gradient(-45deg,transparent,transparent 58px,
+    rgba(232,198,95,.03) 58px,rgba(232,198,95,.03) 59px)}
+#pj-hero .grid{position:relative;display:grid;grid-template-columns:1.02fr .98fr;
+  gap:clamp(26px,4vw,64px);align-items:center;max-width:var(--col);margin:0 auto}
+#pj-hero h1{font-size:clamp(34px,5.4vw,66px);font-weight:700;line-height:1.02;
+  letter-spacing:-.03em;color:var(--cream);margin:0 0 20px}
+#pj-hero h1 .k{color:var(--gold)}
+#pj-hero .shot{position:relative}
+#pj-hero .shot img{width:100%;height:auto;display:block;
+  filter:drop-shadow(0 40px 60px rgba(0,0,0,.55))}
+@media(max-width:820px){
+  #pj-hero .grid{grid-template-columns:1fr;gap:30px}
+  #pj-hero .shot{order:-1;max-width:420px;margin:0 auto}
+}
+
+/* ── THE VSL. It is over four minutes, which is too long to be the first
+      thing anyone meets, so it is not the hero -- it is the right half of
+      "where it came from", which was empty. The story of why he made it and
+      him holding the thing belong beside each other.
+
+      CLICK TO LOAD. Nothing reaches YouTube until someone presses play: the
+      poster is a local JPEG and the iframe is built on click, against
+      youtube-nocookie.com. An always-on embed would put a third-party frame,
+      its cookies and about 700KB of player on every visit to a page most
+      people will scroll straight past. ── */
+#origin-split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4.5vw,68px);
+  align-items:center}
+@media(max-width:880px){#origin-split{grid-template-columns:1fr;gap:32px}}
+#pj-page .vsl{margin:0}
+#pj-page .vfacade{position:relative;display:block;width:100%;padding:0;border:0;
+  background:#04122A;cursor:pointer;overflow:hidden;aspect-ratio:16/9;border-radius:2px}
+#pj-page .vfacade img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .6s var(--ease),filter .35s ease}
+#pj-page .vfacade:hover img{transform:scale(1.02);filter:brightness(1.06)}
+#pj-page .vfacade:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+/* The play mark sits bottom-left, not centre. Centred, it lands squarely on
+   his mouth -- the frame is already 16:9, so there is no crop that moves his
+   face out from under it. Down here it reads as a player control on a still,
+   which is the right weight for something optional anyway. */
+#pj-page .vfacade::after{content:"";position:absolute;inset:auto 0 0 0;height:42%;
+  background:linear-gradient(0deg,rgba(3,12,28,.55),rgba(3,12,28,0));
+  pointer-events:none}
+#pj-page .vplay{position:absolute;left:clamp(14px,1.6vw,22px);bottom:clamp(14px,1.6vw,22px);
+  width:clamp(52px,5.6vw,68px);height:clamp(52px,5.6vw,68px);pointer-events:none;
+  transition:transform .25s var(--ease)}
+#pj-page .vfacade:hover .vplay{transform:scale(1.08)}
+#pj-page .vplay svg{width:100%;height:100%;display:block}
+#pj-page .vsl iframe{width:100%;aspect-ratio:16/9;border:0;display:block;border-radius:2px}
+#pj-page .vcap{margin:11px 0 0;font-size:.8rem;color:var(--slate);max-width:none}
+
+/* ── the four returns, and the four things inside ── */
+#pj-page .rows{list-style:none;margin:26px 0 0;padding:0;border-top:1px solid var(--border)}
+#pj-page .cream .rows,#pj-page .cream-2 .rows{border-top-color:var(--line-cream)}
+#pj-page .rows li{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);
+  gap:6px 34px;padding:16px 0;border-bottom:1px solid var(--border);
+  transition:background .3s ease,padding-left .3s var(--ease)}
+#pj-page .cream .rows li,#pj-page .cream-2 .rows li{border-bottom-color:var(--line-cream)}
+#pj-page .rows li:hover{background:rgba(232,198,95,.05);padding-left:12px}
+#pj-page .cream .rows li:hover,#pj-page .cream-2 .rows li:hover{background:#FFFDF7}
+#pj-page .rows p{margin:0;max-width:52ch}
+@media(max-width:720px){#pj-page .rows li{grid-template-columns:1fr;gap:4px}}
+
+/* ── the ticks. One object, listed rather than priced. ── */
+#pj-page .kit{list-style:none;margin:24px 0 0;padding:0;max-width:760px}
+#pj-page .kit li{position:relative;padding:12px 0 12px 28px;
+  border-bottom:1px solid var(--line-cream);font-size:1rem;color:var(--ink-soft)}
+#pj-page .kit li:last-child{border-bottom:none}
+#pj-page .kit li::before{content:"";position:absolute;left:0;top:1.5em;width:13px;height:1px;
+  background:var(--bronze)}
+#pj-page .kit b{color:var(--ink);font-weight:600}
+
+/* ── the price line. A number, not a stack. ── */
+#pj-page .price{margin:30px 0 0;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+#pj-page .price .amt{font-family:var(--head);font-size:clamp(34px,4.4vw,52px);
+  font-weight:700;color:var(--ink);line-height:1}
+#pj-page .price .pnote{font-size:.95rem;color:var(--ink-soft)}
+
+/* ── the spread, shown rather than described ── */
+#pj-page .plates{display:grid;grid-template-columns:repeat(3,1fr);
+  gap:clamp(14px,2vw,26px);margin-top:clamp(26px,3vw,36px)}
+#pj-page .plates figure{margin:0}
+#pj-page .plates .box{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center}
+#pj-page .plates img{max-width:100%;max-height:100%;width:auto;height:auto;display:block;
+  filter:drop-shadow(0 18px 28px rgba(31,42,61,.18))}
+#pj-page .plates figcaption{margin-top:10px;text-align:center;font-size:.8rem;
+  color:var(--ink-soft);line-height:1.5}
+@media(max-width:720px){#pj-page .plates{grid-template-columns:1fr;gap:22px;
+    max-width:300px;margin-left:auto;margin-right:auto}
+  #pj-page .plates .box{aspect-ratio:4/3}}
+
+/* ── the guarantee sits in a bracketed panel, the device the men's page
+      uses for the one thing it wants read twice ── */
+#pj-page .panel{position:relative;border:1px solid rgba(232,198,95,.2);
+  padding:clamp(26px,4vw,46px);max-width:820px;margin:26px 0 0}
+#pj-page .panel::before,#pj-page .panel::after{content:"";position:absolute;
+  width:38px;height:38px;border:2px solid var(--gold)}
+#pj-page .panel::before{top:-1px;left:-1px;border-right:none;border-bottom:none}
+#pj-page .panel::after{bottom:-1px;right:-1px;border-left:none;border-top:none}
+
+#pj-close{text-align:center}
+/* Every <p> here is capped at 64ch for reading, and .ey / .fine set their own
+   margins, which out-specify a plain "#pj-close p". Without naming them the
+   eyebrow and the fine print centre a 384px box inside a 1000px column and sit
+   300px left of the heading they belong to. */
+#pj-close p,#pj-close .ey,#pj-close .fine{margin-left:auto;margin-right:auto}
+#pj-close h2{font-size:clamp(26px,4.2vw,48px)}
+#pj-close .lede{margin-left:auto;margin-right:auto}
+@media(prefers-reduced-motion:reduce){#pj-page *{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body style="margin:0;padding:0;background:#04122A">
+
+<div id="pj-rail" aria-hidden="true"><span class="bar"></span></div>
+
+<div id="pj-page">
+<parallaxx-nav></parallaxx-nav>
+
+<!-- ══ 01 · HERO ═══════════════════════════════════════════════════ -->
+<section class="sec ink" id="pj-hero">
+  <div class="hatch" aria-hidden="true"></div>
+  <div class="grid">
+    <div>
+      <p class="ey" data-r="far">The world&rsquo;s most valuable journal</p>
+      <h1>
+        <span class="mask"><span>One page a day.</span></span>
+        <span class="mask"><span class="k">Ninety days.</span></span>
+      </h1>
+      <p class="lede" data-r="mid">The Parallaxx Progress Journal. Eight rituals I reverse engineered out of the years things moved, written down so you can run them too.</p>
+      <a class="btn" href="https://buy.stripe.com/aEU4i15gC9Yg3UQ6oq" data-r="mid">Buy the journal</a>
+      <p class="fine" data-r="far">&euro;24.99 &nbsp;&middot;&nbsp; Hardcover &nbsp;&middot;&nbsp; Shipped anywhere in the world</p>
+    </div>
+    <div class="shot" data-r="near">
+      <img src="https://static.wixstatic.com/media/e1784d_0ece67bf674741d0897b382b88472d3d~mv2.png"
+           alt="The Parallaxx Progress Journal, hardcover, shown open at a goal page" width="728" height="782" loading="eager" decoding="async">
+    </div>
+  </div>
+</section>
+
+<!-- ══ 02 · WHERE IT CAME FROM ═════════════════════════════════════ -->
+<section class="sec dark">
+  <div class="in narrow">
+    <div id="origin-split">
+      <div>
+        <p class="ey" data-r="far">Where it came from</p>
+        <h2 data-r="mid">I made the first one as a gift.</h2>
+        <p class="lede" data-r="mid">It was for clients. Twelve focused intentions, the systems I had reverse engineered out of my own best years and kept running because they kept working.</p>
+        <p data-r="mid">As I got sharper with the rituals, people started noticing. They saw a run of wins and accused me of being a serial winner. The name stuck around, and this is the thing underneath it.</p>
+        <p class="hand" data-r="far" style="margin-top:20px">so here it is, properly made</p>
+      </div>
+      <div class="vsl" data-r="near">
+        <button class="vfacade" type="button" data-yt="ISVT4hfSP9k"
+                aria-label="Play the video: Daniel on the Progress Journal">
+          <img src="/assets/img/journal-vsl-poster.jpg" alt="Daniel holding the Progress Journal" width="1600" height="900" loading="lazy" decoding="async">
+          <span class="vplay"><svg viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="48" r="46" fill="rgba(6,25,56,0.85)" stroke="#E8C65F" stroke-width="2"/><polygon points="40,30 68,48 40,66" fill="#E8C65F"/></svg></span>
+        </button>
+        <p class="vcap">Daniel on the journal &middot; about 4 minutes, if you want it</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 03 · WHAT IS INSIDE ═════════════════════════════════════════ -->
+<section class="sec cream">
+  <div class="in narrow">
+    <p class="ey" data-r="far">What is inside</p>
+    <h2 data-r="mid">Ninety days, eight rituals, one page at a time.</h2>
+    <ul class="rows" data-r="mid">
+      <li><h3>Twelve focused intentions</h3><p>One at a time, so you are never running all of them at once.</p></li>
+      <li><h3>Eight daily rituals</h3><p>Intention in the morning, attention at night. Both fit on the page.</p></li>
+      <li><h3>Goal pages</h3><p>What it is, why it matters, when it lands, and how it will feel when it does.</p></li>
+      <li><h3>Milestones and rewards</h3><p>Somewhere to mark the thing you finished, which is the part most of us skip.</p></li>
+    </ul>
+    <div class="plates" data-r="mid">
+      <figure>
+        <div class="box"><img src="https://static.wixstatic.com/media/e1784d_113269a7d1264fcab0d3f1ee4f1c32f2~mv2.png"
+             alt="An open spread showing how the ninety days are laid out" width="979" height="697" loading="lazy" decoding="async"></div>
+        <figcaption>How it works</figcaption>
+      </figure>
+      <figure>
+        <div class="box"><img src="https://static.wixstatic.com/media/e1784d_29dc4af5b6f24a3f907f365cd8855d0d~mv2.png"
+             alt="The hardcover Progress Journal, closed" width="660" height="953" loading="lazy" decoding="async"></div>
+        <figcaption>Hardcover, ninety days</figcaption>
+      </figure>
+      <figure>
+        <div class="box"><img src="https://static.wixstatic.com/media/e1784d_c87a3242e16548dabf09dda3e7d100a0~mv2.png"
+             alt="An open spread showing a goal page" width="978" height="696" loading="lazy" decoding="async"></div>
+        <figcaption>A goal page</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 04 · WHAT NINETY DAYS DOES ══════════════════════════════════ -->
+<section class="sec black">
+  <div class="in narrow">
+    <p class="ey" data-r="far">What ninety days does</p>
+    <h2 data-r="mid">Small, and it compounds.</h2>
+    <ul class="rows" data-r="mid">
+      <li><h3>More time for what you like</h3><p>Because you stop spending it on what does not count.</p></li>
+      <li><h3>A felt sense of getting somewhere</h3><p>Week in, week out, rather than once a quarter when you look back.</p></li>
+      <li><h3>Results that come easier</h3><p>The page does the remembering, so you are not carrying the system as well as the work.</p></li>
+      <li><h3>Your time back</h3><p>Owned, and spent on purpose.</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══ 05 · WHAT SHIPS ═════════════════════════════════════════════ -->
+<section class="sec cream-2">
+  <div class="in narrow">
+    <p class="ey" data-r="far">What you get</p>
+    <h2 data-r="mid">More than a journal.</h2>
+    <p class="lede" data-r="mid">The book is the thing you hold. These come with it.</p>
+    <ul class="kit" data-r="mid">
+      <li><b>The hardcover Progress Journal.</b> A full ninety day run, with the eight daily rituals on every page.</li>
+      <li><b>Shipping, anywhere in the world.</b> Included in the price, wherever you are.</li>
+      <li><b>Transformational Growth.</b> A video module and workbook on setting goals you are emotionally connected to, rather than goals that look good written down.</li>
+      <li><b>Accelerating Progress.</b> A second module on building a daily sense of accomplishment, so the subconscious starts doing some of the lifting.</li>
+    </ul>
+    <div class="price" data-r="mid">
+      <span class="amt">&euro;24.99</span>
+      <span class="pnote">Shipping included. One payment, no subscription.</span>
+    </div>
+    <p style="margin-top:24px"><a class="btn" href="https://buy.stripe.com/aEU4i15gC9Yg3UQ6oq" data-r="mid">Buy the journal</a></p>
+  </div>
+</section>
+
+<!-- ══ 06 · THE GUARANTEE ══════════════════════════════════════════ -->
+<section class="sec dark">
+  <div class="in narrow">
+    <p class="ey" data-r="far">The guarantee</p>
+    <div class="panel" data-r="near">
+      <h2>Follow it. If nothing moves, come and tell me.</h2>
+      <p class="lede">I am not a fan of wishing, hoping, waiting or getting lucky. I would rather find what works and do that until I get the outcome I want.</p>
+      <p>So the deal is simple. Run the system for the ninety days. If you do not see it, message me and I will coach you through the missing piece myself, at no charge.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 07 · CLOSE ══════════════════════════════════════════════════ -->
+<section class="sec ink" id="pj-close">
+  <div class="in narrow">
+    <p class="ey" data-r="far">Ready?</p>
+    <h2 class="mask" id="pjClose"><span>One page a day. Ninety days.</span></h2>
+    <p class="lede" data-r="mid">Start the next ninety on purpose.</p>
+    <p><a class="btn" href="https://buy.stripe.com/aEU4i15gC9Yg3UQ6oq" data-r="mid">Buy the journal</a></p>
+    <p class="fine" data-r="far">&euro;24.99 &nbsp;&middot;&nbsp; Hardcover &nbsp;&middot;&nbsp; Shipped anywhere in the world</p>
+  </div>
+</section>
+
+<parallaxx-footer></parallaxx-footer>
+</div>
+
+<script src="/parallaxx-nav.js"></script>
+<script src="/parallaxx-footer.js"></script>
+<script>
+(function(){
+  var page = document.getElementById('pj-page');
+  if(!page) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var noIO   = !('IntersectionObserver' in window);
+  if(reduce || noIO){ page.classList.add('no-anim'); }
+
+  var reveals = [].slice.call(document.querySelectorAll('#pj-page [data-r]'));
+  if(reduce || noIO){
+    reveals.forEach(function(el){ el.classList.add('seen'); });
+  } else {
+    var ro = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('seen'); ro.unobserve(e.target); } });
+    }, { rootMargin:'0px 0px -12% 0px' });
+    reveals.forEach(function(el){ ro.observe(el); });
+    /* failsafe: nothing on a page that sells something may stay invisible */
+    setTimeout(function(){
+      reveals.forEach(function(el){ el.classList.add('seen'); });
+      [].slice.call(document.querySelectorAll('#pj-page .mask')).forEach(function(m){ m.classList.add('seen'); });
+    }, 4000);
+  }
+
+  [].slice.call(document.querySelectorAll('#pj-hero .mask')).forEach(function(m,i){
+    setTimeout(function(){ m.classList.add('seen'); }, reduce ? 0 : 120 + i * 130);
+  });
+
+  /* Click to load. The poster is swapped for the player only when asked, so a
+     visitor who never presses play never touches YouTube. */
+  [].slice.call(document.querySelectorAll('#pj-page .vfacade')).forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var id = btn.getAttribute('data-yt');
+      if(!id) return;
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + id +
+              '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+      f.title = 'Daniel on the Progress Journal';
+      f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      f.setAttribute('allowfullscreen','');
+      f.setAttribute('referrerpolicy','strict-origin-when-cross-origin');
+      btn.parentNode.replaceChild(f, btn);
+      try { f.focus(); } catch(e){}
+    });
+  });
+
+  var close = document.getElementById('pjClose');
+  if(close){
+    if(reduce || noIO){ close.classList.add('seen'); }
+    else {
+      var io = new IntersectionObserver(function(es){
+        es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('seen'); io.unobserve(e.target); } });
+      }, { rootMargin:'0px 0px -18% 0px' });
+      io.observe(close);
+    }
+  }
+})();
+</script>
+</body>
+</html>

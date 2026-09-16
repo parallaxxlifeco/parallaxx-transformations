@@ -362,5 +362,25 @@
   {
     "url": "https://static.wixstatic.com/media/RW_VOICE_JULIA~mv2.jpg",
     "file": "img/voice-julia.jpg"
+  },
+  {
+    "url": "https://static.wixstatic.com/media/e1784d_0ece67bf674741d0897b382b88472d3d~mv2.png",
+    "file": "img/journal-cover-and-spread.png"
+  },
+  {
+    "url": "https://static.wixstatic.com/media/e1784d_113269a7d1264fcab0d3f1ee4f1c32f2~mv2.png",
+    "file": "img/journal-self-acknowledgement.png"
+  },
+  {
+    "url": "https://static.wixstatic.com/media/e1784d_29dc4af5b6f24a3f907f365cd8855d0d~mv2.png",
+    "file": "img/journal-personal-leadership.png"
+  },
+  {
+    "url": "https://static.wixstatic.com/media/e1784d_c87a3242e16548dabf09dda3e7d100a0~mv2.png",
+    "file": "img/journal-accelerating-progress.png"
+  },
+  {
+    "url": "https://static.wixstatic.com/media/e1784d_049456af915940a197681c781f55a745~mv2.png",
+    "file": "img/toxic-lies-cover.png"
   }
 ]

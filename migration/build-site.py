@@ -228,7 +228,7 @@ ROUTES = [
         tag="parallaxx-home",
         bundle="parallaxx-home.js",
         bg="#061938",
-        title="Personal Leadership Facilitator Daniel Lawson | Parallaxx Transformations",
+        title="Daniel Lawson, Reconnection Coach | Parallaxx Transformations",
         desc="Ask how you're doing and you say fine. Or busy. Same answer for years. "
              "Coaching for people who handle it all on their own.",
         og_title="Coaching for people who handle it all on their own.",
@@ -320,13 +320,12 @@ ROUTES = [
         tag="parallaxx-about-page",
         bundle="parallaxx-about-page.js",
         bg="#04122A",
-        title="Daniel Lawson | Personal Leadership Facilitator | Parallaxx",
-        desc="Discover Daniel Lawson, Personal Leadership expert, guiding clients to purpose-driven "
-             "impact and inner peace through transformative retreats and coaching.",
+        title="Daniel Lawson | Reconnection Coach | Parallaxx",
+        desc="Daniel Lawson runs reconnection work for men and women at Parallaxx: retreats, "
+             "circles and one to one. His own story, and what the work asks of you.",
         og_title="About Daniel Lawson | Parallaxx Transformations",
-        og_desc="Daniel Lawson, an authority in Personal Leadership and retreat facilitation, empowers "
-                "attendees to achieve purposeful impact and inner peace. Explore his journey and discover "
-                "how he helps individuals lead themselves to fulfilling and meaningful lives.",
+        og_desc="Daniel Lawson on the years he spent handling everything on his own, what changed, "
+                "and the rooms he now runs for people doing the same.",
         og_img="img/og-about.png",
     ),
     dict(
@@ -603,7 +602,7 @@ PERSON = {
     "@type": "Person",
     "@id": PERSON_ID,
     "name": "Daniel Lawson",
-    "jobTitle": "Personal Leadership Facilitator",
+    "jobTitle": "Reconnection Coach",
     "worksFor": {"@id": ORG_ID},
     "url": f"{ORIGIN}/about-daniel-lawson",
     "sameAs": SAME_AS,

@@ -172,9 +172,21 @@ itself. The nav's outside-click handler used that and closed the mobile menu
 in the same tick the burger opened it. `composedPath()` reports the real path
 and works in both runtimes.
 
-And nested `backdrop-filter` does not survive: the mobile menu panel filters
-against an already filtered backdrop and the page reads through a background
-that is 98.5 percent opaque. That panel is solid now.
+And nested `backdrop-filter` does not survive: an element inside the shadow
+root filters against an already filtered backdrop and the page reads straight
+through a background that is 98.5 percent opaque. This was found first on the
+mobile menu panel and assumed to be specific to it. It is not. The scrolled
+bar had the same rule at 92 percent and the same fault, which went unnoticed
+for months because every page behind it was a dark hero or an image. On the
+`/insights` articles, which are a plain column of body text, the copy scrolled
+legibly through the whole bar, nav labels and all.
+
+**So nothing in the site chrome carries a `backdrop-filter`.** Not the bar,
+not the desktop dropdown, not the mobile panel. They are solid navy. Fixed in
+`PtNav v3.dc.html` and in the baked copy inside all twelve page sources, then
+rebuilt — the bundle builders are deterministic, so the only diff in every
+regenerated `.js` is those rules. If a future change reintroduces one, this is
+what it will look like: fine on a photographic hero, unreadable over text.
 
 The Priority Audit runs **in the page**, not on `/priority-audit`. The first
 of the fifteen statements is live in the intro, so answering it starts the run

@@ -118,15 +118,66 @@ one defect for another. There is a comment at the top of that file saying so.
 The Reconnected Woman is covered by the same edit, since it is the one page
 that loads the footer bundle at runtime rather than baking it in.
 
+**The Progress Journal and Three Toxic Lies are BUILT, 13 Sep 2026.**
+`/ptjournal` and `/three-toxic-lies` are real pages again, both on the v10
+kit with the nav and footer loaded as shared bundles. `/free-ebook-three-
+toxic-lies` now points at the book rather than at the home page, because
+anybody arriving on it came looking for that exact thing. Neither page is
+committed yet — they are waiting on a copy read.
+
 Still 301ing to `/` and still linked from the footer on every page:
 
-`/three-toxic-lies` · `/parallaxx-perspectives-podcast` ·
-`/reconnect-you-podcast-with-daniel-lawson` · `/blog` · `/ptjournal`
+`/parallaxx-perspectives-podcast` · `/blog`
 
-`/reconnect` no longer has a footer link pointing at it, so it is a plain
-redirect rather than a dead end. Worth deciding where it should land, though:
-Reconnect is still a live offer with no page of its own, and the home page is a
-weak answer for anybody arriving on it from an old link.
+Two links, and both land on the home page. A footer link that goes nowhere is
+worse than no footer link, so each one is a choice: build the page, or cut the
+link. `/blog` has a harvested index listing three article titles and none of
+the article bodies, so rebuilding it means finding the articles first.
+`/parallaxx-perspectives-podcast` harvested to 915 bytes and is an opt-in form
+for "Parallaxx Perspective resources", which is thin enough that cutting the
+link is the honest answer unless the podcast is coming back.
+
+`/reconnect-you-podcast-with-daniel-lawson` is no longer a dead end — it
+redirects to the YouTube channel.
+
+### The one that matters: `/reconnect`
+
+`/reconnect` has no footer link, so it is a plain redirect rather than a dead
+end, and that has made it easy to keep deferring. It should not be.
+
+Reconnect is a live offer with no page of its own, and it is now the
+destination two other pages point at. The Three Toxic Lies book sells it on
+its last page — somebody who buys the book, reads it, and follows the call to
+action lands on the home page. The `/three-toxic-lies` page repeats that
+promise in "what you get". So the gap is no longer only an old inbound link
+with nowhere to go; it is the end of a funnel that is being actively sold into.
+
+The harvested copy is the biggest on the site at 23,769 bytes, and it is
+entirely the 2023 voice — "STOP BEING A COG IN THE MACHINE OF SOCIETY", "the
+harsh truth", "by invitation only", "science backed pathway". It is a rewrite,
+not a port.
+
+### Legacy offers, parked on purpose
+
+Real copy survives for these, and none of them looks like a current offer.
+Listed so nobody has to re-derive it:
+
+| Route | Harvest | What it was |
+|---|---|---|
+| `/limitless-potential` | 18,434 b | Segmented programme — Business Leaders, Founder/CEO, Show-Biz |
+| `/morning-mastery-club` | 18,065 b | In-person sunrise events, same three segments |
+| `/elite-life-challenge` | 17,008 b | A challenge. Its own page says "Doors Closed" |
+| `/personal-leadership-resources` | 4,374 b | A hub listing Three Toxic Lies and the Progress Journal |
+| `/free-guide` | 2,194 b | "Feel to Heal Emotions Guide" lead magnet, email opt-in |
+| `/coaching-experiences` | 577 b | Almost nothing survived |
+
+`/personal-leadership-resources` is the cheap one. It was a shelf pointing at
+the two products, both of which are real pages again, so it could be rebuilt
+from the two things that already exist rather than from its own copy.
+
+The remaining fourteen redirects — the thank-you pages, `/members`,
+`/programs`, `/home`, `/digital-coaching-products`, `/peakperformance-
+community` and the rest — harvested to nothing and are correctly parked.
 
 **As Seen In is DONE, 24 Aug 2026.** `/daniel-lawson-as-seen-in` is a real
 page again, from `Parallaxx As Seen In.dc.html`. Eight appearances, every link
@@ -169,10 +220,13 @@ pointing at the literal string `LUMIOS_MARKER_WOFF2_URL`. The build strips the
 rule now, and the stack falls through to Permanent Marker. To restore it, drop
 the real `.woff2` into `migration/wix-assets/` and remove the strip.
 
-**Testimonial screenshots are flattened PNGs.** Noted in
-`RECONNECTED-MAN-AUDIT.md`. Invisible to search engines and unreadable to
-screen readers. Transcribing them into real text is the single biggest SEO win
-left on that page.
+**~~Testimonial screenshots are flattened PNGs.~~ DONE, 14 Sep 2026.** The v2
+rebuild (`138e618`) transcribed them. The live page carries three real
+`<blockquote>` testimonials with bylines -- Jordi, Harrison, Alex -- and there
+are no screenshot-named assets anywhere in the repo. Checked across all five
+main bundles: 16 real blockquotes, zero flattened quotes. The note in
+`RECONNECTED-MAN-AUDIT.md` is stale for the same reason; that audit describes
+the version this one replaced.
 
 **No DMARC record.** SPF and DKIM are both in place, so adding DMARC is cheap
 deliverability insurance:

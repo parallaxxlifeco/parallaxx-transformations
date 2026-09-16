@@ -377,11 +377,17 @@ CSS = """
 html,body{margin:0;padding:0;background:var(--bg);color:var(--ink)}
 body{font:400 17px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif;
  -webkit-font-smoothing:antialiased}
-.wrap{max-width:46rem;margin:0 auto;padding:4.5rem 1.25rem 6rem}
+/* 42rem puts a 17px line at ~66 characters. It was 46rem, which measured
+   73 — readable, but at the top of the comfortable band rather than in it.
+   The 7rem top clears the fixed nav, which is 76px tall. */
+.wrap{max-width:42rem;margin:0 auto;padding:7rem 1.25rem 6rem}
 h1,h2,h3{font-family:'Montserrat',system-ui,sans-serif;line-height:1.25;
  letter-spacing:-.01em;margin:0}
 h1{font-size:clamp(1.9rem,5vw,2.75rem);font-weight:700;margin-bottom:1.25rem}
-h2{font-size:1.45rem;font-weight:600;margin:3rem 0 .85rem;color:var(--gold)}
+/* Cream, not gold. Saturated yellow at heading size vibrates against navy
+   even though the contrast ratio is fine (~11:1, AAA). Gold is kept for the
+   small accents: the lede rule, the quote rule, table headers, links. */
+h2{font-size:1.45rem;font-weight:600;margin:3rem 0 .85rem;color:var(--ink)}
 h3{font-size:1.12rem;font-weight:600;margin:2rem 0 .6rem}
 p{margin:0 0 1.15rem}
 a{color:var(--gold);text-underline-offset:.18em}
@@ -406,7 +412,24 @@ th{color:var(--gold);font-weight:600;font-size:.82rem;letter-spacing:.05em;
 .cards a{font-family:'Montserrat',system-ui,sans-serif;font-size:1.08rem;
  font-weight:600;text-decoration:none}
 .cards p{margin:.35rem 0 0;color:var(--dim);font-size:.95rem}
-@media(max-width:34rem){.wrap{padding:3rem 1.1rem 4rem}body{font-size:16px}}
+/* Index pillar cards. Same furniture as the og share cards: navy panel,
+   gold hairline, a corner bracket top right, a gold tick down the left of
+   the heading. */
+.pillar{position:relative;margin:2.5rem 0 0;padding:1.7rem 1.6rem 1.5rem;
+ background:var(--deep);border:1px solid rgba(232,198,95,.16)}
+.pillar::after{content:"";position:absolute;top:13px;right:13px;width:28px;height:28px;
+ border-top:1px solid rgba(232,198,95,.4);border-right:1px solid rgba(232,198,95,.4)}
+.pillar h2{margin:0;font-size:1.22rem;color:var(--ink);
+ border-left:2px solid var(--gold);padding-left:.85rem;padding-right:2.5rem}
+.pillar h2 a{color:inherit;text-decoration:none}
+.pillar h2 a:hover{color:var(--gold)}
+.pillar>p{margin:.6rem 0 0 .85rem;color:var(--dim);font-size:.95rem}
+.pillar .cards{margin:1.2rem 0 0 .85rem}
+.pillar .cards li{margin-bottom:.7rem}
+.pillar .cards a{font-size:1rem;font-weight:500;color:var(--dim)}
+.pillar .cards a:hover{color:var(--gold)}
+@media(max-width:34rem){.wrap{padding:5.5rem 1.1rem 4rem}body{font-size:16px}
+ .pillar{padding:1.4rem 1.2rem 1.2rem}}
 """
 
 
@@ -534,7 +557,7 @@ def render_article(ctx, a) -> str:
 <p class="lede">{inline(m['answer'])}</p>
 {a['body']}
 <div class="next">
-Written by Daniel Lawson, personal leadership facilitator.
+Written by Daniel Lawson, Reconnection Coach.
 {siblings}<a href="{pillar_url}">More on {html.escape(a['pillar']['name'].lower())}</a>
 {offers}
 </div>
@@ -575,16 +598,22 @@ def render_hub(ctx, slug, pillar, articles, hub_body) -> str:
 def render_index(ctx, by_pillar) -> str:
     url = f"{ctx['origin']}/insights"
     blocks = []
+    # A pillar with no articles is SKIPPED, not rendered unlinked. Its hub
+    # does not exist yet either -- render_hub holds a hub back until it has
+    # children -- so linking one served the homepage at that URL, which is the
+    # soft-404 pattern Google penalises. Three of the five did exactly that.
     for slug, pillar in PILLARS.items():
         items = by_pillar.get(slug, [])
+        if not items:
+            continue
         cards = "".join(
             f'<li><a href="{a["path"]}">{inline(a["meta"]["title"])}</a></li>'
             for a in items[:6])
         blocks.append(
-            f'<h2><a href="/insights/{slug}" style="text-decoration:none">'
-            f'{html.escape(pillar["name"])}</a></h2>'
+            f'<section class="pillar">'
+            f'<h2><a href="/insights/{slug}">{html.escape(pillar["name"])}</a></h2>'
             f'<p>{html.escape(pillar["blurb"])}</p>'
-            f'<ul class="cards">{cards}</ul>')
+            f'<ul class="cards">{cards}</ul></section>')
     graph = [{
         "@type": "CollectionPage", "@id": url + "#webpage", "url": url,
         "name": "Insights", "isPartOf": {"@id": ctx["org_id"]},

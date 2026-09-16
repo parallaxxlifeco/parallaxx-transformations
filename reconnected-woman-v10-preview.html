@@ -209,6 +209,73 @@
   margin-top:20px; font-family:var(--head); font-size:.66rem; font-weight:700;
   letter-spacing:.16em; text-transform:uppercase; color:var(--gold);
 }
+.theme-lab{
+  display:block; font-family:var(--head); font-size:.62rem; font-weight:700;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:7px;
+}
+#hero .theme{
+  margin:22px auto 0; max-width:46ch; font-family:var(--head);
+  font-size:.95rem; line-height:1.35; color:var(--cream); text-wrap:balance;
+}
+/* The cycle wheel, living inside the offer. A picker: the front row sits at
+   the centre so rows recede above and below it by the same amount. Rows keep a
+   fixed height, so the weight change on the front row never reflows the others
+   and the snap points stay put. Centred, because this section is the offer and
+   the page centres the offer. */
+/* the global p{max-width:64ch} would otherwise give this label a narrow box
+   sitting hard left, so the text centres inside the box rather than the page */
+#pricing .theme-lab{max-width:none; margin:38px auto 7px}
+#pricing .wheel{
+  --wh:62px; --rows:3;
+  position:relative; margin:6px auto 0; max-width:700px;
+  height:calc(var(--wh) * var(--rows));
+  overflow-y:auto; overscroll-behavior:contain; scroll-snap-type:y mandatory;
+  scrollbar-width:none; outline:none;
+  perspective:640px; perspective-origin:50% 50%;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,rgba(0,0,0,.4) 13%,#000 33%,#000 67%,rgba(0,0,0,.4) 87%,transparent 100%);
+          mask-image:linear-gradient(180deg,transparent 0,rgba(0,0,0,.4) 13%,#000 33%,#000 67%,rgba(0,0,0,.4) 87%,transparent 100%);
+}
+#pricing .wheel::-webkit-scrollbar{display:none}
+#pricing .wheel:focus-visible{box-shadow:0 0 0 2px rgba(232,198,95,.45)}
+#pricing .themes{
+  list-style:none; margin:0;
+  padding:calc(var(--wh) * (var(--rows) - 1) / 2) 0;
+  transform-style:preserve-3d;
+}
+#pricing .themes li{
+  height:var(--wh); scroll-snap-align:center;
+  display:grid; grid-template-columns:auto auto; justify-content:center;
+  gap:0 clamp(12px,1.6vw,20px); align-items:center;
+  border-top:1px solid transparent; border-bottom:1px solid transparent;
+  transform-origin:50% 50%; backface-visibility:hidden;
+  transform:translateZ(var(--z,0px)) rotateX(var(--rx,0deg));
+  opacity:var(--o,.3);
+  transition:opacity .2s linear, border-color .4s ease;
+}
+#pricing .themes .mo{
+  font-family:var(--head); font-size:.62rem; font-weight:700;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--slate);
+  transition:color .4s ease;
+}
+#pricing .themes .ti{
+  font-family:var(--head); font-size:clamp(15px,1.6vw,19px);
+  line-height:1.3; color:var(--mist); transition:color .4s ease;
+}
+#pricing .themes li.front{
+  border-top-color:rgba(232,198,95,.55); border-bottom-color:rgba(232,198,95,.55);
+}
+#pricing .themes li.front .mo{color:var(--gold)}
+#pricing .themes li.front .ti{color:var(--gold); font-weight:700}
+#pricing .themes li.soon .ti{font-style:italic}
+#pricing .wheel-note{
+  margin:14px auto 44px; font-family:var(--head);
+  font-size:.92rem; color:var(--slate);
+}
+#rw-page.no-anim #pricing .themes li{opacity:1; transform:none}
+@media(max-width:620px){
+  #pricing .wheel{--wh:76px; perspective:520px}
+  #pricing .themes li{grid-template-columns:1fr; gap:3px; align-content:center; justify-content:stretch}
+}
 #hero .cue{
   position:absolute; left:50%; bottom:20px; z-index:3;
   color:var(--gold); opacity:.5; font-size:1.3rem; line-height:1;
@@ -840,9 +907,8 @@
 .promise-line{
   font-family:var(--head); font-weight:400;
   font-size:clamp(17px,2vw,26px); line-height:1.22; letter-spacing:-.018em;
-  color:var(--cream); max-width:none; margin:0 auto; text-wrap:balance;
+  color:var(--cream); max-width:52ch; margin:0 auto; text-wrap:balance;
 }
-@media(min-width:800px){ .promise-line{white-space:nowrap} }
 .promise-sub{
   font-family:var(--head); font-weight:400; text-align:center;
   font-size:clamp(14px,1.15vw,17px); line-height:1.4; color:var(--slate);
@@ -1001,10 +1067,16 @@
 <body>
 <div id="rw-page">
 <parallaxx-nav active="women"></parallaxx-nav>
+<!-- MONTHLY EDIT. Change these four attributes and the whole page follows:
+     the date and countdown in the hero, the open card and the close, and the
+     theme in the hero and above the pricing grid. Nothing else needs touching.
+     data-theme is the cycle's title in the form "Keyword for Promise"; leave it
+     empty and every theme element removes itself rather than showing a stale one. -->
 <div id="rw-open" hidden
      data-open-at="2026-09-22T08:30:00+02:00"
      data-open-tz="08:30 CET"
-     data-open-times="08:30 CET / 14:30 GMT+8"></div>
+     data-open-times="08:30 CET / 14:30 GMT+8"
+     data-theme="Self-Recognition for Unconditional Worth"></div>
 <div id="rail"><div class="bar"></div><div class="pos" id="railPos"></div></div>
 <!-- ═══════════ 01 · HERO ═══════════ -->
 <section class="sec" id="hero">
@@ -1018,6 +1090,7 @@
     </h1>
     <p class="sub" data-r="near"><span>You've competed with men. Led men. Carried men.</span><b>The masculine is provided.</b><b>You don't have to, for a change.</b></p>
     <button class="btn" type="button" data-trw-modal data-r="mid">Come To The Open Session</button>
+    <p class="theme js-theme-block" data-r="far"><span class="theme-lab">This month</span><span class="js-open-theme">Self-Recognition for Unconditional Worth</span></p>
     <div class="next" data-r="far">Next open session<span class="sep">&nbsp;&middot;&nbsp;</span><span class="nd"><span class="js-open-date">Tuesday 22 September</span><span class="js-open-tz"> &nbsp;&middot;&nbsp; 08:30 CET</span></span><span class="cnt js-open-count"></span></div>
 </div>
   <div class="cue">&darr;</div>
@@ -1027,8 +1100,8 @@
 <section class="sec black" id="promise">
   <div class="in">
     <div class="promise-rule" id="promiseRule"></div>
-    <p class="promise-line"><span class="mask"><span>Work out what you want, and ask for it in four weeks.</span></span></p>
-    <p class="promise-sub" data-r="far">Without slowing down or doing less.</p>
+    <p class="promise-line"><span class="mask"><span>You get clear on what you want, you communicate&nbsp;it, and you feel the shift when it happens.</span></span></p>
+    <p class="promise-sub" data-r="far">In four weeks without slowing down or doing less.</p>
 </div>
 </section>
 
@@ -1312,6 +1385,21 @@
 <section class="sec dark" id="pricing" style="text-align:center">
   <div class="in">
     <h2 data-r="near" style="max-width:24ch; margin-left:auto; margin-right:auto">The first session of every month is open.</h2>
+    <p class="theme-lab js-theme-block" data-r="near">This cycle</p>
+    <!-- MONTHLY: nothing to do here. The script matches data-month against the
+         open-session date, opens the wheel on that row, and feeds its title to
+         the hero. Set the year's themes once. -->
+    <div class="wheel js-theme-block" id="themeWheel" data-r="near" tabindex="0" aria-label="Monthly themes">
+      <ol class="themes" id="themeList">
+        <li data-month="2026-09"><span class="mo">September</span><span class="ti">Self-Recognition for Unconditional Worth</span></li>
+        <li data-month="2026-10"><span class="mo">October</span><span class="ti">Personal Responsibility for What You Want</span></li>
+        <li data-month="2026-11"><span class="mo">November</span><span class="ti">Personal Needs for Giving Yourself First</span></li>
+        <li data-month="2026-12"><span class="mo">December</span><span class="ti">Emotional Space for Clarity on What Matters</span></li>
+        <li data-month="2027-01"><span class="mo">January</span><span class="ti">Clear Boundaries for Certainty Under Pressure</span></li>
+        <li class="soon"><span class="mo"></span><span class="ti">More coming</span></li>
+      </ol>
+    </div>
+    <p class="wheel-note js-theme-block" data-r="near">The transformation stacks, join anytime.</p>
     <div class="pricegrid" data-r="mid">
     <div class="opencard">
       <div class="free">Free</div>
@@ -1789,6 +1877,70 @@
     set('.js-open-count',
         days > 1 ? 'In ' + days + ' days' : days === 1 ? 'Tomorrow' : days === 0 ? 'Today' : '',
         true);
+
+    /* The theme rides the same single source as the date. No theme set, or the
+       date already gone, and the whole block leaves rather than going stale. */
+    /* The list is the source of truth. Match the open session's month against
+       it, take the title from there, and open the wheel on that row — so
+       setting the date is the only monthly edit. The attribute on #rw-open
+       stays as a fallback for a month the list does not cover. */
+    var monthKey = m[1] + '-' + m[2];
+    var theme = '';
+    var wheel = document.getElementById('themeWheel');
+    var track = document.getElementById('themeList');
+    var items = track ? [].slice.call(track.children) : [];
+    var startAt = 0;
+    for(var r = 0; r < items.length; r++){
+      if(items[r].getAttribute('data-month') === monthKey){
+        startAt = r;
+        var ti = items[r].querySelector('.ti');
+        if(ti) theme = ti.textContent.trim();
+      }
+    }
+    if(wheel && items.length){
+      var flat = reduce;
+      var ticking = false;
+      var spin = function(){
+        var h = items[0].offsetHeight || 1;
+        var mid = wheel.scrollTop + wheel.clientHeight / 2;
+        var best = 0, bestD = Infinity;
+        for(var i = 0; i < items.length; i++){
+          /* 0 = centred; negative above the front slot, positive below, so the
+             rotation mirrors either side instead of only falling away downward */
+          var d  = (items[i].offsetTop + h / 2 - mid) / h;
+          var ad = Math.abs(d);
+          if(ad < bestD){ bestD = ad; best = i; }
+          if(flat){
+            items[i].style.setProperty('--o', ad < .5 ? 1 : .34);
+          } else {
+            items[i].style.setProperty('--rx', (-d * 15).toFixed(2) + 'deg');
+            items[i].style.setProperty('--z', (-ad * 46).toFixed(1) + 'px');
+            items[i].style.setProperty('--o', Math.max(.2, 1 - ad * .3).toFixed(3));
+          }
+        }
+        for(var j = 0; j < items.length; j++){
+          items[j].classList.toggle('front', j === best);
+        }
+      };
+      wheel.addEventListener('scroll', function(){
+        if(ticking) return;
+        ticking = true;
+        requestAnimationFrame(function(){ spin(); ticking = false; });
+      }, { passive:true });
+      window.addEventListener('resize', spin);
+      /* set scrollTop directly rather than scrollIntoView, which would drag
+         the whole page down to the section on load */
+      wheel.scrollTop = items[startAt].offsetTop
+                        - (wheel.clientHeight - items[startAt].offsetHeight) / 2;
+      spin();
+    }
+    if(!theme) theme = (src.getAttribute('data-theme') || '').trim();
+    var themeEls = document.querySelectorAll('.js-open-theme');
+    for(var t = 0; t < themeEls.length; t++){ themeEls[t].textContent = theme; }
+    if(!theme || past){
+      var blocks = document.querySelectorAll('.js-theme-block');
+      for(var b = 0; b < blocks.length; b++){ blocks[b].style.display = 'none'; }
+    }
   })();
 
   /* ── video · load on click, not on arrival ──────────────────── */

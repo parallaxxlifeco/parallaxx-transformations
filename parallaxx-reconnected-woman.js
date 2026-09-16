@@ -140,7 +140,10 @@
    than as a portrait competing with the headline. */
 #hero{
   position:relative; min-height:clamp(560px,72svh,780px);
-  display:flex; align-items:flex-end; padding:0;
+  /* the nav is position:fixed and overlays the top of the page, so the hero
+     reserves its height -- otherwise bottom-aligned content tall enough to
+     reach the top edge disappears behind it, as the theme line made it do */
+  display:flex; align-items:flex-end; padding:80px 0 0;
   background:var(--ink-navy); overflow:hidden;
 }
 #hero .plate{position:absolute; inset:0; will-change:transform}
@@ -910,7 +913,7 @@
 .promise-line{
   font-family:var(--head); font-weight:400;
   font-size:clamp(17px,2vw,26px); line-height:1.22; letter-spacing:-.018em;
-  color:var(--cream); max-width:52ch; margin:0 auto; text-wrap:balance;
+  color:var(--cream); max-width:none; margin:0 auto;
 }
 .promise-sub{
   font-family:var(--head); font-weight:400; text-align:center;
@@ -1101,7 +1104,7 @@
 <section class="sec black" id="promise">
   <div class="in">
     <div class="promise-rule" id="promiseRule"></div>
-    <p class="promise-line"><span class="mask"><span>You get clear on what you want, you communicate&nbsp;it, and you feel the shift when it happens.</span></span></p>
+    <p class="promise-line"><span class="mask"><span>You get clear on what you want,<br>you communicate it,<br>and you feel the shift when it happens.</span></span></p>
     <p class="promise-sub" data-r="far">In four weeks without slowing down or doing less.</p>
 </div>
 </section>

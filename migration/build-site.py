@@ -45,9 +45,14 @@ from pathlib import Path
 # where the page bundles live and where dist/ is written. Cloudflare Pages takes
 # its config from _redirects and _headers inside the output directory, so there
 # is nothing to write at the repository root.
+import articles
+
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent
 DIST = REPO / "dist"
+# Markdown articles. See migration/articles.py for why they are static
+# HTML rather than another .dc.html bundle.
+CONTENT = REPO / "content" / "insights"
 ORIGIN = "https://www.parallaxxtransformations.com"
 
 # The Reconnected Woman bundle pulls its nav and footer from GitHub Pages by
@@ -513,7 +518,7 @@ REDIRECTS = {
     "/free-ebook-three-toxic-lies": "/three-toxic-lies",
     "/personal-leadership-resources": "/",
     # Content pages.
-    "/blog": "/",
+    "/blog": "/insights",
     # /ptjournal is a real page again as of 13 Sep -- see ROUTES above. It was
     # parked at "/" only because the Wix page had not been rebuilt yet; the
     # journal never stopped selling, and the footer has linked here throughout.
@@ -537,6 +542,9 @@ REDIRECTS = {
 
 # The 15 Wix blog posts, all under /post/. Handled with one wildcard rather
 # than fifteen entries.
+# DEAD CONSTANT, left in place rather than deleted so a search for
+# "/post/" finds this note. main() writes the /post/* splat itself, in
+# Cloudflare _redirects syntax. Editing the dict below changes nothing.
 WILDCARD_REDIRECTS = [{"source": "/post/:slug*", "destination": "/", "permanent": True}]
 
 STATIC_FILES = [
@@ -949,6 +957,28 @@ def unmapped_wix(text: str) -> list:
     return sorted(set(WIX_HOST_RE.findall(text)))
 
 
+# ── THE FOOTER'S BLOG LINK ─────────────────────────────────────────────
+# The footer carries `<a href="/blog">Blog</a>` and the footer markup is
+# duplicated into TWELVE bundles, so this cannot be fixed in one .dc.html
+# without rebuilding all twelve. It is a text rewrite at build time instead,
+# in the same spirit as detach() and localise().
+#
+# It matters more than it looks. /blog 301s to / (see REDIRECTS), so until
+# 16 Sep 2026 every page on the site carried a footer link that dumped the
+# visitor on the home page. And the footer's own comment notes that Blog is
+# one of seven pages linked from nowhere else at all.
+#
+# The redirect now points at /insights too, so any external link to /blog
+# lands somewhere real rather than on the front door.
+BLOG_LINK = '<a href="/blog">Blog</a>'
+INSIGHTS_LINK = '<a href="/insights">Insights</a>'
+
+
+def relink_blog(text: str) -> tuple:
+    n = text.count(BLOG_LINK)
+    return text.replace(BLOG_LINK, INSIGHTS_LINK), n
+
+
 def detach(text: str) -> tuple:
     """Cut every tie to the hosts we are leaving: Wix for the domain, GitHub
     Pages for the chrome. Returns the text plus the counts, so the build says
@@ -1005,7 +1035,7 @@ def main() -> int:
         print(f"assets   copied {len(asset_map)} files into dist/assets/")
 
     # Bundles: cut the host ties, optionally localise assets.
-    total_links = total_gh = total_font = total_assets = 0
+    total_links = total_gh = total_font = total_assets = total_blog = 0
     still_on_wix = []
     bundles = [r["bundle"] for r in ROUTES] + ["parallaxx-nav.js", "parallaxx-footer.js"]
     for name in dict.fromkeys(bundles):
@@ -1026,6 +1056,8 @@ def main() -> int:
             print("       deploy. Fill it, or drop the route from ROUTES.")
             return 1
         text, n_wix, n_gh, n_font = detach(raw)
+        text, n_blog = relink_blog(text)
+        total_blog += n_blog
         total_links += n_wix
         total_gh += n_gh
         total_font += n_font
@@ -1036,6 +1068,15 @@ def main() -> int:
             if left:
                 still_on_wix.append((name, left))
         (DIST / name).write_text(text, encoding="utf-8")
+
+    # A guard, not a nicety: if a footer rebuild changes this markup the link
+    # silently reverts to /blog on every page and nothing else notices.
+    if total_blog == 0:
+        print("ERROR: no bundle contained the footer's Blog link. The markup "
+              "has changed, so the /insights link is NOT on the site. Update "
+              "BLOG_LINK in this file to match the new markup.")
+        return 1
+    print(f"insights {total_blog} footer Blog links repointed at /insights")
 
     for f in STATIC_FILES:
         if (REPO / f).exists():
@@ -1069,11 +1110,45 @@ def main() -> int:
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(head_html(r), encoding="utf-8")
 
+    # Articles. Built after the routes so they land in the same dist/, and
+    # before the sitemap so their URLs are in it. Any error here is fatal:
+    # the confidentiality guard lives in this call, and a guard that warns
+    # and carries on is a guard that ships the thing it was built to stop.
+    article_urls, article_errors = articles.build(
+        dict(
+            origin=ORIGIN,
+            org_id=ORG_ID,
+            person_id=PERSON_ID,
+            analytics_head=analytics_head(),
+            analytics_body=analytics_body(),
+            dump_schema=lambda graph: (
+                '<script type="application/ld+json">'
+                + json.dumps({"@context": "https://schema.org",
+                              "@graph": [ORGANIZATION, PERSON] + graph},
+                             ensure_ascii=False, separators=(",", ":"))
+                + "</script>"),
+        ),
+        CONTENT, DIST,
+    )
+    if article_errors:
+        print(f"ERROR: {len(article_errors)} problem(s) in content/insights/ — "
+              f"nothing was written:")
+        for e in article_errors:
+            print("  " + e)
+        return 1
+    if article_urls:
+        print(f"articles {len(article_urls)} pages from content/insights/")
+
     # sitemap + robots.
-    urls = "\n".join(
-        f"  <url><loc>{ORIGIN}{'' if r['path'] == '/' else r['path']}</loc>"
-        f"<changefreq>weekly</changefreq></url>"
+    route_urls = [
+        (("" if r["path"] == "/" else r["path"]), None)
         for r in ROUTES if not r.get("noindex")
+    ]
+    urls = "\n".join(
+        f"  <url><loc>{ORIGIN}{path}</loc>"
+        + (f"<lastmod>{lastmod}</lastmod>" if lastmod else "")
+        + "<changefreq>weekly</changefreq></url>"
+        for path, lastmod in route_urls + article_urls
     )
     (DIST / "sitemap.xml").write_text(
         f'<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -1089,6 +1164,17 @@ def main() -> int:
     # /about from /about/index.html on its own, so no cleanUrls equivalent is
     # needed. Order matters in _redirects: the first match wins, so the /post/*
     # wildcard goes last or it would swallow nothing but is safer at the end.
+    # DO NOT try to fix the apex/www split here. Cloudflare Pages matches
+    # _redirects on PATH ONLY -- domain-level redirects are listed as
+    # unsupported in its own docs. A rule like
+    #     /*  https://www.parallaxxtransformations.com/:splat  301
+    # would therefore match on www as well as on the apex, and loop every
+    # request on the site until it errors. It looks like a two-line fix and it
+    # is a way to take the site off the internet.
+    #
+    # The apex -> www 301 belongs in a Cloudflare Single Redirect rule
+    # (Rules -> URL forwarding), which runs at the edge before Pages and can
+    # match on hostname. See README, "The apex/www split".
     lines = [
         "# Legacy Wix URLs. 301 so Google moves the ranking rather than dropping it,",
         "# and so old links in show notes, emails and social posts still land.",

@@ -773,3 +773,277 @@ subscription lapses. That is exactly how this page arrived. The build now
 lists every surviving `wixstatic.com` URL by bundle at the end of its output.
 A warning rather than an error, because it is currently true of a page we want
 to ship — but a loud one.
+
+
+## Articles, 16 Sep 2026
+
+`/insights/<pillar>/<slug>` is markdown in `content/insights/`, rendered to
+static HTML by `migration/articles.py`, which `build-site.py` imports and calls.
+They are for search and AI-answer visibility: most of the traffic they are built
+for will never be a human reading top to bottom.
+
+**They are not .dc.html bundles, on purpose.** Every other route is a
+hand-designed visual document where the layout is the message, so it earns its
+~100KB custom-element bundle. An article is text. The first one renders 1,159
+words in an 18KB page with no page JavaScript at all — against 215KB for
+`/men`. It is also the only shape where the copy is in the HTML rather than
+lifted back out of a bundle afterwards.
+
+### Writing one
+
+    content/insights/<pillar>/<slug>.md
+
+Front matter is flat `key: value`, all nine keys required: `title`, `pillar`,
+`question`, `answer`, `description`, `published`, `updated`, `sources`, `offer`.
+`slug` is optional and defaults to the filename.
+
+Three of those are enforced by the build, and the build fails rather than warns:
+
+- **`answer` must be 25–80 words** and must be a complete answer standing alone.
+  It renders as the lede and it is what an answer engine extracts — the studies
+  put disproportionate weight on the first 50–80 words of a page.
+- **`description` must be ≤158 chars**, past which Google truncates it.
+- **`sources` must name at least one id** from the corpus index. An article with
+  no source id is an article invented out of nothing, which is the thing this
+  pipeline exists not to publish at scale.
+
+The FAQ schema is **derived from the body**, not declared in front matter: an
+`## Common questions` heading, then each `### question` with its answer
+paragraph directly underneath. One copy of the text, so the page and the schema
+cannot drift apart.
+
+The four pillars are defined in `articles.py`. A pillar hub at
+`/insights/<pillar>` is generated from its children, and only once it has
+children — an empty hub is a thin page. Its intro copy comes from
+`content/insights/<pillar>/_hub.md` if that file exists, and that file is meant
+to be written by hand.
+
+### The markdown subset is small on purpose
+
+`## ### - 1. > | --- **bold** *italic* [links](url)`, and nothing else. It
+**raises** on anything it does not recognise rather than passing it through, so
+an unsupported construct fails the build instead of shipping as literal
+asterisks. `python-markdown` is installed on the Mac; whether it is in the
+Cloudflare Pages build image is not something this repo controls, and finding
+out by way of a failed deploy is the wrong way to find out. Need a construct
+that is not there? Add it to `articles.py`.
+
+### The confidentiality guard runs in the deploy path
+
+The rooms are recorded internal use only, confidential, and the precedent is
+commit `4879c42`. **This repo is public**, so anything committed is visible
+forever, in history, even after a delete.
+
+`articles.guard()` fails the build on: an age attached to a person, a person
+placed in a named location, an identifying detail about someone's partner, a
+job title specific enough to identify somebody, a child count, and any
+blockquote without a `> — attribution` line. It is deliberately blunt and will
+sometimes catch an innocent sentence. Rewrite the sentence. A guard that gets
+argued with is a guard that stops working.
+
+It runs inside `build-site.py`, which is the one script Cloudflare Pages calls,
+for the same reason the placeholder guard does: a guard outside the deploy path
+is documentation, not a guard.
+
+### Not done yet
+
+- **Nothing on the site links to `/insights`.** The sitemap carries it and
+  IndexNow pings on deploy, so it will be found, but a real internal link is
+  better. That means rebuilding `parallaxx-nav.js` from its `.dc.html`.
+- The three other pillar hubs have no articles, so they do not render.
+- Strategy, cadence and the corpus index: `_working/SEO-CONTENT-ENGINE.md`.
+
+### Pillar hub intros, 16 Sep 2026
+
+All five `content/insights/<pillar>/_hub.md` files are written. Four of them do
+not appear on the site yet, because a hub only renders once its pillar has at
+least one article — an empty hub is a thin page.
+
+They are still **guarded and parsed on every build**, rendered or not. That was
+a hole worth closing: checking a hub only at render time means an intro written
+months earlier gets its first confidentiality check on the day it silently goes
+live, which is the wrong day to find a problem.
+
+### The apex/www split, and where the fix does NOT go
+
+`parallaxxtransformations.com` and `www.parallaxxtransformations.com` both serve
+the full site at 200. Canonicals point at www, so it is mitigated rather than
+broken, but Google has 26 pages indexed against a 16-URL sitemap and the
+duplicate hostname is the likeliest reason.
+
+**The fix is not a rule in `_redirects`.** Cloudflare Pages matches that file on
+the path only and lists domain-level redirects as unsupported. A `/*` rule there
+fires on www too and loops the whole site. There is a comment saying so at the
+`_redirects` generator in `build-site.py`, because it reads like an obvious
+two-line change and it is not.
+
+It belongs in a **Cloudflare Single Redirect** (Rules → URL forwarding), which
+runs at the edge before Pages and can match on hostname. **This is live and
+Active as of 16 Sep 2026**, built from the dashboard's own "Redirect from root
+to WWW" template:
+
+- Source: `https://parallaxxtransformations.com/*`
+- Target: `https://www.parallaxxtransformations.com/${1}`
+- Status 301, **preserve query string ON**
+
+That last box is unticked by default in the template, and it matters here more
+than it looks: every link Daniel posts carries UTM parameters, and without it
+the redirect would drop them and make any apex-addressed link unattributable.
+
+Verified in a browser after deploying: apex `/men?utm_source=…` lands on
+`www…/men/?utm_source=…` with the query intact, and www serves normally with no
+loop. Nothing in this repo can do it, and nothing in this repo should try.
+
+### The first article cluster, 16 Sep 2026
+
+Three articles under `knowing-and-not-doing`, chosen from the `winnable` rows of
+the keyword map rather than by taste. All three had no AI answer on the SERP and
+weak incumbents. Concentrated in one pillar on purpose: three articles under one
+hub is a cluster and builds topical authority; three spread across five pillars
+are three orphans.
+
+A bug in the confidentiality guard surfaced writing them and is now fixed. The
+location rule (`a client in <Place>`) keyed off a capital letter but was compiled
+with `re.I`, so `[A-Z]` matched anything and the sentence "there's a man in the
+group" failed the build. Patterns now carry their own flags, and the job-title
+rule is case-sensitive too so it stops catching "head of steam". The blunt rules
+stay blunt; these two were wrong rather than blunt.
+
+### Doors: named, not described — 16 Sep 2026
+
+An earlier note here said every article commits to one door. That over-applied
+the voice rule, which is about *describing* a man and a woman in one piece,
+because the reader assembles them into a couple and it reads as couples work.
+It never required a gendered reader.
+
+So articles now address a neutral *you*, and `offer` in the front matter takes
+one destination or two, comma-separated. Two renders both rooms as plain named
+links. Naming them is safe; characterising them is what is not.
+
+Daniel's own stories stay as they are. His life is his, and a first-person
+account of himself is not a described character the reader pairs off with
+somebody.
+
+**The binary still applies where the SUBSTANCE is gendered** — the distant-
+husband dynamic, the insecure-overachiever-at-work dynamic. Those describe a
+gendered life rather than a gendered reader. The pillar-1 and pillar-5 material
+does not.
+
+Practical upside: the corpus is finite, and a men's and a women's version of the
+same query would be two pages competing for one query.
+
+### The cannibalisation guard, 16 Sep 2026
+
+Two pages answering the same question is the failure this pipeline is most
+likely to produce at volume. The keyword map counts **queries**, and a query is
+not an intent: pillar 1 had four winnable rows that turned out to be two
+intents, and two of the first three articles argued the same thing in different
+words. Google picks one, both underperform, and a model choosing which of your
+pages to quote has no reason to prefer either.
+
+Three mechanisms now, two of them enforced by the build:
+
+1. **`intent` is a required front-matter key and must be unique site-wide.**
+   Collision fails the build with both paths named. The test is not whether the
+   queries differ, it is **would the correct answer be different?** Same answer
+   means one page, and the other phrasings become headings inside it.
+2. **Lede similarity warning.** Any two articles whose `answer` fields share
+   more than 42% of their content words print a warning. A soft signal for the
+   near-misses a declared intent will not catch — it did NOT fire on the first
+   collision, which is why both checks exist.
+3. **Sibling links.** Every article links to up to three others in its pillar,
+   using each one's full question as the anchor text. A cluster whose pages link
+   to each other with their *difference* spelled out is how the set tells a
+   crawler they are distinct rather than duplicate.
+
+The guard's first act was to fail the build on
+`why-doesnt-self-awareness-change-anything` against
+`why-am-i-good-at-thinking-and-bad-at-doing`. It is correct and the build stays
+red until one of them changes. Do not weaken the check to go green.
+
+### The footer's Blog link, 16 Sep 2026
+
+The footer carried `<a href="/blog">Blog</a>` on **every page**, and `/blog`
+301'd to `/`. So the whole site had a footer link that dumped the visitor on the
+front door. The footer's own comment already noted that Blog is one of seven
+pages linked from nowhere else at all.
+
+It now reads `Insights` and points at `/insights`, and the redirect goes to
+`/insights` rather than `/` so external links to `/blog` land somewhere real.
+
+**Done as a build-time text rewrite, not a bundle rebuild.** The footer markup is
+duplicated into twelve bundles, so fixing it at source means rebuilding all
+twelve from their `.dc.html` files. `relink_blog()` in `build-site.py` does it in
+one place, in the same spirit as `detach()` and `localise()`.
+
+**It fails the build if the markup ever stops matching.** A footer rebuild that
+changes that anchor would otherwise silently revert the link to `/blog` on every
+page with nothing to notice. If that error fires, update `BLOG_LINK` to the new
+markup rather than removing the check.
+
+### Article share cards, 16 Sep 2026
+
+`og_card_articles.py` builds one card per article, in the same family as
+`og_card_journal.py` and the other two: same navy ground, glow, hairlines,
+corner brackets and logo block.
+
+**The card carries a line from the article, not its title.** On LinkedIn the
+image sits directly above the og:title, so putting the question on both spends
+the best space on the post saying one sentence twice. The image gets a line
+lifted from the piece's own prose and the title gets the question.
+
+That line is an optional `card:` key in the front matter. Type auto-sizes from
+58px down until it fits four lines, so a long line gets smaller type rather than
+a truncated sentence.
+
+    python3 og_card_articles.py
+
+Writes `migration/wix-assets/img/og-<slug>.png`, which is where
+`build-site.py --local` reads og images from, so **the PNGs get committed like
+any other asset**.
+
+**Pillow is deliberately not a build dependency.** The Cloudflare Pages image is
+not this repo's to guarantee, and a deploy is a bad place to find a missing
+library — the same reasoning that keeps the markdown renderer dependency-free.
+So the generator is a local step, and `build-site.py` **warns** when an article
+declares a `card:` line and its PNG is missing. The two cannot drift silently,
+and a missing card falls back to the site's default share image rather than
+emitting a URL that 404s.
+
+### Social metadata on articles, fixed 16 Sep 2026
+
+`og:description` was using the article's lede, which runs to 279 characters on
+one of them; LinkedIn truncates around 150, so every share cut off mid-sentence.
+It now uses `description`, which the front-matter check already caps at 158 and
+which is written for exactly that job.
+
+Also added, because the main routes had them and articles did not:
+`twitter:title`, `twitter:description`, `twitter:image`, `og:image:width/height`,
+and `article:published_time` / `article:modified_time`. `og:type` is now
+`article` on articles and `website` on the hubs and the index.
+
+### Source ids must not carry names, 16 Sep 2026
+
+`sources` in an article's front matter is committed to this repo **in plain
+text, and this repo is public.** The rendered page never shows the field; the
+`.md` does, on GitHub, to anyone.
+
+The corpus originally keyed participant profiles by first name — `PM-SHRI`,
+`PW-JULIA` — and two of those reached article front matter before a pre-push
+sweep caught them. The prefixes are opaque now (`PM-06`, `PW-04`) and the only
+mapping is `corpus-index/people-map.json`, which lives in the Avatar folder and
+is not in any git repo.
+
+`build-site.py` now **fails on an unrecognised source-id shape**. Valid:
+`RM-S1..S6-nnn`, `RW-W1..W4-nnn`, `PM-nn-nnn`, `PW-nn-nnn`, `DL-nnn`.
+
+That check immediately caught a second and unrelated problem: the founder-story
+article cited `FS-001` and three siblings, ids invented before the corpus index
+existed and which have never referred to anything. A fabricated citation in the
+one field that exists to prove nothing was fabricated. Now `DL-005, DL-016,
+DL-018, DL-025, DL-028`, which are real rows.
+
+**Verified by cloning the repo, copying in only the files to be pushed, and
+building from that clone** — not from the working copy. All six insight routes
+emit, every `og:image` resolves to a file that exists, and the sweep finds no
+participant name or name-keyed id anywhere in `content/`.

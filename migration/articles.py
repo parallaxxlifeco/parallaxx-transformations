@@ -444,7 +444,19 @@ th{color:var(--gold);font-weight:600;font-size:.82rem;letter-spacing:.05em;
    place the real brand gold keeps its full value: the hairline, the corner
    bracket and the tick down the left of the heading. Same furniture as the og
    share cards. */
-.pillar{position:relative;margin:2.5rem 0 0;padding:1.7rem 1.6rem 1.5rem;
+/* The index is a directory, not a column of prose, so it gets a wider
+   container and lays the pillars out as a grid. Stacked full width, the fifth
+   pillar sits most of a screen below the fold, and that only gets worse as the
+   pillars fill up. The masthead text stays at reading width inside it -- a
+   60rem lede runs to about 96 characters, which is no width to read at.
+   auto-FILL rather than auto-fit: with five cards the last row holds one, and
+   auto-fit would stretch it across the full width as though something were
+   missing. auto-fill leaves the empty cell empty, which reads as a grid. */
+.wrap--wide{max-width:60rem}
+.wrap--wide .masthead>*{max-width:42rem}
+.pillars{display:grid;gap:1.6rem;margin-top:2.5rem;
+ grid-template-columns:repeat(auto-fill,minmax(19rem,1fr))}
+.pillar{position:relative;margin:0;padding:1.7rem 1.6rem 1.5rem;
  background:var(--panel);color:var(--on-deep);border:1px solid rgba(232,198,95,.16)}
 .pillar::after{content:"";position:absolute;top:13px;right:13px;width:28px;height:28px;
  border-top:1px solid rgba(232,198,95,.4);border-right:1px solid rgba(232,198,95,.4)}
@@ -464,7 +476,7 @@ th{color:var(--gold);font-weight:600;font-size:.82rem;letter-spacing:.05em;
 
 
 def _page(ctx, canonical, title, desc, og_title, og_desc, schema, inner,
-          og_type="website", og_img=None, extra=""):
+          og_type="website", og_img=None, extra="", wrap_class=""):
     """One shell for articles, hubs and the index. No bundle, no page JS.
 
     `og_desc` is the SHORT description, not the lede. It was the lede until
@@ -507,8 +519,8 @@ def _page(ctx, canonical, title, desc, og_title, og_desc, schema, inner,
 {ctx['analytics_head']}
 </head>
 <body>
-<parallaxx-nav></parallaxx-nav>
-<main class="wrap">
+<parallaxx-nav active="insights"></parallaxx-nav>
+<main class="wrap{wrap_class}">
 {inner}
 </main>
 <parallaxx-footer></parallaxx-footer>
@@ -655,12 +667,12 @@ def render_index(ctx, by_pillar) -> str:
     inner = ('<div class="masthead"><h1>Insights</h1>'
              '<p class="lede">Questions that come up in the '
              'rooms, answered the way they get answered there.</p></div>'
-             + "".join(blocks))
+             '<div class="pillars">' + "".join(blocks) + '</div>')
     return _page(ctx, url, "Insights | Parallaxx Transformations",
                  "Questions that come up in the rooms, answered the way they "
                  "get answered there.", "Insights",
                  "Questions that come up in the rooms.",
-                 ctx["dump_schema"](graph), inner)
+                 ctx["dump_schema"](graph), inner, wrap_class=" wrap--wide")
 
 
 # ── ENTRY POINT ────────────────────────────────────────────────────────

@@ -5,7 +5,7 @@ pillar: knowing-and-not-doing
 intent: the understanding is the avoidance
 question: Why doesn't self-awareness change anything?
 card: The most self-aware people I know have the most articulate avoidance.
-answer: Because understanding and changing are different skills, and most of us only ever practise the first one. Thinking costs you nothing. Doing exposes you. So the analysis keeps getting sharper while the gap between what you know and what you have changed stays exactly where it is.
+answer: Because knowing it and integrating it are two different skills, and we are all trained to practise the first one. Understanding costs us nothing. Integrating it in front of another person costs us plenty. So the analysis keeps getting sharper while the gap between what you know and what you have changed stays exactly where it is.
 description: You can name your pattern perfectly and you still run it. Daniel Lawson on why insight doesn't convert, and what does.
 published: 2026-09-16
 updated: 2026-09-16

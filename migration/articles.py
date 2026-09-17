@@ -452,26 +452,35 @@ th{color:var(--gold);font-weight:600;font-size:.82rem;letter-spacing:.05em;
    auto-FILL rather than auto-fit: with five cards the last row holds one, and
    auto-fit would stretch it across the full width as though something were
    missing. auto-fill leaves the empty cell empty, which reads as a grid. */
-.wrap--wide{max-width:60rem}
+.wrap--wide{max-width:68rem}
 .wrap--wide .masthead>*{max-width:42rem}
-.pillars{display:grid;gap:1.6rem;margin-top:2.5rem;
- grid-template-columns:repeat(auto-fill,minmax(19rem,1fr))}
-.pillar{position:relative;margin:0;padding:1.7rem 1.6rem 1.5rem;
+.pillars{display:flex;flex-wrap:wrap;justify-content:center;gap:1.5rem;
+ margin-top:2.5rem}
+/* Three across, and a short last row CENTRED under them rather than left-hung.
+   Flex does that by itself at any count -- five gives 3 then 2 in the middle,
+   four gives 3 then 1 -- where a grid needs nth-child rules that have to be
+   rewritten every time a pillar is added. No grow, so the last row stays
+   card-width instead of stretching to fill.
+   min-width does the responsive work with no media query: the basis shrinks
+   with the container until 17rem stops it, and the row wraps to two, then one. */
+.pillar{position:relative;margin:0;flex:0 1 calc((100% - 3rem)/3);min-width:17rem;
+ padding:1.4rem 1.35rem 1.25rem;
  background:var(--panel);color:var(--on-deep);border:1px solid rgba(232,198,95,.16)}
-.pillar::after{content:"";position:absolute;top:13px;right:13px;width:28px;height:28px;
+.pillar::after{content:"";position:absolute;top:11px;right:11px;width:24px;height:24px;
  border-top:1px solid rgba(232,198,95,.4);border-right:1px solid rgba(232,198,95,.4)}
-.pillar h2{margin:0;font-size:1.22rem;color:var(--on-deep);
- border-left:2px solid var(--brand-gold);padding-left:.85rem;padding-right:2.5rem}
+.pillar h2{margin:0;font-size:1.08rem;line-height:1.3;color:var(--on-deep);
+ border-left:2px solid var(--brand-gold);padding-left:.75rem;padding-right:2rem}
 .pillar h2 a{color:inherit;text-decoration:none}
 .pillar h2 a:hover{color:var(--brand-gold)}
-.pillar>p{margin:.6rem 0 0 .85rem;color:var(--on-deep-dim);font-size:.95rem}
-.pillar .cards{margin:1.2rem 0 0 .85rem}
-.pillar .cards li{margin-bottom:.7rem}
-.pillar .cards a{font-size:1rem;font-weight:500;color:var(--on-deep-dim)}
+.pillar>p{margin:.5rem 0 0 .75rem;color:var(--on-deep-dim);font-size:.88rem;line-height:1.5}
+.pillar .cards{margin:1rem 0 0 .75rem}
+.pillar .cards li{margin-bottom:.6rem}
+.pillar .cards a{font-size:.93rem;line-height:1.35;display:inline-block;
+ font-weight:500;color:var(--on-deep-dim)}
 .pillar .cards a:hover{color:var(--brand-gold)}
 @media(max-width:34rem){.wrap{padding:5.5rem 1.1rem 4rem}body{font-size:16px}
  .masthead{margin:-5.5rem 0 2rem;padding:5.5rem 0 2rem}
- .pillar{padding:1.4rem 1.2rem 1.2rem}}
+ .pillar{min-width:0;padding:1.3rem 1.15rem 1.15rem}}
 """
 
 

@@ -13,6 +13,8 @@
      FOR WOMEN ▾   → The Reconnected Woman
      ABOUT
      TESTIMONIALS
+     INSIGHTS      the articles hub. Until now it was reachable only
+                   from the footer, via the build's Blog-link rewrite.
      CONTACT       coral pill, far right.
 
    WHY THE DOORS COME FIRST
@@ -335,6 +337,12 @@
 
       <div class="pt-item" data-nav="testimonials">
         <a class="pt-link" href="https://www.parallaxxtransformations.com/testimonials-daniel-lawson">Testimonials</a>
+      </div>
+
+      <!-- ══ INSIGHTS ══ the articles hub. Until now it was reachable only
+           from the footer, via the build's Blog-link rewrite. ══ -->
+      <div class="pt-item" data-nav="insights">
+        <a class="pt-link" href="https://www.parallaxxtransformations.com/insights">Insights</a>
       </div>
 
     </nav>

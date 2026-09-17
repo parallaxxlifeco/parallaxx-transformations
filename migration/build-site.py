@@ -978,6 +978,37 @@ def relink_blog(text: str) -> tuple:
     return text.replace(BLOG_LINK, INSIGHTS_LINK), n
 
 
+# The nav has the same shape of problem as the footer above, for the same
+# reason: PtNav v3.dc.html is the source, but its markup is ALSO duplicated
+# into twelve page bundles, each built from its own .dc.html. Editing the nav
+# in one place therefore reaches only the pages that load parallaxx-nav.js --
+# /insights, and the man and woman pages, which pull the bundle in at runtime.
+# Every other page carries its own baked copy and would keep the old nav.
+#
+# Adding the item to twelve design files and rebuilding twelve bundles would
+# work once and drift on the next nav change, so this follows the footer's
+# precedent instead: one rewrite here, applied to every bundle at build time.
+NAV_TESTIMONIALS = (
+    '      <div class="pt-item" data-nav="testimonials">\n'
+    '        <a class="pt-link" href="' + ORIGIN + '/testimonials-daniel-lawson">Testimonials</a>\n'
+    '      </div>\n'
+)
+NAV_INSIGHTS = (
+    '\n      <div class="pt-item" data-nav="insights">\n'
+    '        <a class="pt-link" href="' + ORIGIN + '/insights">Insights</a>\n'
+    '      </div>\n'
+)
+
+
+def add_insights_nav(text: str) -> tuple:
+    """Put Insights in the primary nav, after Testimonials. Idempotent, so the
+    bundle built straight from PtNav v3 -- which already has it -- is left
+    alone rather than given a second copy."""
+    if 'data-nav="insights"' in text or NAV_TESTIMONIALS not in text:
+        return text, 0
+    return text.replace(NAV_TESTIMONIALS, NAV_TESTIMONIALS + NAV_INSIGHTS), 1
+
+
 def detach(text: str) -> tuple:
     """Cut every tie to the hosts we are leaving: Wix for the domain, GitHub
     Pages for the chrome. Returns the text plus the counts, so the build says
@@ -1035,6 +1066,7 @@ def main() -> int:
 
     # Bundles: cut the host ties, optionally localise assets.
     total_links = total_gh = total_font = total_assets = total_blog = 0
+    total_nav = 0
     still_on_wix = []
     bundles = [r["bundle"] for r in ROUTES] + ["parallaxx-nav.js", "parallaxx-footer.js"]
     for name in dict.fromkeys(bundles):
@@ -1054,6 +1086,8 @@ def main() -> int:
             print("       A page with a visible placeholder on it must not")
             print("       deploy. Fill it, or drop the route from ROUTES.")
             return 1
+        raw, n_nav = add_insights_nav(raw)
+        total_nav += n_nav
         text, n_wix, n_gh, n_font = detach(raw)
         text, n_blog = relink_blog(text)
         total_blog += n_blog
@@ -1076,6 +1110,16 @@ def main() -> int:
               "BLOG_LINK in this file to match the new markup.")
         return 1
     print(f"insights {total_blog} footer Blog links repointed at /insights")
+
+    # Same guard as above, for the same reason: if the nav markup shifts, the
+    # Insights tab silently vanishes from every page that bakes its own nav,
+    # and only /insights keeps it. Better to fail the build than ship that.
+    if total_nav == 0:
+        print("ERROR: no bundle took the Insights nav item. The nav markup "
+              "has changed, so Insights is NOT in the nav on the pages that "
+              "carry their own copy. Update NAV_TESTIMONIALS in this file.")
+        return 1
+    print(f"nav      {total_nav} bundles given the Insights tab")
 
     for f in STATIC_FILES:
         if (REPO / f).exists():

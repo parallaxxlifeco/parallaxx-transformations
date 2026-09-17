@@ -435,10 +435,21 @@ th{color:var(--gold);font-weight:600;font-size:.82rem;letter-spacing:.05em;
 .next{margin-top:3.5rem;padding-top:1.75rem;border-top:1px solid rgba(4,18,42,.14);
  font-size:.95rem;color:var(--dim)}
 .next a{display:block;margin-top:.6rem}
+/* These are links, and they were not reading as links. Same colour and weight
+   as the blurb sitting directly above them, no marker, no underline -- the only
+   signal was the hover colour, which a phone never shows at all. So three
+   persistent ones: a marker, a weight and colour step away from the blurb, and
+   an underline. The marker is a chevron built from a border-top and a
+   border-right pair, which is the same construction as the card's corner
+   bracket rather than a second unrelated shape. */
 .cards{list-style:none;margin:2rem 0 0;padding:0}
-.cards li{margin-bottom:1.6rem}
+.cards li{position:relative;margin-bottom:1.4rem;padding-left:1.2rem}
+.cards li::before{content:"";position:absolute;left:1px;top:.5em;width:6px;height:6px;
+ transform:rotate(45deg);border-top:2px solid var(--rule);border-right:2px solid var(--rule)}
 .cards a{font-family:'Montserrat',system-ui,sans-serif;font-size:1.08rem;
- font-weight:600;text-decoration:none}
+ font-weight:600;text-underline-offset:.2em;
+ text-decoration-color:rgba(201,162,39,.45)}
+.cards a:hover,.cards a:focus-visible{text-decoration-color:var(--gold)}
 .cards p{margin:.35rem 0 0;color:var(--dim);font-size:.95rem}
 /* Index pillar cards. Navy panels on the cream ground, which is the second
    place the real brand gold keeps its full value: the hairline, the corner
@@ -474,10 +485,14 @@ th{color:var(--gold);font-weight:600;font-size:.82rem;letter-spacing:.05em;
 .pillar h2 a:hover{color:var(--brand-gold)}
 .pillar>p{margin:.5rem 0 0 .75rem;color:var(--on-deep-dim);font-size:.88rem;line-height:1.5}
 .pillar .cards{margin:1rem 0 0 .75rem}
-.pillar .cards li{margin-bottom:.6rem}
+.pillar .cards li{margin-bottom:.55rem;padding-left:1.05rem}
+.pillar .cards li::before{top:.42em;width:5px;height:5px;
+ border-top-color:var(--brand-gold);border-right-color:var(--brand-gold)}
 .pillar .cards a{font-size:.93rem;line-height:1.35;display:inline-block;
- font-weight:500;color:var(--on-deep-dim)}
-.pillar .cards a:hover{color:var(--brand-gold)}
+ font-weight:600;color:var(--on-deep);
+ text-decoration-color:rgba(232,198,95,.4)}
+.pillar .cards a:hover,.pillar .cards a:focus-visible{color:var(--brand-gold);
+ text-decoration-color:var(--brand-gold)}
 @media(max-width:34rem){.wrap{padding:5.5rem 1.1rem 4rem}body{font-size:16px}
  .masthead{margin:-5.5rem 0 2rem;padding:5.5rem 0 2rem}
  .pillar{min-width:0;padding:1.3rem 1.15rem 1.15rem}}

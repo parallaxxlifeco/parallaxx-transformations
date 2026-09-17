@@ -506,7 +506,7 @@ const ARCHETYPES = {
   freedom: {
     name: 'The Freedom Fortress',
     drive: ['Autonomy', 'Control', 'Movement'],
-    video: '',
+    video: 'https://youtu.be/0akj4Exa-iw',
     poster: '',
     prose: [
       "The Freedom Fortress often builds a life that works &mdash; productive, focused, and free.",
@@ -539,7 +539,7 @@ const ARCHETYPES = {
   intellectual: {
     name: 'The Intellectual Defender',
     drive: ['Understanding', 'Logic', 'Mastery'],
-    video: '',
+    video: 'https://youtu.be/fOct40vvW8c',
     poster: '',
     prose: [
       "The Intellectual Defender often runs on clarity.",
@@ -575,7 +575,7 @@ const ARCHETYPES = {
   idealist: {
     name: 'The Idealist',
     drive: ['Meaning', 'Resonance', 'Alignment'],
-    video: '',
+    video: 'https://youtu.be/1szL7SrqJVc',
     poster: '',
     prose: [
       "The Idealist picks up everything.",
@@ -609,7 +609,7 @@ const ARCHETYPES = {
   performer: {
     name: 'The Performer',
     drive: ['Expression', 'Energy', 'Connection'],
-    video: '',
+    video: 'https://youtu.be/NrXiAAq05w8',
     poster: '',
     prose: [
       "The Performer often knows how to make things feel alive.",
@@ -647,7 +647,7 @@ const ARCHETYPES = {
   controlled: {
     name: 'The Over-Controlled Romantic',
     drive: ['Safety through composure'],
-    video: '',
+    video: 'https://youtu.be/YLPjR7Y8yc8',
     poster: '',
     prose: [
       "The Over-Controlled Romantic wants connection. But even more, he wants to get it right.",
@@ -817,12 +817,24 @@ function renderVideo(a){
     box.appendChild(v);
   } else {
     const f = document.createElement('iframe');
-    f.src = url;
+    f.src = toEmbed(url);
     f.title = a.name + ' — archetype overview';
     f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
     f.allowFullscreen = true;
     box.appendChild(f);
   }
+}
+
+/* YouTube refuses to be framed from a watch or youtu.be URL, so whatever form
+   the link is pasted in as, it becomes an embed URL here. Anything that is not
+   YouTube is passed through untouched -- Vimeo and friends still work. */
+function toEmbed(url){
+  const m = String(url).match(
+    /(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|live\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/
+  );
+  if (!m) return url;
+  const t = String(url).match(/[?&](?:t|start)=(\d+)/);
+  return 'https://www.youtube.com/embed/' + m[1] + (t ? '?start=' + t[1] : '');
 }
 
 function renderResult(result){

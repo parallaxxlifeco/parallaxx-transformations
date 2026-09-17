@@ -372,39 +372,67 @@ OFFER_LABELS = {
 
 BG = "#04122A"
 CSS = """
-:root{--ink:#F1ECE1;--dim:#B1BFD7;--mute:#7C89A3;--gold:#E8C65F;--bg:#04122A;--deep:#061938}
+:root{
+ /* BODY: navy ink on cream. Flipped 17 Sep 2026. Light-on-dark is fine for the
+    hero and the room pages, which are short and looked at; an article is 1,500
+    words that somebody actually reads, and the bright glyphs bleed into a dark
+    ground at that length. */
+ --ink:#04122A;--dim:#3C4C68;--mute:#5A6B85;--bg:#F1ECE1;
+ /* ACCENTS ON CREAM. The brand gold #E8C65F measures about 1.6:1 here and is
+    not a colour on this ground. Rules take #C9A227, link text #8A6A17. */
+ --rule:#C9A227;--gold:#8A6A17;
+ /* THE DARK CONTEXTS: the masthead and the index cards, where the real brand
+    gold survives untouched. The two greys below were built for a dark ground
+    and wash out completely on cream, which is why they only appear here. */
+ --deep:#04122A;--panel:#061938;--on-deep:#F1ECE1;--on-deep-dim:#B1BFD7;
+ --on-deep-mute:#7C89A3;--brand-gold:#E8C65F;
+}
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--ink)}
 body{font:400 17px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif;
  -webkit-font-smoothing:antialiased}
-/* 42rem puts a 17px line at ~66 characters. It was 46rem, which measured
-   73 — readable, but at the top of the comfortable band rather than in it.
+/* 42rem puts a 17px line at ~66 characters. It was 46rem, which measured 73 --
+   readable, but at the top of the comfortable band rather than in it.
    The 7rem top clears the fixed nav, which is 76px tall. */
 .wrap{max-width:42rem;margin:0 auto;padding:7rem 1.25rem 6rem}
+
+/* THE MASTHEAD. The nav is NOT changed for these pages -- it stays transparent
+   until you scroll 40px and then goes solid navy, same as every other route.
+   On a flat cream page its cream links would sit on cream for that first 40px
+   and vanish. So the page gives it something to be transparent over: navy from
+   the top through the end of the lede, cream for the body.
+   Full-bleed by shadow rather than by negative margin, because a -50vw margin
+   overflows the document horizontally and this does not. */
+.masthead{background:var(--deep);color:var(--on-deep);
+ margin:-7rem 0 2.75rem;padding:7rem 0 2.5rem;
+ clip-path:inset(0 -100vmax);box-shadow:0 0 0 100vmax var(--deep)}
+.masthead h1{color:var(--on-deep)}
+.masthead .meta{color:var(--on-deep-mute)}
+.masthead .lede{color:var(--on-deep);border-left-color:var(--brand-gold);margin-bottom:0}
+
 h1,h2,h3{font-family:'Montserrat',system-ui,sans-serif;line-height:1.25;
  letter-spacing:-.01em;margin:0}
 h1{font-size:clamp(1.9rem,5vw,2.75rem);font-weight:700;margin-bottom:1.25rem}
-/* Cream, not gold. Saturated yellow at heading size vibrates against navy
-   even though the contrast ratio is fine (~11:1, AAA). Gold is kept for the
-   small accents: the lede rule, the quote rule, table headers, links. */
+/* Not gold. Saturated yellow at heading size vibrates against its ground even
+   where the contrast ratio is fine. Gold is kept for the small accents. */
 h2{font-size:1.45rem;font-weight:600;margin:3rem 0 .85rem;color:var(--ink)}
 h3{font-size:1.12rem;font-weight:600;margin:2rem 0 .6rem}
 p{margin:0 0 1.15rem}
 a{color:var(--gold);text-underline-offset:.18em}
 .meta{font-size:.82rem;color:var(--mute);letter-spacing:.06em;
  text-transform:uppercase;margin-bottom:1.5rem}
-.lede{font-size:1.2rem;line-height:1.6;color:var(--ink);border-left:3px solid var(--gold);
+.lede{font-size:1.2rem;line-height:1.6;border-left:3px solid var(--rule);
  padding:.1rem 0 .1rem 1.15rem;margin:0 0 2.5rem}
 ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}li{margin-bottom:.45rem}
-blockquote{margin:2rem 0;padding:1.1rem 1.3rem;background:rgba(232,198,95,.06);
- border-left:3px solid rgba(232,198,95,.45)}
+blockquote{margin:2rem 0;padding:1.1rem 1.3rem;background:rgba(201,162,39,.11);
+ border-left:3px solid var(--rule)}
 blockquote p{margin:0 0 .5rem;font-style:italic;color:var(--ink)}
 blockquote cite{font-style:normal;font-size:.85rem;color:var(--mute)}
 table{width:100%;border-collapse:collapse;margin:1.75rem 0;font-size:.94rem}
-th,td{text-align:left;padding:.65rem .7rem;border-bottom:1px solid rgba(177,191,215,.18)}
+th,td{text-align:left;padding:.65rem .7rem;border-bottom:1px solid rgba(4,18,42,.14)}
 th{color:var(--gold);font-weight:600;font-size:.82rem;letter-spacing:.05em;
  text-transform:uppercase}
-.next{margin-top:3.5rem;padding-top:1.75rem;border-top:1px solid rgba(177,191,215,.18);
+.next{margin-top:3.5rem;padding-top:1.75rem;border-top:1px solid rgba(4,18,42,.14);
  font-size:.95rem;color:var(--dim)}
 .next a{display:block;margin-top:.6rem}
 .cards{list-style:none;margin:2rem 0 0;padding:0}
@@ -412,23 +440,25 @@ th{color:var(--gold);font-weight:600;font-size:.82rem;letter-spacing:.05em;
 .cards a{font-family:'Montserrat',system-ui,sans-serif;font-size:1.08rem;
  font-weight:600;text-decoration:none}
 .cards p{margin:.35rem 0 0;color:var(--dim);font-size:.95rem}
-/* Index pillar cards. Same furniture as the og share cards: navy panel,
-   gold hairline, a corner bracket top right, a gold tick down the left of
-   the heading. */
+/* Index pillar cards. Navy panels on the cream ground, which is the second
+   place the real brand gold keeps its full value: the hairline, the corner
+   bracket and the tick down the left of the heading. Same furniture as the og
+   share cards. */
 .pillar{position:relative;margin:2.5rem 0 0;padding:1.7rem 1.6rem 1.5rem;
- background:var(--deep);border:1px solid rgba(232,198,95,.16)}
+ background:var(--panel);color:var(--on-deep);border:1px solid rgba(232,198,95,.16)}
 .pillar::after{content:"";position:absolute;top:13px;right:13px;width:28px;height:28px;
  border-top:1px solid rgba(232,198,95,.4);border-right:1px solid rgba(232,198,95,.4)}
-.pillar h2{margin:0;font-size:1.22rem;color:var(--ink);
- border-left:2px solid var(--gold);padding-left:.85rem;padding-right:2.5rem}
+.pillar h2{margin:0;font-size:1.22rem;color:var(--on-deep);
+ border-left:2px solid var(--brand-gold);padding-left:.85rem;padding-right:2.5rem}
 .pillar h2 a{color:inherit;text-decoration:none}
-.pillar h2 a:hover{color:var(--gold)}
-.pillar>p{margin:.6rem 0 0 .85rem;color:var(--dim);font-size:.95rem}
+.pillar h2 a:hover{color:var(--brand-gold)}
+.pillar>p{margin:.6rem 0 0 .85rem;color:var(--on-deep-dim);font-size:.95rem}
 .pillar .cards{margin:1.2rem 0 0 .85rem}
 .pillar .cards li{margin-bottom:.7rem}
-.pillar .cards a{font-size:1rem;font-weight:500;color:var(--dim)}
-.pillar .cards a:hover{color:var(--gold)}
+.pillar .cards a{font-size:1rem;font-weight:500;color:var(--on-deep-dim)}
+.pillar .cards a:hover{color:var(--brand-gold)}
 @media(max-width:34rem){.wrap{padding:5.5rem 1.1rem 4rem}body{font-size:16px}
+ .masthead{margin:-5.5rem 0 2rem;padding:5.5rem 0 2rem}
  .pillar{padding:1.4rem 1.2rem 1.2rem}}
 """
 
@@ -552,9 +582,11 @@ def render_article(ctx, a) -> str:
         f'<a href="{o}">{html.escape(OFFER_LABELS.get(o, "See how the work is done"))}</a>'
         for o in [x.strip() for x in m["offer"].split(",") if x.strip()])
     inner = f"""<article>
+<div class="masthead">
 <div class="meta">{html.escape(a['pillar']['name'])} · {stamp}</div>
 <h1>{inline(m['title'])}</h1>
 <p class="lede">{inline(m['answer'])}</p>
+</div>
 {a['body']}
 <div class="next">
 Written by Daniel Lawson, Reconnection Coach.
@@ -586,8 +618,9 @@ def render_hub(ctx, slug, pillar, articles, hub_body) -> str:
         "isPartOf": {"@id": ctx["org_id"]},
         "about": {"@id": ctx["person_id"]},
     }]
-    inner = (f'<div class="meta">Insights</div><h1>{html.escape(pillar["name"])}</h1>'
-             f'<p class="lede">{html.escape(pillar["blurb"])}</p>'
+    inner = (f'<div class="masthead">'
+             f'<div class="meta">Insights</div><h1>{html.escape(pillar["name"])}</h1>'
+             f'<p class="lede">{html.escape(pillar["blurb"])}</p></div>'
              f'{hub_body}<ul class="cards">{cards}</ul>'
              f'<div class="next"><a href="{pillar["offer"]}">See how the work is done</a></div>')
     return _page(ctx, url, f"{pillar['name']} | Parallaxx Transformations",
@@ -619,8 +652,9 @@ def render_index(ctx, by_pillar) -> str:
         "name": "Insights", "isPartOf": {"@id": ctx["org_id"]},
         "about": {"@id": ctx["person_id"]},
     }]
-    inner = ('<h1>Insights</h1><p class="lede">Questions that come up in the '
-             'rooms, answered the way they get answered there.</p>'
+    inner = ('<div class="masthead"><h1>Insights</h1>'
+             '<p class="lede">Questions that come up in the '
+             'rooms, answered the way they get answered there.</p></div>'
              + "".join(blocks))
     return _page(ctx, url, "Insights | Parallaxx Transformations",
                  "Questions that come up in the rooms, answered the way they "

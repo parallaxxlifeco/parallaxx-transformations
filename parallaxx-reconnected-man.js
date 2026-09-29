@@ -1295,7 +1295,7 @@
     <p class="sub" data-r="mid">
       <b>For men who are needed, but want more from life.</b>
     </p>
-    <a class="btn" href="#offer" data-r="mid">Register for the next open session</a>
+    <a class="btn" href="#offer" data-r="mid">Register for the next session</a>
     <p class="next" data-r="far">Weekly Tuesday &nbsp;·&nbsp; 4:30 Bali &nbsp;·&nbsp; 10:30 CET</p>
   </div>
   <span class="cue" aria-hidden="true">&#8595;</span>
@@ -1537,7 +1537,7 @@
       </div>
     </div>
     <div class="cta-row" data-r="mid">
-      <button class="btn" type="button" data-trm-modal>Register For The Open Session</button>
+      <button class="btn" type="button" data-trm-modal>Register for the next session</button>
       <p class="fine">The short application first is to ensure a strong mutual fit, for you and for the group.</p>
     </div>
 
@@ -1588,7 +1588,7 @@
     <p class="ey" data-r="far">Ready?</p>
     <h2 class="mask" id="closeMask"><span>Know what you want, and ask for it in four weeks.</span></h2>
     <p class="lede" data-r="mid">Apply for the next open day. Free to sit in, short application form first.</p>
-    <a class="btn" href="#offer" data-r="mid">Register for the open session</a>
+    <a class="btn" href="#offer" data-r="mid">Register for the next session</a>
     <p class="hand sm" data-r="far" style="margin-top:32px">you're joining a living conversation</p>
 
   </div>

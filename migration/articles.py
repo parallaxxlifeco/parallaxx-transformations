@@ -472,8 +472,11 @@ th{color:var(--gold);font-weight:600;font-size:.82rem;letter-spacing:.05em;
    four gives 3 then 1 -- where a grid needs nth-child rules that have to be
    rewritten every time a pillar is added. No grow, so the last row stays
    card-width instead of stretching to fill.
-   min-width does the responsive work with no media query: the basis shrinks
-   with the container until 17rem stops it, and the row wraps to two, then one. */
+   min-width does the responsive work down to tablet: the basis shrinks with
+   the container until 17rem stops it, and the row wraps to two. On a phone the
+   media query below drops min-width to fit a 320px screen, which also removes
+   that floor -- so it must set the basis to 100% as well, or the cards stay
+   three across at a third of the screen each, one word to a line. */
 .pillar{position:relative;margin:0;flex:0 1 calc((100% - 3rem)/3);min-width:17rem;
  padding:1.4rem 1.35rem 1.25rem;
  background:var(--panel);color:var(--on-deep);border:1px solid rgba(232,198,95,.16)}
@@ -495,7 +498,7 @@ th{color:var(--gold);font-weight:600;font-size:.82rem;letter-spacing:.05em;
  text-decoration-color:var(--brand-gold)}
 @media(max-width:34rem){.wrap{padding:5.5rem 1.1rem 4rem}body{font-size:16px}
  .masthead{margin:-5.5rem 0 2rem;padding:5.5rem 0 2rem}
- .pillar{min-width:0;padding:1.3rem 1.15rem 1.15rem}}
+ .pillar{min-width:0;flex-basis:100%;padding:1.3rem 1.15rem 1.15rem}}
 """
 
 

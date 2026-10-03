@@ -750,6 +750,19 @@ def prerender(r: dict) -> str:
     if html is None:
         raise SystemExit("PRERENDER: no HTML template found in %s" % r["bundle"])
 
+    # THE PRE-RENDER MUST RUN THE SAME REWRITES AS THE BUNDLE, IN THE SAME
+    # ORDER. It is lifted from the bundle in the REPO, which is the state
+    # before any of main()'s transforms; the copy written into dist/ gets them.
+    # Skip them here and crawlers read a different site from the one visitors
+    # get. Found twice now: Wix CDN URLs on 14 Sep, and on 3 Oct a pre-render
+    # whose nav had NO link to /insights at all, still pointed at the dead
+    # /blog, and carried 38 absolute self-links. The human nav was correct the
+    # whole time, so nothing looked broken -- only the copy crawlers read was.
+    # That is the worst possible shape for an SEO bug.
+    html, _ = add_insights_nav(html)
+    html, _, _, _ = detach(html)
+    html, _ = relink_blog(html)
+
     for tag in PRERENDER_STRIP_TAGS:
         html = re.sub(r"<%s\b[^>]*>.*?</%s\s*>" % (tag, tag), "", html,
                       flags=re.S | re.I)
@@ -780,6 +793,15 @@ def prerender(r: dict) -> str:
             "PRERENDER: %s would ship %d Wix CDN URL(s) the bundle no longer "
             "uses. Add them to asset-map.json.\n  %s"
             % (r["bundle"], len(stale), "\n  ".join(stale[:6])))
+
+    if ORIGIN in html:
+        raise SystemExit(
+            "PRERENDER: %s would ship %d absolute %s link(s) -- detach() did "
+            "not run over the pre-render." % (r["bundle"], html.count(ORIGIN), ORIGIN))
+    if BLOG_LINK in html or '"/blog"' in html:
+        raise SystemExit(
+            "PRERENDER: %s still links to /blog -- relink_blog() did not run "
+            "over the pre-render." % r["bundle"])
 
     shadow = "attachShadow" in (REPO / r["bundle"]).read_text(
         encoding="utf-8", errors="replace")

@@ -744,21 +744,32 @@ def extract_bundle_html(bundle: str) -> str:
     return None
 
 
-def prerender(r: dict) -> str:
-    """The route's copy as plain markup, for crawlers only."""
-    html = extract_bundle_html(r["bundle"])
+# Nav and footer are the same markup on every route that uses them, so they
+# are pre-rendered once and cached.
+_CHROME_CACHE = {}
+
+CHROME_PLACEHOLDERS = (
+    ("parallaxx-nav", "parallaxx-nav.js"),
+    ("parallaxx-footer", "parallaxx-footer.js"),
+)
+
+
+def prerender_markup(bundle: str, min_words: int = PRERENDER_MIN_WORDS) -> str:
+    """A bundle's copy as plain markup, rewritten exactly as the shipped bundle
+    is. Used for route bundles and for the nav/footer fragments alike."""
+    html = extract_bundle_html(bundle)
     if html is None:
-        raise SystemExit("PRERENDER: no HTML template found in %s" % r["bundle"])
+        raise SystemExit("PRERENDER: no HTML template found in %s" % bundle)
 
     # THE PRE-RENDER MUST RUN THE SAME REWRITES AS THE BUNDLE, IN THE SAME
     # ORDER. It is lifted from the bundle in the REPO, which is the state
-    # before any of main()'s transforms; the copy written into dist/ gets them.
-    # Skip them here and crawlers read a different site from the one visitors
-    # get. Found twice now: Wix CDN URLs on 14 Sep, and on 3 Oct a pre-render
-    # whose nav had NO link to /insights at all, still pointed at the dead
-    # /blog, and carried 38 absolute self-links. The human nav was correct the
-    # whole time, so nothing looked broken -- only the copy crawlers read was.
-    # That is the worst possible shape for an SEO bug.
+    # before any of main()'s transforms; only the copy written into dist/ gets
+    # them. Skip them and crawlers read a different site from the one visitors
+    # get. Found twice: Wix CDN URLs on 14 Sep, and on 3 Oct a pre-render whose
+    # nav had NO link to /insights at all, still pointed at the dead /blog, and
+    # carried ~38 absolute self-links per page. The human nav was correct the
+    # whole time, so nothing looked broken in a browser -- only the copy
+    # crawlers read was wrong. That is the worst shape an SEO bug can take.
     html, _ = add_insights_nav(html)
     html, _, _, _ = detach(html)
     html, _ = relink_blog(html)
@@ -775,16 +786,14 @@ def prerender(r: dict) -> str:
     # Guards. A silently empty pre-render is worse than none: it would look
     # like the job was done while the page stayed invisible.
     words = len(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html)).strip().split())
-    if words < PRERENDER_MIN_WORDS:
-        raise SystemExit("PRERENDER: %s yielded only %d words" % (r["bundle"], words))
+    if words < min_words:
+        raise SystemExit("PRERENDER: %s yielded only %d words" % (bundle, words))
     if re.search(r"<script\b|<style\b", html, re.I):
-        raise SystemExit("PRERENDER: %s still carries script/style" % r["bundle"])
+        raise SystemExit("PRERENDER: %s still carries script/style" % bundle)
     if "${" in html:
         raise SystemExit("PRERENDER: %s carries an un-evaluated ${} expression"
-                         % r["bundle"])
+                         % bundle)
 
-    # Same rewrite the bundles get, so the pre-render can never point somewhere
-    # the shipped page does not.
     html, _ = localise(html, ASSET_MAP)
     if ASSET_MAP and re.search(r"(static|video)\.wixstatic\.com", html):
         stale = sorted(set(re.findall(
@@ -792,16 +801,51 @@ def prerender(r: dict) -> str:
         raise SystemExit(
             "PRERENDER: %s would ship %d Wix CDN URL(s) the bundle no longer "
             "uses. Add them to asset-map.json.\n  %s"
-            % (r["bundle"], len(stale), "\n  ".join(stale[:6])))
-
+            % (bundle, len(stale), "\n  ".join(stale[:6])))
     if ORIGIN in html:
         raise SystemExit(
             "PRERENDER: %s would ship %d absolute %s link(s) -- detach() did "
-            "not run over the pre-render." % (r["bundle"], html.count(ORIGIN), ORIGIN))
+            "not run over the pre-render." % (bundle, html.count(ORIGIN), ORIGIN))
     if BLOG_LINK in html or '"/blog"' in html:
         raise SystemExit(
             "PRERENDER: %s still links to /blog -- relink_blog() did not run "
-            "over the pre-render." % r["bundle"])
+            "over the pre-render." % bundle)
+    return html
+
+
+def chrome_markup(bundle: str) -> str:
+    """Nav is ~20 words and footer ~70. They are chrome, not copy, so the route
+    word floor does not apply to them."""
+    if bundle not in _CHROME_CACHE:
+        _CHROME_CACHE[bundle] = prerender_markup(bundle, min_words=5)
+    return _CHROME_CACHE[bundle]
+
+
+def prerender(r: dict) -> str:
+    """The route's copy as plain markup, for crawlers only."""
+    html = prerender_markup(r["bundle"])
+
+    # FILL THE CHROME PLACEHOLDERS. The Reconnected Man and Woman pages carry
+    # <parallaxx-nav></parallaxx-nav> and <parallaxx-footer></parallaxx-footer>
+    # and load those two bundles at runtime, so a VISITOR gets the full nav and
+    # footer. The pre-render only ever contained the route's own bundle, so a
+    # CRAWLER got those pages with no site navigation at all -- including
+    # /the-reconnected-woman, the most visited page on the site. Filling the
+    # placeholders makes the crawler's copy match the visitor's.
+    #
+    # Routes with no placeholder are left alone ON PURPOSE. The archetype quiz,
+    # wheel-of-reconnect and identity pages carry no nav or footer for anyone,
+    # so injecting one would make the crawler's copy differ from the visitor's
+    # in the other direction. Match the page; do not improve on it.
+    for tag, bundle in CHROME_PLACEHOLDERS:
+        pattern = re.compile(r"<%s\b[^>]*>\s*</%s\s*>" % (tag, tag), re.I)
+        if not pattern.search(html):
+            continue
+        if not (REPO / bundle).exists():
+            raise SystemExit("PRERENDER: %s has a <%s> placeholder but %s is "
+                             "missing." % (r["bundle"], tag, bundle))
+        markup = chrome_markup(bundle)
+        html = pattern.sub(lambda m: markup, html)
 
     shadow = "attachShadow" in (REPO / r["bundle"]).read_text(
         encoding="utf-8", errors="replace")

@@ -37,6 +37,7 @@ Run:  python3 build-site.py          (Wix asset URLs left intact — works today
 import json
 import re
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -1087,6 +1088,64 @@ def detach(text: str) -> tuple:
     return text, n_wix, n_gh, n_font
 
 
+# ── SITEMAP lastmod ─────────────────────────────────────────────────────
+# Google leans on <lastmod> to decide what is worth recrawling. Articles have
+# carried one since 16 Sep; the sixteen ROUTE pages shipped with changefreq
+# only. So a route could change materially -- as every single one did on
+# 3 Oct 2026, when the pre-render was rewritten -- and the sitemap would still
+# tell Google nothing had happened.
+#
+# THE DATE COMES FROM GIT, NOT THE FILESYSTEM. `git clone` resets mtimes, so an
+# mtime-derived date reads "today" for all 33 URLs on every deploy -- exactly
+# the always-fresh signal Google learns to ignore, which is worse than having
+# no lastmod at all.
+#
+# A route's served HTML depends on two things, so its date is the later of:
+#   - its bundle, which is the body, and
+#   - migration/build-site.py, which owns the <head> and the pre-render.
+#
+# If git cannot answer -- not installed, or a shallow clone where every file
+# reports the same commit -- lastmod is OMITTED rather than guessed.
+_GIT_DATE_CACHE = {}
+_GIT_USABLE = None
+
+
+def git_available() -> bool:
+    global _GIT_USABLE
+    if _GIT_USABLE is None:
+        try:
+            r = subprocess.run(["git", "rev-parse", "--is-shallow-repository"],
+                               cwd=str(REPO), capture_output=True,
+                               text=True, timeout=10)
+            _GIT_USABLE = (r.returncode == 0 and r.stdout.strip() == "false")
+        except Exception:
+            _GIT_USABLE = False
+        if not _GIT_USABLE:
+            print("sitemap  git unavailable or shallow clone -- route lastmod omitted")
+    return _GIT_USABLE
+
+
+def git_date(rel: str):
+    """Last commit date of a tracked file, YYYY-MM-DD, or None."""
+    if not git_available():
+        return None
+    if rel not in _GIT_DATE_CACHE:
+        try:
+            r = subprocess.run(["git", "log", "-1", "--format=%cs", "--", rel],
+                               cwd=str(REPO), capture_output=True,
+                               text=True, timeout=10)
+            _GIT_DATE_CACHE[rel] = r.stdout.strip() or None
+        except Exception:
+            _GIT_DATE_CACHE[rel] = None
+    return _GIT_DATE_CACHE[rel]
+
+
+def route_lastmod(r: dict):
+    dates = [d for d in (git_date(r["bundle"]),
+                         git_date("migration/build-site.py")) if d]
+    return max(dates) if dates else None
+
+
 def localise(text: str, asset_map: list) -> tuple:
     """Point Wix CDN URLs at our own copies. Longest URL first, so a transform
     variant is never clipped by the bare media URL that is its own prefix."""
@@ -1250,9 +1309,11 @@ def main() -> int:
 
     # sitemap + robots.
     route_urls = [
-        (("" if r["path"] == "/" else r["path"]), None)
+        (("" if r["path"] == "/" else r["path"]), route_lastmod(r))
         for r in ROUTES if not r.get("noindex")
     ]
+    dated = sum(1 for _, d in route_urls if d)
+    print(f"sitemap  {dated} of {len(route_urls)} routes carry a lastmod")
     urls = "\n".join(
         f"  <url><loc>{ORIGIN}{path}</loc>"
         + (f"<lastmod>{lastmod}</lastmod>" if lastmod else "")

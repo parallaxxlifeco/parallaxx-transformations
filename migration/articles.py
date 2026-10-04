@@ -34,7 +34,8 @@ Supported: ## and ### headings, paragraphs, - bullets, 1. numbered lists,
 
 import html
 import re
-from datetime import date
+from datetime import date, datetime, timezone
+from email.utils import format_datetime
 from pathlib import Path
 
 # ── THE CONFIDENTIALITY GUARD ──────────────────────────────────────────
@@ -538,6 +539,7 @@ def _page(ctx, canonical, title, desc, og_title, og_desc, schema, inner,
 <meta name="twitter:image" content="{og_img}">
 
 <link rel="icon" href="/favicon.png">
+<link rel="alternate" type="application/rss+xml" title="Parallaxx Insights" href="{ctx['origin']}/insights/feed.xml">
 <meta name="theme-color" content="{BG}">
 
 {schema}
@@ -702,6 +704,56 @@ def render_index(ctx, by_pillar) -> str:
                  ctx["dump_schema"](graph), inner, wrap_class=" wrap--wide")
 
 
+# ── THE RSS FEED ───────────────────────────────────────────────────────
+# /insights/feed.xml exists for ONE reader: the GHL RSS campaign that emails
+# each new article to people who subscribed on the site. Added 4 Oct 2026.
+#
+# GHL decides what is "new" by comparing items against what it already sent,
+# so <guid> must never change for an article that has shipped. It is the
+# canonical URL, which means RENAMING A SLUG RE-SENDS THAT ARTICLE to every
+# subscriber. Do not rename a published slug.
+#
+# <description> is the `answer` lede: 25-80 words, written to stand on its
+# own, which is exactly what an email teaser needs. The full body is NOT in
+# the feed on purpose: the email is a pointer to the page, not a copy of it.
+FEED_ITEMS = 20
+
+
+def _rfc822(day: str) -> str:
+    d = date.fromisoformat(day)
+    return format_datetime(datetime(d.year, d.month, d.day, 8, 0, tzinfo=timezone.utc))
+
+
+def render_feed(ctx, by_pillar) -> str:
+    origin = ctx["origin"]
+    esc = lambda t: html.escape(t, quote=False)
+    flat = sorted((a for items in by_pillar.values() for a in items),
+                  key=lambda a: (a["meta"]["published"], a["path"]), reverse=True)
+    items = []
+    for a in flat[:FEED_ITEMS]:
+        m = a["meta"]
+        items.append(
+            "<item>"
+            f"<title>{esc(m['title'])}</title>"
+            f"<link>{a['url']}</link>"
+            f'<guid isPermaLink="true">{a["url"]}</guid>'
+            f"<pubDate>{_rfc822(m['published'])}</pubDate>"
+            f"<category>{esc(a['pillar']['name'])}</category>"
+            f"<description>{esc(m['answer'])}</description>"
+            "</item>")
+    newest = _rfc822(flat[0]["meta"]["published"]) if flat else ""
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n'
+            '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>\n'
+            '<title>Parallaxx Insights</title>\n'
+            f'<link>{origin}/insights</link>\n'
+            f'<atom:link href="{origin}/insights/feed.xml" rel="self" type="application/rss+xml"/>\n'
+            '<description>Questions that come up in the rooms, answered the way '
+            'they get answered there.</description>\n'
+            '<language>en</language>\n'
+            f'<lastBuildDate>{newest}</lastBuildDate>\n'
+            + "\n".join(items) + "\n</channel></rss>\n")
+
+
 # ── ENTRY POINT ────────────────────────────────────────────────────────
 def build(ctx, content_dir: Path, dist: Path) -> tuple:
     """Writes every article, hub and the index. Returns (urls, errors).
@@ -827,5 +879,8 @@ def build(ctx, content_dir: Path, dist: Path) -> tuple:
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(render_index(ctx, by_pillar), encoding="utf-8")
         urls.append(("/insights", max(u[1] for u in urls)))
+        # Not added to `urls`: a feed is not a page and has no place in the sitemap.
+        (dist / "insights" / "feed.xml").write_text(render_feed(ctx, by_pillar),
+                                                    encoding="utf-8")
 
     return urls, errors

@@ -1059,3 +1059,27 @@ DL-018, DL-025, DL-028`, which are real rows.
 building from that clone** — not from the working copy. All six insight routes
 emit, every `og:image` resolves to a file that exists, and the sweep finds no
 participant name or name-keyed id anywhere in `content/`.
+
+## Insights email subscribers, 4 Oct 2026
+
+An opt-in add-on: readers can subscribe at the end of an article and get each
+new one by email. Nothing here needs touching per article. Publishing is the
+trigger.
+
+How the pieces fit:
+
+1. **The feed.** `migration/articles.py` writes `/insights/feed.xml` (RSS 2.0,
+   newest 20 articles) on every build, and every insights page carries a
+   `<link rel="alternate" type="application/rss+xml">` pointing at it.
+   Item text is the article's `answer` lede, not the body: the email is a
+   pointer to the page.
+2. **GHL watches the feed.** An RSS-schedule email campaign in GHL checks
+   the feed and sends any new item to contacts tagged `insights-subscriber`.
+3. **The subscribe box** on the articles feeds that tag. *(Being built.)*
+
+**Do not rename a published article's slug.** The feed's `<guid>` is the
+canonical URL, so GHL reads a renamed article as a new one and emails it to
+every subscriber again.
+
+Check the feed after a build: `dist/insights/feed.xml`, or live at
+https://www.parallaxxtransformations.com/insights/feed.xml

@@ -497,10 +497,43 @@ th{color:var(--gold);font-weight:600;font-size:.82rem;letter-spacing:.05em;
  text-decoration-color:rgba(232,198,95,.4)}
 .pillar .cards a:hover,.pillar .cards a:focus-visible{color:var(--brand-gold);
  text-decoration-color:var(--brand-gold)}
+/* THE SUBSCRIBE BOX, 4 Oct 2026. Sits after the body on every insights page.
+   The heading and line are ours, so they set in the article type; only the
+   two fields and the button come from GHL, in an iframe styled cream and navy
+   in the GHL builder to match. loading=lazy and no form_embed.js, so the
+   page still ships no script of its own and the iframe costs nothing until a
+   reader scrolls to it. */
+.subscribe{margin:3.5rem 0 0;padding:1.75rem 0 0;border-top:2px solid var(--rule)}
+.wrap--wide .subscribe{max-width:42rem;margin-left:auto;margin-right:auto}
+.subscribe h2{margin:0 0 .6rem}
+.subscribe p{color:var(--dim);margin:0 0 1rem}
+.subscribe iframe{display:block;height:300px;border:0;
+ margin:0 -16px;width:calc(100% + 32px);max-width:none}
 @media(max-width:34rem){.wrap{padding:5.5rem 1.1rem 4rem}body{font-size:16px}
  .masthead{margin:-5.5rem 0 2rem;padding:5.5rem 0 2rem}
  .pillar{min-width:0;flex-basis:100%;padding:1.3rem 1.15rem 1.15rem}}
 """
+
+
+# ── THE SUBSCRIBE BOX ──────────────────────────────────────────────────
+# GHL form "Insights subscribe". Submitting starts the double opt-in workflow
+# in GHL; only confirmed contacts get the weekly roundup. To change the two
+# lines below, edit them here. To change the fields, the button or the
+# message shown after signing up, edit the form in GHL (Sites > Forms) --
+# nothing here needs touching for that.
+SUBSCRIBE_FORM_ID = "EOwePM5iswFuXOj8p4ej"
+SUBSCRIBE_HEADING = "Want the next one?"
+SUBSCRIBE_LINE = ("Every article is written from real conversations and questions "
+                  "from our groups. Never miss an insight with the weekly roundup.")
+
+
+def subscribe_box() -> str:
+    return (f'<aside class="subscribe" aria-labelledby="subscribe-h">'
+            f'<h2 id="subscribe-h">{html.escape(SUBSCRIBE_HEADING)}</h2>'
+            f'<p>{html.escape(SUBSCRIBE_LINE)}</p>'
+            f'<iframe src="https://api.leadconnectorhq.com/widget/form/{SUBSCRIBE_FORM_ID}" '
+            f'title="Subscribe to the weekly Insights roundup" loading="lazy"></iframe>'
+            f'</aside>')
 
 
 def _page(ctx, canonical, title, desc, og_title, og_desc, schema, inner,
@@ -629,6 +662,7 @@ def render_article(ctx, a) -> str:
 <p class="lede">{inline(m['answer'])}</p>
 </div>
 {a['body']}
+{subscribe_box()}
 <div class="next">
 Written by Daniel Lawson, Reconnection Coach.
 {siblings}<a href="{pillar_url}">More on {html.escape(a['pillar']['name'].lower())}</a>
@@ -662,7 +696,7 @@ def render_hub(ctx, slug, pillar, articles, hub_body) -> str:
     inner = (f'<div class="masthead">'
              f'<div class="meta">Insights</div><h1>{html.escape(pillar["name"])}</h1>'
              f'<p class="lede">{html.escape(pillar["blurb"])}</p></div>'
-             f'{hub_body}<ul class="cards">{cards}</ul>'
+             f'{hub_body}<ul class="cards">{cards}</ul>{subscribe_box()}'
              f'<div class="next"><a href="{pillar["offer"]}">See how the work is done</a></div>')
     return _page(ctx, url, f"{pillar['name']} | Parallaxx Transformations",
                  pillar["blurb"], pillar["name"], pillar["blurb"],
@@ -696,7 +730,7 @@ def render_index(ctx, by_pillar) -> str:
     inner = ('<div class="masthead"><h1>Insights</h1>'
              '<p class="lede">Questions that come up in the '
              'rooms, answered the way they get answered there.</p></div>'
-             '<div class="pillars">' + "".join(blocks) + '</div>')
+             '<div class="pillars">' + "".join(blocks) + '</div>' + subscribe_box())
     return _page(ctx, url, "Insights | Parallaxx Transformations",
                  "Questions that come up in the rooms, answered the way they "
                  "get answered there.", "Insights",

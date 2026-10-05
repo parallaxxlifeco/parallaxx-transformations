@@ -1075,7 +1075,28 @@ How the pieces fit:
    pointer to the page.
 2. **GHL watches the feed.** An RSS-schedule email campaign in GHL checks
    the feed and sends any new item to contacts tagged `insights-subscriber`.
-3. **The subscribe box** on the articles feeds that tag. *(Being built.)*
+3. **The subscribe box** sits at the end of every article, topic page and the
+   Insights page (`subscribe_box()` in `migration/articles.py`). Its heading
+   and line are `SUBSCRIBE_HEADING` / `SUBSCRIBE_LINE` at the top of that
+   block. The fields underneath are a GHL form in an iframe.
+
+### What lives in GHL (built 4 Oct 2026)
+
+| Piece | Where | What it does |
+|---|---|---|
+| Form **Insights subscribe** (`EOwePM5iswFuXOj8p4ej`) | Sites > Forms | First name + email, "Keep me posted", cream/navy. The after-signup message is set under its Settings tab. |
+| Trigger link **Insights - confirm subscription** | Marketing > Trigger Links | Goes to /insights with UTM `utm_campaign=insights-confirm`. |
+| Workflow **Insights - subscribe (double opt-in)** | Automation > Workflows | Form submitted -> tag `insights-pending` -> confirmation email ("Confirm and you're in", from daniel@reconnectyou.life, preference type Insights) containing the trigger link. |
+| Workflow **Insights - confirmed subscriber** | Automation > Workflows | Trigger link clicked -> add `insights-subscriber`, remove `insights-pending`. |
+| Campaign **Insights - weekly roundup** | Marketing > Emails | RSS Schedule on `/insights/feed.xml`, every Sunday 3:00 PM Bali time (= 9:00 AM Berlin in summer, 8:00 AM in winter). Recipients: tag `insights-subscriber`, with "include contacts tagged later" on. Subject `{{contact.first_name}}, this is what we discussed this week` (falls back to "Hey"). Maximum number of feeds: 2. From Daniel Lawson, daniel@reconnectyou.life. PS links The Reconnected Man and The Reconnected Woman pages, tagged `utm_campaign=insights-roundup`. |
+| Preference type **Insights** | Settings > Preference Management Hub | The unsubscribe-from-just-this category, attached to the confirmation email and the roundup. GHL caps active categories at 5; Founders Breakfast was archived on 5 Oct 2026 to make room. |
+
+**Only `insights-subscriber` gets the roundup.** Anyone who never clicks the
+confirm link stays `insights-pending` and gets nothing more.
+
+To change the confirmation email wording: open the subscribe workflow, click
+the "Confirmation email" step. The link in it is
+`{{trigger_link.HVEf8UOpUgvXbHCqqTCi}}` -- keep that if you rewrite the body.
 
 **Do not rename a published article's slug.** The feed's `<guid>` is the
 canonical URL, so GHL reads a renamed article as a new one and emails it to
@@ -1083,3 +1104,13 @@ every subscriber again.
 
 Check the feed after a build: `dist/insights/feed.xml`, or live at
 https://www.parallaxxtransformations.com/insights/feed.xml
+
+To change the roundup's wording or subject: Marketing > Emails > Insights -
+weekly roundup. The article list is a Code block (not GHL's RSS Items
+block, which can't be styled) holding one navy rounded card wrapped in
+`{{#rss_items rss_items}} ... {{/rss_items}}`; GHL repeats the card per
+article, filling `{{{rss_item.title}}}`, `{{{rss_item.content}}}` and
+`{{rss_item.url}}`. Keep the triple braces on title and content. A test email
+sends every item in the feed (the test panel ignores "Maximum number of
+feeds"); the scheduled send caps at 2. GHL cannot put an article title in the subject line (checked
+5 Oct 2026), so the subject is fixed text plus the first name.

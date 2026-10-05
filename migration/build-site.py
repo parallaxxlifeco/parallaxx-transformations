@@ -47,6 +47,7 @@ from pathlib import Path
 # its config from _redirects and _headers inside the output directory, so there
 # is nothing to write at the repository root.
 import articles
+import landing
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent
@@ -1306,6 +1307,16 @@ def main() -> int:
         return 1
     if article_urls:
         print(f"articles {len(article_urls)} pages from content/insights/")
+
+    # Landing pages: one-job pages Daniel sends people to. noindex, and left
+    # out of the sitemap -- see landing.py for why.
+    landing_paths = landing.build(
+        dict(origin=ORIGIN, analytics_head=analytics_head(),
+             analytics_body=analytics_body()),
+        DIST,
+        (lambda t: localise(t, asset_map)[0]) if local else None,
+    )
+    print(f"landing  {len(landing_paths)} page(s): {', '.join(landing_paths)}")
 
     # sitemap + robots.
     route_urls = [

@@ -1084,7 +1084,7 @@ How the pieces fit:
 
 | Piece | Where | What it does |
 |---|---|---|
-| Form **Insights subscribe** (`EOwePM5iswFuXOj8p4ej`) | Sites > Forms | First name + email, "Keep me posted", cream/navy. The after-signup message is set under its Settings tab. |
+| Form **Insights subscribe** (`EOwePM5iswFuXOj8p4ej`) | Sites > Forms | First name + email, "Keep me posted". Labels off (Styles > Show Label), placeholders "First name" / "Email". Since 5 Oct 2026 its Custom CSS (Styles & Options > Advanced > Custom CSS) puts both fields and the button on one line with a transparent background, the button dropping under the fields below 540px wide; the site iframe is 84px tall (140px on phones) to match, set in `migration/articles.py`. If you add a field, raise those heights. The after-signup message is set under its Settings tab. |
 | Trigger link **Insights - confirm subscription** | Marketing > Trigger Links | Goes to /insights with UTM `utm_campaign=insights-confirm`. |
 | Workflow **Insights - subscribe (double opt-in)** | Automation > Workflows | Form submitted -> tag `insights-pending` -> confirmation email ("Confirm and you're in", from daniel@reconnectyou.life, preference type Insights) containing the trigger link. |
 | Workflow **Insights - confirmed subscriber** | Automation > Workflows | Trigger link clicked -> add `insights-subscriber`, remove `insights-pending`. |

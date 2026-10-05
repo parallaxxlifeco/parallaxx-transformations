@@ -499,16 +499,20 @@ th{color:var(--gold);font-weight:600;font-size:.82rem;letter-spacing:.05em;
  text-decoration-color:var(--brand-gold)}
 /* THE SUBSCRIBE BOX, 4 Oct 2026. Sits after the body on every insights page.
    The heading and line are ours, so they set in the article type; only the
-   two fields and the button come from GHL, in an iframe styled cream and navy
-   in the GHL builder to match. loading=lazy and no form_embed.js, so the
+   two fields and the button come from GHL, in a transparent iframe. Since
+   5 Oct 2026 the form's Custom CSS in GHL (Styles > Advanced > Custom CSS)
+   lays the two fields and the button on one line with no labels, wrapping
+   the button under the fields below 540px wide. The heights here leave room
+   for a "required" note under a field and for the thank-you message. loading=lazy and no form_embed.js, so the
    page still ships no script of its own and the iframe costs nothing until a
    reader scrolls to it. */
 .subscribe{margin:3.5rem 0 0;padding:1.75rem 0 0;border-top:2px solid var(--rule)}
 .wrap--wide .subscribe{max-width:42rem;margin-left:auto;margin-right:auto}
 .subscribe h2{margin:0 0 .6rem}
 .subscribe p{color:var(--dim);margin:0 0 1rem}
-.subscribe iframe{display:block;height:300px;border:0;
- margin:0 -16px;width:calc(100% + 32px);max-width:none}
+.subscribe iframe{display:block;height:84px;border:0;width:100%;
+ color-scheme:normal}
+@media(max-width:34rem){.subscribe iframe{height:140px}}
 @media(max-width:34rem){.wrap{padding:5.5rem 1.1rem 4rem}body{font-size:16px}
  .masthead{margin:-5.5rem 0 2rem;padding:5.5rem 0 2rem}
  .pillar{min-width:0;flex-basis:100%;padding:1.3rem 1.15rem 1.15rem}}

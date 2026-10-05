@@ -1086,17 +1086,21 @@ How the pieces fit:
 |---|---|---|
 | Form **Insights subscribe** (`EOwePM5iswFuXOj8p4ej`) | Sites > Forms | First name + email, "Keep me posted". Labels off (Styles > Show Label), placeholders "First name" / "Email". Since 5 Oct 2026 its Custom CSS (Styles & Options > Advanced > Custom CSS) puts both fields and the button on one line with a transparent background, the button dropping under the fields below 540px wide; the site iframe is 84px tall (140px on phones) to match, set in `migration/articles.py`. If you add a field, raise those heights. The after-signup message is set under its Settings tab. |
 | Trigger link **Insights - confirm subscription** | Marketing > Trigger Links | Goes to /insights with UTM `utm_campaign=insights-confirm`. |
-| Workflow **Insights - subscribe (double opt-in)** | Automation > Workflows | Form submitted -> tag `insights-pending` -> confirmation email ("Confirm and you're in", from daniel@reconnectyou.life, preference type Insights) containing the trigger link. |
+| Workflow **Insights - subscribe (double opt-in)** | Automation > Workflows | Form submitted -> tag `insights-pending` -> confirmation email ("IMPORTANT: Confirm & You're In", from daniel@reconnectyou.life, preference type Insights) with a navy "Yes, keep me posted" button carrying the trigger link. |
 | Workflow **Insights - confirmed subscriber** | Automation > Workflows | Trigger link clicked -> add `insights-subscriber`, remove `insights-pending`. |
-| Campaign **Insights - weekly roundup** | Marketing > Emails | RSS Schedule on `/insights/feed.xml`, every Sunday 3:00 PM Bali time (= 9:00 AM Berlin in summer, 8:00 AM in winter). Recipients: tag `insights-subscriber`, with "include contacts tagged later" on. Subject `{{contact.first_name}}, this is what we discussed this week` (falls back to "Hey"). Maximum number of feeds: 2. From Daniel Lawson, daniel@reconnectyou.life. PS links The Reconnected Man and The Reconnected Woman pages, tagged `utm_campaign=insights-roundup`. |
+| Campaign **Insights - weekly roundup** | Marketing > Emails | RSS Schedule on `/insights/feed.xml`, every Sunday 5:00 AM in the account's GMT+8 time (= 8:00 AM Melbourne while Melbourne is on daylight time, Oct to Apr; 7:00 AM from April, so move it to 6:00 AM then to keep 8:00). Scheduled 5 Oct 2026, first send Sun 11 Oct. GHL will not schedule an RSS campaign while its tag has 0 contacts. Recipients: tag `insights-subscriber`, with "include contacts tagged later" on. Subject `{{contact.first_name}}, this is what we discussed this week` (falls back to "Hey"). Maximum number of feeds: 2. From Daniel Lawson, daniel@reconnectyou.life. PS links The Reconnected Man and The Reconnected Woman pages, tagged `utm_campaign=insights-roundup`. |
 | Preference type **Insights** | Settings > Preference Management Hub | The unsubscribe-from-just-this category, attached to the confirmation email and the roundup. GHL caps active categories at 5; Founders Breakfast was archived on 5 Oct 2026 to make room. |
 
 **Only `insights-subscriber` gets the roundup.** Anyone who never clicks the
 confirm link stays `insights-pending` and gets nothing more.
 
 To change the confirmation email wording: open the subscribe workflow, click
-the "Confirmation email" step. The link in it is
+the "Confirmation email" step, then the email preview > edit. Since 5 Oct 2026
+it is built in GHL's HTML code editor ("From smart builder" > Code editor),
+not Quick compose: Quick compose strips the styling off links, so a button
+can't be made there. The button's link is
 `{{trigger_link.HVEf8UOpUgvXbHCqqTCi}}` -- keep that if you rewrite the body.
+Edit the words between the tags and leave the inline styles alone.
 
 **Do not rename a published article's slug.** The feed's `<guid>` is the
 canonical URL, so GHL reads a renamed article as a new one and emails it to

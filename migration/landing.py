@@ -11,7 +11,8 @@ indexed page -- Brian's clip is on /men. Indexing a second page holding the same
 
 To add another: copy the TESTIMONIAL_BRIAN dict, change the fields, and add it
 to PAGES. Video and poster are given as their Wix CDN URLs, exactly as the
-asset map lists them, so a --local build serves our own copies.
+asset map lists them, so a --local build serves our own copies -- or as
+/assets/ paths for files added straight to migration/wix-assets/.
 """
 
 import html
@@ -22,11 +23,13 @@ TESTIMONIALS = "/testimonials-daniel-lawson"
 TESTIMONIAL_BRIAN = dict(
     path="/testimonial-brian",
     title="Brian B, Client Story | Parallaxx Transformations",
-    desc="Brian B on keeping it all internally, in 49 seconds.",
+    desc="Brian B, Reconnect client, United Kingdom, in his own words.",
     name="Brian B",
-    # Same clip and poster as the proof section on /men.
-    video="https://video.wixstatic.com/video/111174_96f86443b9e244999b01cd1e8172bd81/720p/mp4/file.mp4",
-    poster="https://static.wixstatic.com/media/111174_e25884f8c6bb492c9dea0f85b614c441~mv2.jpg/v1/fill/w_1280,h_720,al_c,q_90,enc_auto/proof-poster.jpg",
+    # The 82s recut made for this page (5 Oct 2026), not the 49s clip on /men.
+    # Both files live in migration/wix-assets/, which the build copies to
+    # /assets/. The poster is the frame at 7.5s, with his name card on screen.
+    video="/assets/video/brian-reconnect-testimonial-90s.mp4",
+    poster="/assets/img/brian-reconnect-testimonial-poster.jpg",
     primary=("Book Complimentary Call", BOOK_CALL),
     secondary=("See more of what others are saying", TESTIMONIALS),
 )
@@ -119,10 +122,10 @@ def build(ctx, dist, localise=None) -> list:
         text = render(ctx, p)
         if localise:
             text = localise(text)
-            # og:image has to stay absolute for the scrapers; localising made
-            # it a root-relative /assets/ path.
-            text = text.replace('property="og:image" content="/',
-                                'property="og:image" content="' + ctx["origin"] + '/')
+        # og:image has to be absolute for the scrapers, and the poster is a
+        # root-relative /assets/ path.
+        text = text.replace('property="og:image" content="/',
+                            'property="og:image" content="' + ctx["origin"] + '/')
         out = dist / p["path"].strip("/") / "index.html"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(text, encoding="utf-8")

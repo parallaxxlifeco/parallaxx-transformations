@@ -22,9 +22,9 @@ TESTIMONIALS = "/testimonials-daniel-lawson"
 
 TESTIMONIAL_BRIAN = dict(
     path="/testimonial-brian",
-    title="Brian B, Client Story | Parallaxx Transformations",
+    title="Brian’s shared experience | Parallaxx Transformations",
     desc="Brian B, Reconnect client, United Kingdom, in his own words.",
-    name="Brian B",
+    heading="Brian’s shared experience",
     # The 82s recut made for this page (5 Oct 2026), not the 49s clip on /men.
     # Both files live in migration/wix-assets/, which the build copies to
     # /assets/. The poster is the frame at 7.5s, with his name card on screen.
@@ -47,7 +47,8 @@ main{flex:1;display:flex;align-items:center;justify-content:center;
  padding:clamp(104px,14vh,150px) 20px clamp(56px,9vh,96px);
  background:radial-gradient(ellipse at 50% 0%,#0F2448 0%,var(--bg) 62%)}
 .tm{width:100%;max-width:820px;text-align:center}
-.who{margin:0 0 18px;font-size:.7rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.tm h1{margin:0 0 26px;font:500 clamp(1.7rem,4.6vw,2.6rem)/1.2 'Poppins',system-ui,sans-serif;
+ letter-spacing:-.01em;color:var(--cream)}
 .vid{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--border);
  background:#000;aspect-ratio:16/9;box-shadow:0 24px 60px rgba(0,0,0,.45)}
 .vid video{display:block;width:100%;height:100%;object-fit:cover;background:#000}
@@ -88,7 +89,7 @@ def render(ctx, p) -> str:
 <meta name="theme-color" content="#061938">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
 <style>{CSS}</style>
 {ctx['analytics_head']}
 </head>
@@ -96,7 +97,7 @@ def render(ctx, p) -> str:
 <parallaxx-nav></parallaxx-nav>
 <main>
   <div class="tm">
-    <p class="who">{e(p['name'])}</p>
+    <h1>{e(p['heading'])}</h1>
     <div class="vid">
       <video controls playsinline preload="metadata" poster="{e(p['poster'])}" src="{e(p['video'])}"></video>
     </div>

@@ -28,7 +28,7 @@ TESTIMONIAL_BRIAN = dict(
     video="https://video.wixstatic.com/video/111174_96f86443b9e244999b01cd1e8172bd81/720p/mp4/file.mp4",
     poster="https://static.wixstatic.com/media/111174_e25884f8c6bb492c9dea0f85b614c441~mv2.jpg/v1/fill/w_1280,h_720,al_c,q_90,enc_auto/proof-poster.jpg",
     primary=("Book Complimentary Call", BOOK_CALL),
-    secondary=("See more what others are saying", TESTIMONIALS),
+    secondary=("See more of what others are saying", TESTIMONIALS),
 )
 
 PAGES = [TESTIMONIAL_BRIAN]

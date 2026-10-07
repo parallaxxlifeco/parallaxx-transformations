@@ -647,8 +647,24 @@ def page_entity(r: dict):
     return None
 
 
+def route_url(path: str) -> str:
+    """The absolute URL the server actually serves for a route.
+
+    Cloudflare Pages serves dist/<path>/index.html at "<path>/" and 301s the
+    slashless form. So a canonical, og:url or sitemap <loc> written without the
+    trailing slash points at a REDIRECT -- and Google, crawling "/men/", read
+    canonical "/men", followed it, and landed back on "/men/". That round trip
+    is what it reported as Redirect error on /men, /insights and
+    /the-reconnected-man; the validation started 14 Sep failed on 5 Oct 2026.
+    """
+    p = path if path.startswith("/") else "/" + path
+    if not p.endswith("/"):
+        p += "/"
+    return ORIGIN + p
+
+
 def jsonld(r: dict) -> str:
-    canonical = ORIGIN + ("" if r["path"] == "/" else r["path"])
+    canonical = route_url(r["path"])
     page_type = "WebPage"
     if r["path"] == "/":
         page_type = "WebPage"
@@ -859,7 +875,7 @@ def prerender(r: dict) -> str:
 
 
 def head_html(r: dict) -> str:
-    canonical = ORIGIN + ("" if r["path"] == "/" else r["path"])
+    canonical = route_url(r["path"])
     # Resolve the share image against what actually shipped. Localised assets
     # land under /assets/, but a few OG images are repo-root files copied to the
     # root of dist — so a single hardcoded prefix gets one of the two wrong.
@@ -1320,7 +1336,7 @@ def main() -> int:
 
     # sitemap + robots.
     route_urls = [
-        (("" if r["path"] == "/" else r["path"]), route_lastmod(r))
+        (("/" if r["path"] == "/" else r["path"] + "/"), route_lastmod(r))
         for r in ROUTES if not r.get("noindex")
     ]
     dated = sum(1 for _, d in route_urls if d)
@@ -1364,6 +1380,10 @@ def main() -> int:
     ]
     width = max(len(s) for s in REDIRECTS) + 2
     for src, dest in REDIRECTS.items():
+        # Internal destinations get the trailing slash Pages serves them at,
+        # so a legacy URL lands in one hop rather than 301 -> 301.
+        if dest.startswith("/") and not dest.endswith("/"):
+            dest += "/"
         lines.append(f"{src.ljust(width)}{dest}  301")
     lines += ["", "# The 15 Wix blog posts, caught by one splat rather than fifteen rules.",
               "/post/*".ljust(width) + "/  301"]

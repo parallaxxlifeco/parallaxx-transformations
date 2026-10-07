@@ -67,7 +67,8 @@ main{flex:1;display:flex;align-items:center;justify-content:center;
 
 
 def render(ctx, p) -> str:
-    canonical = ctx["origin"] + p["path"]
+    # Trailing slash: Pages 301s the slashless form, so the canonical must be the final URL.
+    canonical = ctx["origin"] + "/" + p["path"].strip("/") + "/"
     e = lambda s: html.escape(s, quote=True)
     return f"""<!DOCTYPE html>
 <html lang="en">

@@ -646,7 +646,7 @@ def article_schema(ctx, a) -> str:
 
 def render_article(ctx, a) -> str:
     m = a["meta"]
-    pillar_url = f"/insights/{m['pillar']}"
+    pillar_url = f"/insights/{m['pillar']}/"
     published = date.fromisoformat(m["published"]).strftime("%-d %B %Y")
     updated = date.fromisoformat(m["updated"]).strftime("%-d %B %Y")
     stamp = published if m["published"] == m["updated"] else f"{published} · updated {updated}"
@@ -683,7 +683,7 @@ Written by Daniel Lawson, Reconnection Coach.
 
 
 def render_hub(ctx, slug, pillar, articles, hub_body) -> str:
-    url = f"{ctx['origin']}/insights/{slug}"
+    url = f"{ctx['origin']}/insights/{slug}/"
     cards = "".join(
         f'<li><a href="{a["path"]}">{inline(a["meta"]["title"])}</a>'
         f'<p>{inline(a["meta"]["answer"][:150])}…</p></li>'
@@ -708,7 +708,7 @@ def render_hub(ctx, slug, pillar, articles, hub_body) -> str:
 
 
 def render_index(ctx, by_pillar) -> str:
-    url = f"{ctx['origin']}/insights"
+    url = f"{ctx['origin']}/insights/"
     blocks = []
     # A pillar with no articles is SKIPPED, not rendered unlinked. Its hub
     # does not exist yet either -- render_hub holds a hub back until it has
@@ -829,7 +829,13 @@ def build(ctx, content_dir: Path, dist: Path) -> tuple:
                           f"Known: {', '.join(PILLARS)}")
             continue
         slug = meta.get("slug") or path.stem
-        rel = f"/insights/{meta['pillar']}/{slug}"
+        # TRAILING SLASH IS NOT COSMETIC. Pages serves dist/<path>/index.html
+        # at "<path>/" and 301s the slashless form, so a canonical, og:url,
+        # sitemap <loc> or internal link without it points at a REDIRECT.
+        # Google read canonical "/men", followed it, got a 301 back to
+        # "/men/", and reported Redirect error on 3 URLs (validation failed
+        # 5 Oct 2026). Every self-URL carries the slash.
+        rel = f"/insights/{meta['pillar']}/{slug}/"
         by_pillar.setdefault(meta["pillar"], []).append(dict(
             meta=meta, body=body, faq=faq, path=rel,
             url=ctx["origin"] + rel, pillar=PILLARS[meta["pillar"]]))
@@ -910,13 +916,13 @@ def build(ctx, content_dir: Path, dist: Path) -> tuple:
         out = dist / "insights" / slug / "index.html"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(render_hub(ctx, slug, pillar, items, hub_body), encoding="utf-8")
-        urls.append((f"/insights/{slug}", max(a["meta"]["updated"] for a in items)))
+        urls.append((f"/insights/{slug}/", max(a["meta"]["updated"] for a in items)))
 
     if by_pillar:
         out = dist / "insights" / "index.html"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(render_index(ctx, by_pillar), encoding="utf-8")
-        urls.append(("/insights", max(u[1] for u in urls)))
+        urls.append(("/insights/", max(u[1] for u in urls)))
         # Not added to `urls`: a feed is not a page and has no place in the sitemap.
         (dist / "insights" / "feed.xml").write_text(render_feed(ctx, by_pillar),
                                                     encoding="utf-8")

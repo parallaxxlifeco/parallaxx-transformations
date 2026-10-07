@@ -471,6 +471,47 @@ ROUTES = [
         og_img="og-quiz.jpg",
     ),
     dict(
+        path="/three-toxic-lies",
+        tag="parallaxx-toxic-lies",
+        bundle="parallaxx-toxic-lies.js",
+        bg="#04122A",
+        # The Wix page carried no meta description at all, so there is nothing
+        # to carry across here and nothing lost by writing one. The title on
+        # Wix was "Three Toxic Lies  | Parallaxx Transformations", with the
+        # double space.
+        title="Three Toxic Lies | A Short Book About Time | Parallaxx",
+        desc="Three things about time that many of us believe, and what is true instead. "
+             "A short book by Daniel Lawson, about an hour to read, with three exercises "
+             "to write your own answers into. \u20ac14.97, posted anywhere in the world.",
+        og_title="You probably believe at least one of these.",
+        og_desc="Three Toxic Lies. A short book about time and what it costs you \u2014 "
+                "named plainly, with the truth set against each one.",
+        og_img="img/og-toxic-lies.png",
+    ),
+    dict(
+        path="/ptjournal",
+        tag="parallaxx-progress-journal",
+        bundle="parallaxx-progress-journal.js",
+        bg="#04122A",
+        # The harvested Wix metadata read "Accelerate Your Momentum Parallaxx
+        # Progress Journal - your 90-day guide to becoming a 'serial winner'.
+        # The worlds most valuable personal journal guaranteed!" Two things were
+        # wrong with it: "worlds" had no apostrophe, and the guarantee claim was
+        # attached to the wrong noun -- the guarantee on the page is that Daniel
+        # coaches you through it himself if ninety days move nothing, which is a
+        # promise he can keep, not a property of the book. The superlative
+        # itself is Daniel's claim about his own product and it leads the page,
+        # so it leads the metadata too.
+        title="The World\u2019s Most Valuable Journal | Parallaxx Transformations",
+        desc="The world\u2019s most valuable journal. One page a day for ninety days, built "
+             "on eight daily rituals, with twelve focused intentions, goal pages and two "
+             "video modules included. \u20ac24.99, shipped anywhere in the world.",
+        og_title="The world\u2019s most valuable journal.",
+        og_desc="The Parallaxx Progress Journal. One page a day, ninety days, and eight "
+                "rituals reverse engineered out of the years things moved.",
+        og_img="img/og-progress-journal.png",
+    ),
+    dict(
         path="/wheel-of-reconnect",
         tag="parallaxx-wheel-of-reconnect",
         bundle="parallaxx-wheel-of-reconnect.js",
@@ -1174,6 +1215,59 @@ def localise(text: str, asset_map: list) -> tuple:
     return text, hits
 
 
+# ── INTERNAL LINKS: ONE HOP ─────────────────────────────────────────────
+# Pages serves every page at /path/ and 301s /path to it. The bundles, chrome
+# and articles all link to the slashless form, so every internal click and
+# every link Googlebot follows costs a redirect first. This pass runs over the
+# finished dist/ and points each internal link straight at its final URL:
+#   - a link to a page that exists gets the trailing slash;
+#   - a link to a legacy URL in REDIRECTS goes to where that redirect ends up.
+# It decides "a page exists" by looking in dist/, not by a list, so a page
+# added later is covered without touching this. Fragments and queries are kept.
+INTERNAL_LINK = re.compile(
+    r"""((?:href=|[A-Za-z]Url:\s*)(['"]))(/[^'"#?\s]*)([#?][^'"]*)?\2""")
+
+
+def final_path(path: str):
+    """Where an internal path actually lands, or None to leave it alone."""
+    if path == "/" or path.endswith("/"):
+        return None
+    dest = REDIRECTS.get(path)
+    if dest is not None:
+        if not dest.startswith("/"):
+            return dest                      # off-site: send it straight there
+        path = dest
+        if path == "/":
+            return "/"
+    if (DIST / path.strip("/") / "index.html").exists():
+        return path + "/"
+    return None
+
+
+def slash_internal_links() -> tuple:
+    changed = 0
+    left = set()
+    files = list(DIST.glob("*.js")) + list(DIST.rglob("*.html"))
+    for f in files:
+        text = f.read_text(encoding="utf-8")
+
+        def fix(m):
+            nonlocal changed
+            new = final_path(m.group(3))
+            if new is None:
+                return m.group(0)
+            changed += 1
+            return f"{m.group(1)}{new}{m.group(4) or ''}{m.group(2)}"
+
+        out = INTERNAL_LINK.sub(fix, text)
+        if out != text:
+            f.write_text(out, encoding="utf-8")
+        for m in INTERNAL_LINK.finditer(out):
+            if final_path(m.group(3)) is not None:
+                left.add(m.group(3))
+    return changed, sorted(left)
+
+
 def main() -> int:
     local = "--local" in sys.argv
 
@@ -1333,6 +1427,12 @@ def main() -> int:
         (lambda t: localise(t, asset_map)[0]) if local else None,
     )
     print(f"landing  {len(landing_paths)} page(s): {', '.join(landing_paths)}")
+
+    n_links, left = slash_internal_links()
+    if left:
+        print(f"ERROR: internal links still one redirect from their page: {left}")
+        return 1
+    print(f"links    {n_links} internal links pointed at their final URL")
 
     # sitemap + robots.
     route_urls = [

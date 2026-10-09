@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Protection Archetype results</title>
+</head>
+<body style="margin:0;padding:0;background:#ffffff;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff;">
+<tr><td align="left" style="padding:24px 20px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:16px;line-height:1.55;color:#1F2A3D;">
+
+<tr><td style="padding:0 0 14px;">Hi {{inboundWebhookRequest.first_name}},</td></tr>
+<tr><td style="padding:0 0 20px;">Here are your results, for your reference.</td></tr>
+
+<!-- RESULTS CARD -->
+<tr><td style="padding:0 0 22px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F7F3EA;border:1px solid #E4DAC4;border-radius:12px;">
+  <tr><td style="padding:18px 20px 6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#A08A5E;">Your Protection Archetype Quiz</td></tr>
+
+  <tr><td style="padding:8px 20px 0;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr><td style="font-size:15px;font-weight:600;color:#1F2A3D;">{{inboundWebhookRequest.rank1_name}}</td>
+          <td align="right" style="font-size:14px;color:#5A6274;white-space:nowrap;">{{inboundWebhookRequest.rank1_score}} / 20</td></tr>
+      <tr><td colspan="2" style="padding:6px 0 0;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#E8E0CE;border-radius:4px;"><tr>
+          <td width="{{inboundWebhookRequest.rank1_pct}}%" height="8" style="height:8px;line-height:8px;font-size:0;background:{{inboundWebhookRequest.rank1_color}};border-radius:4px;">&nbsp;</td><td style="font-size:0;line-height:8px;">&nbsp;</td>
+        </tr></table>
+      </td></tr>
+    </table>
+  </td></tr>
+
+  <tr><td style="padding:14px 20px 0;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr><td style="font-size:15px;font-weight:600;color:#1F2A3D;">{{inboundWebhookRequest.rank2_name}}</td>
+          <td align="right" style="font-size:14px;color:#5A6274;white-space:nowrap;">{{inboundWebhookRequest.rank2_score}} / 20</td></tr>
+      <tr><td colspan="2" style="padding:6px 0 0;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#E8E0CE;border-radius:4px;"><tr>
+          <td width="{{inboundWebhookRequest.rank2_pct}}%" height="8" style="height:8px;line-height:8px;font-size:0;background:{{inboundWebhookRequest.rank2_color}};border-radius:4px;">&nbsp;</td><td style="font-size:0;line-height:8px;">&nbsp;</td>
+        </tr></table>
+      </td></tr>
+    </table>
+  </td></tr>
+
+  <tr><td style="padding:14px 20px 0;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr><td style="font-size:15px;font-weight:600;color:#1F2A3D;">{{inboundWebhookRequest.rank3_name}}</td>
+          <td align="right" style="font-size:14px;color:#5A6274;white-space:nowrap;">{{inboundWebhookRequest.rank3_score}} / 20</td></tr>
+      <tr><td colspan="2" style="padding:6px 0 0;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#E8E0CE;border-radius:4px;"><tr>
+          <td width="{{inboundWebhookRequest.rank3_pct}}%" height="8" style="height:8px;line-height:8px;font-size:0;background:{{inboundWebhookRequest.rank3_color}};border-radius:4px;">&nbsp;</td><td style="font-size:0;line-height:8px;">&nbsp;</td>
+        </tr></table>
+      </td></tr>
+    </table>
+  </td></tr>
+
+  <tr><td style="padding:14px 20px 0;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr><td style="font-size:15px;font-weight:600;color:#1F2A3D;">{{inboundWebhookRequest.rank4_name}}</td>
+          <td align="right" style="font-size:14px;color:#5A6274;white-space:nowrap;">{{inboundWebhookRequest.rank4_score}} / 20</td></tr>
+      <tr><td colspan="2" style="padding:6px 0 0;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#E8E0CE;border-radius:4px;"><tr>
+          <td width="{{inboundWebhookRequest.rank4_pct}}%" height="8" style="height:8px;line-height:8px;font-size:0;background:{{inboundWebhookRequest.rank4_color}};border-radius:4px;">&nbsp;</td><td style="font-size:0;line-height:8px;">&nbsp;</td>
+        </tr></table>
+      </td></tr>
+    </table>
+  </td></tr>
+
+  <tr><td style="padding:14px 20px 20px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr><td style="font-size:15px;font-weight:600;color:#1F2A3D;">{{inboundWebhookRequest.rank5_name}}</td>
+          <td align="right" style="font-size:14px;color:#5A6274;white-space:nowrap;">{{inboundWebhookRequest.rank5_score}} / 20</td></tr>
+      <tr><td colspan="2" style="padding:6px 0 0;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#E8E0CE;border-radius:4px;"><tr>
+          <td width="{{inboundWebhookRequest.rank5_pct}}%" height="8" style="height:8px;line-height:8px;font-size:0;background:{{inboundWebhookRequest.rank5_color}};border-radius:4px;">&nbsp;</td><td style="font-size:0;line-height:8px;">&nbsp;</td>
+        </tr></table>
+      </td></tr>
+    </table>
+  </td></tr>
+  </table>
+</td></tr>
+<!-- /RESULTS CARD -->
+
+<tr><td style="padding:0 0 14px;">Your archetype: <strong>{{inboundWebhookRequest.archetype}}</strong>.</td></tr>
+<tr><td style="padding:0 0 22px;">Your full results and the video are here any time: <a href="{{inboundWebhookRequest.results_url}}" style="color:#C2410C;">open your results</a></td></tr>
+<tr><td style="padding:0;">Daniel</td></tr>
+
+</table>
+</td></tr>
+</table>
+</body>
+</html>

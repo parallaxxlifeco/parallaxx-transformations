@@ -257,10 +257,10 @@ ROUTES = [
         bg="#04122A",
         title="Coaching for Professional Women | Parallaxx Transformations",
         desc="You've hit every target and you're still behind. Take the Priority Audit. "
-             "Ninety seconds to find out your most important focus — your answer is on the screen.",
+             "Ninety seconds to find out your most important focus. Free results emailed for your reference.",
         og_title="You've hit every target. And you still feel behind.",
         og_desc="What is your most important focus? Priority Audit for an ordinary week. "
-                "Ninety seconds, the answer's on the screen, and nothing lands in your inbox.",
+                "Ninety seconds. Free results emailed for your reference.",
         og_img="img/og-women.jpg",
     ),
     dict(
@@ -312,9 +312,9 @@ ROUTES = [
         bg="#04122A",
         title="Free Priority Audit | Parallaxx Transformations",
         desc="Fifteen statements, ninety seconds. Find the one thing feeding everything else "
-             "in an ordinary week. Nothing lands in your inbox.",
+             "in an ordinary week. Free results emailed for your reference.",
         og_title="Free Priority Audit | Parallaxx Transformations",
-        og_desc="Fifteen statements, ninety seconds. The answer is on the screen.",
+        og_desc="Fifteen statements, ninety seconds. Free results emailed for your reference.",
         og_img="img/og-priority-audit.jpg",
     ),
     dict(
@@ -467,7 +467,7 @@ ROUTES = [
         desc="Five patterns. Find which one you are running, and what it is costing the people "
              "closest to you.",
         og_title="Which of the five patterns are you running?",
-        og_desc="The Protection Archetype Quiz. A few minutes, and the answer is on the screen.",
+        og_desc="The Protection Archetype Quiz. A few minutes. Free results emailed for your reference.",
         og_img="og-quiz.jpg",
     ),
     dict(

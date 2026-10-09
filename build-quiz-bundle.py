@@ -105,9 +105,10 @@ OUT.write_text("""/* PARALLAXX PROTECTION ARCHETYPE QUIZ - Wix Custom Element.
    Site header + footer: the quiz carries its OWN stripped-back header, so
    leave the Wix header OFF. A quiz page wants fewer exits, not more.
 
-   THE RESULT IS NOT GATED. view-result renders the archetype first and the
-   lead form sits underneath it, which is the only version of this that is
-   honest with the microcopy on the men's page. */
+   THE RESULT IS EMAIL GATED (Oct 2026). After the last question view-gate
+   asks for first name + email, posts the lead to the GHL inbound webhook
+   (CONFIG.leadEndpoint) and then renders the result. Microcopy everywhere
+   says: Free results emailed for your reference. */
 (function(){
   if (customElements.get('parallaxx-quiz')) return;
 

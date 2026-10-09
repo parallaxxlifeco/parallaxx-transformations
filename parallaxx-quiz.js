@@ -7,9 +7,10 @@
    Site header + footer: the quiz carries its OWN stripped-back header, so
    leave the Wix header OFF. A quiz page wants fewer exits, not more.
 
-   THE RESULT IS NOT GATED. view-result renders the archetype first and the
-   lead form sits underneath it, which is the only version of this that is
-   honest with the microcopy on the men's page. */
+   THE RESULT IS EMAIL GATED (Oct 2026). After the last question view-gate
+   asks for first name + email, posts the lead to the GHL inbound webhook
+   (CONFIG.leadEndpoint) and then renders the result. Microcopy everywhere
+   says: Free results emailed for your reference. */
 (function(){
   if (customElements.get('parallaxx-quiz')) return;
 
@@ -210,6 +211,12 @@ strong,b{color:var(--px-cream);font-weight:600}
 .px-form-msg{margin-top:14px;font-size:.88rem;min-height:1.2em}
 .px-form-msg.ok{color:var(--px-gold)}
 .px-form-msg.err{color:var(--px-coral-lift)}
+/* Email gate (9 Oct 2026), between the last question and the result.
+   Mirrors the Priority Audit gate. See CONFIG.leadEndpoint. */
+#view-gate .px-wrap{display:flex;align-items:center;justify-content:center;min-height:60vh}
+#view-gate .px-form-card{width:100%}
+.px-gate-fine{margin-top:14px;font-size:.84rem;color:var(--px-slate);text-align:center}
+.px-intro-note{font-size:.88rem;color:var(--px-mist)}
 
 /* Final CTA */
 .px-final{padding:clamp(46px,7vw,90px) 0 clamp(56px,8vw,100px);text-align:center;border-top:1px solid rgba(232,198,95,.14)}
@@ -264,6 +271,7 @@ strong,b{color:var(--px-cream);font-weight:600}
       <div class="px-cta-row">
         <button class="px-btn" id="btn-start" type="button">Take the profiling quiz now <span aria-hidden="true">→</span></button>
         <span class="px-meta">3 minutes · Real insight for self-awareness</span>
+        <span class="px-intro-note">Free results emailed for your reference.</span>
       </div>
     </div>
   </section>
@@ -289,6 +297,31 @@ strong,b{color:var(--px-cream);font-weight:600}
         <button class="px-quiet" id="btn-back" type="button">← Back</button>
         <span class="px-hint">Tip: press 1&ndash;5 on your keyboard</span>
       </div>
+    </div>
+  </section>
+
+  <!-- ══ GATE ═════════════════════════════════════════════════
+       Email before the result, same as the Priority Audit. The send is
+       fire-and-forget, so a failed request never stands between him and
+       his archetype. -->
+  <section class="view" id="view-gate">
+    <div class="px-wrap">
+      <form class="px-form-card" id="gate-form" novalidate>
+        <h3 class="px-serif">Where should I send your protection archetype results?</h3>
+        <div class="px-grid2">
+          <div class="px-field">
+            <label for="g-first">First name</label>
+            <input id="g-first" name="first_name" type="text" autocomplete="given-name" required>
+          </div>
+          <div class="px-field">
+            <label for="g-email">Email</label>
+            <input id="g-email" name="email" type="email" autocomplete="email" inputmode="email" required>
+          </div>
+        </div>
+        <button class="px-btn" type="submit" id="g-submit" style="width:100%">See your archetype <span aria-hidden="true">→</span></button>
+        <p class="px-form-msg err" id="g-msg" role="alert" hidden></p>
+        <p class="px-gate-fine">Free results emailed for your reference.</p>
+      </form>
     </div>
   </section>
 
@@ -331,38 +364,6 @@ strong,b{color:var(--px-cream);font-weight:600}
       </div>
     </div>
 
-    <div class="px-form-sec">
-      <div class="px-wrap">
-        <form class="px-form-card" id="lead-form" novalidate>
-          <h3 class="px-serif">Want the full breakdown sent to you?</h3>
-          <p>Optional. Drop your details and we'll send your archetype write-up plus the first practical step, so you have it when you need it.</p>
-          <div class="px-grid2">
-            <div class="px-field">
-              <label for="f-first">First name</label>
-              <input id="f-first" name="firstName" type="text" autocomplete="given-name" placeholder="Daniel">
-            </div>
-            <div class="px-field">
-              <label for="f-last">Last name</label>
-              <input id="f-last" name="lastName" type="text" autocomplete="family-name" placeholder="Lawson">
-            </div>
-          </div>
-          <div class="px-field">
-            <label for="f-email">Email</label>
-            <input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@email.com">
-          </div>
-          <div class="px-field">
-            <label for="f-phone">WhatsApp</label>
-            <input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+61 400 000 000">
-          </div>
-          <label class="px-consent">
-            <input type="checkbox" id="f-consent" name="consent">
-            <span>I agree to receive my results and follow-up messages from Parallaxx Transformations. See the <a href="https://www.parallaxxtransformations.com/privacy-policy" target="_blank" rel="noopener">privacy policy</a> and <a href="https://www.parallaxxtransformations.com/terms-of-use" target="_blank" rel="noopener">terms of use</a>.</span>
-          </label>
-          <button class="px-btn" type="submit" id="f-submit" style="width:100%">Send me the full breakdown</button>
-          <p class="px-form-msg" id="f-msg" role="status"></p>
-        </form>
-      </div>
-    </div>
 
     <div class="px-final">
       <div class="px-wrap">
@@ -422,7 +423,9 @@ const CONFIG = {
      URL and the form POSTs JSON:
      { firstName, lastName, email, phone, consent, archetype, archetypeKey,
        scores:{...}, answers:[...], flags:{...}, submittedAt }              */
-  leadEndpoint: '',
+  leadEndpoint: 'https://services.leadconnectorhq.com/hooks/Nja8qXnwLqNjaNTJVf5T/webhook-trigger/EWUGJmwLhauwNNCtSrdb',
+  /* Tells this lead apart from the Priority Audit in GHL. */
+  source: 'archetype-quiz',
 
   /* Auto-advance to the next question after an answer is picked (ms).
      Set to 0 to require a click on "Next" instead.                        */
@@ -763,7 +766,7 @@ function pick(value){
 
   const go = () => {
     if (current < QUESTIONS.length - 1){ current++; renderQuestion(); }
-    else finish();
+    else showGate();
   };
   if (CONFIG.advanceDelay > 0) advanceTimer = setTimeout(go, CONFIG.advanceDelay);
   else go();
@@ -893,62 +896,73 @@ function finish(){
   window.__quizResult = result; // exposed for testing
 }
 
-/* ── Lead form ───────────────────────────────────────────────────── */
-$('lead-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const msg = $('f-msg');
-  msg.className = 'px-form-msg';
-
-  const email = $('f-email').value.trim();
-  if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){
-    msg.className = 'px-form-msg err';
-    msg.textContent = 'Pop in a valid email and we’ll send it over.';
-    $('f-email').focus();
-    return;
-  }
-  if (!$('f-consent').checked){
-    msg.className = 'px-form-msg err';
-    msg.textContent = 'Just tick the consent box so we can send it.';
-    return;
-  }
-
-  const result = window.__quizResult || score();
-  const payload = {
-    firstName: $('f-first').value.trim(),
-    lastName: $('f-last').value.trim(),
-    email,
-    phone: $('f-phone').value.trim(),
-    consent: true,
-    archetypeKey: result.primary,
-    archetype: ARCHETYPES[result.primary].name,
-    secondaryArchetype: ARCHETYPES[result.secondary].name,
-    scores: Object.fromEntries(Object.entries(result.scores).map(([k, v]) => [k, v.total])),
-    answers: answers.slice(),
-    flags: result.flags,
-    submittedAt: new Date().toISOString()
+/* ── Gate ────────────────────────────────────────────────────────── */
+const QZ_ORIGIN = 'https://www.parallaxxtransformations.com';
+function showGate(){
+  $('g-msg').hidden = true;
+  showView('view-gate');
+  try { $('g-first').focus({ preventScroll:true }); } catch(e){}
+}
+function resultsUrl(){
+  return QZ_ORIGIN + '/the-archetype-quiz?r=' + answers.map(v => v || 1).join('');
+}
+function leadPayload(first, email){
+  const res = score(), key = res.primary, A = ARCHETYPES[key];
+  const ranking = res.ranked.map(x => ARCHETYPES[x.key].name + ' ' + x.total + '/' + x.possible).join(' · ');
+  const notes = [];
+  if (res.flags.flatProfile)  notes.push('Top two close: ' + ARCHETYPES[res.secondary].name + ' nearly as strong');
+  if (res.flags.lowCandour)   notes.push('Said "Very me" to never feeling insecure in dating');
+  if (res.flags.lowAttention) notes.push('Attention check low, may have rushed');
+  const lines = QUESTIONS.map((q, i) => (i + 1) + '. ' + q + ' ' + SCALE[(answers[i] || 1) - 1]);
+  const summary = [
+    first + ' (' + email + ') completed the Archetype Quiz.',
+    '',
+    'Archetype: ' + A.name,
+    'Second: ' + ARCHETYPES[res.secondary].name,
+    'Scores: ' + ranking,
+    'Notes: ' + (notes.length ? notes.join('; ') : 'none'),
+    '',
+    'Answers:'
+  ].concat(lines).concat(['', 'Results page: ' + resultsUrl()]).join('\n');
+  const out = {
+    first_name: first, email: email, source: CONFIG.source,
+    archetype: A.name, archetype_key: key,
+    secondary: ARCHETYPES[res.secondary].name,
+    ranking: ranking, notes: notes.join('; '),
+    video_url: A.video || '', results_url: resultsUrl(),
+    summary: summary, submitted_at: new Date().toISOString()
   };
-
-  const btn = $('f-submit');
-  btn.disabled = true;
-  btn.textContent = 'Sending…';
-
+  /* The five in ranked order for the results card: bar width is the score
+     out of 20 as a percentage; coral marks his archetype. */
+  res.ranked.forEach((x, i) => {
+    const n = i + 1;
+    out['rank' + n + '_name']  = ARCHETYPES[x.key].name;
+    out['rank' + n + '_score'] = x.total;
+    out['rank' + n + '_pct']   = Math.round(x.total / x.possible * 100);
+    out['rank' + n + '_color'] = i === 0 ? '#FF501F' : '#C9B98F';
+  });
+  return out;
+}
+function sendLead(p){
+  if (!CONFIG.leadEndpoint) return;
   try {
-    if (CONFIG.leadEndpoint){
-      await fetch(CONFIG.leadEndpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-    }
-    msg.className = 'px-form-msg ok';
-    msg.textContent = 'Done — it’s on its way. Check your inbox in a minute.';
-    btn.textContent = 'Sent';
-  } catch (err){
-    msg.className = 'px-form-msg err';
-    msg.textContent = 'That didn’t send. Try again in a moment.';
-    btn.disabled = false;
-    btn.textContent = 'Send me the full breakdown';
-  }
+    fetch(CONFIG.leadEndpoint, { method:'POST', mode:'no-cors', keepalive:true,
+                                 body:new URLSearchParams(p) });
+  } catch(e){}
+}
+function gateError(text, field){
+  const m = $('g-msg'); m.textContent = text; m.hidden = false;
+  if (field) field.focus();
+}
+$('gate-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const fEl = $('g-first'), eEl = $('g-email');
+  const first = fEl.value.trim(), email = eEl.value.trim();
+  if (!first) return gateError('Add your first name.', fEl);
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return gateError('That email doesn’t look right.', eEl);
+  $('g-msg').hidden = true;
+  sendLead(leadPayload(first, email));
+  finish();
 });
 
 /* ── Wiring ──────────────────────────────────────────────────────── */
@@ -969,6 +983,20 @@ document.addEventListener('keydown', (e) => {
 $('r-cta').href = CONFIG.bookCallUrl;
 $('head-cta').href = CONFIG.bookCallUrl;
 $('yr').textContent = new Date().getFullYear();
+
+/* His results link: ?r= followed by his 22 answers (1-5) rebuilds his
+   exact result, past the gate. It is the link in his results email and in
+   Daniel's notification. ?first_name= and ?email= only pre-fill the gate. */
+(function(){
+  let p;
+  try { p = new URLSearchParams(location.search); } catch(e){ return; }
+  if (p.get('first_name')) $('g-first').value = p.get('first_name');
+  if (p.get('email')) $('g-email').value = p.get('email');
+  const r = p.get('r') || '';
+  if (!new RegExp('^[1-5]{' + QUESTIONS.length + '}$').test(r)) return;
+  r.split('').forEach((d, i) => { answers[i] = Number(d); });
+  finish();
+})();
 
 /* Deep link for review: ?preview=performer jumps straight to a result. */
 (function(){

@@ -32,9 +32,9 @@
    she can read and argue with.
 
    SCREENS
-     01 INTRO   two sentences, one button, no form and no email
+     01 INTRO   two sentences, item one live, results emailed
      02 ITEMS   one at a time, five tap targets, back preserves answers
-     03 TURN    cream. the pillars revealed. no score on this screen
+     03 TURN    cream. the pillars revealed, then the email gate
      04 RESULT  bars, then six blocks, one scrolling column
      05 CLOSE   the conversation, the PDF, and the bridge sentence
 
@@ -120,6 +120,23 @@
   /* ── SCREENS ─────────────────────────────────────────────────── */
   .pa-screen{display:none}
   .pa-screen.is-on{display:block}
+  /* ══ THE GATE (9 Oct 2026) ══ The turn screen asks for an email before the
+     result. Daniel's call: completions were invisible, so nobody who took the
+     audit before an open session could be recognised in GHL. See CONFIG.leadEndpoint. */
+  .pa-gate{margin:30px 0 0;padding:22px 22px 20px;border:1px solid rgba(160,138,94,.4);border-radius:14px;background:rgba(255,255,255,.45)}
+  .pa-gate-h{margin:0 0 14px;font-family:'Poppins','Montserrat',sans-serif;font-weight:500;font-size:clamp(1.12rem,2.6vw,1.35rem);line-height:1.3;color:var(--ink)}
+  .pa-gate-row{display:grid;grid-template-columns:1fr 1.4fr;gap:12px}
+  @media(max-width:560px){.pa-gate-row{grid-template-columns:1fr}}
+  .pa-field{display:flex;flex-direction:column;gap:5px;text-align:left}
+  .pa-field span{font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--bronze, #A08A5E)}
+  .pa-field input{font:inherit;font-size:16px;padding:12px 14px;border-radius:10px;border:1px solid rgba(160,138,94,.55);
+    background:#fff;color:var(--ink, #1F2A3D);outline:none;width:100%}
+  .pa-field input:focus{border-color:var(--bronze, #A08A5E);box-shadow:0 0 0 3px rgba(160,138,94,.18)}
+  .pa-gate-msg{margin:10px 0 0;font-size:.85rem;color:#B23A12}
+  .pa-gate .pa-btn{margin-top:16px}
+  .pa-gate .pa-fine{text-align:left;margin:12px 0 0}
+  @media(max-width:560px){.pa-gate .pa-btn{width:100%}}
+
   /* THE NAV IS position:fixed AND THIS FILE WAS BUILT WITHOUT ONE.
      Baking PtNav in put a 68px bar over the top of every screen, and the
      stages centre their content, so the progress row on the items screen
@@ -1125,7 +1142,7 @@
           <p class="pa-promise">Instant access to three scores for where you might be carrying more than you
             need to be. One small thing to try differently this week, and three questions worth reflecting
             on, specific to your result.</p>
-          <p class="pa-fine">Answer the first one and the rest follows here. Nothing lands in your inbox.</p>
+          <p class="pa-fine">Free results emailed for your reference.</p>
         </div>
       </div>
     </div>
@@ -1226,9 +1243,16 @@
         <p class="after pa-fadein">These are not three skills to go and develop. They are three dimensions of self that were supposed to be met for you, consistently, by somebody else, a long time ago. Most of us got some of them. Whatever was missing, you found another way to fulfil, and in your case that way has worked extremely well.</p>
         <p class="after pa-fadein" style="margin-top:14px">All three hold each other up. We are only as equipped as the weakest one.</p>
 
-        <div class="cta pa-fadein">
-          <button class="pa-btn" type="button" id="pa-see">See your three <span aria-hidden="true">&rarr;</span></button>
-        </div>
+        <form class="pa-gate pa-fadein" id="pa-gate" novalidate>
+          <p class="pa-gate-h">Where should I send your focused priority results?</p>
+          <div class="pa-gate-row">
+            <label class="pa-field"><span>First name</span><input id="pa-g-first" name="first_name" type="text" autocomplete="given-name" required></label>
+            <label class="pa-field"><span>Email</span><input id="pa-g-email" name="email" type="email" autocomplete="email" inputmode="email" required></label>
+          </div>
+          <p class="pa-gate-msg" id="pa-g-msg" role="alert" hidden></p>
+          <button class="pa-btn" type="submit" id="pa-see">See your three <span aria-hidden="true">&rarr;</span></button>
+          <p class="pa-fine">Free results emailed for your reference.</p>
+        </form>
       </div>
     </div>
   </div>
@@ -1499,7 +1523,11 @@
        The only block that normally needs touching. */
     const CONFIG = {
       conversationUrl: 'https://www.parallaxxtransformations.com/contact-daniel-lawson',
-      advanceDelay: 300          /* ms after a tap before the next item. 0 disables. */
+      advanceDelay: 300,         /* ms after a tap before the next item. 0 disables. */
+      /* GHL inbound webhook for the email gate. '' sends nothing and still
+         shows the result, so the page never breaks while it is unset. */
+      leadEndpoint: '',
+      source: 'priority-audit'   /* tells the two copies apart in GHL */
     };
 
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1916,6 +1944,72 @@
       if (hasGSAP && !reduce){ try { window.ScrollTrigger.refresh(); } catch(e){} }
     }
 
+
+    /* ══════════════ THE GATE ══════════════
+       Email before the result, on the turn screen. The lead is sent and the
+       result shown in the same tap: the send is fire-and-forget, so a slow or
+       failed request never stands between her and her three. The payload is
+       form-encoded and sent no-cors, which a GHL inbound webhook accepts and
+       which needs no CORS headers from it.
+       'summary' is a ready-made plain-text block for Daniel's notification,
+       and 'results_url' rebuilds this exact result on /priority-audit. */
+    const PA_ORIGIN = 'https://www.parallaxxtransformations.com';
+    const PILLAR_NAME = { needs:'Needs', boundaries:'Boundaries', emotions:'Emotions' };
+    function resultsUrl(){
+      return PA_ORIGIN + '/priority-audit?r=' + answers.map(v => v || 1).join('');
+    }
+    function leadPayload(first, email){
+      const res = score(), r = res.ranked;
+      const total = k => r.filter(x => x.key === k)[0].total;
+      const top = res.tied
+        ? PILLAR_NAME[r[0].key] + ' + ' + PILLAR_NAME[r[1].key] + ' (level)'
+        : PILLAR_NAME[r[0].key];
+      const ranking = r.map(x => PILLAR_NAME[x.key] + ' ' + x.total + '/25').join(' · ');
+      const shape = res.tied ? 'Top two level'
+                  : res.flat ? 'Close spread (within 3 points)'
+                  : 'Clear top priority';
+      const lines = ITEMS.map((it, i) =>
+        (i + 1) + '. ' + it.t + ' [' + PILLAR_NAME[it.p] + '] ' + SCALE[(answers[i] || 1) - 1]);
+      const summary = [
+        first + ' (' + email + ') completed the Priority Audit.',
+        '',
+        'Top priority: ' + top,
+        'Scores: ' + ranking,
+        'Shape: ' + shape,
+        '',
+        'Answers:'
+      ].concat(lines).concat(['', 'Results page: ' + resultsUrl()]).join('\n');
+      return {
+        first_name: first, email: email, source: CONFIG.source,
+        top_pillar: top, ranking: ranking, result_shape: shape,
+        score_needs: total('needs'), score_boundaries: total('boundaries'),
+        score_emotions: total('emotions'),
+        results_url: resultsUrl(), summary: summary,
+        submitted_at: new Date().toISOString()
+      };
+    }
+    function sendLead(p){
+      if (!CONFIG.leadEndpoint) return;
+      try {
+        fetch(CONFIG.leadEndpoint, { method:'POST', mode:'no-cors', keepalive:true,
+                                     body:new URLSearchParams(p) });
+      } catch(e){}
+    }
+    function gateError(text, field){
+      const m = $('pa-g-msg'); m.textContent = text; m.hidden = false;
+      if (field) field.focus();
+    }
+    $('pa-gate').addEventListener('submit', e => {
+      e.preventDefault();
+      const fEl = $('pa-g-first'), eEl = $('pa-g-email');
+      const first = fEl.value.trim(), email = eEl.value.trim();
+      if (!first) return gateError('Add your first name.', fEl);
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return gateError('That email doesn’t look right.', eEl);
+      $('pa-g-msg').hidden = true;
+      sendLead(leadPayload(first, email));
+      finish();
+    });
+
     /* ══════════════ WIRING ══════════════ */
     /* THE START BUTTON IS GONE. The first statement is live on the intro
        screen, so answering it IS the start: it records answer 1, moves to
@@ -1942,7 +2036,6 @@
       });
     })();
     $('pa-back').addEventListener('click', back);
-    $('pa-see').addEventListener('click', finish);
     $('pa-pdf').addEventListener('click', () => { window.print(); });
     $('pa-again').addEventListener('click', () => {
       for (let i = 0; i < answers.length; i++) answers[i] = null;
@@ -1977,6 +2070,24 @@
 
     renderItem();
     revealFades();
+
+
+    /* ══════════════ HER RESULTS LINK ══════════════
+       ?r= followed by her fifteen answers (1-5 each) rebuilds her result
+       directly, past the gate: it is the link in her results email and in
+       Daniel's notification. ?first_name= and ?email= only pre-fill the gate,
+       for links sent from GHL with the contact's details merged in. */
+    (function(){
+      let p;
+      try { p = new URLSearchParams(window.location.search); } catch(e){ return; }
+      const fn = p.get('first_name'), em = p.get('email');
+      if (fn) $('pa-g-first').value = fn;
+      if (em) $('pa-g-email').value = em;
+      const r = p.get('r') || '';
+      if (!/^[1-5]{15}$/.test(r)) return;
+      r.split('').forEach((d, i) => { answers[i] = Number(d); });
+      finish();
+    })();
 
     /* ══════════════ REVIEW DEEP LINKS ══════════════
        ?state=needs | boundaries | emotions | flat jumps straight to a

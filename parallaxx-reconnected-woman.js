@@ -1169,7 +1169,7 @@
       <p class="deadend">Same place</p>
       <p class="breakout">So this is about doing different.</p>
     </div>
-    <p class="notready">Not ready? <a href="#">Take the Priority Audit</a>.<span>Ten minutes to find out which priority gives you the most return.</span></p>
+    <p class="notready">Not ready? <a href="/priority-audit">Take the Priority Audit</a>.<span>Ten minutes to find out which priority gives you the most return. Free results emailed for your reference.</span></p>
 </div>
 </section>
 

@@ -5,7 +5,8 @@
 The audit (/priority-audit and the copy on the women's home page) posts each
 completion to a GHL inbound webhook: `CONFIG.leadEndpoint` in
 `Priority Audit.dc.html` and `Parallaxx Home Women.dc.html`. Both must hold the
-same URL. Rebuild with build-priority-audit-bundle.py and
+same URL (set 9 Oct 2026: workflow "Priority Audit - Results + Notification").
+Rebuild with build-priority-audit-bundle.py and
 build-home-women-bundle.py after changing it.
 
 Fields sent (form-encoded), usable in the workflow as

@@ -1526,7 +1526,7 @@
       advanceDelay: 300,         /* ms after a tap before the next item. 0 disables. */
       /* GHL inbound webhook for the email gate. '' sends nothing and still
          shows the result, so the page never breaks while it is unset. */
-      leadEndpoint: '',
+      leadEndpoint: 'https://services.leadconnectorhq.com/hooks/Nja8qXnwLqNjaNTJVf5T/webhook-trigger/b848c7b8-27fe-4682-930c-32a2c8c5fef6',
       source: 'priority-audit'   /* tells the two copies apart in GHL */
     };
 

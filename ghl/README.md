@@ -77,3 +77,13 @@ Inbound Webhook > Create/update contact > tag `archetype-quiz` > dynamic tag
 `aq-{{inboundWebhookRequest.archetype_key}}` > email his results (subject
 "Your Protection Archetype results") > Notify Daniel (subject
 "Archetype Quiz: <first name> - <archetype>", body = summary).
+
+## Email template note (9 Oct 2026)
+
+GHL wraps every table cell's text in its own 16px Verdana <p> when it saves an
+email, which overrides cell font sizes and made the "14 / 20" scores stack on
+phones. Both results templates now put each piece of text in a <span> with its
+own size, and the score sits in a fixed 72px column as 14&nbsp;/&nbsp;20.
+Keep that pattern for any new text inside the card. After editing a template,
+paste it into the email action's source view (</>) and press Save on the
+workflow itself too, since a published workflow needs that second save.

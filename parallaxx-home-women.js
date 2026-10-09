@@ -4784,7 +4784,7 @@
         '',
         'Answers:'
       ].concat(lines).concat(['', 'Results page: ' + resultsUrl()]).join('\n');
-      return {
+      const out = {
         first_name: first, email: email, source: CONFIG.source,
         top_pillar: top, ranking: ranking, result_shape: shape,
         score_needs: total('needs'), score_boundaries: total('boundaries'),
@@ -4792,6 +4792,18 @@
         results_url: resultsUrl(), summary: summary,
         submitted_at: new Date().toISOString()
       };
+      /* For the results card in her email: the three in ranked order, each
+         with its bar width (score out of 25, as a percentage) and colour.
+         Coral marks her top bar, and the second too when the two are level,
+         matching the page. GHL drops these straight into the template. */
+      r.forEach((x, i) => {
+        const n = i + 1;
+        out['rank' + n + '_name']  = PILLAR_NAME[x.key];
+        out['rank' + n + '_score'] = x.total;
+        out['rank' + n + '_pct']   = Math.round(x.total / 25 * 100);
+        out['rank' + n + '_color'] = (i === 0 || (i === 1 && res.tied)) ? '#FF501F' : '#C9B98F';
+      });
+      return out;
     }
     function sendLead(p){
       if (!CONFIG.leadEndpoint) return;

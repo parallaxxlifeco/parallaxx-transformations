@@ -6,67 +6,34 @@
   if (customElements.get('parallaxx-home')) return;
 
   var CSS = `/* ═══════════════════════════════════════════════════════════════════
-   PARALLAXX - HOME
-   Supersedes Parallaxx Home Sort.dc.html
+   PARALLAXX - HOME (rebuilt 9 Oct 2026, "concept 2")
    -------------------------------------------------------------------
-   ONE JOB: get the right person to /men or /women in under fifteen
-   seconds, and give them a reason to trust Daniel on the way past.
-   It is not a sales page and it must not behave like one.
+   ONE JOB: get the right person to /men or /women fast, and give them a
+   reason to trust Daniel on the way past. Daniel's brief, 9 Oct: the home
+   page is a door that filters men and women into the next page, kept
+   short on mobile.
 
-   SIX BLOCKS.
-     01 FRAME     what this is, who runs it, what to do. His face.
-     02 DOORS     situation is the heading. the tag is small.
-     03 SHARED    the deletion. the only general sentence allowed.
-     04 DANIEL    the record, stated flat. no origin story.
-     05 ELSE      one quiet row for everybody who is neither.
-     06 CLOSE     the doors again. nothing new.
-     -- NAV       PtNav v3, built in rather than placed. See below.
-     -- FOOTER    PtFooter v3, built in rather than placed. See below.
+   THREE BLOCKS.
+     01 HERO + DOORS  one line that sets up BOTH pages, then the doors.
+                      Each door heading is the H1 of the page it opens,
+                      word for word, so the click lands on the line they
+                      just chose. Change a door page's H1, change it here.
+     02 GIVE IT ALL   the credibility band. Daniel asked to keep it: it is
+                      the reference to the wider world of experiences.
+     03 ELSE          one quiet row for everybody who is neither.
+     -- NAV / FOOTER  PtNav v3 and PtFooter v3, baked in as before.
 
-   ───────────────────────────────────────────────────────────────────
-   WHY THERE IS NO GLASS ON THIS PAGE
-   The glass metaphor needs to know whose life it is sitting in front
-   of. At second three we do not know. So this page is Daniel straight
-   on with nothing in the way, and the glass starts the moment they
-   walk through a door. The portrait carries NO CAPTION: "no glass
-   between us" belongs to the men's page and anything written to
-   replace it was decorating a photograph that already speaks.
+   The previous six-block version (shared paragraph, record, close) is in
+   git history before this commit if anything needs lifting back.
 
-   ───────────────────────────────────────────────────────────────────
-   WHY ONLY ONE SENTENCE ON THIS PAGE IS ALLOWED TO BE GENERAL
-   Every other page is aimed at one person so hard that a blended
-   sentence would break it. Block 03 is the exception: the deletion is
-   the one mechanism with named sources on both sides. The COSTUME is
-   not, and it is deliberately absent. See HOME PAGE - Copy.md 01.
-
-   ───────────────────────────────────────────────────────────────────
-   NO JAVASCRIPT IS REQUIRED TO SEE ANY CONTENT.
-   A routing page cannot have content that depends on an animation
-   completing. Everything here is visible with scripting off; the
-   entrance is a CSS animation that starts from the visible state.
-
-   ───────────────────────────────────────────────────────────────────
-   TOKENS shared with GIVE IT ALL:  navy #061938 gold #E8C65F Montserrat
-   TOKENS Parallaxx only:  coral #FF501F  Poppins  Lumios Marker  cream #F1ECE1
-
+   TOKENS: navy #061938  gold #E8C65F  coral #FF501F  cream #F1ECE1
    THE ACCENT RULE. GOLD IS DANIEL. CORAL IS YOU.
+
+   NO container-type ON #px-root OR ANY ANCESTOR OF #pt-nav. It makes the
+   element a containing block for fixed descendants and the site nav
+   would scroll away with the page.
    ═══════════════════════════════════════════════════════════════════ */
-
-  /* ══ THE HOST ═════════════════════════════════════════════════════
-     A custom element is display:inline by default. Inline means no block
-     box, a baseline to sit on, and a wrapper that is free to size itself
-     wrong -- which is what leaves a band of PAGE background under the
-     component. On a Wix page that band is white.
-
-     Both lines matter. display:block fixes the box. The background means
-     that if anything ever does leave a gap, the gap is navy and invisible
-     rather than a white cliff at the bottom of the site.
-
-     The preview harnesses set "parallaxx-home{display:block}" from outside,
-     which is why this never showed up locally: the harness was quietly
-     fixing it and Wix was not. It belongs in here, where it ships. */
   :host{display:block;background:#061938}
-
   *{box-sizing:border-box}
   #px-root{background:#061938;color:#F1ECE1;
     font-family:'Montserrat',system-ui,-apple-system,sans-serif;
@@ -74,33 +41,12 @@
   #px-root h1,#px-root h2,#px-root h3,#px-root h4,#px-root p{margin:0}
   #px-root h1,#px-root h2,#px-root h3{text-wrap:balance}
   #px-root p{text-wrap:pretty}
-  .px-serif{font-family:'Poppins','Montserrat',sans-serif;font-weight:300;letter-spacing:-.018em}
+  #px-root img{display:block;max-width:100%}
+  .px-serif{font-family:'Poppins','Montserrat',sans-serif;font-weight:300;letter-spacing:-.02em}
   .px-hand{font-family:'Lumios Marker','Permanent Marker',cursive;font-weight:400}
-  .px-sec{padding:clamp(44px,5.5vw,78px) clamp(20px,4vw,52px);position:relative}
-  /* THE SMALLEST PHONES GET ROOM, NOT SMALLER TYPE.
-     At 320 the section and card gutters together eat 88px of a 320px screen,
-     which is why the qualifier still wrapped after the type had already been
-     scaled down as far as it should go. Shrinking the type further would have
-     made it unreadable to fix a layout problem. Taking 16px back off the
-     gutters fixes it and gives every other line on the page more room too. */
-  /* The .px-door half of this rule USED TO LIVE HERE and never fired.
-     .px-door is declared further down the sheet at equal specificity,
-     and a media query does not raise specificity, so the later plain
-     rule won at every width: 320px phones have been rendering the
-     24px card padding this block was written to remove. It now sits
-     below the declaration it overrides. Same fault, same fix, as the
-     .pt-door a rule in the footer sheet. */
-  /* 16px OF GUTTER ON EVERY PHONE, NOT JUST THE 320s. The note above
-     was right about the trade and wrong about where it stops: 20px a
-     side on a 390px screen is 40px of a 350px measure spent on air,
-     and every wrap problem on this page was a few characters short of
-     fitting. Sixteen is still a gutter, it is consistent across all
-     six sections, and it is the width the headline sizes below are
-     solved against. */
-  @media(max-width:560px){
-    .px-sec{padding-left:16px;padding-right:16px}
-  }
-  .px-wrap{max-width:1080px;margin:0 auto}
+  .px-wrap{max-width:1180px;margin:0 auto;padding:0 clamp(16px,4vw,48px)}
+  .px-arrow{display:inline-block;transition:transform .2s}
+  a:hover .px-arrow{transform:translateX(4px)}
 
   @keyframes px-rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
   .px-rise{animation:px-rise .7s cubic-bezier(.22,.61,.36,1) both}
@@ -108,488 +54,72 @@
   .px-d3{animation-delay:.27s}.px-d4{animation-delay:.38s}
   @media(prefers-reduced-motion:reduce){.px-rise{animation:none}}
 
-/* ═══ 01 · THE FRAME ══════════════════════════════════════════════ */
-/* Two columns on desktop, portrait first on mobile. The portrait is
-   NOT decorative: 46% of credibility judgements are made on visual
-   design alone, and the page it replaces had no human on it at all. */
-  /* Clears the fixed nav bar. #pt-bar is 16px of padding either side
-     of a 30px logo, so ~62px, plus breathing room. */
-  #px-top{padding-top:clamp(104px,10vw,150px)}
-  #px-top .grid{display:grid;grid-template-columns:1.05fr .95fr;
-    gap:clamp(26px,4vw,58px);align-items:center;max-width:1080px;margin:0 auto}
-  @media(max-width:820px){#px-top .grid{grid-template-columns:1fr;gap:26px}}
-  #px-top .eyebrow{font-size:clamp(15px,3.2vw,20px);color:#E8C65F;margin-bottom:16px;
-    display:block}
-  #px-top h1{font-size:clamp(31px,4.6vw,50px);line-height:1.12;color:#F1ECE1;
-    margin-bottom:22px;max-width:18ch}
-  #px-top .sub{font-size:clamp(16px,1.8vw,20px);line-height:1.65;color:#B1BFD7;
-    max-width:40ch}
-  /* FORCED BREAK, DESKTOP ONLY. Left to itself the line wraps after
-     "Or busy.", which strands "Same answer for years." on its own and
-     splits the two halves of the joke. Breaking after "fine." puts the
-     whole turn on line two. Below 821px the column is one grid cell
-     wide and the natural wrap beats an imposed one, so the br is off. */
-  #px-top .sub br{display:none}
-  @media(min-width:821px){#px-top .sub br{display:inline}}
-  /* ══ PHONE TYPOGRAPHY · 10 Aug ═════════════════════════════════
-     THE H1 WAS A NARROW BLOCK IN A WIDE COLUMN. Two rules were
-     fighting the phone at once. max-width:18ch capped the line at
-     ~335px of an available 350, and text-wrap:balance then evened
-     the ragged edge by making EVERY line short. The result was a
-     four-line brick using two thirds of the screen, with a river of
-     dead space down the right that read as a mistake.
+  /* ══ 01 HERO + DOORS ══ */
+  #px-hero{position:relative;background:#061938;overflow:hidden}
+  #px-hero .photo{position:absolute;top:0;right:0;bottom:0;width:46%}
+  #px-hero .photo img{width:100%;height:100%;object-fit:cover;object-position:40% 25%}
+  #px-hero .photo::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(90deg,#061938 0%,rgba(6,25,56,.6) 22%,rgba(6,25,56,0) 55%),
+               linear-gradient(0deg,#061938 0%,rgba(6,25,56,0) 30%),
+               linear-gradient(180deg,rgba(6,25,56,.8) 0,rgba(6,25,56,0) 170px)}
+  /* the third gradient keeps the nav legible over the bright sky at the top */
+  #px-hero .in{position:relative;z-index:2;padding-top:clamp(150px,18vh,200px);padding-bottom:clamp(56px,7vw,90px)}
+  #px-hero .note{color:#E8C65F;font-size:1.3rem;display:inline-block;transform:rotate(-2deg);transform-origin:left;margin-bottom:16px}
+  #px-hero h1{font-size:clamp(2.4rem,4.6vw,4.3rem);line-height:1.05;max-width:14ch}
+  #px-hero .lede{margin-top:22px;font-size:clamp(1.02rem,1.3vw,1.15rem);line-height:1.65;color:#C4CEE0;max-width:36ch}
 
-     A ch cap is a DESKTOP instrument. It exists to stop a headline
-     running 90 characters across a 1360px page. On a 390px phone the
-     viewport IS the measure, so the cap can only ever subtract. It
-     comes off below 821px and the column does the job.
+  #px-doors{margin-top:clamp(44px,6vw,72px);display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:800px}
+  .px-door{display:flex;flex-direction:column;gap:14px;text-decoration:none;background:#F1ECE1;color:#1E2A3D;
+    padding:clamp(22px,2.6vw,32px);border-radius:6px;transition:transform .25s,box-shadow .25s}
+  .px-door:hover{transform:translateY(-3px);box-shadow:0 22px 44px -26px rgba(0,0,0,.7)}
+  .px-door .tag{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#A08A5E}
+  .px-door h2{font-size:clamp(1.3rem,2vw,1.65rem);line-height:1.2}
+  .px-door .go{margin-top:auto;padding-top:6px;color:#FF501F;font-weight:600;font-size:.95rem}
 
-     Balance goes with it, for the same reason: over two or three
-     lines on 350px it buys symmetry and pays for it in width.
-     text-wrap:pretty keeps the orphan control and drops the rest.
-
-     Size then comes down so the line holds more words -- not because
-     31px was too big to read, but because 28 fits the sentence in
-     two lines instead of four. Same trade on the subline. ══ */
-  @media(max-width:820px){
-    #px-top h1{font-size:clamp(25px,6.9vw,34px);max-width:none;
-      line-height:1.16;text-wrap:pretty;margin-bottom:18px}
-    #px-top .sub{font-size:clamp(14.5px,3.95vw,17.5px);line-height:1.6;
-      max-width:none}
-    #px-top .eyebrow{margin-bottom:13px}
+  @media(max-width:860px){
+    #px-hero .photo{position:relative;width:100%;height:40vh;min-height:280px}
+    #px-hero .photo::after{background:linear-gradient(180deg,rgba(6,25,56,.35) 0%,rgba(6,25,56,0) 35%,#061938 100%)}
+    #px-hero .in{padding-top:0;margin-top:-70px;padding-bottom:56px}
+    #px-hero h1{font-size:2.3rem}
+    #px-doors{grid-template-columns:1fr;gap:12px;margin-top:30px}
+    .px-door{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:6px 12px;padding:20px}
+    .px-door .tag{width:100%}
+    .px-door h2{flex:1 1 60%;font-size:1.25rem}
+    .px-door .go{margin:0;padding:0}
   }
-  .px-portrait{position:relative;border-radius:20px;overflow:hidden;
-    box-shadow:0 24px 60px rgba(0,0,0,.45)}
-  .px-portrait img{width:100%;height:100%;display:block;object-fit:cover;
-    aspect-ratio:4/5}
-  /* Shorter crop on a phone so the doors still break the fold. The portrait
-     is doing a credibility job, not a hero-image job, and it does not need
-     the height to do it. */
-  @media(max-width:820px){.px-portrait img{aspect-ratio:16/10;object-position:50% 26%}}
-  /* THE FALSE-FLOOR RULE. Screen one must never look finished, so the
-     top edge of the doors is pulled up into the fold. */
-  #px-top{padding-bottom:clamp(18px,2.4vw,30px)}
+  @media(max-width:360px){#px-hero h1{font-size:2rem}}
 
-/* ═══ 02 · THE DOORS ══════════════════════════════════════════════ */
-/* The SITUATION is the heading. "For men" is a tag, not a promise, and
-   it sits small above, so nobody is asked to pick a demographic before
-   they have recognised somebody in a sentence. That is also what lets a
-   WIFE use the men's door: "a man she never feels" is the most
-   recognisable line in the archive to her, and she never has to answer
-   a question about herself to get him to the right page. */
-  #px-doors{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,22px);
-    max-width:1080px;margin:0 auto}
-  @media(max-width:820px){#px-doors{grid-template-columns:1fr}}
-  .px-door{display:flex;flex-direction:column;background:rgba(241,236,225,.045);
-    border:1px solid rgba(241,236,225,.14);border-radius:20px;
-    padding:clamp(24px,3vw,36px);text-decoration:none;
-    transition:border-color .3s ease,background .3s ease,transform .3s ease}
-  .px-door:hover,.px-door:focus-visible{border-color:rgba(255,80,31,.6);
-    background:rgba(255,80,31,.075);transform:translateY(-3px);outline:none}
-  .px-door:focus-visible{outline:2px solid #FF8A5C;outline-offset:3px}
-  .px-door .tag{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;
-    font-weight:800;color:#E8C65F;margin-bottom:14px}
-  .px-door h2{font-family:'Poppins','Montserrat',sans-serif;font-weight:300;
-    font-size:clamp(21px,2.35vw,29px);line-height:1.22;color:#F1ECE1;margin-bottom:12px}
-  .px-door p{font-size:.96rem;line-height:1.7;color:#9DAAC0;margin-bottom:22px}
-  /* Heading and body are only ~6px apart in size on a phone, so without more
-     air between them they read as one block of text rather than a hook and a
-     line underneath it. */
-  @media(max-width:520px){
-    .px-door h2{margin-bottom:16px}
-  }
-  /* ══ THE CARDS READ AS ONE TEXTURE ON A PHONE · 10 Aug ═════════
-     Four different jobs were being done at four sizes that a thumb
-     cannot tell apart: tag 10px, heading 21px, body 15px, strip 8px,
-     go 14px. Heading and body were 6px apart and the same colour
-     family, so the card scanned as a paragraph with a bold first
-     sentence rather than as a hook with a line under it.
-
-     The heading now steps UP and the body steps DOWN and gets a
-     dimmer colour, so there are two clear levels instead of four
-     muddy ones. Nothing is retyped; only the weighting moves.
-
-     Balance comes off the card headings too. On a 300px card a
-     balanced three-line heading is three short lines centred in a
-     column that could have held two full ones. ══ */
-  @media(max-width:820px){
-    .px-door h2{font-size:clamp(19px,5.05vw,26px);line-height:1.26;
-      margin-bottom:21px}
-    /* THE ID IS NOT DECORATION. #px-root h1,h2,h3{text-wrap:balance}
-       at the top of this sheet scores an id, and .px-door h2 scores a
-       class, so a plain .px-door h2{text-wrap:...} loses and the card
-       headings stay balanced no matter what is written here. Matching
-       through #px-doors is what makes the override land. Greedy wrap
-       fills each line before it breaks, which on a 300px card is the
-       difference between three short lines and two full ones. */
-    #px-doors .px-door h2{text-wrap:wrap}
-    .px-door p{font-size:.9rem;line-height:1.6;color:#93A1B9;
-      margin-bottom:20px}
-    .px-door .tag{font-size:.6rem;letter-spacing:.22em;margin-bottom:12px}
-  }
-  /* The qualifier strip is the filter. It sits apart from the body copy so it
-     reads as a spec rather than as another sentence. */
-  /* SCALED, NOT STEPPED, and there is no breakpoint on it at all.
-     At .7rem with .15em tracking this strip wanted 335px and a 390px phone
-     gives the card 302, so "CARE ABOUT HER" and "SUCCESSFUL" each dropped an
-     orphan onto a second line. The tracking is what costs the room, not the
-     words, so the tracking gives way first.
-
-     The worst case is NOT the phone. It is ~900px, where the cards are still
-     side by side and each one is at its narrowest. A phone-only media query
-     fixed the phone and left 900 broken, and chasing it with one breakpoint
-     per handset is how you end up with five of them. One clamp holds a single
-     line from 320px all the way up. */
-  /* REVISED 10 Aug. The clamp above had a .5rem FLOOR and a vw middle
-     term, so every phone landed on the floor: 1.1vw of 390px is 4.3px,
-     which clamps to 8px, and 8px uppercase at .055em tracking is not a
-     spec strip, it is a smudge. It also still wrapped to two lines,
-     which is what the clamp was written to prevent.
-
-     The floor goes to .625rem (10px) and the TRACKING pays for it
-     instead: .04em over forty characters is 24px of the 40px the
-     tracking was spending. Measured at both ends -- 264px of a 300px
-     card on a 390px phone, 252px of a 336px card at the 900px worst
-     case the note below describes. One line, both ends, still one
-     clamp and no extra breakpoint. */
-  .px-door .qual{font-size:clamp(.625rem,1.05vw,.7rem);letter-spacing:.04em;
-    text-transform:uppercase;font-weight:700;color:#7F8DA6;
-    margin-bottom:24px;padding-top:16px;
-    border-top:1px solid rgba(241,236,225,.09)}
-  .px-door .go{margin-top:auto;font-size:.88rem;font-weight:700;color:#FF6A3D;
-    display:inline-flex;align-items:center;gap:.5em}
-  .px-door:hover .go{color:#FF804F}
-  /* THE SMALLEST PHONES, RELOCATED FROM THE TOP OF THE SHEET SO IT
-     WINS. 14px of card gutter rather than 24, which is the last four
-     pixels the qualifier strip needs to stay on one line at 320, plus
-     a tracking step that costs nothing at that size. */
-  @media(max-width:360px){
-    .px-door{padding:22px 14px}
-    .px-door .qual{font-size:.58rem;letter-spacing:.015em}
+  /* ══ 02 GIVE IT ALL ══ */
+  #px-gia{position:relative;min-height:520px;display:flex;align-items:flex-end;overflow:hidden}
+  #px-gia > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:30% 40%}
+  #px-gia::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(90deg,rgba(3,14,34,.2) 0%,rgba(3,14,34,.55) 45%,rgba(3,14,34,.92) 75%),
+               linear-gradient(0deg,rgba(3,14,34,.85) 0%,rgba(3,14,34,0) 45%)}
+  #px-gia .px-wrap{position:relative;z-index:2;width:100%;display:flex;justify-content:flex-end;padding-top:80px;padding-bottom:64px}
+  #px-gia .card{max-width:470px}
+  #px-gia .note{color:#E8C65F;font-size:1.2rem;display:inline-block;transform:rotate(-2deg);margin-bottom:14px}
+  #px-gia p{font-size:1.04rem;line-height:1.7;color:#F1ECE1}
+  #px-gia p strong{font-weight:600}
+  #px-gia dl{display:flex;gap:30px;margin:26px 0;padding:18px 0;border-top:1px solid rgba(241,236,225,.14);border-bottom:1px solid rgba(241,236,225,.14)}
+  #px-gia dl div{margin:0}
+  #px-gia dt{font-family:'Poppins',sans-serif;font-weight:300;font-size:2rem;color:#E8C65F;line-height:1}
+  #px-gia dd{margin:8px 0 0;font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:#C4CEE0}
+  #px-gia .links{display:flex;gap:24px;flex-wrap:wrap;font-weight:600;font-size:.92rem}
+  #px-gia .links a{color:#F1ECE1;text-decoration:none;border-bottom:1.5px solid currentColor;padding-bottom:3px}
+  #px-gia .links a.gold{color:#E8C65F}
+  @media(max-width:760px){
+    #px-gia{min-height:0;display:block}
+    #px-gia > img{position:relative;height:260px}
+    #px-gia::after{display:none}
+    #px-gia .px-wrap{background:#030E22;padding-top:30px;padding-bottom:48px;display:block}
+    #px-gia dl{gap:22px}
+    #px-gia dt{font-size:1.6rem}
   }
 
-/* ═══ 03 · THE ONE THING BOTH OF THEM DO ══════════════════════════ */
-  #px-shared{border-top:1px solid rgba(241,236,225,.09);
-    border-bottom:1px solid rgba(241,236,225,.09);
-    background:rgba(241,236,225,.022)}
-  #px-shared .px-wrap{max-width:760px}
-  #px-shared .eyebrow{color:#E8C65F;font-size:clamp(15px,3.2vw,19px);
-    display:block;margin-bottom:14px}
-  #px-shared h2{font-size:clamp(23px,3.2vw,36px);line-height:1.18;
-    margin-bottom:22px;color:#F1ECE1}
-  /* THREE LINES WHERE TWO WERE AVAILABLE · 10 Aug. Same fault as the
-     H1 above and the same fix: balance was splitting a 61-character
-     sentence into three short centred lines inside a 350px column
-     that holds it in two. Nothing here needed to be rewritten. */
-  /* THE SIZE IS SOLVED, NOT GUESSED. Two lines happen when the first
-     sentence -- "Completely different circumstances." -- fits the
-     column, and it is 17.1x the font size wide in Poppins 300. On a
-     390px phone the column is 358px once the gutters come in to 16,
-     so the ceiling is 21px and 5.15vw lands on 20 with five percent
-     of headroom for a device whose Poppins measures a hair wider.
-     Checked the same way at 320, 360, 375 and 430. The tracking does
-     part of the work: -.028em is a touch tighter than the .px-serif
-     default and buys back about one percent of the line. */
-  @media(max-width:820px){
-    #px-shared h2{font-size:clamp(16.5px,5.15vw,28px);line-height:1.22;
-      letter-spacing:-.028em;text-wrap:pretty;margin-bottom:20px}
-    #px-shared p{font-size:clamp(14.8px,3.95vw,17px);line-height:1.72}
-  }
-  #px-shared p{font-size:clamp(15px,1.65vw,18px);line-height:1.78;
-    color:#B1BFD7;margin-bottom:16px}
-  /* Daniel's own line, so it carries gold and sits apart. It is the
-     confession that stops the paragraph above reading as a man
-     diagnosing two groups of people from the outside. */
-  #px-shared .mine{border-left:2px solid #E8C65F;padding-left:18px;
-    color:#E4E9F2;margin-top:26px;margin-bottom:0}
-
-/* ═══ 04 · ME, AND THE RECORD ═════════════════════════════════════ */
-  /* ══ THE FULL-BLEED PLATE ══════════════════════════════════════
-     THE ONLY IMAGE ON THIS PAGE BESIDES THE PORTRAIT, and it sits under
-     the RECORD rather than anywhere else, because this is the one block
-     where a photograph is doing a job instead of decorating: "1000+ lives
-     changed, 9 countries" is a claim on flat navy and a receipt over a
-     room with people in it.
-
-     WHY A BACK-TO-CAMERA FRAME AND NOT A PORTRAIT-ON-STAGE.
-     A man addressing the reader from a platform is the fatal read on the
-     women's side (W04 3.6) and it makes Daniel the loudest thing on a page
-     whose whole job is to point at the reader. Back to camera inverts it:
-     the subject of the photograph is the ROOM, he is the smallest warm
-     shape in it, and half the faces are women who chose to be there.
-
-     NOT BEHIND BLOCK 03. That block is the interior one, and a stage
-     behind "I built things people needed so I'd never have to ask to be
-     included" argues with the sentence.
-
-     TREATMENT. 82% navy, plus a gradient that dissolves both edges into
-     the flat navy above and below, so it reads as depth rather than as a
-     photograph you stop and look at. Solid navy underneath, so nothing
-     here depends on the image loading. Lazy, because it is below the
-     fold, and 230KB at 2000px wide. */
-  #px-me{position:relative;isolation:isolate;overflow:hidden}
-  #px-me .px-plate{position:absolute;inset:0;z-index:-2;
-    background:#061938 center 38% / cover no-repeat}
-  #px-me .px-plate img{width:100%;height:100%;object-fit:cover;
-    object-position:center 46%;display:block;opacity:1}
-  /* THE SCRIM IS DARKEST IN THE MIDDLE, NOT AT THE EDGES, which is the
-     opposite of a vignette and is what makes this work. The copy is
-     centred and capped at 720px, so the middle band carries the text on
-     near-solid navy while the room stays legible left and right. A
-     uniform veil heavy enough to protect the type also flattened the
-     photograph into a smudge, which defeated the point of using it.
-     Vertical pass dissolves both edges into the flat navy sections above
-     and below so the block has no seams. */
-  #px-me .px-veil{position:absolute;inset:0;z-index:-1;
-    background:
-      linear-gradient(180deg,#061938 0%,rgba(6,25,56,.10) 14%,rgba(6,25,56,.10) 86%,#061938 100%),
-      linear-gradient(90deg,rgba(6,25,56,0) 0%,rgba(6,25,56,.62) 24%,rgba(6,25,56,.70) 50%,rgba(6,25,56,.62) 76%,rgba(6,25,56,0) 100%)}
-  /* The scrim came down from .95 to .70 in the centre so the room is
-     actually visible. Type keeps its contrast from a shadow instead of
-     from the veil, which is the cheaper way to buy legibility: it costs
-     nothing behind the letters and everything stays readable while the
-     photograph stays a photograph. */
-  #px-me .px-wrap{text-shadow:0 1px 3px rgba(6,25,56,.95),0 2px 18px rgba(6,25,56,.85)}
-  /* On a phone the copy fills the width, so the centre band covers the
-     frame and the room reads as tone rather than as a picture. Accepted:
-     legibility first, and the photograph is doing a supporting job. */
-  @media(max-width:820px){
-    #px-me .px-veil{background:
-      linear-gradient(180deg,#061938 0%,rgba(6,25,56,.74) 14%,rgba(6,25,56,.78) 86%,#061938 100%)}
-  }
-  #px-me{padding-top:clamp(66px,8vw,110px);padding-bottom:clamp(66px,8vw,110px)}
-  /* On a phone the veil is uniform, so the padding below the link is 66px of
-     flat dark photograph with nothing in it. Tighter, and the block ends
-     where the content does. */
-  @media(max-width:520px){
-    #px-me{padding-top:clamp(52px,12vw,66px);padding-bottom:clamp(46px,10vw,60px)}
-  }
-  #px-me .px-wrap{max-width:900px;text-align:center;position:relative;z-index:1}
-  #px-me .hand{color:#E8C65F;font-size:clamp(21px,3vw,30px);display:block;
-    margin-bottom:20px}
-  #px-me p{font-size:clamp(15px,1.6vw,17.5px);line-height:1.78;color:#C3CDDC;
-    margin:0 auto 14px}
-  /* The credential sentence is set WIDER than the wrap so it lands on two
-     lines rather than three. At the 720px column it broke three ways and the
-     orphan line ("ALL world of experiences.") read as a mistake. The record
-     strip and the link stay on the narrower measure below it. */
-  #px-me p.cred{max-width:none;width:min(100%,900px)}
-  #px-me strong{color:#D8DFEA;font-weight:600}
-  /* THE RECORD. Billboards on highways: the credential strip currently lives
-     only in the footer and at the foot of the avatar pages, and the evidence
-     says it belongs high on a high-traffic page. It is also the only evidence
-     on this page, because it is about Daniel rather than about anybody's
-     result, so it needs nothing captured first. */
-  #px-me .px-record{display:flex;flex-wrap:wrap;justify-content:center;
-    gap:clamp(22px,4vw,54px);margin:30px 0 26px;padding:24px 0;
-    border-top:1px solid rgba(241,236,225,.16);
-    border-bottom:1px solid rgba(241,236,225,.16)}
-  #px-me .px-record div{text-align:center}
-  /* Flex-wrap put "1000+" and "9" on one row and "6+" alone underneath,
-     which reads as a mistake rather than as a set. A three-column grid
-     cannot wrap, so the row holds whatever the width. The labels tighten
-     with it; "YEARS FACILITATING" still takes two lines in its cell, and
-     that is fine because all three cells are the same width. */
-  @media(max-width:560px){
-    #px-me .px-record{display:grid;grid-template-columns:repeat(3,1fr);
-      gap:12px;padding:20px 0}
-    #px-me .px-record dt{font-size:clamp(23px,6.4vw,30px)}
-    #px-me .px-record dd{font-size:.57rem;letter-spacing:.08em;line-height:1.35}
-  }
-  #px-me .px-record dt{font-family:'Poppins','Montserrat',sans-serif;font-weight:300;
-    font-size:clamp(26px,3.4vw,38px);line-height:1;color:#E8C65F;margin:0}
-  #px-me .px-record dd{margin:8px 0 0;font-size:.66rem;letter-spacing:.18em;
-    text-transform:uppercase;font-weight:700;color:#A4B0C4}
-  #px-me a.more{display:inline-block;margin-top:14px;color:#E8C65F;font-weight:700;
-    text-decoration:none;font-size:.92rem;
-    border-bottom:1px solid rgba(232,198,95,.45);padding-bottom:2px}
-  #px-me a.more:hover,#px-me a.more:focus-visible{color:#F1ECE1;border-bottom-color:#F1ECE1}
-
-/* ═══ 05 · NEITHER OF THOSE ═══════════════════════════════════════ */
-/* Deliberately the lowest-contrast thing on the page. A two-door page
-   bounces everybody who is not one of the two, and some of them book
-   the stages. One row, no persuasion. */
-  #px-else{border-top:1px solid rgba(241,236,225,.07);text-align:center;
-    padding-top:clamp(32px,4vw,52px);padding-bottom:clamp(32px,4vw,52px)}
-  #px-else .lab{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
-    font-weight:800;color:#7C89A3;display:block;margin-bottom:16px}
-  #px-else .row{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:center}
-  #px-else a{color:#9DAAC0;text-decoration:none;font-size:.94rem;
-    border-bottom:1px solid rgba(157,170,192,.28);padding-bottom:2px}
-  #px-else a:hover,#px-else a:focus-visible{color:#F1ECE1;border-bottom-color:#F1ECE1}
-
-/* ═══ 06 · THE CLOSE ══════════════════════════════════════════════ */
-  #px-close{text-align:center;padding-bottom:clamp(56px,7vw,96px)}
-  #px-close .hand{color:#E8C65F;font-size:clamp(20px,3vw,29px);display:block;
-    margin-bottom:26px}
-  #px-close .pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,1.8vw,18px);
-    max-width:900px;margin:0 auto;text-align:left}
-  @media(max-width:820px){#px-close .pair{grid-template-columns:1fr}}
-  .px-mini{display:block;background:rgba(241,236,225,.04);
-    border:1px solid rgba(241,236,225,.13);border-radius:16px;
-    padding:22px clamp(18px,2.2vw,26px);text-decoration:none;
-    transition:border-color .3s ease,background .3s ease}
-  .px-mini:hover,.px-mini:focus-visible{border-color:rgba(255,80,31,.55);
-    background:rgba(255,80,31,.07);outline:none}
-  /* ══ THE CLOSE ASKS THE SAME QUESTION, SO IT IS SET THE SAME SIZE · 10 Aug ══
-     These two cards carry the SAME sentence as the doors in block 02,
-     to the character. They were running a size below them in all three
-     of their parts -- tag .62 against .64, line 16-19px against 21-29,
-     go .84 against .88 -- so the close read as a footnote restating the
-     offer rather than as the offer put one last time. The reader who
-     reaches this block without having clicked is the only person left
-     on the page still deciding, and the type that closes them was the
-     smallest version of itself on the page.
-
-     Every value below is now LIFTED from .px-door rather than picked
-     again, here and at the phone breakpoint, so the two blocks cannot
-     drift apart a second time. The cards stay visually lighter than
-     the doors, which is still right: that is carried by the panel --
-     16px radius against 20, .04 fill against .045, no qualifier strip
-     and no body paragraph -- and not by shrinking the words. ══ */
-  .px-mini .tag{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;
-    font-weight:800;color:#E8C65F;display:block;margin-bottom:14px}
-  .px-mini span.line{font-family:'Poppins','Montserrat',sans-serif;font-weight:300;
-    font-size:clamp(21px,2.35vw,29px);line-height:1.22;color:#F1ECE1;display:block}
-  .px-mini .go{display:block;margin-top:16px;font-size:.88rem;font-weight:700;color:#FF6A3D}
-
-/* ═══════════════════════════════════════════════════════════════════
-   PHONE SIZING, MEASURED AGAINST THE CONTAINER · 10 Aug
-   -------------------------------------------------------------------
-   WHY EVERY EARLIER FIX WAS A LITTLE TOO WIDE.
-
-   Every size on this page was a clamp with a vw middle term, and vw is
-   the VIEWPORT. This component does not get the viewport. It sits in a
-   Wix custom-element widget inside a Wix section, and Wix takes a
-   margin off both sides on mobile. So the type was being sized for a
-   390px screen while it was actually being laid out in something
-   closer to 340, and every line that had been solved to fit "with five
-   percent of headroom" was over the edge by the time it reached a
-   phone. That is one fault producing four symptoms: the qualifier
-   strip on two lines, the card heading on three, the "something else"
-   row on three, and the footer columns wrapping every link to the word.
-
-   YOU CANNOT FIX THAT WITH SMALLER NUMBERS. Guessing a narrower vw
-   coefficient just moves the cliff -- it would be wrong again the
-   moment Wix changed its gutter, or on a page where the widget is
-   full-bleed. The unit has to be the one that knows the answer.
-
-   cqw IS 1% OF THE CONTAINER, so a heading solved at 5.5cqw fits at
-   322px and still fits at 280px, without knowing or caring what the
-   viewport is or what Wix did to it.
-
-   THE CONTAINERS ARE PER BLOCK, NOT ON #px-root, AND THAT IS LOAD
-   BEARING. container-type:inline-size implies layout containment,
-   which makes the element a containing block for FIXED descendants.
-   #pt-nav is position:fixed and lives inside #px-root, so a container
-   on the root would turn the site nav into an element that scrolls
-   away with the page. Each block owns its own container instead.
-
-   FALLBACK: a browser without container queries treats the cqw
-   declaration as invalid and keeps the vw rule above it, which is
-   exactly today's behaviour. Nothing regresses, it just stops
-   improving. Safari 16 and Chrome 105 both have it.
-
-   EVERY NUMBER BELOW IS SOLVED, NOT PICKED. Natural single-line width
-   divided by font size is a constant per string in a given face, so
-   the ceiling for N lines is (N x container x 0.94) / that ratio. The
-   0.94 is greedy-wrap waste -- a line breaks before it is full. The
-   coefficients then take ~7% under the ceiling so a device whose
-   Montserrat measures a hair wider than the reference still holds.
-   Ratios measured in real Montserrat 700 and Poppins 300, not in a
-   fallback face, which is how the first pass got them wrong.
-   ═══════════════════════════════════════════════════════════════════ */
-@media(max-width:820px){
-
-  /* ── 01 HERO. Ratio 23.97 for the H1, so two lines needs 7.84cqw and
-        it takes 7.3. The subline has room to spare at 4.3. ── */
-  #px-top .grid{container-type:inline-size}
-  #px-top h1{font-size:clamp(22px,7.3cqw,34px)}
-  #px-top .sub{font-size:clamp(13.5px,4.3cqw,17.5px)}
-
-  /* ── 02 THE DOORS. The card is its own container, so the heading and
-        the strip are measured against the CARD, not the screen -- which
-        is the number that actually matters and the one vw could never
-        see. Padding comes down 24 -> 18 first, because the cheapest
-        width on the page is the width you stop spending.
-
-        Heading ratio 31.73 -> two lines at 5.92cqw, set at 5.5. This is
-        the "single word on line three" fix: at 19.7px the sentence
-        needed 2.03 lines, which rounds to three and leaves "from." on
-        its own. Two full lines beats three ragged ones.
-
-        Qualifier ratio 25.5 -> one line at 3.8cqw, set at 3.35. ── */
-  .px-door{container-type:inline-size;padding:22px 18px}
-  #px-doors .px-door h2{font-size:clamp(15px,5.5cqw,26px);line-height:1.28;
-    margin-bottom:18px}
-  .px-door .qual{font-size:clamp(8.5px,3.35cqw,11.2px);letter-spacing:.04em}
-  .px-door p{font-size:clamp(13px,4.2cqw,15.5px);line-height:1.6}
-  /* NO white-space:nowrap ON THE STRIP, deliberately. It would guarantee
-     one line and buy that with an ellipsis, and "CARE ABOUT..." is worse
-     than the same three words on two lines. The size is solved to fit;
-     if some device still beats it, wrapping is the graceful failure. */
-  @media(max-width:360px){.px-door{padding:22px 14px}}
-
-  /* ── 03 SHARED. Two lines here is not about the whole sentence, it is
-        about whether "Completely different circumstances." fits line
-        one. That clause is 0.574 of the string, so the real ratio is
-        17.06 and the ceiling is 5.86cqw. Set at 5.4. ── */
-  #px-shared .px-wrap{container-type:inline-size}
-  #px-shared h2{font-size:clamp(15px,5.4cqw,28px)}
-  #px-shared p{font-size:clamp(14px,4.25cqw,17px)}
-
-  /* ── 04 THE RECORD AND THE CREDENTIAL.
-        The numbers were 26px on a phone, which made a supporting strip
-        the loudest thing in the block. 5.6cqw puts them at 20 and the
-        labels tighten to match.
-
-        THE CREDENTIAL PARAGRAPH IS CENTRED, REVERSED 10 Aug. It was
-        ranged left here on the argument that four centred lines with a
-        short last one read as a narrow column floating in the block.
-        Seen on the device that is not what happens: it is the only
-        ranged-left thing inside a block whose hand line, record and
-        link are all centred, so the paragraph reads as misaligned
-        rather than as deliberately set, and the eye catches the ragged
-        left edge against the centred rule above it before it reads a
-        word. A short last line in a centred block is ordinary; one
-        element out of four sitting off the block's own axis is not.
-        The whole block is centred again, which is also what it does on
-        every width above this breakpoint. ── */
-  #px-me .px-wrap{container-type:inline-size}
-  #px-me p{font-size:clamp(13.5px,4.1cqw,17.5px);line-height:1.62}
-  #px-me .px-record dt{font-size:clamp(17px,5.6cqw,30px)}
-  #px-me .px-record dd{font-size:clamp(7.5px,2.35cqw,10.5px);letter-spacing:.05em;
-    line-height:1.3;margin-top:6px}
-  #px-me .px-record{gap:10px;margin:24px 0 20px}
-
-  /* ── 05 SOMETHING ELSE. Four links, and the split that gives two rows
-        is 277px + 201px at 15px. That holds down to a 280px container
-        and breaks below it. At 3.8cqw it holds to 250, and the gap
-        comes in because 26px of horizontal gap on a phone is a third
-        of a link. ── */
-  /* A GRID, NOT A WRAPPING FLEX ROW. Sized down it does land on two
-     lines, but flex fills greedily, so the split is 3 + 1 and "The
-     journal" sits alone under three others -- and which split you get
-     changes with every device width. Two columns is 2 + 2 at every
-     width, always, and the row stops being a thing that has to be
-     re-solved each time a phone gets wider. */
-  #px-else .row{container-type:inline-size;display:grid;
-    grid-template-columns:1fr 1fr;gap:12px 16px;justify-items:center}
-  #px-else a{font-size:clamp(12px,3.8cqw,15px)}
-  #px-else .lab{font-size:.64rem;letter-spacing:.16em}
-
-  /* ── 06 THE CLOSE. The same container trick as the doors and the
-        same numbers, because it is the same sentence. The mini card is
-        NARROWER than a door card at this breakpoint -- a 900px pair
-        against a 1080px row -- so measuring against the card rather
-        than the screen is what actually makes the two blocks the same
-        size, instead of merely giving them the same declaration and a
-        different result. ── */
-  .px-mini{container-type:inline-size;padding:22px 18px}
-  .px-mini span.line{font-size:clamp(15px,5.5cqw,26px);line-height:1.28}
-  .px-mini .tag{font-size:.6rem;letter-spacing:.22em;margin-bottom:12px}
-  @media(max-width:360px){.px-mini{padding:22px 14px}}
-}
+  /* ══ 03 ELSE ══ */
+  #px-else{background:#030E22;padding:30px 0 40px;text-align:center;font-size:.9rem;color:#C4CEE0}
+  #px-else .lab{display:block;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;margin-bottom:12px}
+  #px-else a{white-space:nowrap;color:#F1ECE1;margin:0 12px;text-decoration:none;border-bottom:1px solid rgba(241,236,225,.35);line-height:2.2}
 
 /*/* ══════════════════════════════════════════════════════════════════
    SITE NAV, BUILT IN RATHER THAN PLACED
@@ -1265,248 +795,61 @@
   </div>
 </header>
 
-<!-- ══════════════ 01 · THE FRAME ══════════════
-     PLAIN. It names the CATEGORY (coaching), who it is for, and who runs it,
-     in twenty-five words, and it diagnoses nobody, because a diagnosis has to
-     pick an avatar and we have not met them yet.
-
-     "handle it all on their own" is the clients' own language on BOTH sides,
-     which is why it can carry a general sentence:
-       men's hero   "You handled it all yourself. That's the distance."
-       men's mirror "I kept it all internally."
-       Gena K       "I was trying to figure it out by myself."
-       Ana R        "I couldn't break through them alone."
-
-     THE SUBLINE IS THE CONTINUATION. The headline says who this is for in
-     the third person, which is how a category line has to work. The subline
-     turns it on the reader, and it does it with the two pages' OWN answers
-     to the same question:
-       men's mirror    "How're you doing?"    -> "Good. Fine. Yeah, not too bad."
-       women's mirror  "How's it all going?"  -> "Busy. Good busy."
-     Fine is his word and busy is hers, both verbatim, and neither one genders
-     the sentence. That question is also the one place the two avatar pages
-     are supposed to rhyme, so the home page is now the third instance of a
-     deliberate echo rather than a repeat.
-
-     CUT, 3 Aug: "Take the one that's closer to true." Next to two doors
-     labelled for men and for women, "closer to true" reads as a question
-     about which one you are. Nothing on this page should invite that.
-
-     ALSO REPLACED EARLIER: "I hold rooms for people who are used to holding
-     them", over a three-sentence subline. Daniel does not describe what he
-     does as holding rooms. ══════════════ -->
-<section class="px-sec" id="px-top">
-  <div class="grid">
-    <div>
-      <span class="eyebrow px-hand px-rise px-d1">which is you</span>
-      <h1 class="px-serif px-rise px-d2">Coaching for people who handle it all on their own.</h1>
-      <p class="sub px-rise px-d3">Ask how you&rsquo;re doing and you say fine.<br> Or busy. Same answer for years.</p>
-    </div>
-    <!-- [DANIEL] Replace with the Wix Media URL for daniel-clear.jpg.
-         Real, straight on, not a stage shot and not a headshot. -->
-    <figure class="px-portrait px-rise px-d3" style="margin:0">
-      <img src="https://static.wixstatic.com/media/111174_1c14cd1cd5e5427dbd6cd38ac773a70a~mv2.jpg" alt="Daniel Lawson" loading="eager" fetchpriority="high">
-      <!-- NO CAPTION. "No glass between us." belongs to the men's page portrait
-           and cannot be reused here. Anything written to replace it was decorating
-           a photograph that already says what it needs to: this is the man, and
-           there is nothing in front of him. -->
-    </figure>
-  </div>
-</section>
-
-<!-- ══════════════ 02 · THE DOORS ══════════════
-     BOTH HEADINGS ARE SECOND PERSON, and that is load bearing rather than
-     stylistic. When the men's door was third person ("A man who carries it
-     all...") and the women's was second ("You've hit every target..."), the
-     page put a HE beside a SHE and readers assembled them into a couple:
-     two characters in one relationship rather than two strangers who would
-     never meet. Second person creates no character, so there is nobody to
-     pair her with. Do not flip either one back on its own.
-
-     Both headings are verbatim from their own built hero. "A man who
-     carries it all. And a partner she never feels." now sits in the body,
-     one level down, where it is a detail rather than the frame -- and it is
-     still the line a WIFE recognises her husband in, which is how she gets
-     him to the right page without the site asking her which gender she is.
-
-     NOT USED, deliberately: "Twenty years in, and she's told you something
-     is missing." Hotter, but it needs his wife to have actually had that
-     conversation and plenty have not. A door is a filter for a whole
-     avatar, so it takes the safe version.
-
-     Women's heading and body are both LIFTED VERBATIM from the built
-     women's hero, which moved past its spec document and is better than
-     it. A door has to carry the hook of the page it opens or the click
-     reads as a bait.
-
-     The women's built hero carries NO qualifier strip, so the one below
-     is the only line on either door that is not quoting its own page.
-     Either it goes on her hero or it comes off both doors.
-     See HOME PAGE - Alignment Audit.md C1. ══════════════ -->
-<section class="px-sec">
-  <div id="px-doors">
-
-    <a class="px-door px-rise px-d3" href="https://www.parallaxxtransformations.com/men">
-      <span class="tag">For men</span>
-      <h2>You handled it all yourself. That&rsquo;s where the distance came from.</h2>
-      <p>A man who carries it all. And a partner she never feels.</p>
-      <div class="qual">Relationship &middot; Years in &middot; Care about her</div>
-      <span class="go">This is me <span aria-hidden="true">&#8594;</span></span>
-    </a>
-
-    <a class="px-door px-rise px-d4" href="https://www.parallaxxtransformations.com/women">
-      <span class="tag">For women</span>
-      <h2>You&rsquo;ve hit every target. And you&rsquo;re still behind.</h2>
-      <p>&ldquo;Everything is a priority right now.&rdquo; And it has been for six years.</p>
-      <div class="qual">Independent &middot; Capable &middot; Successful</div>
-      <span class="go">This is me <span aria-hidden="true">&#8594;</span></span>
-    </a>
-
-  </div>
-</section>
-
-<!-- ══════════════ 03 · THE ONE THING BOTH OF THEM DO ══════════════
-     The only general sentence allowed on this site, and the reason the
-     page does not read as two unrelated businesses sharing a logo.
-
-     WRITTEN AS "YOU ... OR YOU", NOT "HE ... SHE". The he/she version put
-     a man and a woman in consecutive clauses and the page read as a couple.
-     Second person addresses one reader at a time and the pairing has
-     nothing to attach to. Same sources either way: the first clause is
-     [CLIENT], the second is [S, Christine] as her page now states it, and
-     the shrinking is [CLIENT + F-V].
-
-     The last line is [D-LIVED] and it is the confession that earns the
-     rest of the page. ══════════════ -->
-<section class="px-sec" id="px-shared">
-  <div class="px-wrap">
-    <span class="eyebrow px-hand px-rise px-d1">it starts the same way</span>
-    <h2 class="px-serif px-rise px-d2">Completely different circumstances. The same patterns within.</h2>
-    <p class="px-rise px-d3">You handled it on your own so you&rsquo;d never be a burden on anyone. You do still have expectations but keep them to yourself, so nobody ever gets the chance to turn you down.</p>
-
-    <!-- REWRITTEN 3 Aug. Was "the want got smaller until it couldn't be
-         refused", which read as though the asking WORKED. The point is the
-         opposite: the ask gets shaved down to the bare minimum, so it is
-         safe and it is also barely worth having. Both halves have to be in
-         the sentence or it reads as a win. -->
-    <p class="px-rise px-d3">So you trim what you ask for. Small enough that it can&rsquo;t be refused, and small enough that getting it changes nothing.</p>
-
-    <!-- REWRITTEN 3 Aug. Was "You didn't start it, and you can't see it from
-         the inside. That is the bit nobody gets to work on alone." Too
-         compressed to land. It is carrying two separate ideas and this is
-         the block where they have to be clear, because together they ARE
-         the argument for the offer:
-           1. nobody chose this, it was worked out young and it worked
-              -- men's page: "A boy works out what gets his needs met.
-              Yours worked then, so you never replaced them."
-           2. it is invisible from inside, AND effort is not the missing
-              ingredient. Both clauses are verbatim off the men's page:
-              "But you were never shown what you couldn't see" and
-              "Effort was never what was missing."
-
-         CONSIDERED AND NOT USED: "you can't see the label when you're inside
-         the jar." Two problems. The site already owns a container metaphor
-         made of glass -- the film, the pane, "I was the man behind the
-         glass" -- and a jar is also glass, so it half-rhymes with the real
-         metaphor instead of matching it or standing clear of it. And it is
-         a coaching-circuit aphorism, which is the register this page spends
-         its whole length staying out of. -->
-    <p class="px-rise px-d3">You worked this out young. It worked, so you never replaced it. But you were never shown what you couldn&rsquo;t see, so more effort hasn&rsquo;t changed it. Because effort isn&rsquo;t what was missing.</p>
-    <p class="mine px-rise px-d4">I did it too. I built things people needed so I&rsquo;d never have to ask to be included. Worked fine for about thirty years.</p>
-  </div>
-</section>
-
-<!-- ══════════════ 04 · ME, AND THE RECORD ══════════════
-     NO ORIGIN STORY. There are two of them and they are avatar-specific:
-     the stages and the half-ask are his, the number that moved is hers.
-     Running either one here picks a side before anybody has walked
-     through a door. The record is neutral, true, and needs nothing
-     captured first, which is why it is the safest evidence on the site.
-
-     [DANIEL] STILL NEEDED: countries, rooms held, people worked with,
-     and the as-seen-in logos. One line of numbers under the credential
-     sentence is the cheapest win available on this page. ══════════════ -->
-<section class="px-sec" id="px-me">
-  <!-- [DANIEL] Replace with the Wix Media URL. Source: gallery3onstage.jpg
-       from the GIVE IT ALL build. 2000px wide, q74, 230KB. -->
-  <div class="px-plate" aria-hidden="true"><img src="https://static.wixstatic.com/media/111174_ad3e5fa47d294ff890516b996bbd2d3c~mv2.jpg" alt="" loading="lazy" decoding="async"></div>
-  <div class="px-veil" aria-hidden="true"></div>
-  <div class="px-wrap">
-    <!-- HAND LINE. "and now me." is the hand line on BOTH avatar pages, so it
-         cannot open this block. This one only works at the top of the funnel,
-         and it answers the H1 rather than repeating it. -->
-    <span class="hand px-hand px-rise px-d1">who&rsquo;s holding it</span>
-    <p class="cred px-rise px-d2">I&rsquo;m <strong>Daniel Lawson</strong>. Credentialled through the <strong>International Coach Guild</strong>, qualified through over half a decade of client results, and the founder of <strong>GIVE IT ALL</strong> world of experiences.</p>
-
-    <!-- THE RECORD. Numbers ruled 3 Aug 2026: 6+ years, 9 countries. The men's
-         page still carried 5+ / 7 and has been corrected to match.
-         Spelling follows the avatar pages: "Int'l Coach Guild", not
-         "International". The media strip (ABC News, Wanderlust, Brainz,
-         Solarcon) is deliberately NOT here: it runs at the foot of both avatar
-         pages and it would cost this page more than it pays on a router. -->
-    <dl class="px-record px-rise px-d3">
-      <div><dt>1000+</dt><dd>lives changed</dd></div>
-      <div><dt>9</dt><dd>countries</dd></div>
-      <div><dt>6+</dt><dd>years facilitating</dd></div>
-    </dl>
-
-    <!-- NO GUIDE POSITION HERE, and that is the point. The two avatar pages
-         take OPPOSITE positions and both are correct:
-           /men   "I haven't been married for 10 years+ (yet). But we're not
-                  too dissimilar."   Peer. It has to be, because a finished man
-                  who never did the thing is a fraud, and the page admits the
-                  not-married fact out loud.
-           /women "I did not just get out of it. I got me back."   Completed.
-                  It has to be, because peer is the fatal reading on her side,
-                  and her fear is that stopping means being passed over.
-         The guide position is a SALES argument. A router does not need it, and
-         whichever one it picked it would half-contradict the other page four
-         seconds later.
-
-         The page's human claim is already made, once, in block 03: "I did it
-         too. I built things people needed so I'd never have to ask to be
-         included." That is a scene rather than a claim and it commits to
-         nothing about how far out he is. This link is now the promise that the
-         rest of the story exists, read in whichever register belongs to the
-         reader. See HOME PAGE - Alignment Audit.md A3. -->
-    <a class="more px-rise px-d4" href="https://www.parallaxxtransformations.com/about-daniel-lawson">How I got here <span aria-hidden="true">&#8594;</span></a>
-  </div>
-</section>
-
-<!-- ══════════════ 05 · NEITHER OF THOSE ══════════════ -->
-<section class="px-sec" id="px-else">
-  <div class="px-wrap">
-    <span class="lab">Here for something else?</span>
-    <div class="row">
-      <a href="https://giveitallevent.com">GIVE IT ALL experiences</a>
-      <a href="https://www.parallaxxtransformations.com/daniel-lawson-speaking">Speaking</a>
-      <a href="https://www.parallaxxtransformations.com/parallaxx-perspectives-podcast">The podcast</a>
-      <a href="https://www.parallaxxtransformations.com/ptjournal">The journal</a>
+<!-- ══════════════ 01 · HERO + DOORS ══════════════
+     The H1 sets up BOTH pages: each door page opens on a version of
+     handling it all on your own. The door headings are those pages' H1s
+     verbatim (/men "You handled it all yourself. That's the distance.",
+     /women "You've hit every target. And you're still behind."). Keep
+     them in step. Second person on both, never a he beside a she. -->
+<section id="px-hero">
+  <div class="photo"><img src="https://static.wixstatic.com/media/111174_36d2347a86fd4315b960a3f1082c14af~mv2.jpg" alt="Daniel Lawson" loading="eager" fetchpriority="high"></div>
+  <div class="px-wrap in">
+    <span class="note px-hand px-rise px-d1">if this is you</span>
+    <h1 class="px-serif px-rise px-d2">Coaching for people who handle it all on their own.</h1>
+    <p class="lede px-rise px-d3">Ask how you&rsquo;re doing and you say fine. Or busy. Same answer for years.</p>
+    <div id="px-doors">
+      <a class="px-door px-rise px-d3" href="https://www.parallaxxtransformations.com/men">
+        <span class="tag">For men</span>
+        <h2 class="px-serif">You handled it all yourself. That&rsquo;s the distance.</h2>
+        <span class="go">This is me <span class="px-arrow" aria-hidden="true">&#8594;</span></span>
+      </a>
+      <a class="px-door px-rise px-d4" href="https://www.parallaxxtransformations.com/women">
+        <span class="tag">For women</span>
+        <h2 class="px-serif">You&rsquo;ve hit every target. And you&rsquo;re still behind.</h2>
+        <span class="go">This is me <span class="px-arrow" aria-hidden="true">&#8594;</span></span>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ══════════════ 06 · THE CLOSE ══════════════
-     The doors again, nothing new, and no second call to action competing
-     with them. ══════════════ -->
-<section class="px-sec" id="px-close">
-  <!-- The line for somebody who read the whole page and still has not clicked.
-       Note this is the only hand line on the site in title case; every other
-       one, here and on both avatar pages, is lowercase. Deliberate or not, it
-       is a one-word change. -->
-  <span class="hand px-hand px-rise px-d1">Choose Your Path</span>
-  <div class="pair">
-    <a class="px-mini px-rise px-d2" href="https://www.parallaxxtransformations.com/men">
-      <span class="tag">For men</span>
-      <span class="line">You handled it all yourself. That&rsquo;s where the distance came from.</span>
-      <span class="go">This is me <span aria-hidden="true">&#8594;</span></span>
-    </a>
-    <a class="px-mini px-rise px-d3" href="https://www.parallaxxtransformations.com/women">
-      <span class="tag">For women</span>
-      <span class="line">You&rsquo;ve hit every target. And you&rsquo;re still behind.</span>
-      <span class="go">This is me <span aria-hidden="true">&#8594;</span></span>
-    </a>
+<!-- ══════════════ 02 · GIVE IT ALL ══════════════
+     Kept at Daniel's request, 9 Oct 2026: credibility and the reference
+     to the wider world of experiences. Numbers ruled 3 Aug 2026. The
+     hand line was "who's holding it"; "holding" is on the voice skill's
+     internal-vocabulary list. -->
+<section id="px-gia">
+  <img src="https://static.wixstatic.com/media/111174_ad3e5fa47d294ff890516b996bbd2d3c~mv2.jpg" alt="Daniel Lawson facilitating a GIVE IT ALL evening" loading="lazy" decoding="async">
+  <div class="px-wrap">
+    <div class="card">
+      <span class="note px-hand">who you&rsquo;ll be with</span>
+      <p>I&rsquo;m <strong>Daniel Lawson</strong>. Credentialled through the <strong>International Coach Guild</strong>, qualified through over half a decade of client results, and the founder of <strong>GIVE IT ALL</strong> world of experiences.</p>
+      <dl>
+        <div><dt>1000+</dt><dd>Lives changed</dd></div>
+        <div><dt>9</dt><dd>Countries</dd></div>
+        <div><dt>6+</dt><dd>Years facilitating</dd></div>
+      </dl>
+      <div class="links">
+        <a href="https://www.parallaxxtransformations.com/about-daniel-lawson">How I got here <span class="px-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="gold" href="https://giveitallevent.com">GIVE IT ALL experiences <span class="px-arrow" aria-hidden="true">&#8594;</span></a>
+      </div>
+    </div>
   </div>
+</section>
+
+<!-- ══════════════ 03 · NEITHER OF THOSE ══════════════ -->
+<section id="px-else">
+  <span class="lab">Here for something else?</span>
+  <a href="https://www.parallaxxtransformations.com/daniel-lawson-speaking">Speaking</a><a href="https://www.parallaxxtransformations.com/insights/">Insights</a><a href="https://www.parallaxxtransformations.com/parallaxx-perspectives-podcast">The podcast</a><a href="https://www.parallaxxtransformations.com/ptjournal">The journal</a>
 </section>
 
 <footer id="pt-foot">

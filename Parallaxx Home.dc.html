@@ -92,17 +92,24 @@
   .px-door .go{margin-top:auto;padding-top:6px;color:#FF501F;font-weight:600;font-size:.95rem}
 
   @media(max-width:860px){
-    #px-hero .photo{position:relative;width:100%;height:40vh;min-height:280px}
+    /* The photo starts BELOW the fixed nav (61-65px on phones), or the nav
+       covers the top of his head. 12% keeps his face in the crop. */
+    #px-hero .photo{position:relative;width:100%;height:36vh;min-height:260px;margin-top:64px}
+    #px-hero .photo img{object-position:50% 12%}
     #px-hero .photo::after{background:linear-gradient(180deg,rgba(6,25,56,.35) 0%,rgba(6,25,56,0) 35%,#061938 100%)}
     #px-hero .in{padding-top:0;margin-top:-70px;padding-bottom:56px}
-    #px-hero h1{font-size:2.3rem}
+    /* THREE LINES ON EVERY PHONE (Daniel, 9 Oct). Sized to the text column,
+       not the screen: measured 3 lines from 320 to 600px at 9.4cqw, and
+       still 3 at 10cqw, so there is margin for a wider device font. The
+       container sits on .in, which is not an ancestor of the fixed nav. */
+    #px-hero .in{container-type:inline-size}
+    #px-hero h1{max-width:none;font-size:clamp(24px,9.4cqw,46px)}
     #px-doors{grid-template-columns:1fr;gap:12px;margin-top:30px}
     .px-door{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:6px 12px;padding:20px}
     .px-door .tag{width:100%}
     .px-door h2{flex:1 1 60%;font-size:1.25rem}
     .px-door .go{margin:0;padding:0}
   }
-  @media(max-width:360px){#px-hero h1{font-size:2rem}}
 
   /* ══ 02 GIVE IT ALL ══ */
   #px-gia{position:relative;min-height:520px;display:flex;align-items:flex-end;overflow:hidden}

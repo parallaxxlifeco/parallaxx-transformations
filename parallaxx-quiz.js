@@ -339,7 +339,7 @@ strong,b{color:var(--px-cream);font-weight:600}
     <div class="px-video-sec">
       <div class="px-wrap">
         <div class="px-video" id="r-video"></div>
-        <p class="px-video-cap" id="r-video-cap">Watch this before you read &mdash; it names the pattern faster than words do.</p>
+        <p class="px-video-cap" id="r-video-cap">Watch this first. It shows the pattern faster than reading about it will.</p>
       </div>
     </div>
 
@@ -358,7 +358,7 @@ strong,b{color:var(--px-cream);font-weight:600}
         <div class="px-rule"><span>The integration axis</span></div>
         <dl class="px-axis" id="r-axis"></dl>
 
-        <div class="px-rule"><span>How your answers landed</span></div>
+        <div class="px-rule"><span>How your answers scored</span></div>
         <div class="px-scores" id="r-scores"></div>
         <p class="px-flag" id="r-flag" hidden></p>
       </div>
@@ -367,8 +367,8 @@ strong,b{color:var(--px-cream);font-weight:600}
 
     <div class="px-final">
       <div class="px-wrap">
-        <h3 class="px-serif">How to turn this awareness into real transformative results?</h3>
-        <p>Awareness names the pattern. A conversation is where it starts to move.</p>
+        <h3 class="px-serif">So what do you do with this now?</h3>
+        <p>Seeing the pattern is a start. Changing it usually takes a conversation with someone who can reflect it back to you.</p>
         <a class="px-btn" id="r-cta" href="#">Book a call <span aria-hidden="true">→</span></a>
         <div class="px-restart"><button class="px-quiet" id="btn-restart" type="button">Retake the quiz</button></div>
       </div>
@@ -512,25 +512,25 @@ const ARCHETYPES = {
     video: 'https://youtu.be/0akj4Exa-iw',
     poster: '',
     prose: [
-      "The Freedom Fortress often builds a life that works &mdash; productive, focused, and free.",
-      "There’s usually a quiet satisfaction that comes from independence and not needing much from anyone. Momentum comes easily; stillness can feel strange, even uncomfortable. He tends to find comfort through motion &mdash; work, travel, training, and new projects all equal progress.",
-      "From the outside, he can appear calm and composed, but there’s often a restlessness just beneath the surface &mdash; a sense that there’s always something more to chase.",
-      "Freedom became his form of protection through staying in control, because at some point, being depended on or needing someone too much proved to be too risky. As a result, commitment or emotional closeness can sometimes feel like confinement, which is easier to pull away from.",
-      "The Freedom Fortress tends to build a life that no one can interrupt. A version of freedom that also keeps him safe. And it works, but it also keeps him disconnected.",
-      "His deepest relational misunderstanding is that <strong>closeness equals control</strong>, and he fears that if someone gets too close, they’ll start taking his space, energy, or focus.",
-      "It’s common for him to rarely articulate what he actually needs to feel safe and autonomous, which leaves women in his life guessing and lacking safety themselves.",
+      "The Freedom Fortress often builds a life that works. He’s productive, focused and free.",
+      "There’s usually a real satisfaction in being independent and not needing much from anyone. Momentum comes easily to him, and stillness can feel strange, even uncomfortable. So he finds comfort in motion, and work, travel, training and new projects all count as progress.",
+      "From the outside he can look calm and composed, but there’s often a restlessness underneath, a sense that there’s always something more to chase.",
+      "At some point, being depended on, or needing someone too much, felt too risky. So freedom became his protection, and staying in control is how he keeps it. Commitment and emotional closeness can start to feel like confinement, and confinement is easier to pull away from.",
+      "The Freedom Fortress tends to build a life nobody can interrupt, a kind of freedom that keeps him safe. And it works, and it also keeps him disconnected.",
+      "His biggest misunderstanding in relationships is that <strong>closeness means losing control</strong>. If someone gets too close, he’s worried they’ll start taking his time, his energy or his focus.",
+      "He rarely says what he needs to feel safe and free, which leaves his partner guessing, and feeling less safe as well.",
       "__CYCLE__That’s what triggers the familiar cycle:<br>she reaches in &rarr; he retreats &rarr; she feels shut out &rarr; he feels misunderstood &rarr; disconnection.",
-      "When “more openness” is requested of him, it’s often overwhelming, then causing him to retreat even further.",
-      "What the Freedom Fortress truly requires is <strong>clarity</strong>. When he can communicate his needs and boundaries before they’re threatened, women stop feeling like they’re locked outside his fortress."
+      "And when he’s asked to open up more, it often feels overwhelming, so he pulls back even further.",
+      "What changes this for the Freedom Fortress is <strong>clarity</strong>. When he can say what he needs and where his boundaries are before they’re under threat, his partner stops feeling locked outside."
     ],
     integIntro: [],
     pillars: [
-      { h: 'Clarity', p: ["Developing a conscious understanding of what is important, and communicating this so that connection doesn’t feel like invasion."] },
-      { h: 'Softness', p: ["The ability to let someone in, to allow himself to be affected by them, and by the emotions that arise as a result, without needing to fix, avoid, or manage them."] },
-      { h: 'Stillness', p: ["The ability to sit with the discomforts of the moment, to cultivate presence, and to enable intimacy to emerge."] },
-      { h: 'Receptivity', p: ["Allowing others to hold space for him. To trust in surrendering, and to feel deserving of care without earning it first."] }
+      { h: 'Clarity', p: ["Getting clear on what matters to him, and saying it, so closeness doesn’t feel like an invasion."] },
+      { h: 'Softness', p: ["Letting someone in and letting himself be affected by them, and by what he feels as a result, without needing to fix it, avoid it or manage it."] },
+      { h: 'Stillness', p: ["Staying with the discomfort of the moment instead of moving on, long enough to be present and for intimacy to grow."] },
+      { h: 'Receptivity', p: ["Letting other people be there for him and contribute, without feeling he has to earn their care first."] }
     ],
-    integOutro: ["The Freedom Fortress doesn’t need to give up his freedom. Rather, only to learn a version of it that includes connection that he craves."],
+    integOutro: ["The Freedom Fortress gets to keep his freedom. What changes is that it starts to include the connection he wants."],
     whenIntegrated: [],
     axis: {
       missing: 'Dependence, stillness, vulnerability',
@@ -546,27 +546,27 @@ const ARCHETYPES = {
     poster: '',
     prose: [
       "The Intellectual Defender often runs on clarity.",
-      "He tends to like things that make sense; patterns, reasons, frameworks. If he can understand it, he can manage it. And if he can manage it, he can relax.",
-      "He’s good with reflection, maybe at times too good. He can track his triggers and explain his patterns in detail. He often believes he’s naming his emotions, but tends to describe them in terms; good, bad, flat, fine.",
+      "He likes things that make sense, patterns, reasons, frameworks. If he can understand it, he can manage it. And if he can manage it, he can relax.",
+      "He’s good at reflecting, maybe too good at times. He can track his triggers and explain his patterns in detail, and he often believes he’s describing his emotions, when the words he uses are good, bad, flat, fine.",
       "He knows the <strong>story</strong> of how he feels, but not always the <strong>feeling itself</strong>.",
       "He often thinks he knows why he is the way he is. And yet, when it matters, he can still feel disconnected from what’s happening in the moment.",
-      "Thinking became the way to stay safe. At some point, emotion was unpredictable. Likely, too much, too loud, too inconvenient. So he built a filter for it: understanding. Now he doesn’t get lost in emotions, but he doesn’t truly feel them either.",
-      "To others, he can appear solid, composed, intellectually aware. But under that calm, there’s usually tension, maybe a fatigue of holding everything together with logic.",
+      "At some point emotion felt unpredictable, likely too much, too loud or too inconvenient, so thinking became how he stayed safe. Understanding became the filter. Now he doesn’t get lost in his emotions, and he doesn’t feel them much either.",
+      "To other people he can look solid, composed and self-aware. But there’s usually tension under that calm, and a tiredness that comes from holding everything together with logic.",
       "He may notice how much of life he spends thinking about living it. And moments continue to pass while he’s still processing them."
     ],
     integIntro: [
-      "For the Intellectual Defender, attaining more insight won’t help. He’s already mastered the mind, now he needs to trust what’s underneath it. The work is reconnecting with himself."
+      "For the Intellectual Defender, more insight won’t change much. He’s already very good at thinking, so what’s next is trusting what’s underneath it, and reconnecting with himself."
     ],
     pillars: [
-      { h: 'Full Emotional Spectrum', p: ["This is about moving from living in his head to developing his emotional world. Life isn’t lived from the mind, it’s experienced through the feelings in the body. Sitting with discomfort and unfamiliar emotions will be the pathway."] },
-      { h: 'Letting go of control', p: ["Allowing his mind to soften from its quick responses and notice what’s happening beneath the thinking. Rather than controlling through thought, it becomes about navigation from personal truth, guided by his emotional compass."] },
-      { h: 'Vulnerability', p: ["Stop hiding from truth through over-explaining or justification. This is about communicating from feeling, rather than waiting for perfect insight or understanding. Naming what’s actually there, what he needs, what he feels, what he wants, even when it’s messy."] }
+      { h: 'Full Emotional Spectrum', p: ["Moving out of his head and developing his emotional world. Life gets experienced through what he feels in his body, and the way there is sitting with discomfort and with emotions he isn’t used to."] },
+      { h: 'Letting go of control', p: ["Letting his mind slow down from its quick answers and noticing what’s happening underneath the thinking. Instead of steering everything with thought, he starts to go by what’s true for him, with his emotions as the compass."] },
+      { h: 'Vulnerability', p: ["Explaining and justifying less, and speaking from what he feels instead of waiting until he fully understands it. Saying what’s there, what he needs, what he feels and what he wants, even when it’s messy."] }
     ],
     integOutro: [],
     whenIntegrated: [
-      "Emotion is no longer noise that needs to be silenced. It becomes personal guidance for clarity.",
-      "That clarity deepens into wisdom; not what he knows, but what he feels and then understands.",
-      "He starts to notice that when he’s fully present, people listen differently, because hearing him then turns into feeling him. And for the first time, his intelligence connects instead of protects."
+      "Emotion stops being noise to switch off and becomes something that guides him.",
+      "That turns into wisdom, built from what he feels first and understands after.",
+      "He starts to notice that when he’s fully present, people listen to him differently, because they can feel him as well as hear him. And his intelligence starts connecting him to people, where before it protected him."
     ],
     axis: {
       missing: 'Feeling, embodiment, surrender',
@@ -581,26 +581,26 @@ const ARCHETYPES = {
     video: 'https://youtu.be/1szL7SrqJVc',
     poster: '',
     prose: [
-      "The Idealist picks up everything.",
-      "He’s drawn to depth, beauty, and connection that feels real. Surface-level living drains him. He wants to feel inspired and moved.",
+      "The Idealist picks up on everything.",
+      "He’s drawn to depth, beauty and connection that feels real, and surface-level living drains him. He wants to feel inspired and moved.",
       "He tends to search for that spark of “rightness” in people, work, and love. When it’s good, it’s really good, everything feels alive and aligned.",
       "But when the spark dips, when the vibe feels off, he starts to step back. He tells himself it’s discernment, but usually, it’s protection.",
       "At some point, disappointment taught him that staying open hurts. So he learned to chase the feeling of perfect alignment instead of staying with what’s real.",
-      "He keeps his heart safe by only fully showing up when things feel perfect. He doesn’t mean to withdraw, he just hasn’t practiced intimacy that grows through imperfection, not alignment."
+      "He keeps his heart safe by only fully showing up when things feel perfect. He doesn’t mean to withdraw, he just hasn’t had much practice at the kind of intimacy that grows through the imperfect parts."
     ],
     integIntro: [],
     pillars: [
-      { h: 'Grounded Reality', p: ["Learning to meet what’s here in the moment, instead of what could be. To see that depth doesn’t disappear when connection feels ordinary. It’s about showing up with consistency through imperfection, instead of chasing chemistry to keep things alive."] },
-      { h: 'Emotional Range', p: ["Letting the full spectrum of emotion exist; frustration, disappointment, boredom, without rushing to find something higher. Staying present through the dull moments builds the safety his heart actually needs."] },
-      { h: 'Honest Acceptance', p: ["Instead of holding out for perfect alignment, he practices softening into what’s real; the mess, the nuance, the difference. This is how he learns to show up with the vulnerability that true depth requires."] },
-      { h: 'Expression without perfection', p: ["Sharing what he feels, even when it’s uncertain or half-formed. Speaking from emotion; “I’m confused,” “I’m hurt,” or “I miss you,” instead of waiting until it sounds clear or evolved. This restores truth to his emotional needs through letting truth come through raw."] }
+      { h: 'Grounded Reality', p: ["Meeting what’s here in the moment instead of what could be, and seeing that depth is still there when connection feels regular. It means showing up consistently through the imperfect parts, instead of chasing chemistry to keep things alive."] },
+      { h: 'Emotional Range', p: ["Letting the full range of emotion exist, frustration, disappointment, boredom, without rushing off to find something higher. Staying present through the dull moments builds the safety his heart needs."] },
+      { h: 'Honest Acceptance', p: ["Instead of holding out for perfect alignment, he practises accepting what’s real, the mess, the nuance, the differences. That’s how he learns to show up with the vulnerability that depth needs."] },
+      { h: 'Expression without perfection', p: ["Sharing what he feels, even when it’s uncertain or half-formed. Speaking from emotion; “I’m confused,” “I’m hurt,” or “I miss you,” instead of waiting until it sounds clear or evolved. That’s how what he needs gets said, by letting it come out raw."] }
     ],
-    integOutro: ["This is how he builds real connection: through honesty. Love isn’t found in magic; it’s built through staying open when connection is not ideal."],
+    integOutro: ["So he builds real connection through honesty, and love gets built by staying open when things aren’t ideal."],
     whenIntegrated: [
       "Intensity turns into intimacy, and depth becomes devotion.",
-      "He realises that alignment doesn’t mean perfection, but rather being real, and choosing to stay long enough to allow it to grow.",
-      "When he’s grounded in the present, his emotional honesty becomes his differentiator. Connection stops being a high to chase and starts becoming a life to build.",
-      "The Idealist finally sees that the extraordinary he’s been chasing has always lived within the ordinary."
+      "He realises alignment means being real, and choosing to stay long enough for it to grow.",
+      "When he’s grounded in the present, his emotional honesty is what sets him apart. Connection stops being a high to chase and becomes a life to build.",
+      "And the Idealist starts to see that what he’s been chasing was there in the regular days all along."
     ],
     axis: {
       missing: 'Acceptance, consistency, emotional tolerance',
@@ -616,28 +616,28 @@ const ARCHETYPES = {
     poster: '',
     prose: [
       "The Performer often knows how to make things feel alive.",
-      "He tends to be naturally engaging; funny, present, tuned in. He can read the room easily, sense people’s moods, and adjust his tone or pace to meet them. It’s not faked, rather a developed instinct.",
+      "He tends to be naturally engaging, funny, present, tuned in. He can read the room easily, sense people’s moods, and adjust his tone or pace to meet them. It’s an instinct he’s built, and it’s real.",
       "He’s learned that connection often comes through expression. And when he brings energy, people light up.",
-      "But underneath, that same instinct can become a kind of protection. Because, likely during childhood, he learned that being quiet, still, or uninteresting could mean being unseen.",
-      "So he finds safety in motion; through humour, insight, warmth, or intensity. If he can keep the energy alive, he can keep the connection alive, but this can also make it hard for them to connect deeply with him.",
-      "He leads with giving, but his imbalance with receiving often becomes an invisible way of managing closeness; keeping people near without fully letting them in.",
-      "From the outside, he looks confident, open, and emotionally fluent. But underneath, there’s often fatigue, the cost of performing for others. Because if he stops, who’s left to love?",
+      "But underneath, that same instinct can become protection, because likely as a kid he learned that being quiet, still or uninteresting could mean going unseen.",
+      "So he finds safety in motion, through humour, insight, warmth or intensity. If he can keep the energy alive, he can keep the connection alive, and it can also make it hard for people to get close to him.",
+      "He leads with giving, and because receiving is harder for him, giving becomes a way of managing closeness, keeping people near without fully letting them in.",
+      "From the outside he looks confident, open and emotionally fluent. Underneath, there’s often a tiredness that comes from performing for everyone. Because if he stops, who’s left to love?",
       "And this is what keeps intimacy out of reach. He’s loved for the energy he brings, not always for the truth he hides. He can make others feel great, while feeling unseen himself."
     ],
     integIntro: [
-      "For The Performer, the work isn’t to be less expressive, rather it’s to be expressive without effort. He’s spent years mastering energy; now he learns to rest in it."
+      "For the Performer, what changes this is being just as expressive, without the effort. He’s spent years getting good at bringing energy, and now he gets to rest in it."
     ],
     pillars: [
-      { h: 'Receiving', p: ["Letting attention and care come toward him, without deflecting it with humour or explanation. Allowing people to see him instead of just feel him in the real moments that are not always high."] },
-      { h: 'Stillness', p: ["The ability to stay in the moment without reaching for the next word, joke, or gesture. To trust that connection doesn’t fade just because he stops holding it up."] },
-      { h: 'Authenticity', p: ["Letting truth take the place of performance. Saying what’s real, not just what sounds right. Dropping the habit of reading the room, and learning to read himself instead."] },
-      { h: 'Self-Trust', p: ["The ability to feel grounded in who he is, even when no one’s reflecting it back. Learning to hold his own approval instead of chasing it through impact. When he trusts himself, expression becomes choice, not proof."] }
+      { h: 'Receiving', p: ["Letting attention and care come toward him, without deflecting it with humour or explanation. Letting people see him in the real moments too, including the ones that aren’t high energy."] },
+      { h: 'Stillness', p: ["Staying in the moment without jumping to the next word, joke or gesture, and trusting that the connection stays when he stops holding it up."] },
+      { h: 'Authenticity', p: ["Saying what’s real instead of what sounds right, and getting into the habit of reading himself as well as reading the room."] },
+      { h: 'Self-Trust', p: ["The ability to feel grounded in who he is, even when no one’s reflecting it back. Learning to hold his own approval instead of chasing it through impact. When he trusts himself, expressing himself is a choice he makes, and he stops needing it to prove anything."] }
     ],
     integOutro: [],
     whenIntegrated: [
       "His expression stops being performance and becomes a presence that creates real connection.",
-      "Charisma softens into calm confidence. Energy turns into ease.",
-      "Connection is no longer something he has to maintain, it becomes an experience he trusts.",
+      "His charisma softens into calm confidence, and the energy comes with ease.",
+      "Connection becomes something he trusts, where before it was something he had to keep up.",
       "The Performer becomes the man whose presence is felt, because he’s shifted from being impressive to being real."
     ],
     axis: {
@@ -654,28 +654,28 @@ const ARCHETYPES = {
     poster: '',
     prose: [
       "The Over-Controlled Romantic wants connection. But even more, he wants to get it right.",
-      "He’s thoughtful, steady, emotionally aware, and careful not to overstep. He reads the room before he reveals himself. He listens, reflects, and adjusts. Always tracking what’s appropriate, what’s safe, what won’t be “too much.”",
-      "It’s not that he’s disingenuous; but rather he has learned that too much emotion, too soon made people pull away. So he built safety in restraint. He learned to self-censor before speaking, to temper enthusiasm, to measure expression. His composure became protection.",
+      "He’s thoughtful, steady, emotionally aware and careful not to overstep. He reads the room before he shows himself, and he listens, reflects and adjusts, always tracking what’s appropriate, what’s safe and what won’t be “too much.”",
+      "He’s sincere. At some point he learned that too much emotion, too soon, made people pull away, so he found safety in restraint. He learned to censor himself before speaking, to hold back his enthusiasm and measure what he shows, and his composure became his protection.",
       "He often confuses restraint with maturity. He prides himself on being calm, measured, and grounded, and he usually is.",
-      "But beneath that composure lives a current of unspoken feeling: excitement that doesn’t get shared, affection that doesn’t get voiced, opinions are softened before they’re shared. He lives half a step behind his own impulse.",
-      "In relationships, he wants depth, but fears mis-calibration. He might be coming on too strong, be misunderstood, say the wrong thing. So he plays it safe.",
-      "His partners sense his steadiness but not always his aliveness. Connection feels polite, never a real fire; warm, but rarely wild.",
-      "Over time, this protection leaves him unseen in a different way. He becomes the man everyone likes, dependable, kind, considerate, but few people get to really feel. He mistakes emotional control for emotional intelligence.",
+      "But beneath that composure lives a current of unspoken feeling, excitement that doesn’t get shared, affection that doesn’t get said, opinions softened before they come out. He lives half a step behind his own impulses.",
+      "In relationships he wants depth, and he’s scared of getting it wrong, coming on too strong, being misunderstood, saying the wrong thing. So he plays it safe.",
+      "His partner feels his steadiness, and not always his aliveness. The connection feels polite and warm, and rarely wild.",
+      "Over time this leaves him unseen in a different way. He becomes the man everyone likes, dependable, kind and considerate, and few people get to feel who he is. He mistakes emotional control for emotional intelligence.",
       "And yet, beneath it all, he’s longing to be met by someone who can draw out the parts he’s been keeping contained."
     ],
     integIntro: [],
     pillars: [
-      { h: 'Permission', p: ["Reclaiming the right to feel, to express, to be affected by others. Learning that enthusiasm isn’t neediness, and that through showing excitement is what reveals his most attractive self. His switch from managing his expression to allowing it to move through him is where he will discover safety within himself."] },
-      { h: 'Emotional Leadership', p: ["He lets go of waiting for self composure to leading while feeling &mdash; even when messy. This enables emotion to coexist with direction and allows his presence to guide. True leadership in love is responsiveness, not in management or control."] },
-      { h: 'Embodied Presence', p: ["Letting his body communicate as much as his mind. Breathing through the impulse instead of analysing it. Trusting that connection deepens when he shows what he feels in real time, not after it’s been censored."] },
-      { h: 'Self-Validation', p: ["Shifting from external calibration (“Did I say that right?”) to internal affirmation (“That was honest”). He then develops trust in his own emotional truth, authenticity feels safe and natural."] }
+      { h: 'Permission', p: ["Reclaiming the right to feel, to express himself and to be affected by other people. Learning that enthusiasm is attractive, and that showing his excitement is when people see him at his best. When he stops managing what he expresses and lets it move through him, he finds safety within himself."] },
+      { h: 'Emotional Leadership', p: ["He stops waiting until he’s composed, and leads while he’s feeling, even when it’s messy. That lets emotion and direction sit together, and his presence guides. In love, leading means responding, more than managing or controlling."] },
+      { h: 'Embodied Presence', p: ["Letting his body say as much as his mind, breathing through an impulse instead of analysing it, and trusting that connection deepens when he shows what he feels in the moment, before he’s edited it."] },
+      { h: 'Self-Validation', p: ["Moving from checking with everyone else (“Did I say that right?”) to checking with himself (“That was honest”). As he trusts what he feels, being himself starts to feel safe and natural."] }
     ],
-    integOutro: ["This is not about abandoning his composure, rather allowing his impulses to come alive and share space with it."],
+    integOutro: ["He keeps his composure. What changes is that his impulses get to come alive alongside it."],
     whenIntegrated: [
       "Emotion stops being something to manage, and becomes something to lead with.",
-      "He realises that connection is not about perfection; it requires presence.",
-      "When he gives himself permission to be seen, his attractive warmth shines through.",
-      "The Over-Controlled Romantic becomes the man whose calm carries depth, because he stops hiding what he feels. Love becomes something he allows because he elevated himself from always trying to get it right."
+      "He realises connection needs presence more than it needs perfection.",
+      "When he gives himself permission to be seen, people feel his warmth.",
+      "The Over-Controlled Romantic becomes the man whose calm carries depth, because he stops hiding what he feels. And love becomes something he lets in, once he stops trying to get it right all the time."
     ],
     axis: {
       missing: 'Emotional spontaneity, embodied truth, self-permission',
@@ -811,7 +811,7 @@ function renderVideo(a){
     return;
   }
 
-  $('r-video-cap').textContent = 'Watch this before you read — it names the pattern faster than words do.';
+  $('r-video-cap').textContent = 'Watch this first. It shows the pattern faster than reading about it will.';
 
   if (/\.mp4($|\?)/i.test(url)){
     const v = document.createElement('video');
@@ -879,9 +879,9 @@ function renderResult(result){
   }).join('');
 
   const notes = [];
-  if (result.flags.flatProfile) notes.push(`Your top two patterns are close &mdash; ${ARCHETYPES[result.secondary].name} is running almost as strongly. Read that one too.`);
-  if (result.flags.lowCandour)  notes.push('You answered &ldquo;Very me&rdquo; to never feeling insecure in dating. Worth a second look &mdash; that answer often protects something.');
-  if (result.flags.lowAttention) notes.push('One of the check questions suggests you moved fast. If this doesn’t land, retake it slower.');
+  if (result.flags.flatProfile) notes.push(`Your top two are close, and ${ARCHETYPES[result.secondary].name} is running almost as strongly as this one.`);
+  if (result.flags.lowCandour)  notes.push('You answered &ldquo;Very me&rdquo; to never feeling insecure in dating. It’s worth a second look, because that answer is often part of the protection.');
+  if (result.flags.lowAttention) notes.push('One of the check questions suggests you moved fast. If this doesn’t resonate, take it again a bit slower.');
   const flag = $('r-flag');
   flag.hidden = notes.length === 0;
   flag.innerHTML = notes.join('<br><br>');

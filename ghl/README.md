@@ -25,3 +25,24 @@ Fields sent (form-encoded), usable in the workflow as
 in GHL's inbound-webhook form. Paste it into the workflow's email action as
 HTML. To change the wording, edit the plain sentences around the card; the
 card itself is driven entirely by the rank fields.
+
+### The GHL workflow (built and published 9 Oct 2026)
+
+"Priority Audit - Results + Notification", in GHL under Automation >
+Workflows (sub-account "Daniel Lawson"). Steps, in order:
+
+1. Trigger: Inbound Webhook (premium trigger, billed per run). Its URL is
+   the leadEndpoint above. Mapping reference = a sample request with all the
+   fields listed here; re-pick a fresh sample if fields are ever added.
+2. Create/update contact: Email and First name from the webhook.
+3. Add tag `priority-audit`.
+4. Add tag (dynamic) `pa-top-{{inboundWebhookRequest.top_pillar}}`.
+5. Email her results: subject "Your Priority Audit results", body is
+   priority-audit-results-email.html pasted into the editor's source view.
+   Sent from the account default sender (daniel@reconnectyou.life).
+6. Notify Daniel: internal notification email to parallaxxlifeco@gmail.com,
+   subject "Priority Audit: <first name> - <top pillar>", body = summary.
+
+Re-entry is on, so someone retaking the audit gets a fresh email each time.
+Tested end to end 9 Oct with parallaxxlifeco+audittest@gmail.com (contact
+"Testa" in GHL can be deleted).

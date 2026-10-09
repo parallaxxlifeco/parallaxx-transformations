@@ -206,6 +206,21 @@ get lost. `The Reconnected Woman.dc.html` is the older chain and is superseded.
 
 Edit the preview file. It IS the page.
 
+**Changing the open-session date is two jobs, not one.** The date in
+`#rw-open` (`data-open-at`, `data-open-times`) only drives what the page
+shows. The registration emails, the calendar invite and the waitlist routing
+all run off four GHL custom values that this repo never touches:
+`rw_session_datetime` (ISO with `+08:00`, which is load-bearing),
+`rw_session_date`, `rw_session_time` and `rw_add_to_calendar`. Then there is the
+Google Calendar event on the permanent Meet room, `oqh-htqs-att`. If only the
+page moves, every woman who registers lands on the waitlist and gets "the
+next date isn't set yet" while the page shows a date. That is exactly what
+happened between 28 Sept and 8 Oct 2026. So whenever `data-open-at` changes,
+run the **rw-new-date** skill, which does the page, GHL, the calendar event, the
+waitlist release and the push as one checklist. The background is in
+`Avatar + Personal Awareness/Women/GHL — Reconnected Woman WF/05 — BUILD SHEET — waitlist split.md`.
+GHL goes first and the push goes last. Do not ship the page date on its own.
+
 **The apply CTAs open a LeadConnector form in a modal, not a new tab.** All
 four of them — the hero, both pricing cards and the closing block — carry
 `data-trw-modal` and open the same dialog. The form ID appears three times in

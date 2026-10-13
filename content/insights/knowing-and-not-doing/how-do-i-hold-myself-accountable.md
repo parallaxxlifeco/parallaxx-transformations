@@ -5,8 +5,8 @@ pillar: knowing-and-not-doing
 intent: you cannot hold yourself to something you still think is selfish
 question: Why do I struggle to hold myself accountable?
 card: You can't hold yourself to something you still think you shouldn't be doing.
-answer: Because the commitment is to something you still think you shouldn't be doing. Accountability to a client or a boss runs on somebody waiting at the other end, and a plan that only serves you has nobody there, so it gets dropped the moment anyone else needs something. What changes this is deciding the thing is allowed, then letting someone see you do it.
-description: You keep your word to everybody else and break it to yourself. Daniel Lawson on why accountability gives way on a commitment you think is selfish.
+answer: Because the commitment is to something you still think you shouldn't be doing. Accountability to a client or a boss is attached to serving someone else, and a plan that only serves you isn't, so it gets dropped the moment anyone else needs something. What changes this is deciding the thing is allowed, then letting someone see you do it.
+description: You keep your word to everybody else and break it to yourself. Daniel Lawson on why accountability fails on a commitment you think is selfish.
 published: 2026-10-13
 updated: 2026-10-13
 sources: PM-10-057, PM-10-059, PM-10-060, PM-10-061, PM-10-062, PM-10-063, PM-10-065, PM-10-089, PM-10-090, PM-10-102, PM-10-103, PM-10-104, PM-10-105, PM-10-106, PM-10-107, PM-10-108, PM-02-040, PM-02-071, PM-04-061, PM-04-062, PW-06-058, PW-06-092, PW-06-093, PW-10-057, PW-10-314, DL-458, DL-460
@@ -60,7 +60,7 @@ Three things change this, and none of them is more force. The commitment has to 
 
 | What a commitment to yourself needs | What happens without it |
 |---|---|
-| To be yours, not a routine somebody else set | It runs while they are there and drifts the week after |
+| To be yours, not a routine somebody else set | It runs while they are there and gets dropped the week after |
 | To be told to someone else, with a time in the calendar | It gets forgotten inside the hour, and nothing was broken because nothing was ever said |
 | To be uncomfortable enough to count, and small enough to finish | Too easy and it proves nothing, too hard and the stopping becomes evidence against you |
 

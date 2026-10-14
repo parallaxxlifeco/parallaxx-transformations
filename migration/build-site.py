@@ -117,6 +117,25 @@ def analytics_head() -> str:
         "    'analytics_storage': analytics\n"
         "  });\n"
         "})();\n"
+        # Daniel's own visits. GA4's IP-based internal-traffic filter is no use
+        # to someone who moves between countries, so the opt-out is per
+        # browser instead: open any page once with ?px-me=on and that browser
+        # stops sending to GA4 for good (?px-me=off undoes it). The ga-disable
+        # flag is Google's own kill switch -- no hits at all, outbound click
+        # events included -- and it must be set before gtag('config').
+        "(function(){\n"
+        "  var q = location.search, msg = '';\n"
+        "  try {\n"
+        "    if (/[?&]px-me=on\\b/.test(q)) { localStorage.setItem('px-me', '1'); msg = 'Analytics OFF for this browser'; }\n"
+        "    if (/[?&]px-me=off\\b/.test(q)) { localStorage.removeItem('px-me'); msg = 'Analytics back ON for this browser'; }\n"
+        "    if (localStorage.getItem('px-me') === '1') { window['ga-disable-" + GA4_ID + "'] = true; }\n"
+        "  } catch (e) {}\n"
+        "  if (msg) { document.addEventListener('DOMContentLoaded', function(){\n"
+        "    var d = document.createElement('div'); d.textContent = msg;\n"
+        "    d.style.cssText = 'position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:2147483647;background:#111;color:#fff;font:600 14px/1.2 system-ui,sans-serif;padding:10px 16px;border-radius:8px';\n"
+        "    document.body.appendChild(d); setTimeout(function(){ d.remove(); }, 5000);\n"
+        "  }); }\n"
+        "})();\n"
         "gtag('js', new Date());\n"
         "gtag('config', '" + GA4_ID + "');\n"
         "</script>\n"

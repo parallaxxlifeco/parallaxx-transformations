@@ -333,27 +333,27 @@ PILLARS = {
     # than interchangeable. Found in their words, remembered in his.
     "knowing-and-not-doing": dict(
         name="Knowing your pattern and still running it",
-        blurb="You can describe the thing you do. You do it anyway.",
+        blurb="You can describe your pattern, but it doesn't change it and you do it anyway.",
         offer="/the-archetype-quiz",
     ),
     "being-the-capable-one": dict(
         name="Being the one who can handle it",
-        blurb="It never looks like self-abandonment. It looks like being good at life.",
+        blurb="From the outside, it just looks like being good at life.",
         offer="/women",
     ),
     "not-knowing-what-you-want": dict(
         name="Not knowing what you want",
-        blurb="Somebody asks what you want and you come up empty.",
+        blurb="Somebody asks what you want, but you're still vague on the detail.",
         offer="/priority-audit",
     ),
     "getting-what-you-wanted": dict(
         name="Getting what you wanted and feeling nothing",
-        blurb="You hit the thing you spent years on, and the view stays the same.",
+        blurb="You've achieved the goals and live the life. But it isn't what you imagined.",
         offer="/men",
     ),
     "what-the-work-costs": dict(
-        name="What the work costs",
-        blurb="The part nobody selling this will tell you about.",
+        name="What personal development requires",
+        blurb="When you change, some people go, and it gets lonely for a while.",
         offer="/women",
     ),
 }
@@ -732,13 +732,13 @@ def render_index(ctx, by_pillar) -> str:
         "about": {"@id": ctx["person_id"]},
     }]
     inner = ('<div class="masthead"><h1>Insights</h1>'
-             '<p class="lede">Questions that come up in the '
-             'rooms, answered the way they get answered there.</p></div>'
+             '<p class="lede">Questions and discussion topics with '
+             'responses from my groups.</p></div>'
              '<div class="pillars">' + "".join(blocks) + '</div>' + subscribe_box())
     return _page(ctx, url, "Insights | Parallaxx Transformations",
-                 "Questions that come up in the rooms, answered the way they "
-                 "get answered there.", "Insights",
-                 "Questions that come up in the rooms.",
+                 "Questions and discussion topics with responses from my "
+                 "groups.", "Insights",
+                 "Questions and discussion topics with responses from my groups.",
                  ctx["dump_schema"](graph), inner, wrap_class=" wrap--wide")
 
 
@@ -785,8 +785,8 @@ def render_feed(ctx, by_pillar) -> str:
             '<title>Parallaxx Insights</title>\n'
             f'<link>{origin}/insights</link>\n'
             f'<atom:link href="{origin}/insights/feed.xml" rel="self" type="application/rss+xml"/>\n'
-            '<description>Questions that come up in the rooms, answered the way '
-            'they get answered there.</description>\n'
+            '<description>Questions and discussion topics with responses from my '
+            'groups.</description>\n'
             '<language>en</language>\n'
             f'<lastBuildDate>{newest}</lastBuildDate>\n'
             + "\n".join(items) + "\n</channel></rss>\n")

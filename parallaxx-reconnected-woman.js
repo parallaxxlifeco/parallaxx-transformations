@@ -1092,7 +1092,7 @@
       <span class="mask"><span class="key">Reconnected</span></span>
       <span class="mask"><span>Woman</span></span>
     </h1>
-    <p class="sub" data-r="near"><span>You've competed with men. Led men. Carried men.</span><b>The masculine is provided.</b><b>You don't have to, for a change.</b></p>
+    <p class="sub" data-r="near"><span>For the capable one everybody leans on, who handles it all on her own,</span><b>has set goals and hit every target,</b><b>and ignored the price she's paid.</b></p>
     <button class="btn" type="button" data-trw-modal data-r="mid">Come To The Open Session</button>
     <p class="theme js-theme-block" data-r="far"><span class="theme-lab">This month</span><span class="js-open-theme">Self-Recognition for Unconditional Worth</span></p>
     <div class="next" data-r="far">Next open session<span class="sep">&nbsp;&middot;&nbsp;</span><span class="nd"><span class="js-open-date">Tuesday 20 October</span><span class="js-open-tz"> &nbsp;&middot;&nbsp; 08:30 CET</span></span><span class="cnt js-open-count"></span></div>
@@ -1133,11 +1133,11 @@
     <div class="divider" data-r="far"></div>
     <ul class="load" id="loadList">
       <li><span class="gauge"><i class="axis"></i><i class="span"></i><i class="fix"></i><i class="mov"></i></span><span class="txt">You said yes again this week. There was no room for it.</span></li>
-      <li><span class="gauge"><i class="axis"></i><i class="span"></i><i class="fix"></i><i class="mov"></i></span><span class="txt">You're the one everyone talks to. Nobody asks about you.</span></li>
+      <li><span class="gauge"><i class="axis"></i><i class="span"></i><i class="fix"></i><i class="mov"></i></span><span class="txt">You're the one everyone talks to. When they ask about you, you say you're good.</span></li>
       <li><span class="gauge"><i class="axis"></i><i class="span"></i><i class="fix"></i><i class="mov"></i></span><span class="txt">You hit the target. The target moves.</span></li>
       <li><span class="gauge"><i class="axis"></i><i class="span"></i><i class="fix"></i><i class="mov"></i></span><span class="txt">You cancelled on someone who matters. Again.</span></li>
       <li><span class="gauge"><i class="axis"></i><i class="span"></i><i class="fix"></i><i class="mov"></i></span><span class="txt">You're holding it together for more people than you'd admit to.</span></li>
-      <li><span class="gauge"><i class="axis"></i><i class="span"></i><i class="fix"></i><i class="mov"></i></span><span class="txt">You look at the men around you and not one of them is carrying anything for you.</span></li>
+      <li><span class="gauge"><i class="axis"></i><i class="span"></i><i class="fix"></i><i class="mov"></i></span><span class="txt">You keep it to yourself and sort it on your own, because that seems kinder, or more efficient.</span></li>
     </ul>
     <div class="closer" id="recogCloser">
       <p>You're winning. You're delivering.<span class="hit">And you're the only one who feels what it costs.</span></p>
@@ -1182,18 +1182,18 @@
       <div class="row">
         <div class="step">
           <span class="n">01</span>
-          <h4>Work Out What You Want</h4>
+          <h4>Get Clear On What You Want</h4>
           <p>The personal unmet values and needs.</p>
         </div>
         <div class="step">
           <span class="n">02</span>
-          <h4>Prioritising Yourself</h4>
+          <h4>Ask For It</h4>
           <p>Asking for, and declining, with real intention.</p>
         </div>
         <div class="step">
           <span class="n">03</span>
-          <h4>Your Outcome In Reality</h4>
-          <p>Not your assumption of it.</p>
+          <h4>Notice The Shift</h4>
+          <p>It's never what you expected.</p>
         </div>
       </div>
     </div>
@@ -1316,7 +1316,7 @@
 <section class="sec dark" id="listen">
   <div class="in narrow">
     <h2 data-r="near">What kind of conversation to expect?</h2>
-    <p class="lede" data-r="mid">Here's a recent summary of us together.</p>
+    <p class="lede" data-r="mid">A recent summary of one of our sessions.</p>
     <div class="player" data-r="mid">
       <div class="t">The Reconnected Woman &mdash; a summary of a recent session</div>
       <audio id="rw-listen" preload="none" src="/audio/reconnected-woman-summary.mp3"></audio>
@@ -1413,8 +1413,8 @@
       <p class="lede">Come, sit in it, and decide from the session rather than from this page.</p>
     </div>
     <div class="stay">
-      <h3>Stay, and here's the four weeks.</h3>
-      <p class="dim">Work out what you want, and ask for it.</p>
+      <h3>Stay, and the four weeks run like this.</h3>
+      <p class="dim">Figure out what you want, and ask for it.</p>
       <ul>
         <li>One live session a week, in four-week cycles</li>
         <li>Live facilitation and hot seat work</li>
@@ -1439,7 +1439,7 @@
     <h2 data-r="near">You'll own a new experience of your life.</h2>
     <div class="after-grid" data-r="mid">
       <div><h4>Continue to build upon it</h4><p>Build the reps, with the same one or a different one.</p></div>
-      <div><h4>Continue more personalised</h4><p>Credit your membership to personal 1:1 access.</p></div>
+      <div><h4>Continue more personalised</h4><p>Reconnect, 1:1, with your membership included.</p></div>
       <div><h4>Continue alone</h4><p>Take what you've gained, and celebrate your wins.</p></div>
     </div>
   </div>
@@ -1459,7 +1459,7 @@
       <details><summary>Do I need to attend every session?</summary><div class="ans">No. Life moves and the group knows it. Come when you can, and know that the women who turn up regularly are the ones who feel it shift.</div></details>
       <details><summary>When do sessions run?</summary><div class="ans">One sitting time, set so it works across the time zones the group is spread over, and we stay fluid with what the group asks for. Come to the open session and you'll see how it sits with your week.</div></details>
       <details><summary>What does the fee include?</summary><div class="ans">Facilitation, hot seat work, resources, and the people you'll meet. It's largely a filter.</div></details>
-      <details><summary>Are there upsells coming?</summary><div class="ans">No. There's the 1:1 Reconnect Program if you decide you want more, faster, deeper, and your membership investment is discounted from that. Same work, same direction. More personal.</div></details>
+      <details><summary>Are there upsells coming?</summary><div class="ans">No. There's the 1:1 Reconnect Program if you decide you want more, faster, deeper, and your membership comes with it. Same work, same direction. More personal.</div></details>
     </div>
   </div>
 </section>
@@ -1468,7 +1468,7 @@
 <section class="sec ink" id="cta-final">
   <div class="in">
     <p class="ey" data-r="far">Ready?</p>
-    <h2 data-r="near" class="twoline">Work out what you want,<span>and ask for it in four weeks.</span></h2>
+    <h2 data-r="near" class="twoline">Figure out what you want,<span>and ask for it in four weeks.</span></h2>
     <p class="when" data-r="mid">Next open session <span class="js-open-date" data-fallback="is being confirmed">Tuesday 20 October</span>. Free to attend, short application form first.</p>
     <button class="btn" type="button" data-trw-modal data-r="mid">Register For The Open Session</button>
   </div>

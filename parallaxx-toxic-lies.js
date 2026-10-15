@@ -216,7 +216,7 @@ html{scroll-behavior:smooth}
         <span class="mask"><span>You probably believe</span></span>
         <span class="mask"><span class="k">at least one of these.</span></span>
       </h1>
-      <p class="lede" data-r="mid">A short book about time and what it costs you. About an hour to read, with three exercises to write your own answers into.</p>
+      <p class="lede" data-r="mid">What if the busyness was never about time? A short book about the lies that keep you busy, stressed and unfulfilled. About an hour to read, with three action steps to write your own answers into.</p>
       <a class="btn" href="https://buy.stripe.com/5kA01L10meewbni008" data-r="mid">Buy the book</a>
       <p class="fine" data-r="far">&euro;14.97 &nbsp;&middot;&nbsp; Paperback &nbsp;&middot;&nbsp; Posted anywhere in the world</p>
     </div>
@@ -231,14 +231,19 @@ html{scroll-behavior:smooth}
 <section class="sec dark">
   <div class="in narrow">
     <p class="ey" data-r="far">If this is you</p>
-    <h2 data-r="mid">The day ends and you could not say where it went.</h2>
+    <!-- Rows are the book's own opening mirror (2026 edition, p3), word for word
+         apart from "nobody", which the voice skill bans. -->
+    <h2 data-r="mid">You&rsquo;re handling everything, and you&rsquo;re last on the list.</h2>
     <ul class="rows" data-r="mid">
-      <li><h3>Nothing settles</h3><p>Your attention is in four places and none of them is the thing in front of you.</p></li>
-      <li><h3>No costs more than yes</h3><p>So you take on more than you want to, and feel it the moment you agree.</p></li>
-      <li><h3>The list outlives the day</h3><p>You work hard and finish nothing, so tomorrow starts behind.</p></li>
-      <li><h3>Done never arrives</h3><p>You finish something and move to the next one without stopping to notice.</p></li>
+      <li><h3>Fine, or busy</h3><p>Someone asks how you&rsquo;re doing and that&rsquo;s the answer. Same answer for years.</p></li>
+      <li><h3>Yes, when you&rsquo;d rather say no</h3><p>Another project, another favour, another thing you&rsquo;ll just take care of.</p></li>
+      <li><h3>The dinner you cancelled</h3><p>Something came in at the last minute, so friends or family got moved again.</p></li>
+      <li><h3>Everybody&rsquo;s go-to</h3><p>People bring you their stuff. When they ask about yours, you say you&rsquo;re good.</p></li>
+      <li><h3>Handling it so no-one&rsquo;s burdened</h3><p>You keep it to yourself and sort it on your own, because that seems kinder, or more efficient.</p></li>
+      <li><h3>The target that keeps moving</h3><p>You hit it, 99% wasn&rsquo;t enough, so next time you go for 102.</p></li>
+      <li><h3>What you want</h3><p>Someone asks what you&rsquo;d like, for you, and you tell them you&rsquo;re easy.</p></li>
     </ul>
-    <p class="hand" data-r="far" style="margin-top:24px">many of us do this until we know better</p>
+    <p class="lede" data-r="mid" style="margin-top:24px">If some of this sounds like your week, you&rsquo;re in good company. I ran most of it myself for about thirty years. And you get to keep everything you&rsquo;ve built while you change it.</p>
   </div>
 </section>
 
@@ -246,27 +251,27 @@ html{scroll-behavior:smooth}
 <section class="sec ink">
   <div class="in narrow">
     <p class="ey" data-r="far">What the book is about</p>
-    <h2 data-r="mid">Three things about time that many of us believe.</h2>
-    <p class="lede" data-r="mid">You did not make them up. They are common enough to read as common sense, which is what makes them expensive. The book names all three, and what is true instead.</p>
+    <h2 data-r="mid">Three lies that keep you busy, stressed and unfulfilled.</h2>
+    <p class="lede" data-r="mid">You learned this, and it worked. Many of us figured out young that being useful, being capable and being no trouble to anyone was the safest way to be included. And because you learned it, you can change it.</p>
     <div id="lies-spine">
       <div class="lie" data-r="mid">
         <span class="node" aria-hidden="true"></span>
         <span class="n">Toxic lie one</span>
-        <h3>&ldquo;If I&rsquo;m not busy, it means I&rsquo;m wasting time.&rdquo;</h3>
+        <h3>&ldquo;If I&rsquo;m not busy, I&rsquo;m wasting time.&rdquo;</h3>
         <div class="truth"><span class="t">Truth</span>
-          <p>Top performers in every field prioritise rest, recovery and play.</p></div>
+          <p>Busy is the most respectable reason there is to stop asking for what you want.</p></div>
       </div>
       <div class="lie" data-r="mid">
         <span class="node" aria-hidden="true"></span>
         <span class="n">Toxic lie two</span>
-        <h3>&ldquo;When I make more money, I&rsquo;ll be less stressed and live more of the life I wanted.&rdquo;</h3>
+        <h3>&ldquo;When I&rsquo;ve earned enough, I&rsquo;ll finally live the way I want to.&rdquo;</h3>
         <div class="truth"><span class="t">Truth</span>
-          <p>More money does not guarantee internal freedom.</p></div>
+          <p>More money doesn&rsquo;t hand you what you stopped asking for.</p></div>
       </div>
       <div class="lie" data-r="mid">
         <span class="node" aria-hidden="true"></span>
         <span class="n">Toxic lie three</span>
-        <h3>&ldquo;One more goal, one more outcome, and one day I&rsquo;ll feel accomplished.&rdquo;</h3>
+        <h3>&ldquo;One more target, and then I&rsquo;ll feel like I&rsquo;ve done enough.&rdquo;</h3>
         <div class="truth"><span class="t">Truth</span>
           <p>When you know what&rsquo;s important, you can ignore what&rsquo;s not.</p></div>
       </div>
@@ -280,9 +285,9 @@ html{scroll-behavior:smooth}
     <p class="ey" data-r="far">And what to do about it</p>
     <h2 data-r="mid">Three steps, and you write your own answers in.</h2>
     <ul class="rows" data-r="mid">
-      <li><h3>Upgrade your time mindset</h3><p>Start with the language you use about time, because the way you talk about it is the way you get it.</p></li>
-      <li><h3>Amplify your experience of life</h3><p>Decide the state you want to be in, then let go of what runs against it.</p></li>
-      <li><h3>Decide what matters most</h3><p>Choose the few things you give your intention and attention to, and let the rest be.</p></li>
+      <li><h3>Notice what busy is covering</h3><p>Start by noticing what you say when someone asks how you are. Then swap the usual answer for what&rsquo;s true, and something you want.</p></li>
+      <li><h3>Catch what you&rsquo;ve stopped asking for</h3><p>See where your yes goes, what you handle so no-one else could, and what fills the gap instead of asking. Then leave something unfinished.</p></li>
+      <li><h3>Decide what you want</h3><p>Decide something you want for yourself, keep it small and specific, and let the people it involves know.</p></li>
     </ul>
   </div>
 </section>
@@ -293,9 +298,9 @@ html{scroll-behavior:smooth}
     <p class="ey" data-r="far">What you get</p>
     <h2 data-r="mid">A paperback, posted to you.</h2>
     <ul class="kit" data-r="mid">
-      <li><b>The book.</b> About an hour to read, with the three lies named, the truth set against each one, and three exercises with pages to write on.</li>
+      <li><b>The book.</b> About an hour to read, with the three lies, the truth set against each one, and three action steps with pages to write on.</li>
       <li><b>Shipping, anywhere in the world.</b> Included in the price, wherever you are.</li>
-      <li><b>A connection call with me.</b> There is an invitation inside the book to get clear on what you want and how Reconnect gets you there.</li>
+      <li><b>Where to go next.</b> At the back, how Reconnect works, and where to find our groups, The Reconnected Man and The Reconnected Woman.</li>
     </ul>
     <div class="price" data-r="mid">
       <span class="amt">&euro;14.97</span>
@@ -310,8 +315,8 @@ html{scroll-behavior:smooth}
   <div class="in narrow">
     <p class="ey" data-r="far">One line from the book</p>
     <div class="panel" data-r="near">
-      <h2>You&rsquo;re either going to change by design or by disaster.</h2>
-      <p class="lede">If the cracks are showing, that is the check engine light. There is still time to turn it around, and turning it around starts with seeing what you have been running on.</p>
+      <h2>You&rsquo;re either going to change by design, or by disaster.</h2>
+      <p class="lede">If the cracks are showing, take them as your check engine light. Please hear me when I say there&rsquo;s still time.</p>
     </div>
   </div>
 </section>

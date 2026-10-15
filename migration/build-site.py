@@ -498,13 +498,13 @@ ROUTES = [
         # to carry across here and nothing lost by writing one. The title on
         # Wix was "Three Toxic Lies  | Parallaxx Transformations", with the
         # double space.
-        title="Three Toxic Lies | A Short Book About Time | Parallaxx",
-        desc="Three things about time that many of us believe, and what is true instead. "
-             "A short book by Daniel Lawson, about an hour to read, with three exercises "
-             "to write your own answers into. \u20ac14.97, posted anywhere in the world.",
+        title="Three Toxic Lies That Keep You Busy | Parallaxx",
+        desc="Three lies that keep you busy, stressed and unfulfilled, and what is true "
+             "instead. A short book by Daniel Lawson, about an hour to read, with three "
+             "action steps to write your own answers into. \u20ac14.97, posted anywhere "
+             "in the world.",
         og_title="You probably believe at least one of these.",
-        og_desc="Three Toxic Lies. A short book about time and what it costs you \u2014 "
-                "named plainly, with the truth set against each one.",
+        og_desc="Three Toxic Lies. What if the busyness was never about time?",
         og_img="img/og-toxic-lies.png",
     ),
     dict(

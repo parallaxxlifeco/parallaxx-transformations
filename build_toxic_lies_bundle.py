@@ -84,8 +84,9 @@ if not (HERE / "migration" / "wix-assets" / _cover).exists():
 
 # THE THREE LIES. The whole reason this page exists rather than the Wix one,
 # which sold three outcomes and never named a lie. All three are verbatim from
-# the book and the page is not worth shipping without them.
-for _n, _frag in ((1, "not busy"), (2, "more money"), (3, "one more outcome")):
+# the book and the page is not worth shipping without them. Fragments updated
+# 15 Oct 2026 for the 2026 edition's wording of lies two and three.
+for _n, _frag in ((1, "not busy"), (2, "earned enough"), (3, "one more target")):
     if _frag not in HTML.lower():
         raise SystemExit(
             "FAIL: toxic lie %d is not on the page. The old Wix page sold the "

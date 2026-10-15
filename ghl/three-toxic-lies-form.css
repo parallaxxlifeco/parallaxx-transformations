@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Poppins:wght@700&display=swap');html,body,#app,.hl-app,.hl_form-builder--main{background: transparent !important;}
+#_builder-form{border: 0 !important;box-shadow: none !important;padding: 0 !important;background: transparent !important;max-width: none !important;min-height: 0 !important;}
+.ghl-form-wrap{max-width: none !important;margin: 0 !important;}
+#_builder-form > div{align-items: flex-start !important;}
+#_builder-form .form-side{min-height: 0 !important;justify-content: flex-start !important;}
+#_builder-form .fields-container{flex-direction: row !important;flex-wrap: wrap !important;gap: 10px !important;align-items: flex-start !important;}
+#_builder-form .form-field-wrapper{flex: 1 1 180px !important;width: auto !important;max-width: none !important;margin: 0 !important;padding: 0 !important;}
+#_builder-form [id$="_2"],#_builder-form [id$="_button_3"]{flex: 1 1 100% !important;}
+#_builder-form .label-alignment{display: none !important;}
+#_builder-form .form-control,#_builder-form .form-builder--item input[type="text"][class="form-control"],#_builder-form input[type="email"]{height: 48px !important;padding: 0 14px !important;background: rgba(4,18,42,.75) !important;color: #F1ECE1 !important;border: 1px solid #1B2C46 !important;border-radius: 2px !important;box-shadow: none !important;font-family: 'Montserrat',system-ui,sans-serif !important;font-size: 16px !important;font-weight: 500 !important;}
+#_builder-form .form-control::placeholder{color: #7C89A3 !important;opacity: 1 !important;}
+#_builder-form .form-control:focus{border-color: #E8C65F !important;outline: none !important;}
+#_builder-form .email-input .form-control{padding-left: 36px !important;}
+#_builder-form .email-input svg{color: #7C89A3 !important;}
+#_builder-form .standard-checkbox-container{display: flex !important;gap: 10px !important;align-items: flex-start !important;}
+#_builder-form .standard-checkbox-container input[type="checkbox"]{width: 18px !important;height: 18px !important;margin: 2px 0 0 !important;flex: 0 0 auto !important;accent-color: #FF501F !important;}
+#_builder-form .standard-checkbox-container label{font-family: 'Montserrat',system-ui,sans-serif !important;font-size: 14.5px !important;line-height: 1.45 !important;font-weight: 400 !important;color: #B1BFD7 !important;margin: 0 !important;}
+#_builder-form .form-builder--btn-submit{margin-top: 4px !important;}
+#_builder-form .form-builder--btn-submit button{width: 100% !important;height: 52px !important;padding: 0 24px !important;background: #FF501F !important;color: #fff !important;border: 0 !important;border-radius: 2px !important;font-family: 'Poppins',system-ui,sans-serif !important;font-size: 12px !important;font-weight: 700 !important;letter-spacing: .13em !important;text-transform: uppercase !important;box-shadow: none !important;}
+#_builder-form .form-builder--btn-submit button *{font: inherit !important;color: inherit !important;letter-spacing: inherit !important;text-transform: inherit !important;}
+#_builder-form .form-builder--btn-submit button:hover{background: #FF6A3D !important;}
+#_builder-form .error,#_builder-form .text-danger{color: #FF6A3D !important;font-family: 'Montserrat',system-ui,sans-serif !important;font-size: 13px !important;}
+html body #_builder-form .form-builder--item input.form-control,html body #_builder-form .form-builder--item input[type="text"][class="form-control"],html body #_builder-form .form-builder--item input[type="email"]{background-color: rgba(4,18,42,.75) !important;color: #F1ECE1 !important;border: 1px solid #1B2C46 !important;border-radius: 2px !important;box-shadow: none !important;font-family: 'Montserrat',system-ui,sans-serif !important;font-size: 16px !important;font-weight: 500 !important;height: 48px !important;}
+html body #_builder-form .form-builder--item input.form-control:focus{border-color: #E8C65F !important;}

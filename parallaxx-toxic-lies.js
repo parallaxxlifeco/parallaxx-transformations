@@ -78,7 +78,7 @@ html{scroll-behavior:smooth}
 #ttl-page .cream h2,#ttl-page .cream-2 h2{color:var(--ink)}
 #ttl-page h3{font-size:clamp(17px,1.8vw,21px);font-weight:600;line-height:1.3;color:var(--cream)}
 #ttl-page .cream h3,#ttl-page .cream-2 h3{color:var(--ink)}
-#ttl-page p{margin:0 0 14px;max-width:64ch}
+#ttl-page p{margin:0 0 14px;max-width:64ch;text-wrap:pretty}
 #ttl-page .lede{font-size:clamp(16px,1.55vw,19px);line-height:1.55;color:var(--mist)}
 #ttl-page .cream .lede,#ttl-page .cream-2 .lede{color:var(--ink-soft)}
 #ttl-page .dim{color:var(--slate)}
@@ -127,8 +127,12 @@ html{scroll-behavior:smooth}
 #ttl-hero .shot img{width:100%;height:auto;display:block;
   filter:drop-shadow(0 40px 60px rgba(0,0,0,.6))}
 @media(max-width:820px){
-  #ttl-hero .grid{grid-template-columns:1fr;gap:30px}
-  #ttl-hero .shot{order:-1;max-width:420px;margin:0 auto}
+  #ttl-hero .grid{grid-template-columns:1fr;gap:22px}
+  /* top padding clears the fixed nav (61-65px on phones); the cover is kept
+     to 300px so the form is closer to the first screen */
+  #ttl-hero{padding-top:104px}
+  #ttl-hero .shot{order:-1;max-width:300px;margin:0 auto}
+  #ttl-hero h1{font-size:clamp(26px,8.2vw,36px)}
 }
 
 /* ── the mirror, and the three action steps ── */
@@ -200,13 +204,34 @@ html{scroll-behavior:smooth}
 #ttl-close h2{font-size:clamp(26px,4.2vw,48px)}
 #ttl-close p,#ttl-close .ey,#ttl-close .fine{margin-left:auto;margin-right:auto}
 @media(prefers-reduced-motion:reduce){#ttl-page *{animation:none!important;transition:none!important}}
+
+#ttl-lies .lies-grid{max-width:1000px;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,5vw,72px);align-items:center}
+#ttl-lies .side .panel{text-align:left;margin:0;background:rgba(10,29,60,.55)}
+#ttl-lies .side .panel h2{font-size:clamp(24px,2.6vw,32px)}
+#ttl-lies .side .ttl-form{margin:22px 0 0;max-width:none}
+@media(max-width:900px){#ttl-lies .lies-grid{grid-template-columns:1fr}}
+/* ── THE SIGN-UP FORM (15 Oct 2026). Same GHL form twice, hero and beside
+      the lies: "Three Toxic Lies - Free Book" (Sites > Forms, id TDSyOXeH5838jtA7gx6S).
+      Fields, button text, the tickbox and the dark styling all live in GHL
+      (the styling in Styles > Advanced > Custom CSS); on submit GHL sends the
+      whole page to /three-toxic-lies/thank-you/. The workflow hangs off the
+      Form Submitted trigger. Fixed heights, as on the insights subscribe box:
+      the fields sit side by side above ~370px of iframe and stack below it,
+      and the slack leaves room for a "required" note. ── */
+#ttl-page .ttl-form{margin-top:26px;max-width:520px}
+#ttl-page .ttl-form iframe{display:block;width:100%;height:205px;border:0;color-scheme:normal}
+#ttl-page .ttl-form .fine{margin-top:4px}
+@media(max-width:560px){#ttl-page .ttl-form iframe{height:300px}}
 `;
   var HTML = `<div id="ttl-rail" aria-hidden="true"><span class="bar"></span></div>
 
 <div id="ttl-page">
 <parallaxx-nav></parallaxx-nav>
 
-<!-- ══ 01 · HERO ═══════════════════════════════════════════════════ -->
+<!-- ══ 01 · HERO ═══════════════════════════════════════════════════
+     FREE LEAD MAGNET since 15 Oct 2026 (was a EUR 14.97 paperback). The
+     only decision on this page is whether to leave a name and an email,
+     so every line about price, shipping and what is in the box went. -->
 <section class="sec ink" id="ttl-hero">
   <div class="hatch" aria-hidden="true"></div>
   <div class="grid">
@@ -217,118 +242,72 @@ html{scroll-behavior:smooth}
         <span class="mask"><span class="k">at least one of these.</span></span>
       </h1>
       <p class="lede" data-r="mid">What if the busyness was never about time? A short book about the lies that keep you busy, stressed and unfulfilled. About an hour to read, with three action steps to write your own answers into.</p>
-      <a class="btn" href="https://buy.stripe.com/5kA01L10meewbni008" data-r="mid">Buy the book</a>
-      <p class="fine" data-r="far">&euro;14.97 &nbsp;&middot;&nbsp; Paperback &nbsp;&middot;&nbsp; Posted anywhere in the world</p>
+      <div class="ttl-form" data-r="mid">
+        <iframe src="https://api.leadconnectorhq.com/widget/form/TDSyOXeH5838jtA7gx6S" title="Get the free book" loading="lazy"></iframe>
+        <p class="fine">A free PDF, sent to your inbox.</p>
+      </div>
     </div>
     <div class="shot" data-r="near">
       <img src="https://static.wixstatic.com/media/e1784d_049456af915940a197681c781f55a745~mv2.png"
-           alt="Three Toxic Lies, the paperback" width="877" height="713" loading="eager" decoding="async">
+           alt="Three Toxic Lies by Daniel Lawson" width="877" height="713" loading="eager" decoding="async">
     </div>
   </div>
 </section>
 
-<!-- ══ 02 · THE MIRROR ═════════════════════════════════════════════ -->
+<!-- ══ 02 · THE MIRROR ═════════════════════════════════════════════
+     Four of the book's seven opening rows (2026 edition, p3), the four
+     that read the same on both doors. "nobody" is "no-one" per the voice
+     skill. -->
 <section class="sec dark">
   <div class="in narrow">
     <p class="ey" data-r="far">If this is you</p>
-    <!-- Rows are the book's own opening mirror (2026 edition, p3), word for word
-         apart from "nobody", which the voice skill bans. -->
     <h2 data-r="mid">You&rsquo;re handling everything, and you&rsquo;re last on the list.</h2>
     <ul class="rows" data-r="mid">
       <li><h3>Fine, or busy</h3><p>Someone asks how you&rsquo;re doing and that&rsquo;s the answer. Same answer for years.</p></li>
-      <li><h3>Yes, when you&rsquo;d rather say no</h3><p>Another project, another favour, another thing you&rsquo;ll just take care of.</p></li>
       <li><h3>The dinner you cancelled</h3><p>Something came in at the last minute, so friends or family got moved again.</p></li>
-      <li><h3>Everybody&rsquo;s go-to</h3><p>People bring you their stuff. When they ask about yours, you say you&rsquo;re good.</p></li>
       <li><h3>Handling it so no-one&rsquo;s burdened</h3><p>You keep it to yourself and sort it on your own, because that seems kinder, or more efficient.</p></li>
-      <li><h3>The target that keeps moving</h3><p>You hit it, 99% wasn&rsquo;t enough, so next time you go for 102.</p></li>
       <li><h3>What you want</h3><p>Someone asks what you&rsquo;d like, for you, and you tell them you&rsquo;re easy.</p></li>
     </ul>
-    <p class="lede" data-r="mid" style="margin-top:24px">If some of this sounds like your week, you&rsquo;re in good company. I ran most of it myself for about thirty years. And you get to keep everything you&rsquo;ve built while you change it.</p>
+    <p class="lede" data-r="mid" style="margin-top:24px">If some of this sounds like your week, you&rsquo;re in good company. I ran most of it myself for about thirty years.</p>
   </div>
 </section>
 
-<!-- ══ 03 · THE THREE LIES ═════════════════════════════════════════ -->
-<section class="sec ink">
-  <div class="in narrow">
+<!-- ══ 03 · THE THREE LIES ═════════════════════════════════════════
+     The lies only. The truth the book sets against each one is what
+     people download it for, so it stays in the book. -->
+<section class="sec ink" id="ttl-lies">
+  <div class="in lies-grid">
+   <div>
     <p class="ey" data-r="far">What the book is about</p>
     <h2 data-r="mid">Three lies that keep you busy, stressed and unfulfilled.</h2>
-    <p class="lede" data-r="mid">If you&rsquo;re stretched thin and working hard without ever feeling like you&rsquo;ve done enough, you learned that, and it worked. Many of us figured out young that being useful, being capable and being no trouble to anyone was the safest way to be included. And because you learned it, you can change it.</p>
     <div id="lies-spine">
       <div class="lie" data-r="mid">
         <span class="node" aria-hidden="true"></span>
         <span class="n">Toxic lie one</span>
         <h3>&ldquo;If I&rsquo;m not busy, I&rsquo;m wasting time.&rdquo;</h3>
-        <div class="truth"><span class="t">Truth</span>
-          <p>Busy is the most respectable reason there is to stop asking for what you want.</p></div>
       </div>
       <div class="lie" data-r="mid">
         <span class="node" aria-hidden="true"></span>
         <span class="n">Toxic lie two</span>
         <h3>&ldquo;When I&rsquo;ve earned enough, I&rsquo;ll finally live the way I want to.&rdquo;</h3>
-        <div class="truth"><span class="t">Truth</span>
-          <p>More money doesn&rsquo;t hand you what you stopped asking for.</p></div>
       </div>
       <div class="lie" data-r="mid">
         <span class="node" aria-hidden="true"></span>
         <span class="n">Toxic lie three</span>
         <h3>&ldquo;One more target, and then I&rsquo;ll feel like I&rsquo;ve done enough.&rdquo;</h3>
-        <div class="truth"><span class="t">Truth</span>
-          <p>When you know what&rsquo;s important, you can ignore what&rsquo;s not.</p></div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ══ 04 · WHAT YOU DO ABOUT IT ═══════════════════════════════════ -->
-<section class="sec cream">
-  <div class="in narrow">
-    <p class="ey" data-r="far">And what to do about it</p>
-    <h2 data-r="mid">Three steps, and you write your own answers in.</h2>
-    <ul class="rows" data-r="mid">
-      <li><h3>Notice what busy is covering</h3><p>Start by noticing what you say when someone asks how you are. Then swap the usual answer for what&rsquo;s true, and something you want.</p></li>
-      <li><h3>Catch what you&rsquo;ve stopped asking for</h3><p>See where your yes goes, what you handle so no-one else could, and what fills the gap instead of asking. Then leave something unfinished.</p></li>
-      <li><h3>Decide what you want</h3><p>Decide something you want for yourself, keep it small and specific, and let the people it involves know.</p></li>
-    </ul>
-  </div>
-</section>
-
-<!-- ══ 05 · WHAT YOU GET ═══════════════════════════════════════════ -->
-<section class="sec cream-2">
-  <div class="in narrow">
-    <p class="ey" data-r="far">What you get</p>
-    <h2 data-r="mid">A paperback, posted to you.</h2>
-    <ul class="kit" data-r="mid">
-      <li><b>The book.</b> About an hour to read, with the three lies, the truth set against each one, and three action steps with pages to write on.</li>
-      <li><b>Shipping, anywhere in the world.</b> Included in the price.</li>
-      <li><b>Where to go next.</b> At the back, how Reconnect works, and where to find our groups, The Reconnected Man and The Reconnected Woman.</li>
-    </ul>
-    <div class="price" data-r="mid">
-      <span class="amt">&euro;14.97</span>
-      <span class="pnote">Shipping included, paid once.</span>
-    </div>
-    <p style="margin-top:24px"><a class="btn" href="https://buy.stripe.com/5kA01L10meewbni008" data-r="mid">Buy the book</a></p>
-  </div>
-</section>
-
-<!-- ══ 06 · THE LINE ═══════════════════════════════════════════════ -->
-<section class="sec dark">
-  <div class="in narrow">
-    <p class="ey" data-r="far">One line from the book</p>
+   </div>
+   <!-- The second sign-up sits beside the lies (Daniel, 15 Oct): the right
+        column was empty, and the quote is the reason to sign up. -->
+   <div class="side">
     <div class="panel" data-r="near">
       <h2>You&rsquo;re either going to change by design, or by disaster.</h2>
-      <p class="lede">If the cracks are showing, take them as your check engine light. Please hear me when I say there&rsquo;s still time.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ══ 07 · CLOSE ══════════════════════════════════════════════════ -->
-<section class="sec ink" id="ttl-close">
-  <div class="in narrow">
-    <p class="ey" data-r="far">Ready?</p>
-    <h2 class="mask" id="ttlClose"><span>Three lies. About an hour.</span></h2>
-    <p class="lede" data-r="mid">If this is you, check it out.</p>
-    <p><a class="btn" href="https://buy.stripe.com/5kA01L10meewbni008" data-r="mid">Buy the book</a></p>
-    <p class="fine" data-r="far">&euro;14.97 &nbsp;&middot;&nbsp; Paperback &nbsp;&middot;&nbsp; Posted anywhere in the world</p>
+      <div class="ttl-form">
+        <iframe src="https://api.leadconnectorhq.com/widget/form/TDSyOXeH5838jtA7gx6S" title="Get the free book" loading="lazy"></iframe>
+        <p class="fine">A free PDF, sent to your inbox.</p>
+      </div>
+   </div>
   </div>
 </section>
 
@@ -397,6 +376,7 @@ html{scroll-behavior:smooth}
     }, { rootMargin:'0px 0px -18% 0px' });
     io.observe(close);
   }
+
 })();
 
   }

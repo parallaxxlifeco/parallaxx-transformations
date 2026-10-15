@@ -499,10 +499,9 @@ ROUTES = [
         # Wix was "Three Toxic Lies  | Parallaxx Transformations", with the
         # double space.
         title="Three Toxic Lies That Keep You Busy | Parallaxx",
-        desc="Three lies that keep you busy, stressed and unfulfilled, and what is true "
-             "instead. A short book by Daniel Lawson, about an hour to read, with three "
-             "action steps to write your own answers into. \u20ac14.97, posted anywhere "
-             "in the world.",
+        desc="Three lies that keep you busy, stressed and unfulfilled. A free short book "
+             "by Daniel Lawson, about an hour to read, with three action steps to write "
+             "your own answers into.",
         og_title="You probably believe at least one of these.",
         og_desc="Three Toxic Lies. What if the busyness was never about time?",
         og_img="img/og-toxic-lies.png",

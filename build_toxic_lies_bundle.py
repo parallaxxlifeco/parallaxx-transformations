@@ -59,17 +59,20 @@ assert 'id="ttl-page"' in HTML, "page root missing"
 assert "parallaxx-nav" in HTML and "parallaxx-footer" in HTML, "chrome missing from the body"
 
 # FREE LEAD MAGNET since 15 Oct 2026. The paperback checkout and its price
-# are gone on purpose; the page's one job is the sign-up form. A build that
-# ships the form with no webhook behind it collects emails into nothing.
+# are gone on purpose; the page's one job is the sign-up form. Both forms are
+# the GHL form "Three Toxic Lies - Free Book", embedded as an iframe; a build
+# that points at any other form (or none) collects emails into nothing.
 if "buy.stripe.com" in HTML or "&euro;" in HTML:
     raise SystemExit("FAIL: a checkout link or a price is back on the free page.")
+TTL_FORM_ID = "TDSyOXeH5838jtA7gx6S"
 n_forms = HTML.count('class="ttl-form"')
-if n_forms != 2:
-    raise SystemExit("FAIL: expected the sign-up form twice (hero, close), found %d" % n_forms)
-_ep = re.search(r"leadEndpoint:\s*'([^']*)'", s)
-if not _ep or not _ep.group(1).startswith("https://services.leadconnectorhq.com/hooks/"):
-    raise SystemExit("FAIL: TTL_CONFIG.leadEndpoint is not set to the GHL webhook.")
-print("sign-up    %d forms -> %s" % (n_forms, _ep.group(1)[-24:]))
+n_embeds = HTML.count("https://api.leadconnectorhq.com/widget/form/%s" % TTL_FORM_ID)
+if n_forms != 2 or n_embeds != 2:
+    raise SystemExit("FAIL: expected the GHL book form twice (hero, beside the lies), "
+                     "found %d form blocks and %d embeds" % (n_forms, n_embeds))
+if "leadEndpoint" in HTML:
+    raise SystemExit("FAIL: the old webhook sign-up script is back.")
+print("sign-up    %d GHL form embeds (%s)" % (n_embeds, TTL_FORM_ID))
 
 # THE COVER. The one asset this product has. A cover render that 404s leaves
 # a page selling an object nobody can see.

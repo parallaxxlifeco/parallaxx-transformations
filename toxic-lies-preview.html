@@ -209,32 +209,19 @@ html{scroll-behavior:smooth}
 #ttl-lies .side .panel{text-align:left;margin:0;background:rgba(10,29,60,.55)}
 #ttl-lies .side .panel h2{font-size:clamp(24px,2.6vw,32px)}
 #ttl-lies .side .ttl-form{margin:22px 0 0;max-width:none}
-#ttl-lies .side .ttl-form .fields{grid-template-columns:1fr}
 @media(max-width:900px){#ttl-lies .lies-grid{grid-template-columns:1fr}}
-/* ── THE SIGN-UP FORM (15 Oct 2026). Same form twice, hero and close.
-      Posts to a GHL inbound webhook (TTL_CONFIG.leadEndpoint), which
-      creates the contact, tags it and emails the PDF (and, only if the
-      unticked roundup box was ticked, starts the Insights double opt-in); the page then goes
-      to /three-toxic-lies/thank-you/. ── */
+/* ── THE SIGN-UP FORM (15 Oct 2026). Same GHL form twice, hero and beside
+      the lies: "Three Toxic Lies - Free Book" (Sites > Forms, id TDSyOXeH5838jtA7gx6S).
+      Fields, button text, the tickbox and the dark styling all live in GHL
+      (the styling in Styles > Advanced > Custom CSS); on submit GHL sends the
+      whole page to /three-toxic-lies/thank-you/. The workflow hangs off the
+      Form Submitted trigger. Fixed heights, as on the insights subscribe box:
+      the fields sit side by side above ~370px of iframe and stack below it,
+      and the slack leaves room for a "required" note. ── */
 #ttl-page .ttl-form{margin-top:26px;max-width:520px}
-#ttl-page .ttl-form .fields{display:grid;grid-template-columns:1fr 1.4fr;gap:10px;margin-bottom:12px}
-#ttl-page .ttl-form label{display:block}
-#ttl-page .ttl-form label span{display:block;font-family:var(--head);font-size:.6rem;font-weight:800;
-  letter-spacing:.2em;text-transform:uppercase;color:var(--slate);margin:0 0 6px}
-#ttl-page .ttl-form input{width:100%;font:500 16px/1.2 var(--body);color:var(--cream);
-  background:rgba(4,18,42,.75);border:1px solid var(--border);border-radius:2px;padding:14px 14px;
-  transition:border-color .2s}
-#ttl-page .ttl-form input:focus{outline:none;border-color:var(--gold)}
-#ttl-page .ttl-form label.opt{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;cursor:pointer}
-#ttl-page .ttl-form label.opt input{width:18px;height:18px;margin:2px 0 0;flex:0 0 auto;accent-color:var(--coral);padding:0}
-#ttl-page .ttl-form label.opt span{text-wrap:pretty;font:400 .9rem/1.45 var(--body);letter-spacing:0;text-transform:none;color:var(--mist);margin:0}
-#ttl-page .ttl-form .btn{width:100%}
-#ttl-page .ttl-form .msg{margin:10px 0 0;color:var(--coral-lift);font-size:.9rem}
-#ttl-page .ttl-form .fine{margin-top:10px}
-#ttl-page .ttl-form.busy .btn{opacity:.7;pointer-events:none}
-#ttl-close .ttl-form{margin:26px auto 0;text-align:left}
-#ttl-close .ttl-form .fine{text-align:center}
-@media(max-width:560px){#ttl-page .ttl-form .fields{grid-template-columns:1fr}}
+#ttl-page .ttl-form iframe{display:block;width:100%;height:205px;border:0;color-scheme:normal}
+#ttl-page .ttl-form .fine{margin-top:4px}
+@media(max-width:560px){#ttl-page .ttl-form iframe{height:300px}}
 </style>
 </head>
 <body style="margin:0;padding:0;background:#04122A">
@@ -258,16 +245,10 @@ html{scroll-behavior:smooth}
         <span class="mask"><span class="k">at least one of these.</span></span>
       </h1>
       <p class="lede" data-r="mid">What if the busyness was never about time? A short book about the lies that keep you busy, stressed and unfulfilled. About an hour to read, with three action steps to write your own answers into.</p>
-      <form class="ttl-form" data-r="mid" novalidate>
-        <div class="fields">
-          <label><span>First name</span><input name="first_name" type="text" autocomplete="given-name" required></label>
-          <label><span>Email</span><input name="email" type="email" autocomplete="email" required></label>
-        </div>
-        <label class="opt"><input name="weekly_roundup" type="checkbox" value="yes"><span>Also send me the weekly roundup of new insights.</span></label>
-        <button class="btn" type="submit">Send me the book</button>
-        <p class="msg" role="alert" hidden></p>
+      <div class="ttl-form" data-r="mid">
+        <iframe src="https://api.leadconnectorhq.com/widget/form/TDSyOXeH5838jtA7gx6S" title="Get the free book" loading="lazy"></iframe>
         <p class="fine">A free PDF, sent to your inbox.</p>
-      </form>
+      </div>
     </div>
     <div class="shot" data-r="near">
       <img src="https://static.wixstatic.com/media/e1784d_049456af915940a197681c781f55a745~mv2.png"
@@ -325,16 +306,10 @@ html{scroll-behavior:smooth}
    <div class="side">
     <div class="panel" data-r="near">
       <h2>You&rsquo;re either going to change by design, or by disaster.</h2>
-      <form class="ttl-form" novalidate>
-        <div class="fields">
-          <label><span>First name</span><input name="first_name" type="text" autocomplete="given-name" required></label>
-          <label><span>Email</span><input name="email" type="email" autocomplete="email" required></label>
-        </div>
-        <label class="opt"><input name="weekly_roundup" type="checkbox" value="yes"><span>Also send me the weekly roundup of new insights.</span></label>
-        <button class="btn" type="submit">Send me the book</button>
-        <p class="msg" role="alert" hidden></p>
+      <div class="ttl-form">
+        <iframe src="https://api.leadconnectorhq.com/widget/form/TDSyOXeH5838jtA7gx6S" title="Get the free book" loading="lazy"></iframe>
         <p class="fine">A free PDF, sent to your inbox.</p>
-      </form>
+      </div>
    </div>
   </div>
 </section>
@@ -381,32 +356,6 @@ html{scroll-behavior:smooth}
     io.observe(close);
   }
 
-  /* ── SIGN-UP ── */
-  var TTL_CONFIG = {
-    leadEndpoint: '',
-    thanks: '/three-toxic-lies/thank-you/',
-    source: 'three-toxic-lies'
-  };
-  [].slice.call(document.querySelectorAll('#ttl-page .ttl-form')).forEach(function(f){
-    f.addEventListener('submit', function(e){
-      e.preventDefault();
-      var first = f.first_name.value.trim(), email = f.email.value.trim(), msg = f.querySelector('.msg');
-      function err(t, el){ msg.textContent = t; msg.hidden = false; if(el) el.focus(); }
-      if(!first){ return err('Add your first name.', f.first_name); }
-      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ return err('That email doesn\u2019t look right.', f.email); }
-      if(!TTL_CONFIG.leadEndpoint){ return err('Sign-up isn\u2019t connected yet.'); }
-      msg.hidden = true; f.classList.add('busy');
-      var body = new URLSearchParams({ first_name:first, email:email, source:TTL_CONFIG.source,
-        weekly_roundup: f.weekly_roundup && f.weekly_roundup.checked ? 'yes' : 'no',
-        submitted_at:new Date().toISOString() });
-      var go = function(){ window.location.href = TTL_CONFIG.thanks; };
-      try {
-        fetch(TTL_CONFIG.leadEndpoint, { method:'POST', mode:'no-cors', keepalive:true, body:body })
-          .then(go, go);
-      } catch(x){ go(); }
-      setTimeout(go, 2500);
-    });
-  });
 })();
 </script>
 </body>

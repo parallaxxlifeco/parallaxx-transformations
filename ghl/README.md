@@ -90,29 +90,37 @@ workflow itself too, since a published workflow needs that second save.
 
 ## Three Toxic Lies sign-up (free book, 15 Oct 2026)
 
-/three-toxic-lies is now a free download. Two identical forms (hero, and
-beside the lies) post to a GHL inbound webhook: `TTL_CONFIG.leadEndpoint`
-in toxic-lies-preview.html (in the page script). The browser then goes to
-/three-toxic-lies/thank-you/ (built by migration/landing.py, TTL_THANKS).
+/three-toxic-lies is a free download. Daniel chose a GHL form over a webhook
+(15 Oct): the workflow triggers on Form Submitted, which is simpler to run.
 
-STATUS when written: the webhook is NOT built yet, so leadEndpoint is ''.
-build_toxic_lies_bundle.py refuses to build until it holds a GHL hook URL,
-so parallaxx-toxic-lies.js (the live page) is still the old paperback page.
-To go live: paste the hook URL into leadEndpoint, run
-`python3 build_toxic_lies_bundle.py`, commit, push.
-
-Fields sent (form-encoded), as `{{inboundWebhookRequest.<name>}}`:
-- first_name, email
-- source (`three-toxic-lies`)
-- weekly_roundup (`yes` only if they ticked "Also send me the weekly roundup
-  of new insights"; `no` otherwise). Only `yes` should start the Insights
-  double opt-in. Nobody is added to the roundup otherwise.
-- submitted_at
+THE FORM: Sites > Forms > "Three Toxic Lies - Free Book", id
+`TDSyOXeH5838jtA7gx6S` (duplicated from "Insights subscribe"). It is embedded
+twice on the page (hero, and beside the lies) as a plain iframe of
+https://api.leadconnectorhq.com/widget/form/TDSyOXeH5838jtA7gx6S, no
+form_embed.js. Fixed heights in toxic-lies-preview.html: 205px, 300px at
+560px and under (room for the "required" notes).
+- Fields: First name (required), Email (required), checkbox custom field
+  "Weekly roundup" (query key `weekly_roundup`, field id sqjqPFq3imY1wkoAJ9Zq,
+  one option "Also send me the weekly roundup of new insights.", unticked,
+  not required), button "Send me the book".
+- On submit: Settings > Redirect to URL
+  https://www.parallaxxtransformations.com/three-toxic-lies/thank-you/ . The
+  widget sets window.top.location, so the whole page goes, not the iframe.
+- Styling: Styles > Advanced > Custom CSS. Dark inputs, coral uppercase
+  button, Montserrat/Poppins via @import, first name and email side by side
+  above ~370px of iframe. The last two rules repeat the input colours with
+  `html body` in front: GHL's own input styles load after the custom CSS and
+  win a tie. A copy of the CSS: ghl/three-toxic-lies-form.css.
+- To change wording, fields or the redirect: edit the form in GHL. Nothing
+  on the site needs rebuilding. If a field is added, check the iframe
+  heights; the build guard (build_toxic_lies_bundle.py) checks the form id
+  appears twice.
 
 The book: https://www.parallaxxtransformations.com/assets/books/three-toxic-lies.pdf
 (source file migration/wix-assets/books/three-toxic-lies.pdf, the 2026 edition).
 
-Workflow to build: Inbound Webhook > Create/update contact > tag
-`three-toxic-lies` > email the book (link above; thank-you page tells them to
-check Promotions and reply when it arrives) > If weekly_roundup = yes, start
+Workflow to build (in GHL, Daniel's other chat): trigger Form Submitted, form
+"Three Toxic Lies - Free Book" > tag `three-toxic-lies` > email the book
+(link above; the thank-you page tells them to check Promotions and reply when
+it arrives) > If/Else on the Weekly roundup field: only when ticked, start
 the Insights double opt-in > Notify Daniel (he wants to know who grabs it).

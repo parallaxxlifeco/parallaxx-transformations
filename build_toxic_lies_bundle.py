@@ -165,6 +165,10 @@ bundle = """/* PARALLAXX TRANSFORMATIONS - Three Toxic Lies. Tag: %(tag)s.
     this.innerHTML = HTML;
     script('/parallaxx-nav.js', 'ttl-nav-js');
     script('/parallaxx-footer.js', 'ttl-foot-js');
+    // GHL's form_embed.js hands the page's UTM tags to the form, so a sign-up
+    // records which channel it came from. Without it GHL logs every one as
+    // Direct traffic (tested 15 Oct 26). Same script the RW and RM pages load.
+    script('https://link.msgsndr.com/js/form_embed.js', 'ttl-ghl-js');
     try { boot(); } catch (e) { /* the page renders fully visible without it */ }
   };
 

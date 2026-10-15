@@ -243,7 +243,7 @@ html{scroll-behavior:smooth}
       </h1>
       <p class="lede" data-r="mid">What if the busyness was never about time? A short book about the lies that keep you busy, stressed and unfulfilled. About an hour to read, with three action steps to write your own answers into.</p>
       <div class="ttl-form" data-r="mid">
-        <iframe src="https://api.leadconnectorhq.com/widget/form/TDSyOXeH5838jtA7gx6S" title="Get the free book" loading="lazy"></iframe>
+        <iframe src="https://api.leadconnectorhq.com/widget/form/TDSyOXeH5838jtA7gx6S" title="Get the free book" loading="lazy" id="form-TDSyOXeH5838jtA7gx6S" data-form-id="TDSyOXeH5838jtA7gx6S" data-form-name="Three Toxic Lies - Free Book"></iframe>
         <p class="fine">A free PDF, sent to your inbox.</p>
       </div>
     </div>
@@ -304,7 +304,7 @@ html{scroll-behavior:smooth}
     <div class="panel" data-r="near">
       <h2>You&rsquo;re either going to change by design, or by disaster.</h2>
       <div class="ttl-form">
-        <iframe src="https://api.leadconnectorhq.com/widget/form/TDSyOXeH5838jtA7gx6S" title="Get the free book" loading="lazy"></iframe>
+        <iframe src="https://api.leadconnectorhq.com/widget/form/TDSyOXeH5838jtA7gx6S" title="Get the free book" loading="lazy" id="form-TDSyOXeH5838jtA7gx6S-2" data-form-id="TDSyOXeH5838jtA7gx6S" data-form-name="Three Toxic Lies - Free Book"></iframe>
         <p class="fine">A free PDF, sent to your inbox.</p>
       </div>
    </div>
@@ -393,6 +393,10 @@ html{scroll-behavior:smooth}
     this.innerHTML = HTML;
     script('/parallaxx-nav.js', 'ttl-nav-js');
     script('/parallaxx-footer.js', 'ttl-foot-js');
+    // GHL's form_embed.js hands the page's UTM tags to the form, so a sign-up
+    // records which channel it came from. Without it GHL logs every one as
+    // Direct traffic (tested 15 Oct 26). Same script the RW and RM pages load.
+    script('https://link.msgsndr.com/js/form_embed.js', 'ttl-ghl-js');
     try { boot(); } catch (e) { /* the page renders fully visible without it */ }
   };
 

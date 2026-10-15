@@ -82,7 +82,7 @@ sub = f("Light", 27)
 d.text((56, 386), "You probably believe at least one.", font=f("Light", 25), fill=MIST)
 
 d.line([(56, 448), (560, 448)], fill=(255, 255, 255, 40), width=1)
-track(d, (56, 470), "PAPERBACK  ·  POSTED WORLDWIDE  ·  €14.97",
+track(d, (56, 470), "FREE BOOK  ·  PDF TO YOUR INBOX",
       f("Bold", 13), SLATE, sp=3.0)
 
 # --- card guard -------------------------------------------------------
@@ -92,12 +92,13 @@ track(d, (56, 470), "PAPERBACK  ·  POSTED WORLDWIDE  ·  €14.97",
 # a picture, so nothing downstream can read it and notice. Everything above
 # this marker is the drawing code, and it is what gets checked.
 _src = pathlib.Path(__file__).read_text().split("# --- card guard")[0]
-for _wrong in ("HARDCOVER", "24.99", "Ninety days", "most valuable journal"):
+for _wrong in ("HARDCOVER", "24.99", "Ninety days", "most valuable journal",
+               "PAPERBACK", "14.97", "POSTED WORLDWIDE"):
     if _wrong.lower() in _src.lower():
         raise SystemExit(
             "FAIL: %r is still in the drawing code. Check every string that "
             "came across from the journal's card." % _wrong)
-for _want in ("Three Toxic", "14.97", "PAPERBACK"):
+for _want in ("Three Toxic", "FREE BOOK", "PDF TO YOUR INBOX"):
     if _want.lower() not in _src.lower():
         raise SystemExit("FAIL: %r is missing from the card" % _want)
 

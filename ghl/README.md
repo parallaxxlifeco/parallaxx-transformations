@@ -87,3 +87,32 @@ own size, and the score sits in a fixed 72px column as 14&nbsp;/&nbsp;20.
 Keep that pattern for any new text inside the card. After editing a template,
 paste it into the email action's source view (</>) and press Save on the
 workflow itself too, since a published workflow needs that second save.
+
+## Three Toxic Lies sign-up (free book, 15 Oct 2026)
+
+/three-toxic-lies is now a free download. Two identical forms (hero, and
+beside the lies) post to a GHL inbound webhook: `TTL_CONFIG.leadEndpoint`
+in toxic-lies-preview.html (in the page script). The browser then goes to
+/three-toxic-lies/thank-you/ (built by migration/landing.py, TTL_THANKS).
+
+STATUS when written: the webhook is NOT built yet, so leadEndpoint is ''.
+build_toxic_lies_bundle.py refuses to build until it holds a GHL hook URL,
+so parallaxx-toxic-lies.js (the live page) is still the old paperback page.
+To go live: paste the hook URL into leadEndpoint, run
+`python3 build_toxic_lies_bundle.py`, commit, push.
+
+Fields sent (form-encoded), as `{{inboundWebhookRequest.<name>}}`:
+- first_name, email
+- source (`three-toxic-lies`)
+- weekly_roundup (`yes` only if they ticked "Also send me the weekly roundup
+  of new insights"; `no` otherwise). Only `yes` should start the Insights
+  double opt-in. Nobody is added to the roundup otherwise.
+- submitted_at
+
+The book: https://www.parallaxxtransformations.com/assets/books/three-toxic-lies.pdf
+(source file migration/wix-assets/books/three-toxic-lies.pdf, the 2026 edition).
+
+Workflow to build: Inbound Webhook > Create/update contact > tag
+`three-toxic-lies` > email the book (link above; thank-you page tells them to
+check Promotions and reply when it arrives) > If weekly_roundup = yes, start
+the Insights double opt-in > Notify Daniel (he wants to know who grabs it).

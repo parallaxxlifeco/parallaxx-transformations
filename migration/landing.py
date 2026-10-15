@@ -34,7 +34,25 @@ TESTIMONIAL_BRIAN = dict(
     secondary=("See more of what others are saying", TESTIMONIALS),
 )
 
-PAGES = [TESTIMONIAL_BRIAN]
+# After the Three Toxic Lies sign-up (15 Oct 2026). The form posts to GHL
+# and sends the browser here. Daniel's brief: the book is in their inbox,
+# check Promotions, and reply when it arrives (a reply is what tells the
+# inbox these emails are wanted).
+TTL_THANKS = dict(
+    path="/three-toxic-lies/thank-you",
+    title="It’s on its way | Three Toxic Lies",
+    desc="Three Toxic Lies is on its way to your inbox.",
+    heading="It’s on its way to your inbox.",
+    image="/assets/img/toxic-lies-cover.png",
+    paras=[
+        "Give it a few minutes. If it’s not there, check your Promotions tab or spam "
+        "folder, and move it to your inbox so the next ones arrive there too.",
+        "When it arrives, hit reply and let me know it got to you.",
+    ],
+    secondary=("Back to the home page", "/"),
+)
+
+PAGES = [TESTIMONIAL_BRIAN, TTL_THANKS]
 
 CSS = """
 :root{--bg:#061938;--deep:#04122A;--cream:#F1ECE1;--mist:#B1BFD7;--slate:#7C89A3;
@@ -63,7 +81,36 @@ main{flex:1;display:flex;align-items:center;justify-content:center;
  padding:6px 2px;border-bottom:1px solid rgba(232,198,95,.5)}
 .sec:hover,.sec:focus-visible{color:var(--gold);border-bottom-color:var(--gold)}
 @media(max-width:520px){.btn{width:100%}}
+.msgpage .cover{width:min(300px,70vw);height:auto;margin:0 auto 22px;display:block;
+ filter:drop-shadow(0 24px 40px rgba(0,0,0,.5))}
+.msgpage p{max-width:46ch;margin:0 auto 14px;font-size:1.05rem;line-height:1.7;text-wrap:balance}
+.msgpage h1{text-wrap:balance}
 """
+
+
+def _inner(p, e) -> str:
+    """A video page (the testimonial) or a message page (a thank-you)."""
+    if p.get("video"):
+        return f"""  <div class="tm">
+    <h1>{e(p['heading'])}</h1>
+    <div class="vid">
+      <video controls playsinline preload="metadata" poster="{e(p['poster'])}" src="{e(p['video'])}"></video>
+    </div>
+    <div class="cta">
+      <a class="btn" href="{e(p['primary'][1])}">{e(p['primary'][0])} <span aria-hidden="true">&rarr;</span></a>
+      <a class="sec" href="{e(p['secondary'][1])}">{e(p['secondary'][0])}</a>
+    </div>
+  </div>"""
+    paras = "".join(f"<p>{e(t)}</p>" for t in p.get("paras", []))
+    img = f'<img class="cover" src="{e(p["image"])}" alt="">' if p.get("image") else ""
+    sec = (f'<div class="cta"><a class="sec" href="{e(p["secondary"][1])}">{e(p["secondary"][0])}</a></div>'
+           if p.get("secondary") else "")
+    return f"""  <div class="tm msgpage">
+    {img}
+    <h1>{e(p['heading'])}</h1>
+    {paras}
+    {sec}
+  </div>"""
 
 
 def render(ctx, p) -> str:
@@ -84,7 +131,7 @@ def render(ctx, p) -> str:
 <meta property="og:url" content="{canonical}">
 <meta property="og:title" content="{e(p['title'])}">
 <meta property="og:description" content="{e(p['desc'])}">
-<meta property="og:image" content="{e(p['poster'])}">
+<meta property="og:image" content="{e(p.get('poster') or p.get('image',''))}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.png">
 <meta name="theme-color" content="#061938">
@@ -97,16 +144,7 @@ def render(ctx, p) -> str:
 <body>
 <parallaxx-nav></parallaxx-nav>
 <main>
-  <div class="tm">
-    <h1>{e(p['heading'])}</h1>
-    <div class="vid">
-      <video controls playsinline preload="metadata" poster="{e(p['poster'])}" src="{e(p['video'])}"></video>
-    </div>
-    <div class="cta">
-      <a class="btn" href="{e(p['primary'][1])}">{e(p['primary'][0])} <span aria-hidden="true">&rarr;</span></a>
-      <a class="sec" href="{e(p['secondary'][1])}">{e(p['secondary'][0])}</a>
-    </div>
-  </div>
+{_inner(p, e)}
 </main>
 <parallaxx-footer></parallaxx-footer>
 <script src="/parallaxx-nav.js"></script>

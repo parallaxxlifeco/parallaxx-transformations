@@ -497,6 +497,35 @@ th{color:var(--gold);font-weight:600;font-size:.82rem;letter-spacing:.05em;
  text-decoration-color:rgba(232,198,95,.4)}
 .pillar .cards a:hover,.pillar .cards a:focus-visible{color:var(--brand-gold);
  text-decoration-color:var(--brand-gold)}
+/* LISTEN, 16 Oct 2026. A play button under the lede on every article. Two
+   modes, chosen per article at build time: if assets/audio/<slug>.mp3 exists
+   the button plays that file (narrate_articles.py makes them); otherwise it
+   reads the page aloud with the browser's own speech voice, which costs
+   nothing and needs no file. The bar stays hidden until the script has
+   checked the browser can do either, so nobody gets a dead button. Once
+   started, a small pause pill follows the reader down the page. Every play
+   is counted in GA4: listen_start, listen_progress (25/50/75), listen_complete. */
+.listen{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem;margin:1.6rem 0 0}
+.listen[hidden]{display:none}
+.listen-btn,.listen-fab{display:inline-flex;align-items:center;gap:.6rem;cursor:pointer;
+ font:600 .82rem/1 'Montserrat',system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;
+ color:var(--deep);background:var(--brand-gold);border:0;border-radius:999px;padding:.7rem 1.15rem .7rem .8rem}
+.listen-btn:hover,.listen-fab:hover{background:#F3DD93}
+.listen-btn:focus-visible,.listen-fab:focus-visible{outline:2px solid var(--on-deep);outline-offset:3px}
+.listen .ico,.listen-fab .ico{position:relative;width:1.35rem;height:1.35rem;border-radius:50%;
+ background:var(--deep);flex:0 0 auto}
+.listen .ico::before,.listen-fab .ico::before{content:"";position:absolute;left:52%;top:50%;
+ transform:translate(-40%,-50%);border-style:solid;border-width:.3rem 0 .3rem .48rem;
+ border-color:transparent transparent transparent var(--brand-gold)}
+.on .ico::before{left:50%;transform:translate(-50%,-50%);width:.42rem;height:.5rem;
+ border-width:0 .14rem;border-color:var(--brand-gold)}
+.listen-note{font-size:.82rem;color:var(--on-deep-mute)}
+.listen-fab{position:fixed;right:1rem;bottom:1rem;z-index:60;
+ box-shadow:0 10px 28px -10px rgba(4,18,42,.55)}
+.listen-fab[hidden]{display:none}
+article .reading{background:rgba(201,162,39,.16);box-shadow:0 0 0 .35rem rgba(201,162,39,.16);
+ border-radius:2px}
+.masthead .reading{background:rgba(232,198,95,.12);box-shadow:0 0 0 .35rem rgba(232,198,95,.12)}
 /* THE SUBSCRIBE BOX, 4 Oct 2026. Sits after the body on every insights page.
    The heading and line are ours, so they set in the article type; only the
    two fields and the button come from GHL, in a transparent iframe. Since
@@ -540,8 +569,139 @@ def subscribe_box() -> str:
             f'</aside>')
 
 
+# ── LISTEN ─────────────────────────────────────────────────────────────
+# The play button's script, inlined on article pages only. Plain ES5, no
+# dependencies. Device-voice mode reads sentence by sentence (one long
+# utterance gets cut off after ~15s in Chrome) and treats pause as "stop and
+# remember the sentence", because speechSynthesis.pause() is unreliable on
+# Android and Chrome. The GA4 events fall silent on their own wherever gtag is
+# missing or switched off (?px-me=on).
+LISTEN_JS = r"""<script>
+(function(){
+  var box = document.querySelector('.listen'); if (!box) return;
+  var src = box.getAttribute('data-src'), synth = window.speechSynthesis;
+  if (!src && !(synth && window.SpeechSynthesisUtterance)) return;
+  box.hidden = false;
+  var btn = box.querySelector('.listen-btn'), page = location.pathname;
+  var kind = src ? 'recorded' : 'device', started = false, playing = false, marks = {};
+  var fab = btn.cloneNode(true); fab.className = 'listen-fab'; fab.hidden = true;
+  document.body.appendChild(fab);
+  var inView = true;
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){ inView = es[0].isIntersecting; paint(); }).observe(btn);
+  }
+  function ev(name, extra){
+    if (typeof gtag !== 'function') return;
+    var p = { source_page: page, voice_type: kind };
+    for (var k in extra) p[k] = extra[k];
+    gtag('event', name, p);
+  }
+  function progress(f){
+    [25, 50, 75].forEach(function(m){
+      if (f * 100 >= m && !marks[m]) { marks[m] = 1; ev('listen_progress', { percent: m }); }
+    });
+    if (f >= 0.98 && !marks[100]) { marks[100] = 1; ev('listen_complete', {}); }
+  }
+  function paint(){
+    var t = playing ? 'Pause' : (started ? 'Resume' : 'Listen to this article');
+    [btn, fab].forEach(function(b){
+      b.querySelector('.lbl').textContent = t;
+      b.setAttribute('aria-pressed', playing ? 'true' : 'false');
+      b.classList.toggle('on', playing);
+    });
+    fab.hidden = !(started && !inView);
+    // Sit above the analytics notice bar while it is still showing.
+    var bar = document.getElementById('px-consent'), r = bar && bar.getBoundingClientRect();
+    fab.style.bottom = (r && r.height && getComputedStyle(bar).display !== 'none')
+      ? (window.innerHeight - r.top + 16) + 'px' : '';
+  }
+  function begin(){ if (!started) { started = true; marks = {}; ev('listen_start', {}); } }
+
+  if (src) {
+    var au = new Audio(); au.preload = 'none'; au.src = src;
+    var toggle = function(){ if (au.paused) { begin(); au.play(); } else au.pause(); };
+    btn.onclick = fab.onclick = toggle;
+    au.onplay = function(){ playing = true; paint(); };
+    au.onpause = function(){ playing = false; paint(); };
+    au.ontimeupdate = function(){ if (au.duration) progress(au.currentTime / au.duration); };
+    au.onended = function(){ progress(1); started = false; playing = false; paint(); };
+    return;
+  }
+
+  var sel = 'article .masthead h1, article .masthead .lede, article > p, article > h2,' +
+            ' article > h3, article > ul > li, article > ol > li, article > blockquote > p,' +
+            ' article > table tbody tr';
+  var q = [], total = 0;
+  [].slice.call(document.querySelectorAll(sel)).forEach(function(n){
+    var t = n.textContent || '';
+    if (n.tagName === 'TR') {  // a table row reads as "Heading: cell. Heading: cell."
+      var hs = [].slice.call(n.closest('table').querySelectorAll('thead th'));
+      t = [].slice.call(n.cells).map(function(c, k){
+        var h = hs[k] ? hs[k].textContent.trim() : '';
+        return (h ? h.charAt(0) + h.slice(1).toLowerCase() + ': ' : '') + c.textContent.trim().replace(/[.]?$/, '.');
+      }).join(' ');
+    }
+    t = t.replace(/\s+/g, ' ').trim(); if (!t) return;
+    (t.match(/[^.!?]+[.!?]+["'’”)\]]*\s*|[^.!?]+$/g) || [t]).forEach(function(x){
+      x = x.trim(); if (x) { q.push({ n: n, t: x, at: total }); total += x.length; }
+    });
+  });
+  if (!q.length) { box.hidden = true; return; }
+  var voice = null;
+  function pick(){
+    var vs = synth.getVoices().filter(function(v){ return /^en/i.test(v.lang); });
+    var score = function(v){
+      var s = 0;
+      if (/natural|neural|premium|enhanced|online/i.test(v.name)) s += 8;
+      if (/^en[-_]GB/i.test(v.lang)) s += 4; else if (/^en[-_](AU|IE|NZ)/i.test(v.lang)) s += 3;
+      else if (/^en[-_]US/i.test(v.lang)) s += 2;
+      if (/google/i.test(v.name)) s += 1;
+      return s;
+    };
+    vs.sort(function(a, b){ return score(b) - score(a); });
+    voice = vs[0] || null;
+  }
+  pick(); if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = pick;
+  var i = 0, cur = null, lit = null;
+  function light(n){ if (lit) lit.classList.remove('reading'); lit = n; if (n) n.classList.add('reading'); }
+  function say(){
+    if (i >= q.length) {
+      progress(1); started = false; playing = false; i = 0; light(null); paint(); return;
+    }
+    var item = q[i], u = new SpeechSynthesisUtterance(item.t);
+    if (voice) { u.voice = voice; u.lang = voice.lang; } else u.lang = 'en-GB';
+    u.rate = 1;
+    u.onend = function(){ if (cur !== u || !playing) return; i++; progress((q[i] ? q[i].at : total) / total); say(); };
+    u.onerror = function(e){ if (cur !== u || !playing) return;
+      if (e.error === 'interrupted' || e.error === 'canceled') return; i++; say(); };
+    cur = u; light(item.n); synth.speak(u);
+  }
+  function toggle(){
+    if (playing) { playing = false; cur = null; synth.cancel(); paint(); return; }
+    begin(); playing = true; paint(); synth.cancel(); say();
+  }
+  btn.onclick = fab.onclick = toggle;
+  window.addEventListener('pagehide', function(){ synth.cancel(); });
+})();
+</script>"""
+
+
+def listen_bar(slug: str, body_html: str, lede: str, dist: Path) -> str:
+    """The bar under the lede. A recorded file wins over the device voice."""
+    has_file = (dist / "assets" / "audio" / f"{slug}.mp3").exists()
+    words = len(re.sub(r"<[^>]+>", " ", body_html + " " + lede).split())
+    mins = max(1, round(words / 155))
+    note = (f"{mins} min" if has_file
+            else f"{mins} min · read aloud by your device")
+    src = f' data-src="/assets/audio/{slug}.mp3"' if has_file else ""
+    return (f'<div class="listen"{src} hidden>'
+            f'<button type="button" class="listen-btn" aria-pressed="false">'
+            f'<span class="ico" aria-hidden="true"></span><span class="lbl">Listen to this article</span>'
+            f'</button><span class="listen-note">{note}</span></div>')
+
+
 def _page(ctx, canonical, title, desc, og_title, og_desc, schema, inner,
-          og_type="website", og_img=None, extra="", wrap_class=""):
+          og_type="website", og_img=None, extra="", wrap_class="", tail=""):
     """One shell for articles, hubs and the index. No bundle, no page JS.
 
     `og_desc` is the SHORT description, not the lede. It was the lede until
@@ -592,6 +752,7 @@ def _page(ctx, canonical, title, desc, og_title, og_desc, schema, inner,
 <parallaxx-footer></parallaxx-footer>
 <script src="/parallaxx-nav.js"></script>
 <script src="/parallaxx-footer.js"></script>
+{tail}
 {ctx['analytics_body']}
 </body>
 </html>
@@ -664,6 +825,7 @@ def render_article(ctx, a) -> str:
 <div class="meta">{html.escape(a['pillar']['name'])} · {stamp}</div>
 <h1>{inline(m['title'])}</h1>
 <p class="lede">{inline(m['answer'])}</p>
+{a['listen']}
 </div>
 {a['body']}
 {subscribe_box()}
@@ -679,7 +841,8 @@ Written by Daniel Lawson, Reconnection Coach.
                  og_type="article",
                  og_img=a.get("og_img"),
                  extra=f'<meta property="article:published_time" content="{m["published"]}">\n'
-                       f'<meta property="article:modified_time" content="{m["updated"]}">')
+                       f'<meta property="article:modified_time" content="{m["updated"]}">',
+                 tail=LISTEN_JS)
 
 
 def render_hub(ctx, slug, pillar, articles, hub_body) -> str:
@@ -837,7 +1000,7 @@ def build(ctx, content_dir: Path, dist: Path) -> tuple:
         # 5 Oct 2026). Every self-URL carries the slash.
         rel = f"/insights/{meta['pillar']}/{slug}/"
         by_pillar.setdefault(meta["pillar"], []).append(dict(
-            meta=meta, body=body, faq=faq, path=rel,
+            meta=meta, body=body, faq=faq, path=rel, slug=slug,
             url=ctx["origin"] + rel, pillar=PILLARS[meta["pillar"]]))
 
     # ── THE CANNIBALISATION GUARD ──────────────────────────────────────
@@ -899,6 +1062,7 @@ def build(ctx, content_dir: Path, dist: Path) -> tuple:
                       f"commit the PNG. Falling back to the site's default "
                       f"share image.")
             a["siblings"] = [x for x in items if x is not a][:3]
+            a["listen"] = listen_bar(a["slug"], a["body"], a["meta"]["answer"], dist)
             out = dist / a["path"].strip("/") / "index.html"
             out.parent.mkdir(parents=True, exist_ok=True)
             out.write_text(render_article(ctx, a), encoding="utf-8")

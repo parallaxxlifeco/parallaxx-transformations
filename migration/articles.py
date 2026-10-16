@@ -583,7 +583,7 @@ LISTEN_JS = r"""<script>
   if (!src && !(synth && window.SpeechSynthesisUtterance)) return;
   box.hidden = false;
   var btn = box.querySelector('.listen-btn'), page = location.pathname;
-  var kind = src ? 'recorded' : 'device', started = false, playing = false, marks = {};
+  var kind = src ? 'audio_file' : 'device', started = false, playing = false, marks = {};
   var fab = btn.cloneNode(true); fab.className = 'listen-fab'; fab.hidden = true;
   document.body.appendChild(fab);
   var inView = true;
@@ -691,7 +691,7 @@ def listen_bar(slug: str, body_html: str, lede: str, dist: Path) -> str:
     has_file = (dist / "assets" / "audio" / f"{slug}.mp3").exists()
     words = len(re.sub(r"<[^>]+>", " ", body_html + " " + lede).split())
     mins = max(1, round(words / 155))
-    note = (f"{mins} min" if has_file
+    note = (f"{mins} min · AI narration in Daniel's voice" if has_file
             else f"{mins} min · read aloud by your device")
     src = f' data-src="/assets/audio/{slug}.mp3"' if has_file else ""
     return (f'<div class="listen"{src} hidden>'

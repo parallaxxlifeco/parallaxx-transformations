@@ -816,6 +816,30 @@ words in an 18KB page with no page JavaScript at all — against 215KB for
 `/men`. It is also the only shape where the copy is in the HTML rather than
 lifted back out of a bundle afterwards.
 
+### Listen button, 16 Oct 2026
+
+Every article has a "Listen to this article" button under the lede. Since
+then articles carry one small inline script (`LISTEN_JS` in articles.py,
+about 4KB); still no bundle.
+
+- **No audio file:** the browser's own speech voice reads the page, sentence
+  by sentence, highlighting what it is reading. Free, nothing to store, and it
+  sounds different on every device. The script prefers a British "natural"
+  voice where the device has one. If a browser cannot speak, the bar never
+  appears.
+- **With `migration/wix-assets/audio/<slug>.mp3`:** the button plays that file
+  instead and the note reads "AI narration in Daniel's voice". Nothing else
+  changes. `python3 migration/narrate_articles.py` makes them with ElevenLabs
+  (`--dry-run` first: it lists what is new or changed and the character
+  count, which is roughly the credits it will use). It only narrates new or
+  edited articles, tracked in `audio/manifest.json`. The API key lives in
+  `~/.parallaxx-elevenlabs` on the Mac, NEVER in this repo (it is public).
+  The whole back catalogue on 16 Oct 2026 was ~136,000 characters.
+- **Tracking:** GA4 events `listen_start`, `listen_progress` (`percent` 25,
+  50, 75) and `listen_complete`, each with `source_page` and `voice_type`
+  (`device` or `audio_file`). Read them in GA4 under Reports > Engagement >
+  Events. Daniel's own browsers send nothing once `?px-me=on` is set.
+
 ### Writing one
 
     content/insights/<pillar>/<slug>.md

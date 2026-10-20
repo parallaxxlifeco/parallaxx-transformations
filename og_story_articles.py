@@ -157,7 +157,10 @@ def build_story(meta, slug):
     OUTDIR.mkdir(parents=True, exist_ok=True)
     out = OUTDIR / f"story-{slug}.png"
     story.save(out)
-    url = f"{ORIGIN}/insights/{meta.get('pillar')}/{slug}"
+    # Tagged so story taps read as instagram / story in GA4 rather than "direct".
+    # Trailing slash avoids a redirect hop. Added 17 Oct 2026 (audit run sheet, Fix 1).
+    url = (f"{ORIGIN}/insights/{meta.get('pillar')}/{slug}/"
+           f"?utm_source=instagram&utm_medium=story&utm_campaign={slug}")
     return out, url, size, len(lines), ok
 
 

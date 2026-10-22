@@ -78,13 +78,38 @@ if _m:
     import datetime
     _d = datetime.date(int(_m.group(1)), int(_m.group(2)), int(_m.group(3)))
     _want = "%s %d %s" % (_d.strftime("%A"), _d.day, _d.strftime("%B"))
-    _n = HTML.count(_want)
-    if _n != 3:
-        raise SystemExit(
-            "FAIL: data-open-at says %s, but the markup fallback %r appears %d times, not 3.\n"
-            "      Update the three .js-open-date fallbacks to match the attribute."
-            % (_d.isoformat(), _want, _n))
-    print("open date  %s  (%d fallbacks match)" % (_want, _n))
+    _texts = re.findall(r'class="js-open-date"[^>]*>([^<]*)<', HTML)
+    if len(_texts) != 3:
+        raise SystemExit("FAIL: expected 3 .js-open-date elements, found %d" % len(_texts))
+    if _d >= datetime.date.today():
+        # A live date: every fallback must name it.
+        if any(t != _want for t in _texts):
+            raise SystemExit(
+                "FAIL: data-open-at says %s, but the .js-open-date fallbacks read %r.\n"
+                "      Update all three to %r." % (_d.isoformat(), _texts, _want))
+        print("open date  %s  (3 fallbacks match)" % _want)
+    else:
+        # The date has passed, so the page is between sessions and names the
+        # next month (see the BETWEEN SESSIONS note on #rw-open). The fallbacks
+        # must name that month, not the session that has gone.
+        _tag = re.search(r'<div id="rw-open"[^>]*>', HTML).group(0)
+        _nm = re.search(r'data-next-month="([^"]*)"', _tag)
+        if _nm is None:
+            _y, _mo = _d.year, _d.month + 1
+            if _mo > 12: _y, _mo = _y + 1, 1
+            _key = "%d-%02d" % (_y, _mo)
+        else:
+            _key = _nm.group(1).strip()
+        if _key:
+            _name = datetime.date(int(_key[:4]), int(_key[5:7]), 1).strftime("%B")
+            if any(_name not in t for t in _texts) or any(_want in t for t in _texts):
+                raise SystemExit(
+                    "FAIL: data-open-at %s has passed, so the page is between sessions and\n"
+                    "      the .js-open-date fallbacks should name %s. They read %r."
+                    % (_d.isoformat(), _name, _texts))
+            print("between sessions  next month %s  (3 fallbacks match)" % _name)
+        else:
+            print("between sessions  data-next-month empty, page shows 'date to be announced'")
 
 # The annotation layer is a build-time thing and must never reach a browser.
 for marker in ('class="note"', "noteBtn", 'class="ph"', "IMAGE_SLOT_", "[CLIENT]"):

@@ -1074,7 +1074,12 @@
      the date and countdown in the hero, the open card and the close, and the
      theme in the hero and above the pricing grid. Nothing else needs touching.
      data-theme is the cycle's title in the form "Keyword for Promise"; leave it
-     empty and every theme element removes itself rather than showing a stale one. -->
+     empty and every theme element removes itself rather than showing a stale one.
+     BETWEEN SESSIONS. Once data-open-at has passed, the page switches itself to
+     the next month: "November", "Registrations open now", and that month's theme
+     from The Months Ahead. It takes the month after data-open-at. Add
+     data-next-month="YYYY-MM" to name a different month, or data-next-month=""
+     to fall back to "date to be announced". -->
 <div id="rw-open" hidden
      data-open-at="2026-10-20T08:30:00+02:00"
      data-open-tz="08:30 CET"
@@ -1093,8 +1098,8 @@
     </h1>
     <p class="sub" data-r="near"><span>For the capable one everybody leans on, who handles it all on her own,</span><b>has set goals and hit every target,</b><b>and ignored the price she's paid.</b></p>
     <button class="btn" type="button" data-trw-modal data-r="mid">Come To The Open Session</button>
-    <p class="theme js-theme-block" data-r="far"><span class="theme-lab">This month</span><span class="js-open-theme">Self-Recognition for Unconditional Worth</span></p>
-    <div class="next" data-r="far">Next open session<span class="sep">&nbsp;&middot;&nbsp;</span><span class="nd"><span class="js-open-date">Tuesday 20 October</span><span class="js-open-tz"> &nbsp;&middot;&nbsp; 08:30 CET</span></span><span class="cnt js-open-count"></span></div>
+    <p class="theme js-theme-block" data-r="far"><span class="theme-lab js-theme-lab">November</span><span class="js-open-theme">Personal Needs for Giving to Yourself First</span></p>
+    <div class="next" data-r="far">Next open session<span class="sep">&nbsp;&middot;&nbsp;</span><span class="nd"><span class="js-open-date">November</span><span class="js-open-tz"></span></span><span class="cnt js-open-count">Registrations open now</span></div>
 </div>
   <div class="cue">&darr;</div>
 </section>
@@ -1396,7 +1401,7 @@
       <ol class="themes" id="themeList">
         <li data-month="2026-09"><span class="mo">September</span><span class="ti">Self-Recognition for Unconditional Worth</span></li>
         <li data-month="2026-10"><span class="mo">October</span><span class="ti">Personal Responsibility for What You Want</span></li>
-        <li data-month="2026-11"><span class="mo">November</span><span class="ti">Personal Needs for Giving Yourself First</span></li>
+        <li data-month="2026-11"><span class="mo">November</span><span class="ti">Personal Needs for Giving to Yourself First</span></li>
         <li data-month="2026-12"><span class="mo">December</span><span class="ti">Emotional Space for Clarity on What Matters</span></li>
         <li data-month="2027-01"><span class="mo">January</span><span class="ti">Clear Boundaries for Certainty Under Pressure</span></li>
         <li class="soon"><span class="mo"></span><span class="ti">More coming</span></li>
@@ -1406,9 +1411,9 @@
     <div class="pricegrid" data-r="mid">
     <div class="opencard">
       <div class="free">Free</div>
-      <div class="when"><span class="js-open-date">Tuesday 20 October</span><span class="js-open-times">08:30 CET / 14:30 GMT+8</span></div>
+      <div class="when"><span class="js-open-date">November</span><span class="js-open-times"></span></div>
       <div class="where">Online, wherever you are</div>
-      <p class="cnt js-open-count"></p>
+      <p class="cnt js-open-count">Registrations open now</p>
       <p class="lede">Come, sit in it, and decide from the session rather than from this page.</p>
     </div>
     <div class="stay">
@@ -1421,7 +1426,7 @@
         <li>First access to new frameworks and resources</li>
         <li>Complimentary 1:1 call on week 6</li>
       </ul>
-      <p class="pricenote"><b>&euro;89 a month</b>, and your membership price is grandfathered. It never increases as long as you stay. Memberships roll over monthly. Cancel anytime.</p>
+      <p class="pricenote"><b>&euro;119 a month</b>, and your membership price is grandfathered. It never increases as long as you stay. Memberships roll over monthly. Cancel anytime.</p>
     </div>
     </div>
     <div class="cta-row" data-r="mid">
@@ -1453,7 +1458,10 @@
       <details><summary>Isn't this just another women's circle?</summary><div class="ans">No. Most are built around becoming more feminine, and there's a performance in that. Here we call it as it is, so you can put something down instead of picking more up.</div></details>
       <details><summary>Why is a man hosting it?</summary><div class="ans">Because the women who join want a healthy masculine presence in their life, one they are not being led by, competing with, or taking instruction from. Just the masculine holding the room, so they can stop for a change.</div></details>
       <details><summary>I have great friends. Do I need this?</summary><div class="ans">Friendship runs on co-regulation and the women you'd go to are running your operating system. I'm not here to be your friend.</div></details>
-      <details><summary>Can I come once before I decide?</summary><div class="ans">Yes. The first session of every month is open and there's no charge for it. Come, sit in it, and decide from the room rather than from this page. After that it's &euro;89 a month, and you're grandfathered: your price never increases as long as you stay.</div></details>
+      <details><summary>Can I come once before I decide?</summary><div class="ans">Yes. The first session of every month is open and there's no charge for it. Come, sit in it, and decide from the room rather than from this page. After that it's &euro;119 a month, and you're grandfathered: your price never increases as long as you stay.</div></details>
+      <details><summary>Can I cancel?</summary><div class="ans">Yes, any time. It's month to month, and your membership runs to the end of the month you've paid for.</div></details>
+      <details><summary>What if I'm away for a month?</summary><div class="ans">You can pause once a year, for up to a month, and you keep your price. Ask before your next payment.</div></details>
+      <details><summary>Is what I share kept private?</summary><div class="ans">Yes. What you share stays between us. I sometimes draw on a line or a theme from a session in my writing, without anything that could identify you, and I'll always ask you first before using anything that does, like a clip or a testimonial.</div></details>
       <details><summary>Where does it run?</summary><div class="ans">Online, so you can join from wherever you are. Nothing to travel to and nothing to arrange around it.</div></details>
       <details><summary>Do I need to attend every session?</summary><div class="ans">No. Life moves and the group knows it. Come when you can, and know that the women who turn up regularly are the ones who feel it shift.</div></details>
       <details><summary>When do sessions run?</summary><div class="ans">One sitting time, set so it works across the time zones the group is spread over, and we stay fluid with what the group asks for. Come to the open session and you'll see how it sits with your week.</div></details>
@@ -1468,7 +1476,7 @@
   <div class="in">
     <p class="ey" data-r="far">Ready?</p>
     <h2 data-r="near" class="twoline">Figure out what you want,<span>and ask for it in four weeks.</span></h2>
-    <p class="when" data-r="mid">Next open session <span class="js-open-date" data-fallback="is being confirmed">Tuesday 20 October</span>. Free to attend, short application form first.</p>
+    <p class="when" data-r="mid">Next open session <span class="js-open-date" data-fallback="is being confirmed" data-pending="is in {month}. Registrations are open now">is in November. Registrations are open now</span>. Free to attend, short application form first.</p>
     <button class="btn" type="button" data-trw-modal data-r="mid">Register For The Open Session</button>
   </div>
 </section>
@@ -1862,6 +1870,27 @@
       weekday:'long', day:'numeric', month:'long', timeZone:'UTC'
     });
 
+    /* Between sessions: the date has gone, so name the next month instead and
+       say registrations are open (GHL holds new registrations on the waitlist
+       until the date is set). The month after data-open-at unless
+       data-next-month says otherwise; empty switches this off. Never names a
+       month that is already behind us, or one not after the last session. */
+    var pend = null;
+    if(past){
+      var nk = src.getAttribute('data-next-month');
+      if(nk === null){
+        var ny = +m[1], nm = +m[2] + 1; if(nm > 12){ nm = 1; ny++; }
+        nk = ny + '-' + (nm < 10 ? '0' : '') + nm;
+      }
+      nk = nk.trim();
+      var pm = nk.match(/^(\d{4})-(\d{2})$/);
+      var nowKey = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2);
+      if(pm && nk > m[1] + '-' + m[2] && nk >= nowKey){
+        pend = { key: nk, name: new Date(Date.UTC(+pm[1], +pm[2] - 1, 15))
+                   .toLocaleDateString('en-GB', { month:'long', timeZone:'UTC' }) };
+      }
+    }
+
     function set(sel, text, hideWhenPast){
       var els = document.querySelectorAll(sel);
       for(var i = 0; i < els.length; i++){
@@ -1871,15 +1900,24 @@
     }
     var dates = document.querySelectorAll('.js-open-date');
     for(var i = 0; i < dates.length; i++){
-      dates[i].textContent = past
-        ? (dates[i].getAttribute('data-fallback') || 'date to be announced')
-        : pretty;
+      dates[i].textContent = pend
+        ? (dates[i].getAttribute('data-pending') || pend.name).replace('{month}', pend.name)
+        : past
+          ? (dates[i].getAttribute('data-fallback') || 'date to be announced')
+          : pretty;
     }
     set('.js-open-tz', ' \u00a0\u00b7\u00a0 ' + (src.getAttribute('data-open-tz') || ''), true);
     set('.js-open-times', src.getAttribute('data-open-times') || '', true);
-    set('.js-open-count',
-        days > 1 ? 'In ' + days + ' days' : days === 1 ? 'Tomorrow' : days === 0 ? 'Today' : '',
-        true);
+    if(pend){
+      var cnts = document.querySelectorAll('.js-open-count');
+      for(var c = 0; c < cnts.length; c++){ cnts[c].textContent = 'Registrations open now'; }
+    } else {
+      set('.js-open-count',
+          days > 1 ? 'In ' + days + ' days' : days === 1 ? 'Tomorrow' : days === 0 ? 'Today' : '',
+          true);
+    }
+    var labs = document.querySelectorAll('.js-theme-lab');
+    for(var l = 0; l < labs.length; l++){ labs[l].textContent = pend ? pend.name : 'This month'; }
 
     /* The theme rides the same single source as the date. No theme set, or the
        date already gone, and the whole block leaves rather than going stale. */
@@ -1887,7 +1925,7 @@
        it, take the title from there, and open the wheel on that row — so
        setting the date is the only monthly edit. The attribute on #rw-open
        stays as a fallback for a month the list does not cover. */
-    var monthKey = m[1] + '-' + m[2];
+    var monthKey = pend ? pend.key : m[1] + '-' + m[2];
     var theme = '';
     var wheel = document.getElementById('themeWheel');
     var track = document.getElementById('themeList');
@@ -1940,7 +1978,7 @@
     if(!theme) theme = (src.getAttribute('data-theme') || '').trim();
     var themeEls = document.querySelectorAll('.js-open-theme');
     for(var t = 0; t < themeEls.length; t++){ themeEls[t].textContent = theme; }
-    if(!theme || past){
+    if(!theme || (past && !pend)){
       var blocks = document.querySelectorAll('.js-theme-block');
       for(var b = 0; b < blocks.length; b++){ blocks[b].style.display = 'none'; }
     }

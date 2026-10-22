@@ -69,12 +69,16 @@ if "`" in src:
              f"destroys the stylesheet. Use single quotes.")
 if "${" in src:
     sys.exit("FAIL: '${' in source would interpolate inside the template literal.")
-if src.count("Last updated 1 September 2026") != 2:
-    sys.exit("FAIL: expected a 'Last updated 1 September 2026' line on both\n"
-             "documents. A legal page that has quietly lost its date is worse than\n"
-             "one that is out of date. If the date genuinely changed, change it in\n"
-             "the source AND in this guard -- they are pinned together on purpose,\n"
-             "so a date can never drift without somebody deciding it should.")
+# Privacy is dated 1 September 2026. Terms moved to 22 October 2026 when
+# section 10 (Memberships) was added at Daniel's go-ahead.
+if (src.count("Last updated 1 September 2026") != 1
+        or src.count("Last updated 22 October 2026") != 1):
+    sys.exit("FAIL: expected 'Last updated 1 September 2026' (privacy) and\n"
+             "'Last updated 22 October 2026' (terms), once each. A legal page that\n"
+             "has quietly lost its date is worse than one that is out of date. If a\n"
+             "date genuinely changed, change it in the source AND in this guard --\n"
+             "they are pinned together on purpose, so a date can never drift\n"
+             "without somebody deciding it should.")
 if src.count("Parallax Life Co Pty LTD") < 3:
     sys.exit("FAIL: the governing entity is missing from one of the documents. "
              "Both have to name who the terms are with.")

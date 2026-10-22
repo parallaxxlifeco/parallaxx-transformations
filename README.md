@@ -781,11 +781,9 @@ reveals everything regardless.
 
 ### Still open
 
-- **The enrol URL is unconfirmed.** It points at
-  `members.parallaxxtransformations.com`, which was `CNAME members →
-  preview.clientclub.net` (LeadConnector) and was **dropped in the migration**.
-  Verified 17 Aug 2026: the host answers with a self-signed certificate, so no
-  browser connects. Either restore that CNAME or repoint the button.
+- **Enrol URL fixed 22 Oct 2026.** The button now points at
+  `login.giveitallevent.com/courses/offers/5976d5b4-…` (the GHL client portal).
+  The old `members.parallaxxtransformations.com` address no longer resolves.
 - **The video and poster are the last two Wix dependencies on the site.** Run
   `migration/download-identity-video.sh` before Wix is cancelled, then
   `map-new-assets.py`. A 1080p VSL cannot be reconstructed from a harvest the

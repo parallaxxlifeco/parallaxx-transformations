@@ -85,7 +85,7 @@ CONSENT_MODE = "opt-out"
 # events happen off-site, so a pageview report can never answer "which page
 # produced an enquiry".
 OUTBOUND_EVENTS = [
-    (r"(^|\.)leadconnectorhq\.com$|(^|\.)msgsndr\.com$", "lead_click"),
+    (r"(^|\.)leadconnectorhq\.com$|(^|\.)msgsndr\.com$|(^|\.)giveitallevent\.com$", "lead_click"),
     (r"(^|\.)stripe\.com$", "checkout_click"),
     (r"^members\.parallaxxtransformations\.com$", "vault_click"),
 ]
@@ -554,7 +554,9 @@ REDIRECTS = {
     "/what-is-your-archetype": "/the-archetype-quiz",
     "/archetype-quiz-form-follow": "/the-archetype-quiz",
     "/assesment-page": "/the-archetype-quiz",
-    "/vault": "https://vault.parallaxxtransformations.com",
+    # The Teachable vault closed years ago and vault.* no longer resolves
+    # (checked 22 Oct 2026), so old /vault links go home rather than to a dead host.
+    "/vault": "/",
     # Offers and funnels that no longer have a page of their own.
     "/reconnect": "/",
     "/programs": "/",

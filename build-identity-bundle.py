@@ -209,4 +209,4 @@ PREV.write_text("""<!DOCTYPE html>
 
 print("built %s  css=%d  html=%d  boot=%d" % (JS.name, len(CSS), len(HTML), len(BOOTBODY)))
 print("built %s" % PREV.name)
-print("NOTE: the enrol URL and the Wix-hosted video are both still unresolved.")
+print("NOTE: the Wix-hosted video is still unresolved.")

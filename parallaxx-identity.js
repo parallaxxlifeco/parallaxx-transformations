@@ -46,11 +46,9 @@
        dashes and the copyright sign rendered as literal garbage on the
        live page.
 
-   STILL OUTSTANDING, AND BOTH MATTER
-   · The enrol URL points at members.parallaxxtransformations.com. That
-     CNAME was dropped in the migration and the host answers with a
-     self-signed certificate, so no browser connects. Confirm the live
-     URL before this page does any work.
+   STILL OUTSTANDING
+   · (Fixed 22 Oct 2026) The enrol URL now points at
+     login.giveitallevent.com, the GHL portal that hosts the offer.
    · The video and its poster are still served from Wix and are not in
      asset-map.json, so they are not localised. They die with the Wix
      subscription. See migration/download-identity-video.sh.
@@ -299,16 +297,11 @@
       </div>
     </div>
 
-    <!-- ══════════════════════════════════════════════════════════
-         THIS URL IS UNCONFIRMED. members.parallaxxtransformations.com
-         was CNAME members -> preview.clientclub.net (LeadConnector),
-         and that record was dropped in the migration. Verified 17 Aug
-         2026: the host answers with a self-signed certificate, so no
-         browser will connect. Left exactly as it was on the live page
-         rather than guessed at -- confirm it, or restore the CNAME.
-         ══════════════════════════════════════════════════════════ -->
+    <!-- Enrol link: the GHL client portal on login.giveitallevent.com (same
+         offer ID as the old members.* address, which no longer resolves).
+         Confirmed by Daniel and checked live 22 Oct 2026. -->
     <div class="id2-cta-row id2-reveal">
-      <a class="id2-btn" href="https://members.parallaxxtransformations.com/courses/offers/5976d5b4-1966-480b-af8e-d34fd095f865">
+      <a class="id2-btn" href="https://login.giveitallevent.com/courses/offers/5976d5b4-1966-480b-af8e-d34fd095f865">
         <span>Begin the Challenge</span>
         <svg viewBox="0 0 18 10" fill="none" aria-hidden="true"><path d="M0 5h16M12 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"></path></svg>
       </a>

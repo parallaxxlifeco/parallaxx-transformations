@@ -1099,7 +1099,7 @@
     </h1>
     <p class="sub" data-r="near"><span>For the capable one everybody leans on, who handles it all on her own,</span><b>has set goals and hit every target,</b><b>and ignored the price she's paid.</b></p>
     <button class="btn" type="button" data-trw-modal data-r="mid">Come To The Open Session</button>
-    <p class="theme js-theme-block" data-r="far"><span class="theme-lab js-theme-lab">November</span><span class="js-open-theme">Personal Needs for Giving to Yourself First</span></p>
+    <p class="theme js-theme-block" data-r="far"><span class="theme-lab js-theme-lab" style="display:none">This month</span><span class="js-open-theme">Personal Needs for Giving to Yourself First</span></p>
     <div class="next" data-r="far">Next open session<span class="sep">&nbsp;&middot;&nbsp;</span><span class="nd"><span class="js-open-date">November</span><span class="js-open-tz"></span></span><span class="cnt js-open-count">Registrations open now</span></div>
 </div>
   <div class="cue">&darr;</div>
@@ -1940,7 +1940,12 @@
           true);
     }
     var labs = document.querySelectorAll('.js-theme-lab');
-    for(var l = 0; l < labs.length; l++){ labs[l].textContent = pend ? pend.name : 'This month'; }
+    /* Between sessions the month is already named in the line below, so the
+       label goes rather than saying it twice. */
+    for(var l = 0; l < labs.length; l++){
+      labs[l].textContent = 'This month';
+      labs[l].style.display = pend ? 'none' : '';
+    }
 
     /* The theme rides the same single source as the date. No theme set, or the
        date already gone, and the whole block leaves rather than going stale. */

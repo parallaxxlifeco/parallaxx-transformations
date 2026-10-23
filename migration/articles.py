@@ -117,7 +117,15 @@ def guard(text: str, where: str) -> list:
 # repo does not need. The FAQ is derived from the body instead (see below),
 # which also means the on-page questions and the FAQPage schema cannot drift
 # apart — they are the same text.
-SOURCE_ID = re.compile(r"(?:RM-S[1-6]|RW-W[1-4]|PM-\d{2}|PW-\d{2}|DL)-\d{3}")
+# Session numbers are open-ended: the rooms run weekly and the archive was at
+# six men's sessions and four women's when this was written. It was never
+# widened, so by 23 October 2026 RM-S7..S11 and RW-W5..W9 — 1,697 corpus rows,
+# and 12 queue rows that seed them — could not be cited at all. The guard is
+# here to stop NAME-keyed ids (PM-SHRI, PW-JULIA) reaching this public repo, and
+# a digit after RM-S or RW-W is already opaque, so the session count is matched
+# with \d{1,2} rather than an allowlist that goes stale every week. Letters
+# after the prefix still fail, which is the leak this exists to catch.
+SOURCE_ID = re.compile(r"(?:RM-S\d{1,2}|RW-W\d{1,2}|PM-\d{2}|PW-\d{2}|DL)-\d{3}")
 
 REQUIRED_KEYS = ("title", "pillar", "intent", "question", "answer", "description",
                  "published", "updated", "sources", "offer")
@@ -158,7 +166,7 @@ def parse_front_matter(raw: str, where: str) -> tuple:
         if not SOURCE_ID.fullmatch(sid):
             raise ValueError(
                 f"{where}: source id {sid!r} is not a recognised shape. Valid: "
-                f"RM-S1..S6-nnn, RW-W1..W4-nnn, PM-nn-nnn, PW-nn-nnn, DL-nnn. "
+                f"RM-Sn-nnn, RW-Wn-nnn, PM-nn-nnn, PW-nn-nnn, DL-nnn. "
                 f"If that is a name-keyed id, it must NOT be committed — this "
                 f"repo is public. Look it up in corpus-index/people-map.json "
                 f"and cite the opaque id instead.")

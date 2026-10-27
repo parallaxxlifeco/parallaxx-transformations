@@ -57,7 +57,13 @@
 .sec.dark{background:var(--navy)}
 .sec.black{background:var(--black)}
 .sec.cream{background:var(--cream); color:var(--ink)}
-.sec.cream-2{background:var(--cream-2); color:var(--ink)}
+/* Sand sections: a deeper sand for the main cream bands, a near-white
+   paper for the bio, so two neighbours never read as one. Text and
+   bronze run darker inside both for contrast. */
+.sec.cream,.sec.cream-2{--ink:#121A2A; --ink-soft:#3F4757; --bronze:#86672A; --line-cream:#CFC2A6}
+.sec.cream{background:#E8DEC8}
+
+.sec.cream-2{background:#FBF8F1; color:var(--ink)}
 .in{max-width:var(--col); margin:0 auto}
 .narrow{max-width:1040px}
 /* ONE LEFT EDGE (Oct 2026). The narrow sections used to centre their 1040px
@@ -65,6 +71,8 @@
    in and out. They now keep the narrower measure but start on the same left
    edge as everything else; the spare width falls on the right. */
 .in.narrow{margin-left:calc((100% - min(100%, var(--col))) / 2); margin-right:auto}
+/* The video is the one block that sits centred on the page. */
+#vsl .in.narrow{margin-left:auto; margin-right:auto}
 
 .ey{
   font-family:var(--head); font-size:.62rem; font-weight:800;
@@ -762,6 +770,17 @@
   .vgrid .voice img{width:64px}
 }
 
+/* ── RESTRUCTURE, Oct 2026: pieces that moved into other sections ── */
+#recognition .trap-h{font-size:clamp(24px,3vw,38px); margin-top:clamp(48px,6vw,72px)}
+@media(min-width:900px){ #recognition .trap-h{white-space:nowrap} }
+.rcs-note{margin:18px 0 0; max-width:62ch; color:var(--ink-soft); font-size:clamp(15px,1.5vw,17px); line-height:1.6; text-wrap:pretty}
+#difference .nots{margin:26px 0 0}
+#difference .nots li{color:var(--ink-soft)}
+#difference .nots li.struck{color:#A9A193}
+.friends-line{margin:30px 0 0; max-width:62ch; color:var(--ink-soft); font-size:clamp(15px,1.5vw,18px); line-height:1.6}
+.friends-line span{display:block; margin-top:8px; font-family:var(--head); font-weight:600; color:var(--ink); font-size:clamp(17px,1.9vw,22px)}
+.listen-more{margin:clamp(40px,5vw,60px) 0 0; padding-top:clamp(28px,3.5vw,40px); border-top:1px solid var(--border)}
+.listen-more .lm-h{margin:0 0 14px; color:var(--mist); font-size:1rem}
 /* ═══ 13 · VALUES — standards as held lines ═══ */
 .stds{margin:28px 0 0; border-top:1px solid var(--line-cream)}
 .std{
@@ -916,6 +935,140 @@
 .trap-rig.shifted .deadend{opacity:.45}
 .trap-rig.shifted .breakout{border-left-color:var(--gold-lift)}
 
+
+/* ═══ TRAP · COMPACT ═════════════════════════════════════════
+   One row: the two options, an arrow, the answer. A brace under
+   the options joins them at "Same place". On a loop, a gold pulse
+   runs in from both options to the same place, then along the
+   arrow, and the answer lights. Hover or tap an option to try it. */
+#recognition .trap-h{font-size:clamp(22px,2.5vw,32px); margin-top:clamp(34px,4vw,52px)}
+.trap2{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) 44px minmax(0,1.15fr);
+  column-gap:12px; margin-top:20px; align-items:stretch}
+.t2-opt{grid-row:1; font:inherit; text-align:left; cursor:pointer; color:inherit;
+  background:var(--card); border:1px solid var(--border); border-top:2px solid var(--slate);
+  padding:14px 16px; opacity:.85;
+  transition:opacity .35s ease, border-color .35s ease, transform .35s var(--ease)}
+.t2-opt .q{display:block; font-family:var(--head); font-weight:600; font-size:clamp(16px,1.45vw,19px); color:var(--cream); line-height:1.25}
+.t2-opt .a{display:block; font-size:.88rem; line-height:1.45; color:var(--slate); margin-top:5px; transition:color .35s ease}
+.t2-opt:hover, .t2-opt:focus-visible, .t2-opt.try{opacity:1; border-top-color:var(--gold); transform:translateY(-2px); outline:none}
+.t2-opt:hover .a, .t2-opt.try .a{color:var(--mist)}
+.t2-arrow{grid-row:1; align-self:center; position:relative; height:2px; background:rgba(124,137,163,.45)}
+.t2-arrow::after{content:""; position:absolute; right:-1px; top:-4px; border:5px solid transparent; border-left:7px solid rgba(124,137,163,.8); border-right:0}
+.t2-arrow i{position:absolute; left:0; top:0; height:2px; width:14px; background:var(--gold); opacity:0}
+.t2-break{grid-row:1; margin:0; max-width:none; display:flex; align-items:center;
+  padding:14px 20px; border-left:2px solid var(--gold); background:rgba(232,198,95,.06);
+  font-family:var(--head); font-weight:600; font-size:clamp(18px,1.75vw,23px); line-height:1.25; color:var(--cream);
+  transition:background .5s ease, box-shadow .5s ease}
+.t2-break b{color:var(--gold-lift); font-weight:700}
+.t2-brace{grid-row:2; grid-column:1 / 3; position:relative; height:16px; margin:0 25%;
+  border:1px solid rgba(124,137,163,.45); border-top:0; border-radius:0 0 8px 8px}
+.t2-brace span{position:absolute; left:50%; top:22px; transform:translateX(-50%); white-space:nowrap;
+  font-family:var(--head); font-size:.6rem; font-weight:800; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--slate); transition:color .35s ease}
+.t2-brace i{position:absolute; bottom:-1px; height:2px; width:16px; background:var(--gold); opacity:0}
+.t2-brace .l{left:0} .t2-brace .r{right:0}
+.trap2{padding-bottom:22px}
+/* the loop */
+.trap2.on .t2-brace .l{animation:t2l 4s ease-in-out infinite}
+.trap2.on .t2-brace .r{animation:t2r 4s ease-in-out infinite}
+.trap2.on .t2-brace span{animation:t2same 4s ease-in-out infinite}
+.trap2.on .t2-arrow i{animation:t2arrow 4s ease-in-out infinite}
+.trap2.on .t2-break{animation:t2glow 4s ease-in-out infinite}
+@keyframes t2l{0%{left:0;opacity:0} 5%{opacity:1} 32%{left:calc(50% - 8px);opacity:1} 38%,100%{left:calc(50% - 8px);opacity:0}}
+@keyframes t2r{0%{right:0;opacity:0} 5%{opacity:1} 32%{right:calc(50% - 8px);opacity:1} 38%,100%{right:calc(50% - 8px);opacity:0}}
+@keyframes t2same{0%,28%{color:var(--slate)} 36%,52%{color:var(--gold)} 64%,100%{color:var(--slate)}}
+@keyframes t2arrow{0%,40%{left:0;opacity:0} 44%{opacity:1} 66%{left:calc(100% - 14px);opacity:1} 70%,100%{left:calc(100% - 14px);opacity:0}}
+@keyframes t2glow{0%,64%{background:rgba(232,198,95,.06); box-shadow:none} 74%,86%{background:rgba(232,198,95,.15); box-shadow:0 0 0 1px rgba(232,198,95,.3)} 100%{background:rgba(232,198,95,.06); box-shadow:none}}
+/* trying an option: the same place lights, and the answer answers */
+.trap2:has(.t2-opt:hover) .t2-brace, .trap2:has(.t2-opt.try) .t2-brace{border-color:rgba(232,198,95,.6)}
+.trap2:has(.t2-opt:hover) .t2-brace span, .trap2:has(.t2-opt.try) .t2-brace span{animation:none; color:var(--gold)}
+.trap2:has(.t2-opt:hover) .t2-break, .trap2:has(.t2-opt.try) .t2-break{animation:none; background:rgba(232,198,95,.15); box-shadow:0 0 0 1px rgba(232,198,95,.3)}
+@media(max-width:760px){
+  .trap2{grid-template-columns:1fr 1fr; padding-bottom:0}
+  .t2-arrow{display:none}
+  .t2-brace{margin:0 25% 34px}
+  .t2-break{grid-row:3; grid-column:1 / -1}
+}
+
+/* ═══ RECOGNITION · TWO COLUMNS ══════════════════════════════
+   Her pains on the left, what she has tried on the right. Below
+   1000px they stack as before. */
+@media(min-width:1000px){
+  #recognition .rg{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    column-gap:clamp(48px,5vw,80px); align-items:start}
+  #recognition .rg-r{padding-top:var(--rg-top,62px)}
+  #recognition .rg-r .trap-h{margin-top:0; white-space:normal; font-size:clamp(22px,2.2vw,28px); line-height:1.3}
+  #recognition .rg-r .trap-h .hit{display:block; margin-top:5px}
+  #recognition .rg-l .closer p{font-size:clamp(19px,1.9vw,24px)}
+  #recognition .rg-l .closer p .hit{white-space:normal}
+  #recognition .rg-r .trap2{grid-template-columns:minmax(0,1fr) minmax(0,1fr); padding-bottom:0; margin-top:22px}
+  #recognition .rg-r .t2-arrow{display:none}
+  #recognition .rg-r .t2-brace{margin:0 25% 34px}
+  #recognition .rg-r .t2-break{grid-row:3; grid-column:1 / -1}
+}
+
+/* ═══ HOW · TWO COLUMNS ══════════════════════════════════════
+   The three steps run down a vertical track on the left; the
+   outcome and the system sit beside them. Below 1000px it stacks
+   as before. */
+@media(min-width:1000px){
+  #how .how-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    column-gap:clamp(48px,5vw,80px); align-items:center; margin-top:22px}
+  #how .steps{margin:0}
+  #how .steps .row{grid-template-columns:1fr; gap:28px}
+  #how .step{display:grid; grid-template-columns:38px minmax(0,1fr); column-gap:20px; align-items:start}
+  #how .step .n{grid-row:1 / span 2}
+  #how .step h4{margin:7px 0 4px}
+  #how .step p{grid-column:2; max-width:none}
+  #how .steps .track{left:19px; right:auto; top:19px; bottom:var(--track-end,56px); width:1px; height:auto}
+  #how .steps .track i{width:100%; height:0; transition:height 3.4s linear}
+  #how .steps.on .track i{width:100%; height:100%}
+  #how .steps .runner{left:50%; top:0}
+  #how .steps.on .runner{animation:runv 3.4s linear forwards}
+  #how .why-not{margin-top:0; white-space:normal; text-wrap:balance}
+}
+@keyframes runv{0%{top:0; opacity:0} 6%{opacity:1} 94%{opacity:1} 100%{top:100%; opacity:0}}
+
+/* ═══ DIFFERENCE · TWO COLUMNS ═══════════════════════════════
+   What she gets in the wide column, what this isn't listed small
+   beside it with the friends line under. Stacks below 1000px. */
+.nots-k{margin:26px 0 0; font-family:var(--head); font-size:.62rem; font-weight:800;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--bronze)}
+#difference .nots-k + .nots{margin-top:10px}
+#difference .friends-line{margin:clamp(30px,3.5vw,44px) auto 0; text-align:center; max-width:none}
+#difference .friends-line span{text-wrap:balance}
+@media(max-width:760px){ .nots-k{text-align:center} }
+@media(min-width:1000px){
+  #difference .dif-grid{display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);
+    column-gap:clamp(40px,4.5vw,72px); align-items:start; margin-top:30px}
+  #difference .lifts{margin:0}
+  #difference .lifts li{grid-template-columns:minmax(0,205px) minmax(0,1fr) 56px; padding:14px 20px 15px; gap:4px 20px}
+  #difference .lifts li h4{font-size:clamp(17px,1.45vw,19px)}
+  #difference .lifts li p{font-size:.95rem; line-height:1.5}
+  #difference .xfer .edge{top:-15px; bottom:-15px}
+  #difference .nots-k{margin-top:4px}
+  #difference .nots{flex-direction:column; flex-wrap:nowrap; align-items:flex-start; gap:7px}
+  #difference .nots li{font-size:clamp(15px,1.3vw,17px)}
+  #difference .nots li.struck{color:#8C8471; opacity:.85}
+  #difference .lifts li h4{white-space:nowrap}
+  #difference .dif-grid{align-items:center}
+  #difference .friends-line span{font-size:clamp(17px,1.5vw,19px)}
+}
+
+/* ═══ FAQ · TWO COLUMNS ══════════════════════════════════════
+   The circle on the left, the practical side on the right; each
+   column opens independently. Stacks below 1000px. */
+.faq-k{margin:0; padding:0 0 12px; font-family:var(--head); font-size:.62rem; font-weight:800;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--gold)}
+.faq2{margin-top:26px}
+.faq2 .faq{margin:0; border-top:0}
+.faq2 .faq-k{border-bottom:1px solid var(--border); max-width:none}
+.faq2 .faq + .faq{margin-top:34px}
+@media(min-width:1000px){
+  .faq2{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); column-gap:clamp(40px,4.5vw,72px); align-items:start}
+  .faq2 .faq + .faq{margin-top:0}
+}
+
 /* ═══ ADDED MOTION ═══════════════════════════════════════════ */
 
 /* rail · position marker — where you are standing */
@@ -948,6 +1101,9 @@
   font-size:clamp(17px,2vw,26px); line-height:1.22; letter-spacing:-.018em;
   color:var(--cream); max-width:none; margin:0 auto;
 }
+.promise-line{color:#8F9DB8}
+.promise-line b{font-weight:700; color:var(--gold)}
+.promise-line em{font-style:normal; font-weight:600; color:#fff}
 .promise-sub{
   font-family:var(--head); font-weight:400; text-align:center;
   font-size:clamp(14px,1.15vw,17px); line-height:1.4; color:var(--slate);
@@ -1142,8 +1298,8 @@
 <section class="sec black" id="promise">
   <div class="in">
     <div class="promise-rule" id="promiseRule"></div>
-    <p class="promise-line"><span class="mask"><span>You get clear on what you want,<br>you communicate it,<br>and you feel the shift when it happens.</span></span></p>
-    <p class="promise-sub" data-r="far">In four weeks without slowing down or doing less.</p>
+    <p class="promise-line"><span class="mask"><span>In <b>four weeks</b> you'll know <em>one thing you want</em>,<br>you'll have <em>asked for it</em>,<br>and you'll <em>feel what changes</em> when you do.</span></span></p>
+    <p class="promise-sub" data-r="far">Without slowing down or doing less.</p>
 </div>
 </section>
 
@@ -1166,48 +1322,29 @@
 
 <!-- ═══════════ 03 · RECOGNITION — the accumulation ═══════════ -->
 <section class="sec ink" id="recognition">
-  <div class="in narrow">
+  <div class="in rg">
+   <div class="rg-l">
     <p class="ey" data-r="far">Sounds Like You?</p>
     <div class="divider" data-r="far"></div>
     <ul class="load" id="loadList">
-      <li><span class="gauge"><i class="axis"></i><i class="span"></i><i class="fix"></i><i class="mov"></i></span><span class="txt">You said yes again this week. There was no room for it.</span></li>
-      <li><span class="gauge"><i class="axis"></i><i class="span"></i><i class="fix"></i><i class="mov"></i></span><span class="txt">You're the one everyone talks to. When they ask about you, you say you're good.</span></li>
-      <li><span class="gauge"><i class="axis"></i><i class="span"></i><i class="fix"></i><i class="mov"></i></span><span class="txt">You hit the target. The target moves.</span></li>
-      <li><span class="gauge"><i class="axis"></i><i class="span"></i><i class="fix"></i><i class="mov"></i></span><span class="txt">You cancelled on someone who matters. Again.</span></li>
-      <li><span class="gauge"><i class="axis"></i><i class="span"></i><i class="fix"></i><i class="mov"></i></span><span class="txt">You're holding it together for more people than you'd admit to.</span></li>
-      <li><span class="gauge"><i class="axis"></i><i class="span"></i><i class="fix"></i><i class="mov"></i></span><span class="txt">You keep it to yourself and sort it on your own, because that seems kinder, or more efficient.</span></li>
+      <li><span class="gauge"><i class="axis"></i><i class="span"></i><i class="fix"></i><i class="mov"></i></span><span class="txt">&ldquo;I&rsquo;m doing everything, but I&rsquo;m last on my list.&rdquo;</span></li>
+      <li><span class="gauge"><i class="axis"></i><i class="span"></i><i class="fix"></i><i class="mov"></i></span><span class="txt">&ldquo;I can&rsquo;t tell you what I want.&rdquo;</span></li>
+      <li><span class="gauge"><i class="axis"></i><i class="span"></i><i class="fix"></i><i class="mov"></i></span><span class="txt">&ldquo;The people closest to me are getting the least of me.&rdquo;</span></li>
     </ul>
     <div class="closer" id="recogCloser">
       <p>You're winning. You're delivering.<span class="hit">And you're the only one who feels what it costs.</span></p>
     </div>
-</div>
-</section>
-
-<!-- ═══════════ 04 · TRAP — two options, one dead end ═══════════ -->
-<section class="sec dark" id="trap">
-  <div class="in narrow">
-    <h2 data-r="near">You've had two options. <span class="hit">Neither works.</span></h2>
-    <div class="trap-rig" id="trapRig">
-      <div class="trap-pair">
-        <div class="trap-opt">
-          <p class="q">&ldquo;Slow down. Do less.&rdquo;</p>
-          <p class="a">Like being asked to stop being you.</p>
-        </div>
-        <div class="trap-opt">
-          <p class="q">&ldquo;Push harder.&rdquo;</p>
-          <p class="a">You're already at full capacity.</p>
-        </div>
-      </div>
-      <svg class="trap-svg" viewBox="0 0 600 96" preserveAspectRatio="none" aria-hidden="true">
-        <path style="--len:300" d="M150,0 L150,44 Q150,64 300,64" />
-        <path style="--len:300" d="M450,0 L450,44 Q450,64 300,64" />
-        <path style="--len:40" d="M300,64 L300,84" />
-        <circle class="node" cx="300" cy="88" r="4" />
-      </svg>
-      <p class="deadend">Same place</p>
-      <p class="breakout">So this is about doing different.</p>
+   </div>
+   <div class="rg-r">
+    <h2 class="trap-h" data-r="near">You've had two options. <span class="hit">Neither works.</span></h2>
+    <div class="trap2" id="trapRig">
+      <button class="t2-opt" type="button"><span class="q">&ldquo;Slow down. Do less.&rdquo;</span><span class="a">Like being asked to stop being you.</span></button>
+      <button class="t2-opt" type="button"><span class="q">&ldquo;Push harder.&rdquo;</span><span class="a">You're already at full capacity.</span></button>
+      <div class="t2-arrow" aria-hidden="true"><i></i></div>
+      <p class="t2-break"><span>So this is about <b>doing different.</b></span></p>
+      <div class="t2-brace" aria-hidden="true"><i class="l"></i><i class="r"></i><span>Same place</span></div>
     </div>
-    <p class="notready">Not ready? <a href="/priority-audit">Take the Priority Audit</a>.<span>Ten minutes to find out which priority gives you the most return. Free results emailed for your reference.</span></p>
+   </div>
 </div>
 </section>
 
@@ -1215,6 +1352,7 @@
 <section class="sec cream" id="how">
   <div class="in">
     <p class="ey" data-r="far">How It Works</p>
+    <div class="how-grid">
     <div class="steps" id="stepsRig">
       <div class="track"><i></i><em class="runner"></em></div>
       <div class="row">
@@ -1235,50 +1373,65 @@
         </div>
       </div>
     </div>
+    <div class="how-r">
     <p class="why-not" data-r="mid">A simple outcome you already know you should have.<span>So why haven't you?</span></p>
     <div class="rcs" data-r="far">
       <span class="k">The Relational Connection System&trade;</span>
       <span class="v">Vision</span><span class="v">Values</span><span class="v">Velocity</span>
     </div>
-</div>
-</section>
-
-<!-- ═══════════ 06 · DISTINCTION — negation ═══════════ -->
-<section class="sec black" id="distinction">
-  <div class="in">
-    <p class="ey" data-r="far">Be Clear On What This Is</p>
-    <h2 data-r="near">What This Isn't</h2>
-    <ul class="nots" id="notsList">
-      <li>No sage</li>
-      <li>No palo santo</li>
-      <li>No goddess circle</li>
-      <li>No womb wisdom</li>
-      <li>No priestess</li>
-    </ul>
-    <p class="stand" data-r="mid">We're not asking you to soften or surrender.</p>
-    <p data-r="mid">This is somewhere your competence has nothing to do.</p>
-    <div class="not3" data-r="mid">
-      <div class="r"><h4>Not A Women's Circle</h4><p>No performance of it.</p></div>
-      <div class="r"><h4>Not A Sisterhood</h4><p>No loyalty pact, no comfort without change.</p></div>
-      <div class="r"><h4>Not A Friendly Coffee Chat</h4><p>No deflection into talking about other people.</p></div>
+    <p class="rcs-note" data-r="far">You don't arrive missing a pillar. You arrive with two of them borrowed, a vision someone else set and a velocity that serves it. Every month runs the same four weeks, with a new theme.</p>
+    </div>
     </div>
 </div>
 </section>
 
-<!-- ═══════════ 07 · FRIENDS — the closed loop ═══════════ -->
-<section class="sec dark" id="friends">
+<!-- ═══════════ 12 · VOICES ═══════════ -->
+<section class="sec black" id="voices">
   <div class="in">
-    <div class="split">
-     <div>
-      <h2 data-r="near">Your friends can't do this</h2>
-     </div>
-     <div class="claims">
-      <p class="one" data-r="near">Friendship runs on co-regulation. You leave feeling better and nothing has changed.</p>
-      <p class="two" data-r="mid">Put yourself in a room of women exactly like you and you'll find a way to help. You always do.</p>
-      <p class="three" data-r="mid">Every other room like this one is run by someone exactly like you.</p>
-     </div>
+    <h2 data-r="near">From women inside</h2>
+    <div class="vgrid">
+      <div data-r="mid"><div class="reelwrap">
+        <video id="rw-voices-reel" playsinline preload="none" poster="/assets/img/rw-reel-ladies-cover.jpg">
+          <source src="/assets/video/rw-reel-conversation-inside.mp4" type="video/mp4">
+        </video>
+        <button class="vplay" type="button" aria-label="Play: what's the conversation inside?"><svg viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="48" r="46" fill="rgba(6,25,56,0.85)" stroke="#E8C65F" stroke-width="2"/><polygon points="40,30 68,48 40,66" fill="#E8C65F"/></svg></button>
+      </div></div>
+    <div class="voices" data-r="mid">
+      <figure class="voice">
+        <img src="https://static.wixstatic.com/media/RW_VOICE_MARIANNE~mv2.jpg" alt="Marianne" width="280" height="280" loading="lazy" decoding="async">
+        <blockquote>&ldquo;In the beginning this was like a side project from the real thing, my business. Now it's integrating in everything that I do.&rdquo;</blockquote>
+        <p class="who">Marianne<span class="from"> &middot; Denmark</span></p>
+        <p class="about">On what she thought she was signing up for.</p>
+      </figure>
+      <figure class="voice">
+        <img src="https://static.wixstatic.com/media/RW_VOICE_DANI~mv2.jpg" alt="Dani" width="280" height="280" loading="lazy" decoding="async">
+        <blockquote>&ldquo;I bit the bullet. I'm not going to sit with this any longer. It's terrifying, and I feel very proud of myself.&rdquo;</blockquote>
+        <p class="who">Dani<span class="from"> &middot; UK</span></p>
+        <p class="about">On the business she'd kept in the background for six years.</p>
+      </figure>
+      <figure class="voice">
+        <img src="https://static.wixstatic.com/media/RW_VOICE_JULIA~mv2.jpg" alt="Julia" width="280" height="280" loading="lazy" decoding="async">
+        <blockquote>&ldquo;I'm more tapped into myself, and because of that everybody around me can be more tapped into themselves.&rdquo;</blockquote>
+        <p class="who">Julia<span class="from"> &middot; Poland</span></p>
+        <p class="about">On what ninety minutes a week changed.</p>
+      </figure>
     </div>
-</div>
+    </div>
+    <div id="listen" class="listen-more" data-r="mid">
+      <p class="lm-h">Or listen to a summary of a recent session.</p>
+      <div class="player" data-r="mid">
+      <div class="t">The Reconnected Woman &mdash; a summary of a recent session</div>
+      <audio id="rw-listen" preload="none" src="/audio/reconnected-woman-summary.mp3"></audio>
+      <canvas id="wave" width="1200" height="152" role="slider" tabindex="0"
+              aria-label="Seek through the session summary"
+              aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></canvas>
+      <div class="meta">
+        <button class="play" id="rw-listen-play" type="button" aria-label="Play the session summary">&#9654;</button>
+        <span><span id="rw-now">0:00</span> / 10:45 &nbsp;&middot;&nbsp; 5.2 MB</span>
+      </div>
+    </div>
+    </div>
+  </div>
 </section>
 
 <!-- ═══════════ 08 · DIFFERENCE — the release ═══════════ -->
@@ -1287,36 +1440,25 @@
     <p class="ey" data-r="far">The Difference</p>
     <p class="question" data-r="near">When were you last seen, heard, witnessed and held in a masculine presence without a romantic intent?</p>
     <p class="putdown" data-r="mid">You've been over-functioning your masculinity to make up for the masculine you didn't get from the men in your world. <b>Put it down for a change.</b></p>
+    <div class="dif-grid">
     <ul class="lifts" id="liftList">
       <li><h4>Structure is held</h4><p>Someone else facilitates the room, the logistics, the pace.</p><span class="xfer"><i class="rail"></i><i class="edge"></i><i class="blk"></i></span></li>
       <li><h4>It's taken care of</h4><p>Nothing here for you to do.</p><span class="xfer"><i class="rail"></i><i class="edge"></i><i class="blk"></i></span></li>
       <li><h4>Nothing to manage</h4><p>Say the true thing. No cleaning up after it.</p><span class="xfer"><i class="rail"></i><i class="edge"></i><i class="blk"></i></span></li>
       <li><h4>No scorecard</h4><p>Nothing to win, so your competence has nothing to do.</p><span class="xfer"><i class="rail"></i><i class="edge"></i><i class="blk"></i></span></li>
     </ul>
-</div>
-</section>
-
-<!-- ═══════════ 09 · OUTCOME — the vector reverses ═══════════ -->
-<section class="sec dark" id="outcome">
-  <div class="in narrow">
-    <p class="ey" data-r="far">What Changes</p>
-    <h2 data-r="near">You already have the integrity.<br>It points outward.</h2>
-    <div class="vector" id="vectorRig">
-      <svg viewBox="0 0 380 34" aria-hidden="true">
-        <g transform="translate(0,17)">
-          <line class="axis" x1="14" y1="0" x2="366" y2="0" />
-        <path class="ch" d="M330,-8 L339,0 L330,8" />
-        <path class="ch" d="M282,-8 L291,0 L282,8" />
-        <path class="ch" d="M234,-8 L243,0 L234,8" />
-        <path class="ch" d="M186,-8 L195,0 L186,8" />
-        <path class="ch" d="M138,-8 L147,0 L138,8" />
-        <path class="ch" d="M90,-8 L99,0 L90,8" />
-          <circle class="her" cx="34" cy="0" r="10" />
-        </g>
-      </svg>
-      <span class="cap" id="vecCap">Pointed outward</span>
+    <div class="dif-r">
+    <p class="nots-k">What this isn&rsquo;t</p>
+    <ul class="nots" id="notsList">
+      <li>No sage</li>
+      <li>No palo santo</li>
+      <li>No goddess circle</li>
+      <li>No womb wisdom</li>
+      <li>No priestess</li>
+    </ul>
     </div>
-    <p class="lede" data-r="mid" style="margin-top:26px">Our work here is turning it inward. Same standard, turned inwards.</p>
+    </div>
+    <p class="friends-line" data-r="mid">Friendship runs on co-regulation. You leave feeling better and nothing has changed.<span>Every other room like this one is run by someone exactly like you.</span></p>
 </div>
 </section>
 
@@ -1350,87 +1492,7 @@
   </div>
 </section>
 
-<!-- ═══════════ 11 · LISTEN ═══════════ -->
-<section class="sec dark" id="listen">
-  <div class="in narrow">
-    <h2 data-r="near">What kind of conversation to expect?</h2>
-    <p class="lede" data-r="mid">A recent summary of one of our sessions.</p>
-    <div class="player" data-r="mid">
-      <div class="t">The Reconnected Woman &mdash; a summary of a recent session</div>
-      <audio id="rw-listen" preload="none" src="/audio/reconnected-woman-summary.mp3"></audio>
-      <canvas id="wave" width="1200" height="152" role="slider" tabindex="0"
-              aria-label="Seek through the session summary"
-              aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></canvas>
-      <div class="meta">
-        <button class="play" id="rw-listen-play" type="button" aria-label="Play the session summary">&#9654;</button>
-        <span><span id="rw-now">0:00</span> / 10:45 &nbsp;&middot;&nbsp; 5.2 MB</span>
-      </div>
-    </div>
-    <p class="pullquote" data-r="mid">"Life is not about trying to feel better. Life is about feeling more."</p>
-</div>
-</section>
-
 <!-- ═══════════ 12 · VOICES ═══════════ -->
-<!-- ═══════════ 12 · VOICES ═══════════ -->
-<section class="sec black" id="voices">
-  <div class="in">
-    <h2 data-r="near">From women inside</h2>
-    <div class="vgrid">
-      <div data-r="mid"><div class="reelwrap">
-        <video id="rw-voices-reel" playsinline preload="none" poster="/assets/img/rw-reel-ladies-cover.jpg">
-          <source src="/assets/video/rw-reel-conversation-inside.mp4" type="video/mp4">
-        </video>
-        <button class="vplay" type="button" aria-label="Play: what's the conversation inside?"><svg viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="48" r="46" fill="rgba(6,25,56,0.85)" stroke="#E8C65F" stroke-width="2"/><polygon points="40,30 68,48 40,66" fill="#E8C65F"/></svg></button>
-      </div></div>
-    <div class="voices" data-r="mid">
-      <figure class="voice">
-        <img src="https://static.wixstatic.com/media/RW_VOICE_MARIANNE~mv2.jpg" alt="Marianne" width="280" height="280" loading="lazy" decoding="async">
-        <blockquote>&ldquo;In the beginning this was like a side project from the real thing, my business. Now it's integrating in everything that I do.&rdquo;</blockquote>
-        <p class="who">Marianne<span class="from"> &middot; Denmark</span></p>
-        <p class="about">On what she thought she was signing up for.</p>
-      </figure>
-      <figure class="voice">
-        <img src="https://static.wixstatic.com/media/RW_VOICE_DANI~mv2.jpg" alt="Dani" width="280" height="280" loading="lazy" decoding="async">
-        <blockquote>&ldquo;I bit the bullet. I'm not going to sit with this any longer. It's terrifying, and I feel very proud of myself.&rdquo;</blockquote>
-        <p class="who">Dani<span class="from"> &middot; UK</span></p>
-        <p class="about">On the business she'd kept in the background for six years.</p>
-      </figure>
-      <figure class="voice">
-        <img src="https://static.wixstatic.com/media/RW_VOICE_JULIA~mv2.jpg" alt="Julia" width="280" height="280" loading="lazy" decoding="async">
-        <blockquote>&ldquo;I'm more tapped into myself, and because of that everybody around me can be more tapped into themselves.&rdquo;</blockquote>
-        <p class="who">Julia<span class="from"> &middot; Poland</span></p>
-        <p class="about">On what ninety minutes a week changed.</p>
-      </figure>
-    </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════ 13 · VALUES — standards as held lines ═══════════ -->
-<section class="sec cream" id="values">
-  <div class="in">
-    <p class="ey" data-r="far">What We Stand For</p>
-    <h2 data-r="near">Our standards together</h2>
-    <div class="stds" id="stdList">
-      <div class="std"><h4>Your Space</h4><p>Not for the women. Not to contribute.</p></div>
-      <div class="std"><h4>Your Truth</h4><p>That's the contribution. Performance is at the door.</p></div>
-      <div class="std"><h4>Punctuality</h4><p>Show up like it matters, because you do.</p></div>
-      <div class="std"><h4>Curiosity</h4><p>Over judgment. Of each other, and of yourself.</p></div>
-      <div class="std"><h4>Accountability</h4><p>One intention out of every session. Yours to keep.</p></div>
-    </div>
-</div>
-</section>
-
-<!-- ═══════════ 14 · INTENTION — one unbroken line ═══════════ -->
-<section class="sec ink" id="intention">
-  <div class="in">
-    <div class="oneline"></div>
-    <p class="ey" data-r="far">One Intention</p>
-    <h2 data-r="near">An outcome specifically for you.</h2>
-    <p data-r="mid">And the line you'll hold to meet it.</p>
-</div>
-</section>
-
 <!-- ═══════════ 15 · PRICING ═══════════ -->
 <section class="sec dark" id="pricing" style="text-align:center">
   <div class="in">
@@ -1462,10 +1524,9 @@
       <h3>Stay, and the four weeks run like this.</h3>
       <p class="dim">Figure out what you want, and ask for it.</p>
       <ul>
-        <li>One live session a week, in four-week cycles</li>
+        <li>Four sessions a month, each month a new theme with its own workbook</li>
         <li>Live facilitation and hot seat work</li>
-        <li>Access to the group between sessions</li>
-        <li>First access to new frameworks and resources</li>
+        <li>The WhatsApp group with the other women between sessions</li>
         <li>Complimentary 1:1 call on week 6</li>
       </ul>
       <p class="pricenote"><b>&euro;119 a month</b>, and your membership price is grandfathered. It never increases as long as you stay. Memberships roll over monthly. Cancel anytime.</p>
@@ -1478,37 +1539,33 @@
   </div>
 </section>
 
-<!-- ═══════════ 16 · AFTER ═══════════ -->
-<section class="sec cream-2" id="after">
-  <div class="in">
-    <p class="ey" data-r="far">After Four Weeks</p>
-    <h2 data-r="near">You'll own a new experience of your life.</h2>
-    <div class="after-grid" data-r="mid">
-      <div><h4>Continue to build upon it</h4><p>Build the reps, with the same one or a different one.</p></div>
-      <div><h4>Continue more personalised</h4><p>Reconnect, 1:1, with your membership included.</p></div>
-      <div><h4>Continue alone</h4><p>Take what you've gained, and celebrate your wins.</p></div>
-    </div>
-  </div>
-</section>
-
 <!-- ═══════════ 17 · FAQ ═══════════ -->
 <section class="sec black" id="faq">
-  <div class="in narrow">
+  <div class="in">
     <p class="ey" data-r="far">Common Questions</p>
     <h2 data-r="near">Before You Come</h2>
-    <div class="faq" data-r="mid">
-      <details><summary>Isn't this just another women's circle?</summary><div class="ans">No. Most are built around becoming more feminine, and there's a performance in that. Here we call it as it is, so you can put something down instead of picking more up.</div></details>
-      <details><summary>Why is a man hosting it?</summary><div class="ans">Because the women who join want a healthy masculine presence in their life, one they are not being led by, competing with, or taking instruction from. Just the masculine holding the room, so they can stop for a change.</div></details>
-      <details><summary>I have great friends. Do I need this?</summary><div class="ans">Friendship runs on co-regulation and the women you'd go to are running your operating system. I'm not here to be your friend.</div></details>
-      <details><summary>Can I come once before I decide?</summary><div class="ans">Yes. The first session of every month is open and there's no charge for it. Come, sit in it, and decide from the room rather than from this page. After that it's &euro;119 a month, and you're grandfathered: your price never increases as long as you stay.</div></details>
-      <details><summary>Can I cancel?</summary><div class="ans">Yes, any time. It's month to month, and your membership runs to the end of the month you've paid for.</div></details>
-      <details><summary>What if I'm away for a month?</summary><div class="ans">You can pause once a year, for up to a month, and you keep your price. Ask before your next payment.</div></details>
-      <details><summary>Is what I share kept private?</summary><div class="ans">Yes. What you share stays between us. I sometimes draw on a line or a theme from a session in my writing, without anything that could identify you, and I'll always ask you first before using anything that does, like a clip or a testimonial.</div></details>
-      <details><summary>Where does it run?</summary><div class="ans">Online, so you can join from wherever you are. Nothing to travel to and nothing to arrange around it.</div></details>
-      <details><summary>Do I need to attend every session?</summary><div class="ans">No. Life moves and the group knows it. Come when you can, and know that the women who turn up regularly are the ones who feel it shift.</div></details>
-      <details><summary>When do sessions run?</summary><div class="ans">One sitting time, set so it works across the time zones the group is spread over, and we stay fluid with what the group asks for. Come to the open session and you'll see how it sits with your week.</div></details>
-      <details><summary>What does the fee include?</summary><div class="ans">Facilitation, hot seat work, resources, and the people you'll meet. It's largely a filter.</div></details>
-      <details><summary>Are there upsells coming?</summary><div class="ans">No. There's the 1:1 Reconnect Program if you decide you want more, faster, deeper, and your membership comes with it. Same work, same direction. More personal.</div></details>
+    <div class="faq2" data-r="mid">
+      <div class="faq">
+        <p class="faq-k">The circle</p>
+        <details><summary>Isn't this just another women's circle?</summary><div class="ans">No. Most are built around becoming more feminine, and there's a performance in that. Here we call it as it is, so you can put something down instead of picking more up.</div></details>
+        <details><summary>Why is a man hosting it?</summary><div class="ans">Because the women who join want a healthy masculine presence in their life, one they are not being led by, competing with, or taking instruction from. Just the masculine holding the room, so they can stop for a change.</div></details>
+        <details><summary>I have great friends. Do I need this?</summary><div class="ans">Friendship runs on co-regulation and the women you'd go to are running your operating system. I'm not here to be your friend.</div></details>
+        <details><summary>What do you ask of me in the sessions?</summary><div class="ans">Five standards we keep together. Your space: you're here for you, not to contribute to everyone else. Your truth: that's the contribution, and performance stays at the door. Punctuality: show up like it matters, because you do. Curiosity over judgment, of each other and of yourself. And accountability: one intention out of every session, yours to keep.</div></details>
+        <details><summary>What happens after four weeks?</summary><div class="ans">Keep building, with the same intention or a new one. Go deeper 1:1 with Reconnect, which includes complimentary access to The Reconnected Woman. Or take what you've gained and celebrate your wins.</div></details>
+        <details><summary>I'm not ready yet. Where do I start?</summary><div class="ans">Take the <a href="/priority-audit">Priority Audit</a>. Ten minutes to find out which priority gives you the most return, with your free results emailed to you.</div></details>
+        <details><summary>Are there upsells coming?</summary><div class="ans">No. There's the 1:1 Reconnect Program if you decide you want more, faster, deeper. Join Reconnect and your place in The Reconnected Woman is complimentary. Same work, same direction. More personal.</div></details>
+      </div>
+      <div class="faq">
+        <p class="faq-k">The practical side</p>
+        <details><summary>Can I come once before I decide?</summary><div class="ans">Yes. The first session of every month is open and there's no charge for it. Come, sit in it, and decide from the room rather than from this page. After that it's &euro;119 a month, and you're grandfathered: your price never increases as long as you stay.</div></details>
+        <details><summary>Can I cancel?</summary><div class="ans">Yes, any time. It's month to month, and your membership runs to the end of the month you've paid for.</div></details>
+        <details><summary>What if I'm away for a month?</summary><div class="ans">You can pause once a year, for up to a month, and you keep your price. Ask before your next payment.</div></details>
+        <details><summary>Is what I share kept private?</summary><div class="ans">Yes. What you share stays between us. I sometimes draw on a line or a theme from a session in my writing, without anything that could identify you, and I'll always ask you first before using anything that does, like a clip or a testimonial.</div></details>
+        <details><summary>Where does it run?</summary><div class="ans">Online, so you can join from wherever you are. Nothing to travel to and nothing to arrange around it.</div></details>
+        <details><summary>Do I need to attend every session?</summary><div class="ans">No. Life moves and the group knows it. Come when you can, and know that the women who turn up regularly are the ones who feel it shift.</div></details>
+        <details><summary>When do sessions run?</summary><div class="ans">One sitting time, set so it works across the time zones the group is spread over, and we stay fluid with what the group asks for. Come to the open session and you'll see how it sits with your week.</div></details>
+        <details><summary>What does the fee include?</summary><div class="ans">Facilitation, hot seat work, resources, and the people you'll meet. It's largely a filter.</div></details>
+      </div>
     </div>
   </div>
 </section>
@@ -1653,6 +1710,12 @@
       io.unobserve(el);
     }, { rootMargin:'0px 0px -20% 0px' });
     io.observe(rig);
+    [].forEach.call(rig.querySelectorAll('.t2-opt'), function(o){
+      o.addEventListener('click', function(){
+        [].forEach.call(rig.querySelectorAll('.t2-opt'), function(x){ if(x!==o) x.classList.remove('try'); });
+        o.classList.toggle('try');
+      });
+    });
   })();
 
   /* ── 02 · PROMISE · rule draws, then the line lifts ─────────── */
@@ -1777,7 +1840,7 @@
       nots.forEach(function(n, i){ setTimeout(function(){ n.classList.add('struck'); }, 220 + i * 430); });
       ioN.unobserve(el);
     });
-    ioN.observe(document.getElementById('notsList'));
+    var nl=document.getElementById('notsList'); if(nl) ioN.observe(nl);
   }
 
   /* ── 08 · DIFFERENCE · four things lift off ─────────────────── */
@@ -1792,7 +1855,7 @@
       setTimeout(function(){ el.classList.add('handed'); }, 150 + (lifts.length - 1) * 520 + 1150);
       ioL.unobserve(el);
     });
-    ioL.observe(document.getElementById('liftList'));
+    var ll2=document.getElementById('liftList'); if(ll2) ioL.observe(ll2);
   }
 
   /* ── 13 · VALUES · each standard draws its line ─────────────── */
@@ -1804,7 +1867,7 @@
       stds.forEach(function(s, i){ setTimeout(function(){ s.classList.add('held'); }, 120 + i * 250); });
       ioV.unobserve(el);
     });
-    ioV.observe(document.getElementById('stdList'));
+    var sl=document.getElementById('stdList'); if(sl) ioV.observe(sl);
   }
 
   /* ── 11 · LISTEN · the transport ─────────────────────────────

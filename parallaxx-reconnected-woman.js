@@ -1344,10 +1344,10 @@
     <h2 data-r="near">From women inside</h2>
     <div class="voices" data-r="mid">
       <figure class="voice">
-        <img src="https://static.wixstatic.com/media/RW_VOICE_CHRISTINE~mv2.jpg" alt="Christine" width="280" height="280" loading="lazy" decoding="async">
-        <blockquote>&ldquo;This time I stood my ground. He said it's the first time in fourteen years I'd really discussed something with him, and the first time he understood me.&rdquo;</blockquote>
-        <p class="who">Christine</p>
-        <p class="about">On ending a disagreement she'd normally have absorbed.</p>
+        <img src="https://static.wixstatic.com/media/RW_VOICE_MARIANNE~mv2.jpg" alt="Marianne" width="280" height="280" loading="lazy" decoding="async">
+        <blockquote>&ldquo;In the beginning this was like a side project from the real thing, my business. Now it's integrating in everything that I do.&rdquo;</blockquote>
+        <p class="who">Marianne</p>
+        <p class="about">On what she thought she was signing up for.</p>
       </figure>
       <figure class="voice">
         <img src="https://static.wixstatic.com/media/RW_VOICE_DANI~mv2.jpg" alt="Dani" width="280" height="280" loading="lazy" decoding="async">

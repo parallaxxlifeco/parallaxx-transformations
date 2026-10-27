@@ -60,6 +60,11 @@
 .sec.cream-2{background:var(--cream-2); color:var(--ink)}
 .in{max-width:var(--col); margin:0 auto}
 .narrow{max-width:1040px}
+/* ONE LEFT EDGE (Oct 2026). The narrow sections used to centre their 1040px
+   column inside the 1240px one, so every heading down the page jumped 100px
+   in and out. They now keep the narrower measure but start on the same left
+   edge as everything else; the spare width falls on the right. */
+.in.narrow{margin-left:calc((100% - min(100%, var(--col))) / 2); margin-right:auto}
 
 .ey{
   font-family:var(--head); font-size:.62rem; font-weight:800;
@@ -297,7 +302,7 @@
    takes its width from that through aspect-ratio. Centred rather than top-
    aligned, so the small residual difference reads as deliberate rather than as
    a column that ran out of text. */
-.biogrid{display:flex; align-items:center; justify-content:center;
+.biogrid{display:flex; align-items:center; justify-content:flex-start;
   gap:clamp(26px,4vw,58px)}
 .biogrid > :first-child{flex:0 0 auto}
 .biogrid .reelwrap{height:clamp(340px,40vw,500px); width:auto}
@@ -737,8 +742,8 @@
    on her face) and pulses gold to invite the click. */
 .vgrid{display:grid; grid-template-columns:auto minmax(0,1fr); gap:clamp(30px,5vw,72px); align-items:center; margin-top:clamp(30px,4vw,46px)}
 /* Ringed like the portraits: a hairline of navy, then gold. */
-.vgrid .reelwrap{height:clamp(440px,44vw,600px); width:auto; box-shadow:0 0 0 4px var(--navy), 0 0 0 6px var(--gold)}
-.vgrid .voices{grid-template-columns:1fr; grid-template-rows:none; row-gap:clamp(26px,3vw,38px); margin-top:0; max-width:560px}
+.vgrid .reelwrap{height:clamp(440px,46vw,660px); width:auto; box-shadow:0 0 0 4px var(--navy), 0 0 0 6px var(--gold)}
+.vgrid .voices{grid-template-columns:1fr; grid-template-rows:none; row-gap:clamp(26px,3vw,38px); margin-top:0; max-width:none}
 .vgrid .voice{display:grid !important; grid-template-columns:auto 1fr; grid-template-rows:auto auto auto; grid-row:auto; column-gap:22px; text-align:left; align-items:start}
 .vgrid .voice img{grid-row:1 / span 3; width:84px; margin:4px 0 0}
 .vgrid .voice blockquote{margin:0}

@@ -293,9 +293,9 @@ ROUTES = [
         # containers" and "deep love, true intimacy", none of which are words
         # the page uses. Both lines below are the page's own: the promise band
         # and the offer for desc, the hero sub and the VSL line for og_desc.
-        desc="Decide what you want, ask for it, and see what happens. A weekly online group "
-             "of men, facilitated by Daniel Lawson. €89 a month, month to month, cancel "
-             "anytime.",
+        desc="Decide what you want, ask for it, and see what happens. Weekly online sessions "
+             "for men, facilitated by Daniel Lawson. The first session of every month is free, "
+             "then €89 a month, cancel anytime.",
         og_title="RECONNECTED MAN | Parallaxx Transformations",
         og_desc="For men who are needed, but want more from life. Decide what you want, ask "
                 "for it, and see what happens — among brothers who hold you to a higher "

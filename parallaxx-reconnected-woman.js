@@ -764,6 +764,14 @@
 .vgrid .vplay.gone::before,.vgrid .vplay.gone::after{animation:none; opacity:0}
 @keyframes vring{0%{transform:scale(1); opacity:.85} 100%{transform:scale(1.7); opacity:0}}
 @media(prefers-reduced-motion:reduce){.vgrid .vplay::before,.vgrid .vplay::after{animation:none; opacity:0}}
+/* The heading sits in the right column, level with the top of the reel. */
+@media(min-width:861px){
+  .vgrid{grid-template-rows:auto 1fr; align-items:start}
+  .vgrid > :nth-child(2){grid-column:1; grid-row:1 / span 2}
+  .vgrid .vhead{grid-column:2; grid-row:1; margin:0}
+  .vgrid{row-gap:0}
+  .vgrid .voices{grid-column:2; grid-row:2; align-self:stretch; align-content:space-evenly; padding-top:12px}
+}
 @media(max-width:860px){
   .vgrid{display:block}
   .vgrid .reelwrap{height:auto; width:100%; max-width:380px; margin:0 auto 36px}
@@ -1058,6 +1066,8 @@
 /* ═══ FAQ · TWO COLUMNS ══════════════════════════════════════
    The circle on the left, the practical side on the right; each
    column opens independently. Stacks below 1000px. */
+.faq .ans a{color:var(--gold); text-decoration:underline; text-underline-offset:3px}
+.faq .ans a:hover{color:var(--gold-lift)}
 .faq-k{margin:0; padding:0 0 12px; font-family:var(--head); font-size:.62rem; font-weight:800;
   letter-spacing:.2em; text-transform:uppercase; color:var(--gold)}
 .faq2{margin-top:26px}
@@ -1388,8 +1398,8 @@
 <!-- ═══════════ 12 · VOICES ═══════════ -->
 <section class="sec black" id="voices">
   <div class="in">
-    <h2 data-r="near">From women inside</h2>
     <div class="vgrid">
+    <h2 class="vhead" data-r="near">From women inside</h2>
       <div data-r="mid"><div class="reelwrap">
         <video id="rw-voices-reel" playsinline preload="none" poster="/assets/img/rw-reel-ladies-cover.jpg">
           <source src="/assets/video/rw-reel-conversation-inside.mp4" type="video/mp4">
@@ -1437,7 +1447,6 @@
 <!-- ═══════════ 08 · DIFFERENCE — the release ═══════════ -->
 <section class="sec cream" id="difference">
   <div class="in">
-    <p class="ey" data-r="far">The Difference</p>
     <p class="question" data-r="near">When were you last seen, heard, witnessed and held in a masculine presence without a romantic intent?</p>
     <p class="putdown" data-r="mid">You've been over-functioning your masculinity to make up for the masculine you didn't get from the men in your world. <b>Put it down for a change.</b></p>
     <div class="dif-grid">
@@ -1542,8 +1551,7 @@
 <!-- ═══════════ 17 · FAQ ═══════════ -->
 <section class="sec black" id="faq">
   <div class="in">
-    <p class="ey" data-r="far">Common Questions</p>
-    <h2 data-r="near">Before You Come</h2>
+    <h2 data-r="near">Common Questions</h2>
     <div class="faq2" data-r="mid">
       <div class="faq">
         <p class="faq-k">The circle</p>

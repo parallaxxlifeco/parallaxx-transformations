@@ -652,6 +652,191 @@
   #recognition .load{grid-template-columns:1fr;grid-template-rows:none;grid-auto-flow:row}
 }
 #recogCloser{margin-top:26px}
+
+/* ═══ MIRRORED FROM THE WOMEN'S PAGE, Oct 2026 ═════════════════
+   The open session (date, countdown, theme), the cycle wheel in the
+   offer, one left edge, the deeper sand, the vertical steps and the
+   two-column FAQ. Kept together so the two pages can be compared. */
+
+/* one left edge: every block starts where the widest one does, except
+   the ones that are deliberately centred */
+.in.narrow:not(.centre){margin-left:calc((100% - min(100%, var(--col))) / 2); margin-right:auto}
+
+/* sand: a deeper sand for the cream bands, a paper for cream-2, darker text */
+.sec.cream,.sec.cream-2{--ink:#121A2A; --ink-soft:#3F4757; --bronze-ink:#5E4B22; --line-cream:#CFC2A6}
+.sec.cream{background:#E8DEC8}
+.sec.cream-2{background:#FBF8F1}
+
+/* hero · theme and the next open session */
+.theme-lab{display:block; font-family:var(--head); font-size:.62rem; font-weight:700;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:7px; max-width:none}
+#hero .theme{margin:22px auto 0; max-width:46ch; font-family:var(--head);
+  font-size:.95rem; line-height:1.35; color:var(--cream); text-wrap:balance}
+.cnt{font-family:var(--head); font-size:.62rem; font-weight:800; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--gold)}
+#hero .next .cnt:not(:empty):before{content:'\\00a0\\00b7\\00a0\\00a0'}
+#hero .next .cnt{color:var(--mist)}
+.opencard .cnt{margin:14px auto 0}
+.opencard .cnt:empty{display:none}
+@media(max-width:640px){
+  #hero .next .sep{display:none}
+  #hero .next .nd{display:block; margin-top:6px}
+  #hero .next .cnt:not(:empty){display:block; margin-top:5px}
+  #hero .next .cnt:not(:empty):before{content:none}
+}
+
+/* offer · the cycle wheel */
+#offer .theme-lab{margin:30px auto 7px}
+#offer .wheel{--wh:62px; --rows:3; position:relative; margin:6px auto 0; max-width:700px;
+  height:calc(var(--wh) * var(--rows)); overflow-y:auto; overscroll-behavior:contain;
+  scroll-snap-type:y mandatory; scrollbar-width:none; outline:none;
+  perspective:640px; perspective-origin:50% 50%;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,rgba(0,0,0,.4) 13%,#000 33%,#000 67%,rgba(0,0,0,.4) 87%,transparent 100%);
+          mask-image:linear-gradient(180deg,transparent 0,rgba(0,0,0,.4) 13%,#000 33%,#000 67%,rgba(0,0,0,.4) 87%,transparent 100%)}
+#offer .wheel::-webkit-scrollbar{display:none}
+#offer .wheel:focus-visible{box-shadow:0 0 0 2px rgba(232,198,95,.45)}
+#offer .themes{list-style:none; margin:0; padding:calc(var(--wh) * (var(--rows) - 1) / 2) 0; transform-style:preserve-3d}
+#offer .themes li{height:var(--wh); scroll-snap-align:center; display:grid; grid-template-columns:auto auto;
+  justify-content:center; gap:0 clamp(12px,1.6vw,20px); align-items:center;
+  border-top:1px solid transparent; border-bottom:1px solid transparent;
+  transform-origin:50% 50%; backface-visibility:hidden;
+  transform:translateZ(var(--z,0px)) rotateX(var(--rx,0deg)); opacity:var(--o,.3);
+  transition:opacity .2s linear, border-color .4s ease}
+#offer .themes .mo{font-family:var(--head); font-size:.62rem; font-weight:700; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--slate); transition:color .4s ease}
+#offer .themes .ti{font-family:var(--head); font-size:clamp(15px,1.6vw,19px); line-height:1.3;
+  color:var(--mist); transition:color .4s ease}
+#offer .themes li.front{border-top-color:rgba(232,198,95,.55); border-bottom-color:rgba(232,198,95,.55)}
+#offer .themes li.front .mo{color:var(--gold)}
+#offer .themes li.front .ti{color:var(--gold); font-weight:700}
+#offer .themes li.soon .ti{font-style:italic}
+#offer .wheel-note{margin:14px auto 0; font-family:var(--head); font-size:.92rem; color:var(--slate)}
+#rm-page.no-anim #offer .themes li{opacity:1; transform:none}
+@media(max-width:620px){
+  #offer .wheel{--wh:76px; perspective:520px}
+  #offer .themes li{grid-template-columns:1fr; gap:3px; align-content:center; justify-content:stretch}
+}
+.opencard .free{margin-bottom:14px}
+
+/* how · the steps run down a vertical track beside the outcome */
+@media(min-width:1000px){
+  #how .how-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    column-gap:clamp(48px,5vw,80px); align-items:center; margin-top:22px}
+  #how .steps .row{grid-template-columns:1fr; gap:28px}
+  #how .step{display:grid; grid-template-columns:44px minmax(0,1fr); column-gap:20px; align-items:start}
+  #how .step .n{grid-row:1 / span 2; margin:0}
+  #how .step h3{margin:9px 0 4px}
+  #how .step p{grid-column:2; max-width:none}
+  #how .steps .track{left:22px; right:auto; top:22px; bottom:var(--track-end,58px); width:1px; height:auto}
+  #how .steps .runner{left:50%; top:0}
+  #how .steps.on .runner{animation:runv 3.4s linear forwards}
+  #how .why-not{margin-top:0; white-space:normal; text-wrap:balance}
+}
+@media(min-width:861px){ .biogrid{justify-content:flex-start} }
+/* promise: the women's treatment, four weeks in gold, the three outcomes bright */
+#promise .promise-line{color:#8F9DB8; line-height:1.22}
+#promise .promise-line b{font-weight:700; color:var(--gold)}
+#promise .promise-line em{font-style:normal; font-weight:600; color:#fff}
+
+/* ═══ TRAP · COMPACT ═════════════════════════════════════════
+   One row: the two options, an arrow, the answer. A brace under
+   the options joins them at "Same place". On a loop, a gold pulse
+   runs in from both options to the same place, then along the
+   arrow, and the answer lights. Hover or tap an option to try it. */
+.trap2{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) 44px minmax(0,1.15fr);
+  column-gap:12px; margin-top:20px; align-items:stretch}
+.t2-opt{grid-row:1; font:inherit; text-align:left; cursor:pointer; color:inherit;
+  background:var(--card); border:1px solid var(--border); border-top:2px solid var(--slate);
+  padding:14px 16px; opacity:.85;
+  transition:opacity .35s ease, border-color .35s ease, transform .35s var(--ease)}
+.t2-opt .q{display:block; font-family:var(--head); font-weight:600; font-size:clamp(16px,1.45vw,19px); color:var(--cream); line-height:1.25}
+.t2-opt .a{display:block; font-size:.88rem; line-height:1.45; color:var(--slate); margin-top:5px; transition:color .35s ease}
+.t2-opt:hover, .t2-opt:focus-visible, .t2-opt.try{opacity:1; border-top-color:var(--gold); transform:translateY(-2px); outline:none}
+.t2-opt:hover .a, .t2-opt.try .a{color:var(--mist)}
+.t2-arrow{grid-row:1; align-self:center; position:relative; height:2px; background:rgba(124,137,163,.45)}
+.t2-arrow::after{content:""; position:absolute; right:-1px; top:-4px; border:5px solid transparent; border-left:7px solid rgba(124,137,163,.8); border-right:0}
+.t2-arrow i{position:absolute; left:0; top:0; height:2px; width:14px; background:var(--gold); opacity:0}
+.t2-break{grid-row:1; margin:0; max-width:none; display:flex; align-items:center;
+  padding:14px 20px; border-left:2px solid var(--gold); background:rgba(232,198,95,.06);
+  font-family:var(--head); font-weight:600; font-size:clamp(18px,1.75vw,23px); line-height:1.25; color:var(--cream);
+  transition:background .5s ease, box-shadow .5s ease}
+.t2-break b{color:var(--gold-lift); font-weight:700}
+.t2-brace{grid-row:2; grid-column:1 / 3; position:relative; height:16px; margin:0 25%;
+  border:1px solid rgba(124,137,163,.45); border-top:0; border-radius:0 0 8px 8px}
+.t2-brace span{position:absolute; left:50%; top:22px; transform:translateX(-50%); white-space:nowrap;
+  font-family:var(--head); font-size:.6rem; font-weight:800; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--slate); transition:color .35s ease}
+.t2-brace i{position:absolute; bottom:-1px; height:2px; width:16px; background:var(--gold); opacity:0}
+.t2-brace .l{left:0} .t2-brace .r{right:0}
+.trap2{padding-bottom:22px}
+/* the loop */
+.trap2.on .t2-brace .l{animation:t2l 4s ease-in-out infinite}
+.trap2.on .t2-brace .r{animation:t2r 4s ease-in-out infinite}
+.trap2.on .t2-brace span{animation:t2same 4s ease-in-out infinite}
+.trap2.on .t2-arrow i{animation:t2arrow 4s ease-in-out infinite}
+.trap2.on .t2-break{animation:t2glow 4s ease-in-out infinite}
+@keyframes t2l{0%{left:0;opacity:0} 5%{opacity:1} 32%{left:calc(50% - 8px);opacity:1} 38%,100%{left:calc(50% - 8px);opacity:0}}
+@keyframes t2r{0%{right:0;opacity:0} 5%{opacity:1} 32%{right:calc(50% - 8px);opacity:1} 38%,100%{right:calc(50% - 8px);opacity:0}}
+@keyframes t2same{0%,28%{color:var(--slate)} 36%,52%{color:var(--gold)} 64%,100%{color:var(--slate)}}
+@keyframes t2arrow{0%,40%{left:0;opacity:0} 44%{opacity:1} 66%{left:calc(100% - 14px);opacity:1} 70%,100%{left:calc(100% - 14px);opacity:0}}
+@keyframes t2glow{0%,64%{background:rgba(232,198,95,.06); box-shadow:none} 74%,86%{background:rgba(232,198,95,.15); box-shadow:0 0 0 1px rgba(232,198,95,.3)} 100%{background:rgba(232,198,95,.06); box-shadow:none}}
+/* trying an option: the same place lights, and the answer answers */
+.trap2:has(.t2-opt:hover) .t2-brace, .trap2:has(.t2-opt.try) .t2-brace{border-color:rgba(232,198,95,.6)}
+.trap2:has(.t2-opt:hover) .t2-brace span, .trap2:has(.t2-opt.try) .t2-brace span{animation:none; color:var(--gold)}
+.trap2:has(.t2-opt:hover) .t2-break, .trap2:has(.t2-opt.try) .t2-break{animation:none; background:rgba(232,198,95,.15); box-shadow:0 0 0 1px rgba(232,198,95,.3)}
+@media(max-width:760px){
+  .trap2{grid-template-columns:1fr 1fr; padding-bottom:0}
+  .t2-arrow{display:none}
+  .t2-brace{margin:0 25% 34px}
+  .t2-break{grid-row:3; grid-column:1 / -1}
+}
+
+/* recognition · the three pains beside the two options */
+#recognition .rg .load{grid-template-columns:1fr; grid-template-rows:none; grid-auto-flow:row; margin-top:4px}
+#recognition .rg .load li{font-size:clamp(16px,1.35vw,19px)}
+#recognition .trap-h{font-size:clamp(22px,2.2vw,28px); line-height:1.3; margin:clamp(40px,5vw,56px) 0 0}
+#recognition .trap-h .hit{color:var(--gold-lift)}
+@media(min-width:1000px){
+  #recognition .rg{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    column-gap:clamp(48px,5vw,80px); align-items:start; max-width:var(--col)}
+  #recognition .rg-r{padding-top:30px}
+  #recognition .trap-h{margin-top:0}
+  #recognition .trap-h .hit{display:block; margin-top:5px}
+  #recognition .rg-r .trap2{grid-template-columns:minmax(0,1fr) minmax(0,1fr); padding-bottom:0; margin-top:22px}
+  #recognition .rg-r .t2-arrow{display:none}
+  #recognition .rg-r .t2-brace{margin:0 25% 34px}
+  #recognition .rg-r .t2-break{grid-row:3; grid-column:1 / -1}
+}
+.rcs-note{margin:18px 0 0; max-width:62ch; color:var(--ink-soft); font-size:clamp(15px,1.5vw,17px); line-height:1.6; text-wrap:pretty}
+
+
+/* difference · absorbs what this isn't, mirroring the women's page */
+#difference .nots-k{margin:30px 0 0; font-family:var(--head); font-size:.62rem; font-weight:800;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--gold); max-width:none}
+#difference .nots{margin:12px 0 0; flex-wrap:wrap; gap:8px 18px}
+#difference .nots li{font-size:clamp(14px,1.2vw,16px)}
+#difference .not-line{margin:clamp(34px,4vw,50px) auto 0; text-align:center; max-width:none;
+  font-size:clamp(15px,1.4vw,18px); color:var(--mist)}
+#difference .not-line span{display:block; margin-top:8px; font-family:var(--head); font-weight:600;
+  color:var(--cream); font-size:clamp(17px,1.7vw,21px); text-wrap:balance}
+#recognition .rg #recogCloser{font-size:clamp(19px,1.9vw,24px)}
+.faq .ans a{color:var(--gold); text-decoration:underline; text-underline-offset:3px}
+.faq .ans a:hover{color:var(--gold-lift)}
+@keyframes runv{0%{top:0; opacity:0} 6%{opacity:1} 94%{opacity:1} 100%{top:100%; opacity:0}}
+
+/* faq · two columns, each opens on its own */
+.faq-in{max-width:var(--col)}
+.faq-k{margin:0; padding:0 0 12px; font-family:var(--head); font-size:.62rem; font-weight:800;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--gold); max-width:none;
+  border-bottom:1px solid rgba(241,236,225,.13)}
+.faq2{margin-top:26px}
+.faq2 .faq{max-width:none; margin:0}
+.faq2 .faq details:first-of-type{border-top:0}
+.faq2 .faq + .faq{margin-top:34px}
+@media(min-width:1000px){
+  .faq2{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); column-gap:clamp(40px,4.5vw,72px); align-items:start}
+  .faq2 .faq + .faq{margin-top:0}
+}
 `;
   var HTML = `<div id="rm-page">
 <parallaxx-nav active="men"></parallaxx-nav>
@@ -1276,8 +1461,202 @@
   #recognition .load{grid-template-columns:1fr;grid-template-rows:none;grid-auto-flow:row}
 }
 #recogCloser{margin-top:26px}
+
+/* ═══ MIRRORED FROM THE WOMEN'S PAGE, Oct 2026 ═════════════════
+   The open session (date, countdown, theme), the cycle wheel in the
+   offer, one left edge, the deeper sand, the vertical steps and the
+   two-column FAQ. Kept together so the two pages can be compared. */
+
+/* one left edge: every block starts where the widest one does, except
+   the ones that are deliberately centred */
+.in.narrow:not(.centre){margin-left:calc((100% - min(100%, var(--col))) / 2); margin-right:auto}
+
+/* sand: a deeper sand for the cream bands, a paper for cream-2, darker text */
+.sec.cream,.sec.cream-2{--ink:#121A2A; --ink-soft:#3F4757; --bronze-ink:#5E4B22; --line-cream:#CFC2A6}
+.sec.cream{background:#E8DEC8}
+.sec.cream-2{background:#FBF8F1}
+
+/* hero · theme and the next open session */
+.theme-lab{display:block; font-family:var(--head); font-size:.62rem; font-weight:700;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:7px; max-width:none}
+#hero .theme{margin:22px auto 0; max-width:46ch; font-family:var(--head);
+  font-size:.95rem; line-height:1.35; color:var(--cream); text-wrap:balance}
+.cnt{font-family:var(--head); font-size:.62rem; font-weight:800; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--gold)}
+#hero .next .cnt:not(:empty):before{content:'\\00a0\\00b7\\00a0\\00a0'}
+#hero .next .cnt{color:var(--mist)}
+.opencard .cnt{margin:14px auto 0}
+.opencard .cnt:empty{display:none}
+@media(max-width:640px){
+  #hero .next .sep{display:none}
+  #hero .next .nd{display:block; margin-top:6px}
+  #hero .next .cnt:not(:empty){display:block; margin-top:5px}
+  #hero .next .cnt:not(:empty):before{content:none}
+}
+
+/* offer · the cycle wheel */
+#offer .theme-lab{margin:30px auto 7px}
+#offer .wheel{--wh:62px; --rows:3; position:relative; margin:6px auto 0; max-width:700px;
+  height:calc(var(--wh) * var(--rows)); overflow-y:auto; overscroll-behavior:contain;
+  scroll-snap-type:y mandatory; scrollbar-width:none; outline:none;
+  perspective:640px; perspective-origin:50% 50%;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,rgba(0,0,0,.4) 13%,#000 33%,#000 67%,rgba(0,0,0,.4) 87%,transparent 100%);
+          mask-image:linear-gradient(180deg,transparent 0,rgba(0,0,0,.4) 13%,#000 33%,#000 67%,rgba(0,0,0,.4) 87%,transparent 100%)}
+#offer .wheel::-webkit-scrollbar{display:none}
+#offer .wheel:focus-visible{box-shadow:0 0 0 2px rgba(232,198,95,.45)}
+#offer .themes{list-style:none; margin:0; padding:calc(var(--wh) * (var(--rows) - 1) / 2) 0; transform-style:preserve-3d}
+#offer .themes li{height:var(--wh); scroll-snap-align:center; display:grid; grid-template-columns:auto auto;
+  justify-content:center; gap:0 clamp(12px,1.6vw,20px); align-items:center;
+  border-top:1px solid transparent; border-bottom:1px solid transparent;
+  transform-origin:50% 50%; backface-visibility:hidden;
+  transform:translateZ(var(--z,0px)) rotateX(var(--rx,0deg)); opacity:var(--o,.3);
+  transition:opacity .2s linear, border-color .4s ease}
+#offer .themes .mo{font-family:var(--head); font-size:.62rem; font-weight:700; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--slate); transition:color .4s ease}
+#offer .themes .ti{font-family:var(--head); font-size:clamp(15px,1.6vw,19px); line-height:1.3;
+  color:var(--mist); transition:color .4s ease}
+#offer .themes li.front{border-top-color:rgba(232,198,95,.55); border-bottom-color:rgba(232,198,95,.55)}
+#offer .themes li.front .mo{color:var(--gold)}
+#offer .themes li.front .ti{color:var(--gold); font-weight:700}
+#offer .themes li.soon .ti{font-style:italic}
+#offer .wheel-note{margin:14px auto 0; font-family:var(--head); font-size:.92rem; color:var(--slate)}
+#rm-page.no-anim #offer .themes li{opacity:1; transform:none}
+@media(max-width:620px){
+  #offer .wheel{--wh:76px; perspective:520px}
+  #offer .themes li{grid-template-columns:1fr; gap:3px; align-content:center; justify-content:stretch}
+}
+.opencard .free{margin-bottom:14px}
+
+/* how · the steps run down a vertical track beside the outcome */
+@media(min-width:1000px){
+  #how .how-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    column-gap:clamp(48px,5vw,80px); align-items:center; margin-top:22px}
+  #how .steps .row{grid-template-columns:1fr; gap:28px}
+  #how .step{display:grid; grid-template-columns:44px minmax(0,1fr); column-gap:20px; align-items:start}
+  #how .step .n{grid-row:1 / span 2; margin:0}
+  #how .step h3{margin:9px 0 4px}
+  #how .step p{grid-column:2; max-width:none}
+  #how .steps .track{left:22px; right:auto; top:22px; bottom:var(--track-end,58px); width:1px; height:auto}
+  #how .steps .runner{left:50%; top:0}
+  #how .steps.on .runner{animation:runv 3.4s linear forwards}
+  #how .why-not{margin-top:0; white-space:normal; text-wrap:balance}
+}
+@media(min-width:861px){ .biogrid{justify-content:flex-start} }
+/* promise: the women's treatment, four weeks in gold, the three outcomes bright */
+#promise .promise-line{color:#8F9DB8; line-height:1.22}
+#promise .promise-line b{font-weight:700; color:var(--gold)}
+#promise .promise-line em{font-style:normal; font-weight:600; color:#fff}
+
+/* ═══ TRAP · COMPACT ═════════════════════════════════════════
+   One row: the two options, an arrow, the answer. A brace under
+   the options joins them at "Same place". On a loop, a gold pulse
+   runs in from both options to the same place, then along the
+   arrow, and the answer lights. Hover or tap an option to try it. */
+.trap2{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) 44px minmax(0,1.15fr);
+  column-gap:12px; margin-top:20px; align-items:stretch}
+.t2-opt{grid-row:1; font:inherit; text-align:left; cursor:pointer; color:inherit;
+  background:var(--card); border:1px solid var(--border); border-top:2px solid var(--slate);
+  padding:14px 16px; opacity:.85;
+  transition:opacity .35s ease, border-color .35s ease, transform .35s var(--ease)}
+.t2-opt .q{display:block; font-family:var(--head); font-weight:600; font-size:clamp(16px,1.45vw,19px); color:var(--cream); line-height:1.25}
+.t2-opt .a{display:block; font-size:.88rem; line-height:1.45; color:var(--slate); margin-top:5px; transition:color .35s ease}
+.t2-opt:hover, .t2-opt:focus-visible, .t2-opt.try{opacity:1; border-top-color:var(--gold); transform:translateY(-2px); outline:none}
+.t2-opt:hover .a, .t2-opt.try .a{color:var(--mist)}
+.t2-arrow{grid-row:1; align-self:center; position:relative; height:2px; background:rgba(124,137,163,.45)}
+.t2-arrow::after{content:""; position:absolute; right:-1px; top:-4px; border:5px solid transparent; border-left:7px solid rgba(124,137,163,.8); border-right:0}
+.t2-arrow i{position:absolute; left:0; top:0; height:2px; width:14px; background:var(--gold); opacity:0}
+.t2-break{grid-row:1; margin:0; max-width:none; display:flex; align-items:center;
+  padding:14px 20px; border-left:2px solid var(--gold); background:rgba(232,198,95,.06);
+  font-family:var(--head); font-weight:600; font-size:clamp(18px,1.75vw,23px); line-height:1.25; color:var(--cream);
+  transition:background .5s ease, box-shadow .5s ease}
+.t2-break b{color:var(--gold-lift); font-weight:700}
+.t2-brace{grid-row:2; grid-column:1 / 3; position:relative; height:16px; margin:0 25%;
+  border:1px solid rgba(124,137,163,.45); border-top:0; border-radius:0 0 8px 8px}
+.t2-brace span{position:absolute; left:50%; top:22px; transform:translateX(-50%); white-space:nowrap;
+  font-family:var(--head); font-size:.6rem; font-weight:800; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--slate); transition:color .35s ease}
+.t2-brace i{position:absolute; bottom:-1px; height:2px; width:16px; background:var(--gold); opacity:0}
+.t2-brace .l{left:0} .t2-brace .r{right:0}
+.trap2{padding-bottom:22px}
+/* the loop */
+.trap2.on .t2-brace .l{animation:t2l 4s ease-in-out infinite}
+.trap2.on .t2-brace .r{animation:t2r 4s ease-in-out infinite}
+.trap2.on .t2-brace span{animation:t2same 4s ease-in-out infinite}
+.trap2.on .t2-arrow i{animation:t2arrow 4s ease-in-out infinite}
+.trap2.on .t2-break{animation:t2glow 4s ease-in-out infinite}
+@keyframes t2l{0%{left:0;opacity:0} 5%{opacity:1} 32%{left:calc(50% - 8px);opacity:1} 38%,100%{left:calc(50% - 8px);opacity:0}}
+@keyframes t2r{0%{right:0;opacity:0} 5%{opacity:1} 32%{right:calc(50% - 8px);opacity:1} 38%,100%{right:calc(50% - 8px);opacity:0}}
+@keyframes t2same{0%,28%{color:var(--slate)} 36%,52%{color:var(--gold)} 64%,100%{color:var(--slate)}}
+@keyframes t2arrow{0%,40%{left:0;opacity:0} 44%{opacity:1} 66%{left:calc(100% - 14px);opacity:1} 70%,100%{left:calc(100% - 14px);opacity:0}}
+@keyframes t2glow{0%,64%{background:rgba(232,198,95,.06); box-shadow:none} 74%,86%{background:rgba(232,198,95,.15); box-shadow:0 0 0 1px rgba(232,198,95,.3)} 100%{background:rgba(232,198,95,.06); box-shadow:none}}
+/* trying an option: the same place lights, and the answer answers */
+.trap2:has(.t2-opt:hover) .t2-brace, .trap2:has(.t2-opt.try) .t2-brace{border-color:rgba(232,198,95,.6)}
+.trap2:has(.t2-opt:hover) .t2-brace span, .trap2:has(.t2-opt.try) .t2-brace span{animation:none; color:var(--gold)}
+.trap2:has(.t2-opt:hover) .t2-break, .trap2:has(.t2-opt.try) .t2-break{animation:none; background:rgba(232,198,95,.15); box-shadow:0 0 0 1px rgba(232,198,95,.3)}
+@media(max-width:760px){
+  .trap2{grid-template-columns:1fr 1fr; padding-bottom:0}
+  .t2-arrow{display:none}
+  .t2-brace{margin:0 25% 34px}
+  .t2-break{grid-row:3; grid-column:1 / -1}
+}
+
+/* recognition · the three pains beside the two options */
+#recognition .rg .load{grid-template-columns:1fr; grid-template-rows:none; grid-auto-flow:row; margin-top:4px}
+#recognition .rg .load li{font-size:clamp(16px,1.35vw,19px)}
+#recognition .trap-h{font-size:clamp(22px,2.2vw,28px); line-height:1.3; margin:clamp(40px,5vw,56px) 0 0}
+#recognition .trap-h .hit{color:var(--gold-lift)}
+@media(min-width:1000px){
+  #recognition .rg{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    column-gap:clamp(48px,5vw,80px); align-items:start; max-width:var(--col)}
+  #recognition .rg-r{padding-top:30px}
+  #recognition .trap-h{margin-top:0}
+  #recognition .trap-h .hit{display:block; margin-top:5px}
+  #recognition .rg-r .trap2{grid-template-columns:minmax(0,1fr) minmax(0,1fr); padding-bottom:0; margin-top:22px}
+  #recognition .rg-r .t2-arrow{display:none}
+  #recognition .rg-r .t2-brace{margin:0 25% 34px}
+  #recognition .rg-r .t2-break{grid-row:3; grid-column:1 / -1}
+}
+.rcs-note{margin:18px 0 0; max-width:62ch; color:var(--ink-soft); font-size:clamp(15px,1.5vw,17px); line-height:1.6; text-wrap:pretty}
+
+
+/* difference · absorbs what this isn't, mirroring the women's page */
+#difference .nots-k{margin:30px 0 0; font-family:var(--head); font-size:.62rem; font-weight:800;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--gold); max-width:none}
+#difference .nots{margin:12px 0 0; flex-wrap:wrap; gap:8px 18px}
+#difference .nots li{font-size:clamp(14px,1.2vw,16px)}
+#difference .not-line{margin:clamp(34px,4vw,50px) auto 0; text-align:center; max-width:none;
+  font-size:clamp(15px,1.4vw,18px); color:var(--mist)}
+#difference .not-line span{display:block; margin-top:8px; font-family:var(--head); font-weight:600;
+  color:var(--cream); font-size:clamp(17px,1.7vw,21px); text-wrap:balance}
+#recognition .rg #recogCloser{font-size:clamp(19px,1.9vw,24px)}
+.faq .ans a{color:var(--gold); text-decoration:underline; text-underline-offset:3px}
+.faq .ans a:hover{color:var(--gold-lift)}
+@keyframes runv{0%{top:0; opacity:0} 6%{opacity:1} 94%{opacity:1} 100%{top:100%; opacity:0}}
+
+/* faq · two columns, each opens on its own */
+.faq-in{max-width:var(--col)}
+.faq-k{margin:0; padding:0 0 12px; font-family:var(--head); font-size:.62rem; font-weight:800;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--gold); max-width:none;
+  border-bottom:1px solid rgba(241,236,225,.13)}
+.faq2{margin-top:26px}
+.faq2 .faq{max-width:none; margin:0}
+.faq2 .faq details:first-of-type{border-top:0}
+.faq2 .faq + .faq{margin-top:34px}
+@media(min-width:1000px){
+  .faq2{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); column-gap:clamp(40px,4.5vw,72px); align-items:start}
+  .faq2 .faq + .faq{margin-top:0}
+}
 </style>
 
+<!-- MONTHLY EDIT. Change these attributes and the whole page follows: the
+     date and countdown in the hero, the open card and the close, and the
+     theme in the hero and on the wheel in the offer. Mirrors #rw-open on the
+     women's page; see the notes there. -->
+<div id="rm-open" hidden
+     data-open-at="2026-12-02T08:30:00+01:00"
+     data-open-tz="08:30 CET"
+     data-open-times="08:30 CET / 15:30 Bali"
+     data-theme="Self-Recognition for Unconditional Worth"></div>
 <div id="rail" aria-hidden="true"><span class="bar"></span><span class="pos" id="railPos"></span></div>
 
 
@@ -1297,8 +1676,9 @@
     <p class="sub" data-r="mid">
       <b>For men who are needed, but want more from life.</b>
     </p>
-    <a class="btn" href="#offer" data-r="mid">Register for the next session</a>
-    <p class="next" data-r="far">Weekly Tuesday &nbsp;·&nbsp; 4:30 Bali &nbsp;·&nbsp; 10:30 CET</p>
+    <button class="btn" type="button" data-trm-modal data-r="mid">Come to the open session</button>
+    <p class="theme js-theme-block" data-r="far"><span class="theme-lab js-theme-lab" style="display:none">This month</span><span class="js-open-theme">Self-Recognition for Unconditional Worth</span></p>
+    <div class="next" data-r="far">Next open session<span class="sep">&nbsp;&middot;&nbsp;</span><span class="nd"><span class="js-open-date">Wednesday 2 December</span><span class="js-open-tz"> &nbsp;&middot;&nbsp; 08:30 CET</span></span><span class="cnt js-open-count"></span></div>
   </div>
   <span class="cue" aria-hidden="true">&#8595;</span>
 </section>
@@ -1307,8 +1687,8 @@
 <section class="sec black" id="promise">
   <div class="in">
     <div class="promise-rule" id="promiseRule" aria-hidden="true"></div>
-    <p class="promise-line mask"><span>Decide what you want. Ask for it. And see what happens.</span></p>
-    <p class="promise-sub" data-r="far">More of you, not a different you.</p>
+    <p class="promise-line mask"><span>In <b>four weeks</b> you'll know <em>one thing you want</em>,<br>you'll have <em>asked for it</em>,<br>and you'll <em>feel what changes</em> when you do.</span></p>
+    <p class="promise-sub" data-r="far">Without slowing down or doing less.</p>
 
   </div>
 </section>
@@ -1329,32 +1709,26 @@
 <!-- ══ 04 · RECOGNITION ═══════════════════════════════════════════ -->
 <section class="sec ink" id="recognition">
   <div class="glow" aria-hidden="true"></div>
-  <div class="in narrow">
+  <div class="in narrow rg">
+   <div class="rg-l">
     <p class="ey" data-r="far">Sounds like you?</p>
     <ul class="load" id="loadList">
-      <li>Being who you think they want you to be. Rather than just <em>you</em>.</li>
-      <li>Satisfied. Comfortable. But can't remember the last time you <em>felt</em> anything.</li>
-      <li>What you want becomes a project, because a project is <em>safer to talk about</em>.</li>
-      <li>Problem-solver mode always on. Even when it isn't <em>yours</em> to solve.</li>
-      <li>You spent years looking forward to this. You're here. <em>Now what?</em></li>
-      <li>Always learning, always growing. The <em>applying</em> rarely lasts.</li>
+      <li>&ldquo;Stuff that&rsquo;s just for me is not always the priority.&rdquo;</li>
+      <li>&ldquo;I&rsquo;m supposed to have all the answers.&rdquo;</li>
+      <li>&ldquo;No one really listens, so you just keep to yourself.&rdquo;</li>
     </ul>
     <p id="recogCloser">You already know.<span>You've just got very good at talking over it.</span></p>
-
-  </div>
-</section>
-
-<!-- ══ 05 · TRAP ══════════════════════════════════════════════════ -->
-<section class="sec dark" id="trap">
-  <div class="in narrow" id="trapRig">
-    <h2 data-r="mid">It never looks like avoidance <span class="hit">from the inside</span>.</h2>
-    <p class="lede" data-r="mid">Every man decided the thing he wanted could wait. None of them called it that.</p>
-    <ul class="costumes" data-r="mid">
-      <li>Consideration</li><li>Realism</li><li>Responsibility</li>
-      <li>Standards</li><li>Learning</li><li>Planning</li>
-    </ul>
-    <p class="trap-under">&ldquo;It's a caretaking strategy. And it's protecting you from asking the hard thing.&rdquo;</p>
-
+   </div>
+   <div class="rg-r">
+    <h2 class="trap-h" data-r="mid">You've had two options. <span class="hit">Neither works.</span></h2>
+    <div class="trap2" id="trap2Rig">
+      <button class="t2-opt" type="button"><span class="q">&ldquo;Push through.&rdquo;</span><span class="a">You've been pushing for years. It's stopped working.</span></button>
+      <button class="t2-opt" type="button"><span class="q">&ldquo;Go and talk to someone.&rdquo;</span><span class="a">They tell you you're doing great. Nothing changes.</span></button>
+      <div class="t2-arrow" aria-hidden="true"><i></i></div>
+      <p class="t2-break"><span>So this is about <b>doing different.</b></span></p>
+      <div class="t2-brace" aria-hidden="true"><i class="l"></i><i class="r"></i><span>Same place</span></div>
+    </div>
+   </div>
   </div>
 </section>
 
@@ -1362,49 +1736,29 @@
 <section class="sec cream" id="how">
   <div class="in">
     <p class="ey" data-r="far">How It Works</p>
+    <div class="how-grid">
     <div class="steps" id="steps">
       <div class="row">
         <div class="track" aria-hidden="true"><span class="runner"></span></div>
         <div class="step" data-r="mid"><span class="n">01</span>
-          <h3>Decide What You Want</h3>
+          <h3>Get Clear On What You Want</h3>
           <p>The personal unmet values and needs.</p></div>
         <div class="step" data-r="mid"><span class="n">02</span>
-          <h3>Asking For It</h3>
-          <p>No hedge, and no half question.</p></div>
+          <h3>Ask For It</h3>
+          <p>Asking for, and declining, with real intention.</p></div>
         <div class="step" data-r="mid"><span class="n">03</span>
-          <h3>The Answer In Reality</h3>
-          <p>Not your assumption of it.</p></div>
+          <h3>Notice The Shift</h3>
+          <p>It's never what you expected.</p></div>
       </div>
     </div>
-    <p class="why-not" data-r="mid">A simple ask you already know you should make.<span>So why haven't you?</span></p>
+    <div class="how-r">
+    <p class="why-not" data-r="mid">A simple outcome you already know you should have.<span>So why haven't you?</span></p>
     <div class="rcs" data-r="far">
       <span class="k">The Relational Connection System&trade;</span>
       <span class="v">Vision</span><span class="v">Values</span><span class="v">Velocity</span>
     </div>
-
-  </div>
-</section>
-
-<!-- ══ 07 · WHAT THIS ISN'T ═══════════════════════════════════════ -->
-<section class="sec black" id="distinction">
-  <div class="glow" aria-hidden="true"></div>
-  <div class="in narrow">
-    <h2 data-r="mid">What this isn't.</h2>
-    <div class="clr">
-      <div class="clr-l">
-        <ul class="nots" id="notsList" data-r="mid">
-          <li>No drumming</li><li>No ice baths</li><li>No breathwork</li>
-          <li>No alpha</li><li>No guru</li>
-        </ul>
-        <p class="stand" data-r="mid">We're not asking you to become a different man.</p>
-      </div>
-      <div class="clr-r" data-r="mid">
-        <ul class="not3" data-r="mid">
-      <li class="r"><h3>Not a mastermind</h3><p>Unlike business strategy, we're not going to mastermind your wants.</p></li>
-      <li class="r"><h3>Not therapy</h3><p>More than just talk, we're going for it together.</p></li>
-      <li class="r"><h3>Not a lads' chat</h3><p>The conversations you don't get to have in your day-to-day.</p></li>
-    </ul>
-      </div>
+    <p class="rcs-note" data-r="far">You don't arrive missing a pillar. You arrive with two of them borrowed, a vision someone else set and a velocity that serves it. Every month runs the same four weeks, with a new theme.</p>
+    </div>
     </div>
 
   </div>
@@ -1415,9 +1769,13 @@
   <div class="in narrow">
     <div class="split">
       <div>
-        <p class="ey" data-r="far">The difference</p>
         <p class="question">You can witness your truth, sit with it, and choose to simply feel it for what it is.</p>
         <p class="release-note">Be seen, heard and witnessed in your truth, amongst brothers you won't find among friends.</p>
+        <p class="nots-k">What this isn&rsquo;t</p>
+        <ul class="nots" id="notsList">
+          <li>No drumming</li><li>No ice baths</li><li>No breathwork</li>
+          <li>No alpha</li><li>No guru</li>
+        </ul>
       </div>
       <ul class="lifts" data-r="mid">
         <li><span class="k">01</span><div><h3>Seen</h3><p>Not the version you take to work.</p></div></li>
@@ -1426,6 +1784,7 @@
         <li><span class="k">04</span><div><h3>A higher standard</h3><p>Brothers who expect more of you than your friends do.</p></div></li>
       </ul>
     </div>
+    <p class="not-line" data-r="mid">Not a mastermind. Not therapy. Not a lads' chat.<span>The conversations you don't get to have in your day-to-day.</span></p>
 
   </div>
 </section>
@@ -1434,7 +1793,7 @@
 <section class="sec cream-2" id="bio">
   <div class="in narrow">
     <div class="biogrid">
-      <div class="reelwrap" data-r="near"><video preload="none" playsinline poster="/assets/img/rm-bio-poster.jpg" src="https://video.wixstatic.com/video/111174_4e1bcc7d4c634401adae988048a9cb1b/1080p/mp4/file.mp4"></video><button class="vplay" type="button" aria-label="Play video"><span class="ring" aria-hidden="true"></span></button><span class="len">0:56</span></div>
+      <div class="reelwrap" data-r="near"><video preload="none" playsinline poster="/assets/img/img-52bb7073da.jpg" src="https://video.wixstatic.com/video/111174_4e1bcc7d4c634401adae988048a9cb1b/1080p/mp4/file.mp4"></video><button class="vplay" type="button" aria-label="Play video"><span class="ring" aria-hidden="true"></span></button><span class="len">0:56</span></div>
       <div class="txt" data-r="mid">
         <h2 style="font-size:clamp(24px,3vw,36px)">Daniel Lawson</h2>
         <p class="biorole">I stopped asking for what I wanted, and called it something more respectable.</p>
@@ -1477,106 +1836,80 @@
   </div>
 </section>
 
-<!-- ══ 11 · THE STANDARD ══════════════════════════════════════════ -->
-<section class="sec dark" id="values">
-  <div class="glow" aria-hidden="true"></div>
-  <div class="in narrow">
-    <div class="vals-split">
-      <div class="vals-rail" data-r="mid">
-        <p class="hand">what we stand for</p>
-        <h2>What we value.</h2>
-        <p class="lede">We all have skin in the game and play full out. We require the same from you upon entry.</p>
-        <p class="hand sm">we become your brotherhood</p>
-      </div>
-      <div class="vals-spine" data-r="mid">
-        <div class="v"><span class="node" aria-hidden="true"></span><h3>Dedication</h3>
-          <p>We all commit to the process by showing up like this work matters, because it does.</p></div>
-        <div class="v"><span class="node" aria-hidden="true"></span><h3>Punctuality</h3>
-          <p>As a sign of respect to ourselves and each other. Time is a sacred resource here.</p></div>
-        <div class="v"><span class="node" aria-hidden="true"></span><h3>Raw Vulnerability</h3>
-          <p>Being the best with imperfection. Real, unfiltered, and fully present.</p></div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ══ 11 · ONE INTENTION ═════════════════════════════════════════ -->
-<section class="sec ink" id="intention">
-  <div class="in narrow centre">
-    <div class="oneline" aria-hidden="true"></div>
-    <p class="ey" data-r="far">One intention</p>
-    <p class="promise-line" data-r="mid">Your ask. Either response is a win.</p>
-    <p class="promise-sub" data-r="far">Yes is what you want. No is truth and clarity.</p>
-
-  </div>
-</section>
-
 <!-- ══ 12 · THE OFFER ═════════════════════════════════════════════ -->
 <section class="sec dark" id="offer">
   <div class="in narrow centre">
-    <p class="ey" data-r="far">The offer</p>
-    <h2 data-r="mid">Join the Brotherhood</h2>
-    <p class="lede" data-r="mid">A room of men doing the same work.</p>
+    <p class="ey" data-r="far">Join the brotherhood</p>
+    <h2 data-r="mid" style="max-width:24ch; margin-left:auto; margin-right:auto">The first session of every month is open.</h2>
+    <p class="theme-lab js-theme-block" data-r="mid">This cycle</p>
+    <!-- MONTHLY: nothing to do here. The script matches data-month against the
+         open-session date, opens the wheel on that row, and feeds its title to
+         the hero. Set the themes once. -->
+    <div class="wheel js-theme-block" id="themeWheel" data-r="mid" tabindex="0" aria-label="Monthly themes">
+      <ol class="themes" id="themeList">
+        <li data-month="2026-12"><span class="mo">December</span><span class="ti">Self-Recognition for Unconditional Worth</span></li>
+        <li data-month="2027-01"><span class="mo">January</span><span class="ti">Personal Responsibility for What You Want</span></li>
+        <li data-month="2027-02"><span class="mo">February</span><span class="ti">Personal Needs for Giving to Yourself First</span></li>
+        <li data-month="2027-03"><span class="mo">March</span><span class="ti">Emotional Space for Clarity on What Matters</span></li>
+        <li data-month="2027-04"><span class="mo">April</span><span class="ti">Clear Boundaries for Certainty Under Pressure</span></li>
+        <li class="soon"><span class="mo"></span><span class="ti">More coming</span></li>
+      </ol>
+    </div>
+    <p class="wheel-note js-theme-block" data-r="mid">The transformation stacks, join anytime.</p>
     <div class="pricegrid" data-r="mid">
       <div class="opencard">
-        <div class="free">&euro;89<span class="per">a month</span></div>
-        <div class="when">Join from the next session<span>Weekly Tuesday &middot; 4:30 Bali &middot; 10:30 CET</span></div>
+        <div class="free">Free</div>
+        <div class="when"><span class="js-open-date">Wednesday 2 December</span><span class="js-open-times">08:30 CET / 15:30 Bali</span></div>
         <div class="where">Online, wherever you are</div>
-        <p class="lede">Your price is locked in for as long as you stay. Cancel anytime.</p>
+        <p class="cnt js-open-count">Registrations open now</p>
+        <p class="lede">Come, sit in it, and decide from the session rather than from this page.</p>
       </div>
       <div class="stay">
         <h3>Stay, and here's the four weeks.</h3>
         <p class="dim">Decide what you want. Ask for it. And see what happens.</p>
         <ul>
-          <li>One live session a week, in four-week cycles</li>
+          <li>Four sessions a month, each month a new theme with its own workbook</li>
           <li>Live facilitation and hot seat work</li>
-          <li>A defined theme each month, with the prompt a few days ahead</li>
-          <li>Access to the group between sessions</li>
-          <li>First access to new frameworks and resources</li>
+          <li>The WhatsApp group with the other men between sessions</li>
+          <li>Complimentary 1:1 call on week 6</li>
         </ul>
+        <p class="pricenote"><b>&euro;89 a month</b>, and your membership price is grandfathered. It never increases as long as you stay. Memberships roll over monthly. Cancel anytime.</p>
       </div>
     </div>
     <div class="cta-row" data-r="mid">
-      <button class="btn" type="button" data-trm-modal>Register for the next session</button>
-      <p class="fine">The short application first is to ensure a strong mutual fit, for you and for the group.</p>
+      <button class="btn" type="button" data-trm-modal>Register for the open session</button>
+      <p class="fine">The short application first is to ensure a strong mutual fit, for you and for the men already inside.</p>
     </div>
-
-  </div>
-</section>
-
-<!-- ══ 13 · AFTER FOUR WEEKS ══════════════════════════════════════ -->
-<section class="sec cream-2" id="after">
-  <div class="in narrow">
-    <p class="ey" data-r="far">After four weeks</p>
-    <h2 data-r="mid">You'll have made the ask.</h2>
-    <div class="after-grid" data-r="mid">
-      <div><h3>Continue to build on it</h3><p>More reps, with the same ask or a different one.</p></div>
-      <div><h3>Continue more personally</h3><p>Credit your membership toward 1:1 work in Reconnect.</p></div>
-      <div><h3>Continue on your own</h3><p>Take what you've got, and go use it.</p></div>
-    </div>
-
   </div>
 </section>
 
 <!-- ══ 14 · FAQ ═══════════════════════════════════════════════════ -->
 <section class="sec black" id="faq">
-  <div class="in narrow">
-    <p class="ey" data-r="far">Common questions</p>
-    <h2 data-r="mid">Before you come.</h2>
-    <div class="faq" data-r="mid">
-      <details><summary>Do I need to be in a relationship for this?</summary>
-        <div class="ans">No. The men in here are single, married, separated, and everything in between. What they have in common is the pattern, not the postcode. One man rehearses who he needs to be before he opens the front door, another sits in the car outside a bit longer. Same pattern.</div></details>
-      <details><summary>I already talk to my mates. Why would I pay for this?</summary>
-        <div class="ans">Because of what gets said. Your mates get the version of you that's fine. In here the conversation goes where it doesn't go over a pint, and there's someone holding it so it lands somewhere rather than trailing off.</div></details>
-      <details><summary>Isn't this just another men's group?</summary>
-        <div class="ans">Most of them run on more force. More discipline, more commitment, more accountability. Force is usually what's already failing. We work the other way: find what the habit is paying you, and go around it.</div></details>
-      <details><summary>Can I come once before I decide?</summary>
-        <div class="ans">Our standard is to have skin in the game. It's month to month and you can cancel anytime, so your first four weeks is your trial for the price of a dinner.</div></details>
-      <details><summary>Do I have to talk?</summary>
-        <div class="ans">No. Plenty of men get their money's worth watching someone else's hot seat, because the thing being opened up is usually theirs too.</div></details>
-      <details><summary>Are there upsells coming?</summary>
-        <div class="ans">No. There's 1:1 work in Reconnect if you decide you want it deeper, and your membership comes off the cost. Same work, same direction. More personal.</div></details>
+  <div class="in narrow faq-in">
+    <h2 data-r="mid">Common questions.</h2>
+    <div class="faq2" data-r="mid">
+      <div class="faq">
+        <p class="faq-k">The work</p>
+        <details><summary>Do I need to be in a relationship for this?</summary><div class="ans">No. The men in here are single, married, separated, and everything in between. What they have in common is the pattern, not the postcode. One man rehearses who he needs to be before he opens the front door, another sits in the car outside a bit longer. Same pattern.</div></details>
+        <details><summary>I already talk to my mates. Why would I pay for this?</summary><div class="ans">Because of what gets said. Your mates get the version of you that's fine. In here the conversation goes where it doesn't go over a pint, and there's someone holding it so it lands somewhere rather than trailing off.</div></details>
+        <details><summary>Isn't this just another men's group?</summary><div class="ans">Most of them run on more force. More discipline, more commitment, more accountability. Force is usually what's already failing. We work the other way: find what the habit is paying you, and go around it.</div></details>
+        <details><summary>Do I have to talk?</summary><div class="ans">Yes. It's full participation, and your truth is your contribution. What you share, and how much of it, is your choice.</div></details>
+        <details><summary>What do you ask of me in the sessions?</summary><div class="ans">Three standards we keep together. Dedication: we all commit to the process by showing up like this work matters, because it does. Punctuality: a sign of respect to ourselves and each other, because time is a sacred resource here. Raw vulnerability: real, unfiltered, and fully present. And one intention out of every session: your ask. Either response is a win. Yes is what you want. No is truth and clarity.</div></details>
+        <details><summary>What happens after four weeks?</summary><div class="ans">Keep building, with the same ask or a different one. Go deeper 1:1 with Reconnect, which includes complimentary access to The Reconnected Man. Or take what you've got, and go use it.</div></details>
+        <details><summary>I'm not ready yet. Where do I start?</summary><div class="ans">Take the <a href="/the-archetype-quiz">Protection Archetype Quiz</a>. A few minutes to find which of five patterns you are running, and what it is costing the people closest to you.</div></details>
+        <details><summary>Are there upsells coming?</summary><div class="ans">No. There's 1:1 work in Reconnect if you decide you want more, faster, deeper. Join Reconnect and your place in The Reconnected Man is complimentary. Same work, same direction. More personal.</div></details>
+      </div>
+      <div class="faq">
+        <p class="faq-k">The practical side</p>
+        <details><summary>Can I come once before I decide?</summary><div class="ans">Yes. The first session of every month is open and there's no charge for it. Come, sit in it, and decide from the session rather than from this page. After that it's &euro;89 a month, and you're grandfathered: your price never increases as long as you stay.</div></details>
+        <details><summary>Can I cancel?</summary><div class="ans">Yes, any time. It's month to month, and your membership runs to the end of the month you've paid for.</div></details>
+        <details><summary>What if I'm away for a month?</summary><div class="ans">You can pause once a year, for up to a month, and you keep your price. Ask before your next payment.</div></details>
+        <details><summary>Is what I share kept private?</summary><div class="ans">Yes. What you share stays between us. I sometimes draw on a line or a theme from a session in my writing, without anything that could identify you, and I'll always ask you first before using anything that does, like a clip or a testimonial.</div></details>
+        <details><summary>Where does it run?</summary><div class="ans">Online, so you can join from wherever you are. Nothing to travel to and nothing to arrange around it.</div></details>
+        <details><summary>Do I need to attend every session?</summary><div class="ans">No. Life moves and the men here know it. Come when you can, and know that the men who turn up regularly are the ones who feel it shift.</div></details>
+        <details><summary>When do sessions run?</summary><div class="ans">Wednesdays, 08:30 CET / 15:30 Bali. Come to the open session and you'll see how it sits with your week.</div></details>
+        <details><summary>What does the fee include?</summary><div class="ans">Facilitation, hot seat work, resources, and the men you'll meet. It's largely a filter.</div></details>
+      </div>
     </div>
 
   </div>
@@ -1588,8 +1921,8 @@
   <div class="in narrow centre">
     <p class="ey" data-r="far">Ready?</p>
     <h2 class="mask" id="closeMask"><span>Know what you want, and ask for it in four weeks.</span></h2>
-    <p class="lede" data-r="mid">Register for the next session. Short application form first.</p>
-    <a class="btn" href="#offer" data-r="mid">Register for the next session</a>
+    <p class="lede" data-r="mid">Next open session <span class="js-open-date" data-fallback="is being confirmed" data-pending="is in {month}. Registrations are open now">Wednesday 2 December</span>. Free to attend, short application form first.</p>
+    <button class="btn" type="button" data-trm-modal data-r="mid">Register for the open session</button>
     <p class="hand sm" data-r="far" style="margin-top:32px">you're joining a living conversation</p>
 
   </div>
@@ -1690,6 +2023,148 @@
   once('#promise .mask', 'seen', null, 260);
   once('#closeMask', 'seen');
   once('#trapRig', 'shifted', '0px 0px -20% 0px', 2100);
+  once('#trap2Rig', 'on');
+  [].forEach.call(document.querySelectorAll('#trap2Rig .t2-opt'), function(o){
+    o.addEventListener('click', function(){
+      [].forEach.call(document.querySelectorAll('#trap2Rig .t2-opt'), function(x){ if(x!==o) x.classList.remove('try'); });
+      o.classList.toggle('try');
+    });
+  });
+
+  /* ── THE OPEN DATE · ported from the women's page ─────────── */
+  (function openDate(){
+    var src = document.getElementById('rm-open'); if(!src) return;
+    var at = src.getAttribute('data-open-at') || '';
+    var m = at.match(/^(\d{4})-(\d{2})-(\d{2})/); if(!m) return;
+
+    var evUTC = Date.UTC(+m[1], +m[2] - 1, +m[3]);
+    var now = new Date();
+    var todayUTC = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+    var days = Math.round((evUTC - todayUTC) / 86400000);
+    var past = days < 0;
+
+    var pretty = new Date(evUTC + 43200000).toLocaleDateString('en-GB', {
+      weekday:'long', day:'numeric', month:'long', timeZone:'UTC'
+    });
+
+    /* Between sessions: the date has gone, so name the next month instead and
+       say registrations are open (GHL holds new registrations on the waitlist
+       until the date is set). The month after data-open-at unless
+       data-next-month says otherwise; empty switches this off. Never names a
+       month that is already behind us, or one not after the last session. */
+    var pend = null;
+    if(past){
+      var nk = src.getAttribute('data-next-month');
+      if(nk === null){
+        var ny = +m[1], nm = +m[2] + 1; if(nm > 12){ nm = 1; ny++; }
+        nk = ny + '-' + (nm < 10 ? '0' : '') + nm;
+      }
+      nk = nk.trim();
+      var pm = nk.match(/^(\d{4})-(\d{2})$/);
+      var nowKey = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2);
+      if(pm && nk > m[1] + '-' + m[2] && nk >= nowKey){
+        pend = { key: nk, name: new Date(Date.UTC(+pm[1], +pm[2] - 1, 15))
+                   .toLocaleDateString('en-GB', { month:'long', timeZone:'UTC' }) };
+      }
+    }
+
+    function set(sel, text, hideWhenPast){
+      var els = document.querySelectorAll(sel);
+      for(var i = 0; i < els.length; i++){
+        if(past && hideWhenPast){ els[i].style.display = 'none'; continue; }
+        els[i].textContent = text;
+      }
+    }
+    var dates = document.querySelectorAll('.js-open-date');
+    for(var i = 0; i < dates.length; i++){
+      dates[i].textContent = pend
+        ? (dates[i].getAttribute('data-pending') || pend.name).replace('{month}', pend.name)
+        : past
+          ? (dates[i].getAttribute('data-fallback') || 'date to be announced')
+          : pretty;
+    }
+    set('.js-open-tz', ' \u00a0\u00b7\u00a0 ' + (src.getAttribute('data-open-tz') || ''), true);
+    set('.js-open-times', src.getAttribute('data-open-times') || '', true);
+    if(pend){
+      var cnts = document.querySelectorAll('.js-open-count');
+      for(var c = 0; c < cnts.length; c++){ cnts[c].textContent = 'Registrations open now'; }
+    } else {
+      set('.js-open-count',
+          days > 1 ? 'In ' + days + ' days' : days === 1 ? 'Tomorrow' : days === 0 ? 'Today' : '',
+          true);
+    }
+    var labs = document.querySelectorAll('.js-theme-lab');
+    /* Between sessions the month is already named in the line below, so the
+       label goes rather than saying it twice. */
+    for(var l = 0; l < labs.length; l++){
+      labs[l].textContent = 'This month';
+      labs[l].style.display = pend ? 'none' : '';
+    }
+
+    /* The theme rides the same single source as the date. No theme set, or the
+       date already gone, and the whole block leaves rather than going stale. */
+    /* The list is the source of truth. Match the open session's month against
+       it, take the title from there, and open the wheel on that row — so
+       setting the date is the only monthly edit. The attribute on #rw-open
+       stays as a fallback for a month the list does not cover. */
+    var monthKey = pend ? pend.key : m[1] + '-' + m[2];
+    var theme = '';
+    var wheel = document.getElementById('themeWheel');
+    var track = document.getElementById('themeList');
+    var items = track ? [].slice.call(track.children) : [];
+    var startAt = 0;
+    for(var r = 0; r < items.length; r++){
+      if(items[r].getAttribute('data-month') === monthKey){
+        startAt = r;
+        var ti = items[r].querySelector('.ti');
+        if(ti) theme = ti.textContent.trim();
+      }
+    }
+    if(wheel && items.length){
+      var flat = reduce;
+      var ticking = false;
+      var spin = function(){
+        var h = items[0].offsetHeight || 1;
+        var mid = wheel.scrollTop + wheel.clientHeight / 2;
+        var best = 0, bestD = Infinity;
+        for(var i = 0; i < items.length; i++){
+          /* 0 = centred; negative above the front slot, positive below, so the
+             rotation mirrors either side instead of only falling away downward */
+          var d  = (items[i].offsetTop + h / 2 - mid) / h;
+          var ad = Math.abs(d);
+          if(ad < bestD){ bestD = ad; best = i; }
+          if(flat){
+            items[i].style.setProperty('--o', ad < .5 ? 1 : .34);
+          } else {
+            items[i].style.setProperty('--rx', (-d * 15).toFixed(2) + 'deg');
+            items[i].style.setProperty('--z', (-ad * 46).toFixed(1) + 'px');
+            items[i].style.setProperty('--o', Math.max(.2, 1 - ad * .3).toFixed(3));
+          }
+        }
+        for(var j = 0; j < items.length; j++){
+          items[j].classList.toggle('front', j === best);
+        }
+      };
+      wheel.addEventListener('scroll', function(){
+        if(ticking) return;
+        ticking = true;
+        requestAnimationFrame(function(){ spin(); ticking = false; });
+      }, { passive:true });
+      window.addEventListener('resize', spin);
+      /* set scrollTop directly rather than scrollIntoView, which would drag
+         the whole page down to the section on load */
+      wheel.scrollTop = items[startAt].offsetTop
+                        - (wheel.clientHeight - items[startAt].offsetHeight) / 2;
+      spin();
+    }
+    if(!theme) theme = (src.getAttribute('data-theme') || '').trim();
+    var themeEls = document.querySelectorAll('.js-open-theme');
+    for(var t = 0; t < themeEls.length; t++){ themeEls[t].textContent = theme; }
+    if(!theme || (past && !pend)){
+      var blocks = document.querySelectorAll('.js-theme-block');
+      for(var b = 0; b < blocks.length; b++){ blocks[b].style.display = 'none'; }
+    }
+  })();
 
   /* ── RECOGNITION · the staged load ─────────────────────────── */
   var rows   = [].slice.call(document.querySelectorAll('#loadList li'));

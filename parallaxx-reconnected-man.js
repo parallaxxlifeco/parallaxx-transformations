@@ -847,6 +847,21 @@
   #recognition .t2-opt .a{font-size:14px; line-height:1.4}
   #recognition .t2-break{font-size:18px; padding:12px 16px}
 }
+/* The difference on phones: the number sits beside its heading, the rows
+   share the page's left edge, and the negations read left to right */
+@media(max-width:760px){
+  #difference .question{font-size:24px; line-height:1.28}
+  #difference .release-note{font-size:16px; margin-top:14px}
+  #difference .nots-k{margin-top:24px}
+  #difference .nots{justify-content:flex-start; text-align:left; gap:6px 14px; margin-top:10px}
+  #difference .nots li{font-size:14px}
+  #difference .split{gap:28px}
+  #difference .lifts li{grid-template-columns:30px minmax(0,1fr); gap:0 10px; padding:14px 0; align-items:baseline}
+  #difference .lifts .k{font-size:1rem}
+  #difference .lifts h3{font-size:16px; margin:0 0 3px}
+  #difference .lifts p{font-size:15px; line-height:1.45}
+  #difference .not-line{margin-top:30px}
+}
 @keyframes runv{0%{top:0; opacity:0} 6%{opacity:1} 94%{opacity:1} 100%{top:100%; opacity:0}}
 
 /* faq · two columns, each opens on its own */
@@ -1680,6 +1695,21 @@
   #recognition .t2-opt .q{font-size:16px}
   #recognition .t2-opt .a{font-size:14px; line-height:1.4}
   #recognition .t2-break{font-size:18px; padding:12px 16px}
+}
+/* The difference on phones: the number sits beside its heading, the rows
+   share the page's left edge, and the negations read left to right */
+@media(max-width:760px){
+  #difference .question{font-size:24px; line-height:1.28}
+  #difference .release-note{font-size:16px; margin-top:14px}
+  #difference .nots-k{margin-top:24px}
+  #difference .nots{justify-content:flex-start; text-align:left; gap:6px 14px; margin-top:10px}
+  #difference .nots li{font-size:14px}
+  #difference .split{gap:28px}
+  #difference .lifts li{grid-template-columns:30px minmax(0,1fr); gap:0 10px; padding:14px 0; align-items:baseline}
+  #difference .lifts .k{font-size:1rem}
+  #difference .lifts h3{font-size:16px; margin:0 0 3px}
+  #difference .lifts p{font-size:15px; line-height:1.45}
+  #difference .not-line{margin-top:30px}
 }
 @keyframes runv{0%{top:0; opacity:0} 6%{opacity:1} 94%{opacity:1} 100%{top:100%; opacity:0}}
 

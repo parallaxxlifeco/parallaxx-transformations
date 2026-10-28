@@ -1736,7 +1736,7 @@
      data-open-at="2026-12-02T08:30:00+01:00"
      data-open-tz="08:30 CET"
      data-open-times="08:30 CET / 15:30 Bali"
-     data-theme="Self-Recognition for Unconditional Worth"></div>
+     data-theme="Your Needs for Running on Full"></div>
 <div id="rail" aria-hidden="true"><span class="bar"></span><span class="pos" id="railPos"></span></div>
 
 
@@ -1757,7 +1757,7 @@
       <b>For men who are needed, but want more from life.</b>
     </p>
     <button class="btn" type="button" data-trm-modal data-r="mid">Come to the open session</button>
-    <p class="theme js-theme-block" data-r="far"><span class="theme-lab js-theme-lab" style="display:none">This month</span><span class="js-open-theme">Self-Recognition for Unconditional Worth</span></p>
+    <p class="theme js-theme-block" data-r="far"><span class="theme-lab js-theme-lab" style="display:none">This month</span><span class="js-open-theme">Your Needs for Running on Full</span></p>
     <div class="next" data-r="far">Next open session<span class="sep">&nbsp;&middot;&nbsp;</span><span class="nd"><span class="js-open-date">Wednesday 2 December</span><span class="js-open-tz"> &nbsp;&middot;&nbsp; 08:30 CET</span></span><span class="cnt js-open-count"></span></div>
   </div>
   <span class="cue" aria-hidden="true">&#8595;</span>
@@ -1927,11 +1927,11 @@
          the hero. Set the themes once. -->
     <div class="wheel js-theme-block" id="themeWheel" data-r="mid" tabindex="0" aria-label="Monthly themes">
       <ol class="themes" id="themeList">
-        <li data-month="2026-12"><span class="mo">December</span><span class="ti">Self-Recognition for Unconditional Worth</span></li>
-        <li data-month="2027-01"><span class="mo">January</span><span class="ti">Personal Responsibility for What You Want</span></li>
-        <li data-month="2027-02"><span class="mo">February</span><span class="ti">Personal Needs for Giving to Yourself First</span></li>
-        <li data-month="2027-03"><span class="mo">March</span><span class="ti">Emotional Space for Clarity on What Matters</span></li>
-        <li data-month="2027-04"><span class="mo">April</span><span class="ti">Clear Boundaries for Certainty Under Pressure</span></li>
+        <li data-month="2026-12"><span class="mo">December</span><span class="ti">Your Needs for Running on Full</span></li>
+        <li data-month="2027-01"><span class="mo">January</span><span class="ti">Emotions for Feeling Alive Again</span></li>
+        <li data-month="2027-02"><span class="mo">February</span><span class="ti">Boundaries for Holding Your Line</span></li>
+        <li data-month="2027-03"><span class="mo">March</span><span class="ti">Self-Acknowledgement for Winning Daily</span></li>
+        <li data-month="2027-04"><span class="mo">April</span><span class="ti">Personal Responsibility for Getting What You Want</span></li>
         <li class="soon"><span class="mo"></span><span class="ti">More coming</span></li>
       </ol>
     </div>

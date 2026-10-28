@@ -283,7 +283,7 @@
 #pricing .themes li.front{
   border-top-color:rgba(232,198,95,.55); border-bottom-color:rgba(232,198,95,.55);
 }
-#pricing .themes li.front .mo{color:var(--gold)}
+#pricing .themes li.front .mo{color:#fff}
 #pricing .themes li.front .ti{color:var(--gold); font-weight:700}
 #pricing .themes li.soon .ti{font-style:italic}
 #pricing .wheel-note{

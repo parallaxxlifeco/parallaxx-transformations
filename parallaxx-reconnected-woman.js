@@ -1035,6 +1035,31 @@
   #how .steps.on .runner{animation:runv 3.4s linear forwards}
   #how .why-not{margin-top:0; white-space:normal; text-wrap:balance}
 }
+/* How it works on phones: the number beside the step, on one short track,
+   so three steps take a third of the scroll */
+@media(max-width:999px){
+  #how .steps .row{grid-template-columns:1fr; gap:18px}
+  #how .step{display:grid; grid-template-columns:38px minmax(0,1fr); column-gap:16px; align-items:start}
+  #how .step .n{grid-row:1 / span 2; margin:0; width:38px; height:38px}
+  #how .step h4{margin:7px 0 3px; font-size:17px}
+  #how .step p{grid-column:2; max-width:none; font-size:.95rem; line-height:1.5}
+  #how .steps .track{display:block; left:19px; right:auto; top:19px; bottom:44px; width:1px; height:auto}
+  #how .steps .track i{width:100%; height:0; transition:height 3.4s linear}
+  #how .steps.on .track i{width:100%; height:100%}
+  #how .steps .runner{left:50%; top:0}
+  #how .steps.on .runner{animation:runv 3.4s linear forwards}
+}
+/* Recognition on phones: one type scale, so the closer, the question, the
+   cards and the answer read as steps down rather than five competing sizes */
+@media(max-width:760px){
+  #recognition .closer p{font-size:19px; line-height:1.3}
+  #recognition .trap-h{font-size:22px; line-height:1.25; margin-top:40px; white-space:normal}
+  #recognition .trap-h .hit{display:block; margin-top:3px}
+  #recognition .t2-opt{padding:12px 14px}
+  #recognition .t2-opt .q{font-size:16px}
+  #recognition .t2-opt .a{font-size:14px; line-height:1.4}
+  #recognition .t2-break{font-size:18px; padding:12px 16px}
+}
 @keyframes runv{0%{top:0; opacity:0} 6%{opacity:1} 94%{opacity:1} 100%{top:100%; opacity:0}}
 
 /* ═══ DIFFERENCE · TWO COLUMNS ═══════════════════════════════

@@ -84,7 +84,17 @@ TTL_THANKS = dict(
 #
 # The circle pages read their open-session date and times from the same
 # element the circle page uses (#rw-open / #rm-open), so the monthly date edit
-# carries over. Once the date has passed the card says "Next open session"
+# carries over.
+#
+# BETWEEN SESSIONS (Daniel, 30 Oct 2026). Once the date has passed, and until
+# the next date is set and pushed, the page switches itself to the waiting-list
+# version: "You're on the list", a card reading "Next open session / Date to
+# be confirmed", and a first step saying she'll be emailed the moment the next
+# date is set. That matches what GHL sends in the same gap (the dateless
+# "You're on the list" email). Setting the next date on the circle page and
+# pushing is the only edit; this page follows it. The waiting-list wording is
+# _LIST_STEP and _LIST_EYEBROW below.
+# (Old note:) Once the date has passed the card says "Next open session"
 # and drops the times rather than naming a gone day.
 
 def _open_session(src, el_id):
@@ -101,6 +111,12 @@ def _open_session(src, el_id):
     dd = date(int(d[1]), int(d[2]), int(d[3]))
     return dd.isoformat(), f"{dd:%A} {dd.day} {dd:%B}", (t[1] if t else "")
 
+
+_LIST_EYEBROW = "You’re on the list"
+_LIST_STEP = ("Watch your inbox",
+              "The next date is being set. As soon as it is, I’ll email you the date, the "
+              "time and the link to join. Check your Promotions tab or spam folder too, and "
+              "move my email to your inbox so it gets to you.")
 
 _INBOX_STEP = ("Check your inbox",
                "Your confirmation has the time and the link to join. If it’s not there in "
@@ -184,7 +200,9 @@ DATE_JS = """
     var t = new Date(), today = t.getFullYear() + '-' + ('0' + (t.getMonth() + 1)).slice(-2) + '-' + ('0' + t.getDate()).slice(-2);
     if (w.getAttribute('data-at') < today) {
       w.textContent = 'Next open session';
-      var tm = document.querySelector('.js-open-times'); if (tm) tm.textContent = 'Date in your inbox';
+      var tm = document.querySelector('.js-open-times'); if (tm) tm.textContent = 'Date to be confirmed';
+      var ps = document.querySelectorAll('[data-past]');
+      for (var i = 0; i < ps.length; i++) ps[i].textContent = ps[i].getAttribute('data-past');
     }
   }"""
 
@@ -267,15 +285,22 @@ def _inner(p, e) -> str:
         card = (f'<div class="card"><span class="d js-open-when" data-at="{iso}">{e(pretty)}</span>'
                 f'<span class="t js-open-times">{e(times)}</span>'
                 f'<span class="w">Online, wherever you are</span></div>')
-    steps = "".join(f'<li><div><h2>{e(h)}</h2><p>{e(t)}</p></div></li>'
-                    for h, t in p.get("steps", []))
+    dated = bool(p.get("open_session"))
+    def _past(i, k):
+        # the waiting-list wording, swapped in by DATE_JS once the date has gone
+        if not dated or i != 0:
+            return ""
+        return f' data-past="{e(_LIST_STEP[k])}"'
+    steps = "".join(f'<li><div><h2{_past(i, 0)}>{e(h)}</h2><p{_past(i, 1)}>{e(t)}</p></div></li>'
+                    for i, (h, t) in enumerate(p.get("steps", [])))
     steps = f'<ol class="steps">{steps}</ol>' if steps else ""
     prim = ""
     if p.get("primary"):
         bid = ' id="px-back"' if p.get("back_to_article") else ""
         prim = (f'<a class="btn"{bid} href="{e(p["primary"][1])}">'
                 f'{e(p["primary"][0])} <span aria-hidden="true">&rarr;</span></a>')
-    ey = f'<p class="ey">{e(p["eyebrow"])}</p>' if p.get("eyebrow") else ""
+    eyp = f' data-past="{e(_LIST_EYEBROW)}"' if dated else ""
+    ey = f'<p class="ey"{eyp}>{e(p["eyebrow"])}</p>' if p.get("eyebrow") else ""
     return f"""  <div class="ty">
     {img}
     {ey}

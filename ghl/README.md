@@ -134,7 +134,7 @@ migration/landing.py (how to add one is in the comment above RW_THANKS).
 
 | Form | id | Redirect to | form_name | Status |
 |---|---|---|---|---|
-| The Woman Application Form v2 | 0RT5EVaTlGxo6QBjyIPT | https://www.parallaxxtransformations.com/thanks/reconnected-woman/ | reconnected_woman | to switch |
+| The Woman Application Form v2 | 0RT5EVaTlGxo6QBjyIPT | https://www.parallaxxtransformations.com/thanks/reconnected-woman/ | reconnected_woman | switched 30 Oct (replaced the old "you're in queue" message) |
 | The Reconnected Man Application Form | UxzzQRv0AbKKQZ0P9bau | https://www.parallaxxtransformations.com/thanks/reconnected-man/ | reconnected_man | WAIT until the men's confirmation sequence is live |
 | Three Toxic Lies - Free Book | TDSyOXeH5838jtA7gx6S | https://www.parallaxxtransformations.com/three-toxic-lies/thank-you/ (already set 15 Oct) | three_toxic_lies | done |
 | Insights subscribe | EOwePM5iswFuXOj8p4ej | https://www.parallaxxtransformations.com/thanks/subscribed/ | insights_subscribe | switched 30 Oct, full-page redirect tested |
@@ -150,3 +150,9 @@ key event once it has arrived (Admin > Data display > Events > Recent events).
 Daniel's Chrome can't test GA4: a Chrome extension (id hnmpcagpplmpfojmgmnngilcnanddlhb)
 swaps Google Analytics for a stub, so nothing from that browser reaches GA4.
 Test on a phone or another browser, after opening any page with ?px-me=off.
+
+Between sessions the circle thank-you pages switch themselves to a waiting-list
+version (eyebrow "You're on the list", card "Date to be confirmed", step 1 "I'll
+email you the date as soon as it is set"), matching the dateless waitlist email
+GHL sends in the same gap. They return to "You're registered for <date>" when the
+next date is set on the circle page and pushed. Wording: _LIST_STEP in landing.py.

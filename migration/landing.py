@@ -47,12 +47,14 @@ TTL_THANKS = dict(
     path="/three-toxic-lies/thank-you",
     title="It’s on its way | Three Toxic Lies",
     desc="Three Toxic Lies is on its way to your inbox.",
-    heading="It’s on its way to your inbox.",
+    eyebrow="Your free book",
+    heading="Three Toxic Lies is on its way to your inbox.",
     image="/assets/img/toxic-lies-cover.png",
-    paras=[
-        "Give it a few minutes. If it’s not there, check your Promotions tab or spam "
-        "folder, and move it to your inbox so the next ones arrive there too.",
-        "When it arrives, hit reply and let me know it got to you.",
+    steps=[
+        ("Give it a few minutes",
+         "If it’s not there, check your Promotions tab or spam folder, and move it to "
+         "your inbox so the next ones arrive there too."),
+        ("Hit reply when it arrives", "Let me know it got to you."),
     ],
     primary=("Check out the Insights", "/insights/"),
     lead="three_toxic_lies",
@@ -76,32 +78,47 @@ TTL_THANKS = dict(
 # then set that form's on-submit in GHL to Redirect to URL with the full
 # https://www.parallaxxtransformations.com/thanks/<name>/ address.
 #
-# The circle pages read their open-session date from the same attribute the
-# circle page uses (#rw-open / #rm-open data-open-at), so the monthly date edit
-# carries over. Once the date has passed the heading says "the next open
-# session" instead of naming a gone day.
+# LAYOUT (31 Oct 2026, Daniel: an oversized title over a wall of text is poor
+# UX): a small eyebrow, a modest heading saying what they signed up for, a
+# session card on the circle pages, then numbered steps and one button.
+#
+# The circle pages read their open-session date and times from the same
+# element the circle page uses (#rw-open / #rm-open), so the monthly date edit
+# carries over. Once the date has passed the card says "Next open session"
+# and drops the times rather than naming a gone day.
 
 def _open_session(src, el_id):
-    """(ISO date, 'Tuesday 24 November') from a circle page's open-date element."""
+    """(ISO date, 'Tuesday 24 November', '08:30 CET / 15:30 GMT+8')."""
     s = (REPO / src).read_text(encoding="utf-8")
-    m = re.search(r'id="%s"[^>]*?data-open-at="(\d{4})-(\d{2})-(\d{2})' % el_id, s, re.S)
+    m = re.search(r'id="%s"(.*?)></div>' % el_id, s, re.S)
     if not m:
+        raise SystemExit(f"landing.py: no #{el_id} in {src}")
+    a = m.group(1)
+    d = re.search(r'data-open-at="(\d{4})-(\d{2})-(\d{2})', a)
+    t = re.search(r'data-open-times="([^"]*)"', a)
+    if not d:
         raise SystemExit(f"landing.py: no data-open-at on #{el_id} in {src}")
-    d = date(int(m[1]), int(m[2]), int(m[3]))
-    return d.isoformat(), f"{d:%A} {d.day} {d:%B}"
+    dd = date(int(d[1]), int(d[2]), int(d[3]))
+    return dd.isoformat(), f"{dd:%A} {dd.day} {dd:%B}", (t[1] if t else "")
 
+
+_INBOX_STEP = ("Check your inbox",
+               "Your confirmation has the time and the link to join. If it’s not there in "
+               "a few minutes, check your Promotions tab or spam folder and move it to your "
+               "inbox, so the reminders get to you too.")
 
 RW_THANKS = dict(
     path="/thanks/reconnected-woman",
-    title="You're registered | The Reconnected Woman",
+    title="You’re registered | The Reconnected Woman",
     desc="Your place at The Reconnected Woman open session.",
+    eyebrow="You’re registered",
+    heading="The Reconnected Woman open session",
     open_session=("reconnected-woman-v10-preview.html", "rw-open"),
-    paras=[
-        "Your confirmation is on its way to your inbox, with the time and the link to "
-        "join. If it's not there in a few minutes, check your Promotions tab or spam "
-        "folder and move it to your inbox, so the reminders get to you too.",
-        "Before then, take the Priority Audit. It takes ten minutes, it shows you which "
-        "priority gives you the most return, and I'll have your results before we meet.",
+    steps=[
+        _INBOX_STEP,
+        ("Take the Priority Audit",
+         "It takes ten minutes, it shows you which priority gives you the most return, "
+         "and I’ll have your results before we meet."),
     ],
     primary=("Take the Priority Audit", "/priority-audit/"),
     lead="reconnected_woman",
@@ -112,16 +129,17 @@ RW_THANKS = dict(
 # promises a confirmation email.
 RM_THANKS = dict(
     path="/thanks/reconnected-man",
-    title="You're registered | The Reconnected Man",
+    title="You’re registered | The Reconnected Man",
     desc="Your place at The Reconnected Man open session.",
+    eyebrow="You’re registered",
+    heading="The Reconnected Man open session",
     open_session=("reconnected-man-v2-preview.html", "rm-open"),
-    paras=[
-        "Your confirmation is on its way to your inbox, with the time and the link to "
-        "join. If it's not there in a few minutes, check your Promotions tab or spam "
-        "folder and move it to your inbox, so the reminders get to you too.",
-        "Before then, take the Protection Archetype Quiz. It takes a few minutes, it "
-        "shows you which of five patterns you're running and what it's costing the "
-        "people closest to you, and I'll have your results before we meet.",
+    steps=[
+        _INBOX_STEP,
+        ("Take the Protection Archetype Quiz",
+         "It takes a few minutes, it shows you which of five patterns you’re running and "
+         "what it’s costing the people closest to you, and I’ll have your results before "
+         "we meet."),
     ],
     primary=("Take the quiz", "/the-archetype-quiz/"),
     lead="reconnected_man",
@@ -134,11 +152,13 @@ SUB_THANKS = dict(
     path="/thanks/subscribed",
     title="Check your inbox | Insights",
     desc="Confirm your subscription to the weekly Insights roundup.",
+    eyebrow="The weekly Insights roundup",
     heading="Nearly there. Check your inbox.",
-    paras=[
-        "I've sent you an email with a link to confirm. Click it and you're on the list "
-        "for the weekly roundup, every Sunday. If it's not there in a few minutes, check "
-        "your Promotions tab or spam folder.",
+    steps=[
+        ("Confirm your email",
+         "I’ve sent you an email with a link to confirm. Click it and you’re on the list "
+         "for the weekly roundup, every Sunday."),
+        ("Can’t see it?", "Check your Promotions tab or spam folder."),
     ],
     primary=("Back to the Insights", "/insights/"),
     back_to_article=True,
@@ -162,7 +182,10 @@ DATE_JS = """
   var w = document.querySelector('.js-open-when');
   if (w) {
     var t = new Date(), today = t.getFullYear() + '-' + ('0' + (t.getMonth() + 1)).slice(-2) + '-' + ('0' + t.getDate()).slice(-2);
-    if (w.getAttribute('data-at') < today) w.textContent = 'the next open session';
+    if (w.getAttribute('data-at') < today) {
+      w.textContent = 'Next open session';
+      var tm = document.querySelector('.js-open-times'); if (tm) tm.textContent = 'Date in your inbox';
+    }
   }"""
 
 BACK_JS = """
@@ -200,6 +223,27 @@ main{flex:1;display:flex;align-items:center;justify-content:center;
  filter:drop-shadow(0 24px 40px rgba(0,0,0,.5))}
 .msgpage p{max-width:46ch;margin:0 auto 14px;font-size:1.05rem;line-height:1.7;text-wrap:balance}
 .msgpage h1{text-wrap:balance}
+/* THANK-YOU LAYOUT (31 Oct 2026): eyebrow, modest heading, session card,
+   numbered steps, one button. Left-aligned in a narrow column. */
+.ty{width:100%;max-width:560px;text-align:left}
+.ty .cover{width:112px;height:auto;display:block;margin:0 0 22px;
+ filter:drop-shadow(0 16px 28px rgba(0,0,0,.5))}
+.ty .ey{margin:0 0 10px;font:700 .68rem/1.4 'Poppins',system-ui,sans-serif;letter-spacing:.2em;
+ text-transform:uppercase;color:var(--gold)}
+.ty h1{margin:0 0 24px;font:600 clamp(1.45rem,3.2vw,1.95rem)/1.25 'Poppins',system-ui,sans-serif;
+ letter-spacing:-.01em;color:var(--cream);text-wrap:balance}
+.ty .card{display:grid;gap:3px;margin:0 0 28px;padding:16px 20px;border:1px solid var(--border);
+ border-left:2px solid var(--gold);border-radius:4px;background:rgba(10,29,60,.65)}
+.ty .card .d{font:600 1.12rem/1.35 'Poppins',system-ui,sans-serif;color:var(--cream)}
+.ty .card .t{color:var(--mist);font-size:.95rem}
+.ty .card .w{color:var(--slate);font-size:.88rem}
+.ty .steps{list-style:none;counter-reset:st;margin:0 0 30px;padding:0;display:grid;gap:20px}
+.ty .steps li{display:grid;grid-template-columns:32px minmax(0,1fr);gap:16px;align-items:start}
+.ty .steps li::before{counter-increment:st;content:counter(st);width:32px;height:32px;border-radius:50%;
+ border:1px solid rgba(232,198,95,.6);color:var(--gold);display:flex;align-items:center;
+ justify-content:center;font:600 .85rem/1 'Poppins',system-ui,sans-serif}
+.ty .steps h2{margin:5px 0 4px;font:600 1rem/1.35 'Poppins',system-ui,sans-serif;color:var(--cream)}
+.ty .steps p{margin:0;font-size:.97rem;line-height:1.6;color:var(--mist)}
 """
 
 
@@ -216,27 +260,29 @@ def _inner(p, e) -> str:
       <a class="sec" href="{e(p['secondary'][1])}">{e(p['secondary'][0])}</a>
     </div>
   </div>"""
-    paras = "".join(f"<p>{e(t)}</p>" for t in p.get("paras", []))
+    img = f'<img class="cover" src="{e(p["image"])}" alt="">' if p.get("image") else ""
+    card = ""
     if p.get("open_session"):
-        iso, pretty = _open_session(*p["open_session"])
-        heading = (f'You\u2019re registered for <span class="js-open-when" data-at="{iso}">'
-                   f'{e(pretty)}</span>.')
-    else:
-        heading = e(p["heading"])
+        iso, pretty, times = _open_session(*p["open_session"])
+        card = (f'<div class="card"><span class="d js-open-when" data-at="{iso}">{e(pretty)}</span>'
+                f'<span class="t js-open-times">{e(times)}</span>'
+                f'<span class="w">Online, wherever you are</span></div>')
+    steps = "".join(f'<li><div><h2>{e(h)}</h2><p>{e(t)}</p></div></li>'
+                    for h, t in p.get("steps", []))
+    steps = f'<ol class="steps">{steps}</ol>' if steps else ""
     prim = ""
     if p.get("primary"):
         bid = ' id="px-back"' if p.get("back_to_article") else ""
-        prim = (f'<div class="cta"><a class="btn"{bid} href="{e(p["primary"][1])}">'
-                f'{e(p["primary"][0])} <span aria-hidden="true">&rarr;</span></a></div>')
-    img = f'<img class="cover" src="{e(p["image"])}" alt="">' if p.get("image") else ""
-    sec = (f'<div class="cta"><a class="sec" href="{e(p["secondary"][1])}">{e(p["secondary"][0])}</a></div>'
-           if p.get("secondary") else "")
-    sec = prim + sec
-    return f"""  <div class="tm msgpage">
+        prim = (f'<a class="btn"{bid} href="{e(p["primary"][1])}">'
+                f'{e(p["primary"][0])} <span aria-hidden="true">&rarr;</span></a>')
+    ey = f'<p class="ey">{e(p["eyebrow"])}</p>' if p.get("eyebrow") else ""
+    return f"""  <div class="ty">
     {img}
-    <h1>{heading}</h1>
-    {paras}
-    {sec}
+    {ey}
+    <h1>{e(p['heading'])}</h1>
+    {card}
+    {steps}
+    {prim}
   </div>"""
 
 

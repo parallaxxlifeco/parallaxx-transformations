@@ -201,6 +201,29 @@ def inline(text: str) -> str:
     return out
 
 
+# The FAQPage schema answer is the same source line as the paragraph on the
+# page, which is the point — they cannot drift. But the schema field is plain
+# text, not markup, so the markdown has to come off rather than be rendered.
+# Without this, an FAQ answer carrying a cross-link to a sibling article put
+# the raw "[label](/insights/...)" into the JSON-LD, where a model reading the
+# answer gets the brackets and the URL in the middle of a sentence. Caught
+# 30 October 2026, on the second article to link a sibling from inside an FAQ
+# answer; the first one is live with it.
+PLAIN_INLINE = [
+    (re.compile(r"\[([^\]]+)\]\(([^)]+)\)"), r"\1"),
+    (re.compile(r"\*\*([^*]+)\*\*"), r"\1"),
+    (re.compile(r"(?<!\*)\*([^*]+)\*(?!\*)"), r"\1"),
+]
+
+
+def plain(text: str) -> str:
+    """Markdown inline stripped to the words, for schema fields."""
+    out = text
+    for pattern, repl in PLAIN_INLINE:
+        out = pattern.sub(repl, out)
+    return out
+
+
 def slugify(text: str) -> str:
     s = re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
     return s[:80]
@@ -307,7 +330,7 @@ def render_body(body: str, where: str) -> tuple:
 
         para.append(line.strip())
         if pending_q:
-            faq.append((pending_q, line.strip()))
+            faq.append((plain(pending_q), plain(line.strip())))
             pending_q = None
         i += 1
 

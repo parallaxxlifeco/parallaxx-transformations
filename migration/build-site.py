@@ -187,6 +187,12 @@ def analytics_body() -> str:
         "</div>\n"
         "<script>\n"
         "(function(){\n"
+        # The page the visitor is on, kept for the session so a thank-you page
+        # can report which page its form was on (source_page on generate_lead).
+        # Thank-you pages are skipped so they read the page before them.
+        "  if (!/^\\/(thanks\\/|three-toxic-lies\\/thank-you)/.test(location.pathname)) {\n"
+        "    try { sessionStorage.setItem('px-src', location.pathname); } catch (e) {}\n"
+        "  }\n"
         "  var KEY = 'px-analytics-consent';\n"
         "  function read(){ try { return localStorage.getItem(KEY); } catch (e) { return null; } }\n"
         "  function write(v){ try { localStorage.setItem(KEY, v); } catch (e) {} }\n"

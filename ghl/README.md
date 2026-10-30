@@ -124,3 +124,22 @@ Workflow to build (in GHL, Daniel's other chat): trigger Form Submitted, form
 (link above; the thank-you page tells them to check Promotions and reply when
 it arrives) > If/Else on the Weekly roundup field: only when ticked, start
 the Insights double opt-in > Notify Daniel (he wants to know who grabs it).
+
+## Thank-you pages, so GA4 can count sign-ups (30 Oct 2026)
+
+GA4 can't see inside these iframe forms, so each form's on-submit is set to
+Settings > Redirect to URL, sending the whole page to a page on the site that
+fires GA4 `generate_lead` {form_name, source_page}. Pages live in
+migration/landing.py (how to add one is in the comment above RW_THANKS).
+
+| Form | id | Redirect to | form_name | Status |
+|---|---|---|---|---|
+| The Woman Application Form v2 | 0RT5EVaTlGxo6QBjyIPT | https://www.parallaxxtransformations.com/thanks/reconnected-woman/ | reconnected_woman | to switch |
+| The Reconnected Man Application Form | UxzzQRv0AbKKQZ0P9bau | https://www.parallaxxtransformations.com/thanks/reconnected-man/ | reconnected_man | WAIT until the men's confirmation sequence is live |
+| Three Toxic Lies - Free Book | TDSyOXeH5838jtA7gx6S | https://www.parallaxxtransformations.com/three-toxic-lies/thank-you/ (already set 15 Oct) | three_toxic_lies | done |
+| Insights subscribe | EOwePM5iswFuXOj8p4ej | https://www.parallaxxtransformations.com/thanks/subscribed/ | insights_subscribe | to switch |
+
+The women's form used to end on a GHL-hosted thank-you page carrying the
+Priority Audit link; the new page carries that link as its one button.
+The Insights page fires before the reader confirms by email (double opt-in),
+so GA4 counts run higher than the confirmed `insights-subscriber` tag.

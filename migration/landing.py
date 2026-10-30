@@ -16,6 +16,11 @@ asset map lists them, so a --local build serves our own copies -- or as
 """
 
 import html
+import pathlib
+import re
+from datetime import date
+
+REPO = pathlib.Path(__file__).resolve().parent.parent
 
 BOOK_CALL = "/contact-daniel-lawson"
 TESTIMONIALS = "/testimonials-daniel-lawson"
@@ -49,10 +54,120 @@ TTL_THANKS = dict(
         "folder, and move it to your inbox so the next ones arrive there too.",
         "When it arrives, hit reply and let me know it got to you.",
     ],
-    secondary=("Back to the home page", "/"),
+    primary=("Check out the Insights", "/insights/"),
+    lead="three_toxic_lies",
 )
 
-PAGES = [TESTIMONIAL_BRIAN, TTL_THANKS]
+
+# ── THANK-YOU PAGES THAT COUNT SIGN-UPS (30 Oct 2026) ────────────────────
+# GA4 can't see inside the GHL forms (they are iframes), so each form's
+# on-submit setting in GHL sends the whole browser to one of these pages,
+# and the page fires one GA4 event:
+#     generate_lead { form_name, source_page }
+# source_page is the last page the visitor was on before this one. Every page
+# on the site stores its path in sessionStorage as px-src (analytics_body() in
+# build-site.py), and these pages are left out of that, so the value they read
+# is the page the form was on: for the Insights form, which article.
+# The event fires once per form per browser tab (sessionStorage px-lead-<form>),
+# so a refresh doesn't count twice.
+#
+# TO ADD ONE FOR A NEW FORM: copy a dict below, give it its own path under
+# /thanks/, a new `lead` name (lowercase_with_underscores), add it to PAGES,
+# then set that form's on-submit in GHL to Redirect to URL with the full
+# https://www.parallaxxtransformations.com/thanks/<name>/ address.
+#
+# The circle pages read their open-session date from the same attribute the
+# circle page uses (#rw-open / #rm-open data-open-at), so the monthly date edit
+# carries over. Once the date has passed the heading says "the next open
+# session" instead of naming a gone day.
+
+def _open_session(src, el_id):
+    """(ISO date, 'Tuesday 24 November') from a circle page's open-date element."""
+    s = (REPO / src).read_text(encoding="utf-8")
+    m = re.search(r'id="%s"[^>]*?data-open-at="(\d{4})-(\d{2})-(\d{2})' % el_id, s, re.S)
+    if not m:
+        raise SystemExit(f"landing.py: no data-open-at on #{el_id} in {src}")
+    d = date(int(m[1]), int(m[2]), int(m[3]))
+    return d.isoformat(), f"{d:%A} {d.day} {d:%B}"
+
+
+RW_THANKS = dict(
+    path="/thanks/reconnected-woman",
+    title="You're registered | The Reconnected Woman",
+    desc="Your place at The Reconnected Woman open session.",
+    open_session=("reconnected-woman-v10-preview.html", "rw-open"),
+    paras=[
+        "Your confirmation is on its way to your inbox, with the time and the link to "
+        "join. If it's not there in a few minutes, check your Promotions tab or spam "
+        "folder and move it to your inbox, so the reminders get to you too.",
+        "Before then, take the Priority Audit. It takes ten minutes, it shows you which "
+        "priority gives you the most return, and I'll have your results before we meet.",
+    ],
+    primary=("Take the Priority Audit", "/priority-audit/"),
+    lead="reconnected_woman",
+)
+
+# Built now; the men's GHL form keeps its old on-submit until the men's
+# confirmation sequence is live (Daniel, 30 Oct 2026), because this page
+# promises a confirmation email.
+RM_THANKS = dict(
+    path="/thanks/reconnected-man",
+    title="You're registered | The Reconnected Man",
+    desc="Your place at The Reconnected Man open session.",
+    open_session=("reconnected-man-v2-preview.html", "rm-open"),
+    paras=[
+        "Your confirmation is on its way to your inbox, with the time and the link to "
+        "join. If it's not there in a few minutes, check your Promotions tab or spam "
+        "folder and move it to your inbox, so the reminders get to you too.",
+        "Before then, take the Protection Archetype Quiz. It takes a few minutes, it "
+        "shows you which of five patterns you're running and what it's costing the "
+        "people closest to you, and I'll have your results before we meet.",
+    ],
+    primary=("Take the quiz", "/the-archetype-quiz/"),
+    lead="reconnected_man",
+)
+
+# Double opt-in: this fires when the form is submitted, BEFORE the reader
+# confirms by email, so GA4's insights_subscribe count runs higher than the
+# confirmed subscribers in GHL (tag insights-subscriber).
+SUB_THANKS = dict(
+    path="/thanks/subscribed",
+    title="Check your inbox | Insights",
+    desc="Confirm your subscription to the weekly Insights roundup.",
+    heading="Nearly there. Check your inbox.",
+    paras=[
+        "I've sent you an email with a link to confirm. Click it and you're on the list "
+        "for the weekly roundup, every Sunday. If it's not there in a few minutes, check "
+        "your Promotions tab or spam folder.",
+    ],
+    primary=("Back to the Insights", "/insights/"),
+    back_to_article=True,
+    lead="insights_subscribe",
+)
+
+PAGES = [TESTIMONIAL_BRIAN, TTL_THANKS, RW_THANKS, RM_THANKS, SUB_THANKS]
+
+LEAD_JS = """<script>
+(function(){
+  var F = %s, src = '', k = 'px-lead-' + F, done = null;
+  try { src = sessionStorage.getItem('px-src') || ''; done = sessionStorage.getItem(k); } catch (e) {}
+  if (!done && typeof gtag === 'function') {
+    gtag('event', 'generate_lead', {form_name: F, source_page: src || '(not set)'});
+    try { sessionStorage.setItem(k, '1'); } catch (e) {}
+  }%s
+})();
+</script>"""
+
+DATE_JS = """
+  var w = document.querySelector('.js-open-when');
+  if (w) {
+    var t = new Date(), today = t.getFullYear() + '-' + ('0' + (t.getMonth() + 1)).slice(-2) + '-' + ('0' + t.getDate()).slice(-2);
+    if (w.getAttribute('data-at') < today) w.textContent = 'the next open session';
+  }"""
+
+BACK_JS = """
+  var b = document.getElementById('px-back');
+  if (b && /^\\/insights\\/./.test(src)) { b.href = src; b.firstChild.nodeValue = 'Back to the article '; }"""
 
 CSS = """
 :root{--bg:#061938;--deep:#04122A;--cream:#F1ECE1;--mist:#B1BFD7;--slate:#7C89A3;
@@ -102,15 +217,34 @@ def _inner(p, e) -> str:
     </div>
   </div>"""
     paras = "".join(f"<p>{e(t)}</p>" for t in p.get("paras", []))
+    if p.get("open_session"):
+        iso, pretty = _open_session(*p["open_session"])
+        heading = (f'You\u2019re registered for <span class="js-open-when" data-at="{iso}">'
+                   f'{e(pretty)}</span>.')
+    else:
+        heading = e(p["heading"])
+    prim = ""
+    if p.get("primary"):
+        bid = ' id="px-back"' if p.get("back_to_article") else ""
+        prim = (f'<div class="cta"><a class="btn"{bid} href="{e(p["primary"][1])}">'
+                f'{e(p["primary"][0])} <span aria-hidden="true">&rarr;</span></a></div>')
     img = f'<img class="cover" src="{e(p["image"])}" alt="">' if p.get("image") else ""
     sec = (f'<div class="cta"><a class="sec" href="{e(p["secondary"][1])}">{e(p["secondary"][0])}</a></div>'
            if p.get("secondary") else "")
+    sec = prim + sec
     return f"""  <div class="tm msgpage">
     {img}
-    <h1>{e(p['heading'])}</h1>
+    <h1>{heading}</h1>
     {paras}
     {sec}
   </div>"""
+
+
+def _lead_js(p) -> str:
+    if not p.get("lead"):
+        return ""
+    extra = (DATE_JS if p.get("open_session") else "") + (BACK_JS if p.get("back_to_article") else "")
+    return LEAD_JS % ("'" + p["lead"] + "'", extra)
 
 
 def render(ctx, p) -> str:
@@ -150,6 +284,7 @@ def render(ctx, p) -> str:
 <script src="/parallaxx-nav.js"></script>
 <script src="/parallaxx-footer.js"></script>
 {ctx['analytics_body']}
+{_lead_js(p)}
 </body>
 </html>
 """

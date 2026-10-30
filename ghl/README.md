@@ -137,9 +137,16 @@ migration/landing.py (how to add one is in the comment above RW_THANKS).
 | The Woman Application Form v2 | 0RT5EVaTlGxo6QBjyIPT | https://www.parallaxxtransformations.com/thanks/reconnected-woman/ | reconnected_woman | to switch |
 | The Reconnected Man Application Form | UxzzQRv0AbKKQZ0P9bau | https://www.parallaxxtransformations.com/thanks/reconnected-man/ | reconnected_man | WAIT until the men's confirmation sequence is live |
 | Three Toxic Lies - Free Book | TDSyOXeH5838jtA7gx6S | https://www.parallaxxtransformations.com/three-toxic-lies/thank-you/ (already set 15 Oct) | three_toxic_lies | done |
-| Insights subscribe | EOwePM5iswFuXOj8p4ej | https://www.parallaxxtransformations.com/thanks/subscribed/ | insights_subscribe | to switch |
+| Insights subscribe | EOwePM5iswFuXOj8p4ej | https://www.parallaxxtransformations.com/thanks/subscribed/ | insights_subscribe | switched 30 Oct, full-page redirect tested |
 
 The women's form used to end on a GHL-hosted thank-you page carrying the
 Priority Audit link; the new page carries that link as its one button.
 The Insights page fires before the reader confirms by email (double opt-in),
 so GA4 counts run higher than the confirmed `insights-subscriber` tag.
+
+GA4 side (30 Oct 2026): custom dimensions Form name (form_name) and Source page
+(source_page) registered, event scope. generate_lead can only be starred as a
+key event once it has arrived (Admin > Data display > Events > Recent events).
+Daniel's Chrome can't test GA4: a Chrome extension (id hnmpcagpplmpfojmgmnngilcnanddlhb)
+swaps Google Analytics for a stub, so nothing from that browser reaches GA4.
+Test on a phone or another browser, after opening any page with ?px-me=off.

@@ -181,7 +181,24 @@ SUB_THANKS = dict(
     lead="insights_subscribe",
 )
 
-PAGES = [TESTIMONIAL_BRIAN, TTL_THANKS, RW_THANKS, RM_THANKS, SUB_THANKS]
+# NOT FOUND (2 Nov 2026). Cloudflare Pages serves dist/404.html, with a real
+# 404 status, for any address that matches no page. Without it Pages treats
+# the site as a single-page app and answers every made-up address (bots hit
+# /you daily) with the home page and a 200, which Google files as a soft 404.
+# Written to dist/404.html via `file`, with no canonical: it has no address of
+# its own. Every link and script on it must stay root-relative (/...) because
+# it is served at whatever path was asked for.
+NOT_FOUND = dict(
+    path="/404",
+    file="404.html",
+    title="Page not found | Parallaxx Transformations",
+    desc="This page doesn't exist.",
+    eyebrow="Page not found",
+    heading="This page doesn't exist.",
+    primary=("Go to the home page", "/"),
+)
+
+PAGES = [TESTIMONIAL_BRIAN, TTL_THANKS, RW_THANKS, RM_THANKS, SUB_THANKS, NOT_FOUND]
 
 LEAD_JS = """<script>
 (function(){
@@ -322,6 +339,9 @@ def render(ctx, p) -> str:
     # Trailing slash: Pages 301s the slashless form, so the canonical must be the final URL.
     canonical = ctx["origin"] + "/" + p["path"].strip("/") + "/"
     e = lambda s: html.escape(s, quote=True)
+    # A page written to a fixed file (the 404) has no address of its own.
+    canon = "" if p.get("file") else f'<link rel="canonical" href="{canonical}">\n'
+    ogurl = "" if p.get("file") else f'<meta property="og:url" content="{canonical}">\n'
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -329,12 +349,10 @@ def render(ctx, p) -> str:
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(p['title'])}</title>
 <meta name="description" content="{e(p['desc'])}">
-<link rel="canonical" href="{canonical}">
-<meta name="robots" content="noindex,follow">
+{canon}<meta name="robots" content="noindex,follow">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Parallaxx Transformations">
-<meta property="og:url" content="{canonical}">
-<meta property="og:title" content="{e(p['title'])}">
+{ogurl}<meta property="og:title" content="{e(p['title'])}">
 <meta property="og:description" content="{e(p['desc'])}">
 <meta property="og:image" content="{e(p.get('poster') or p.get('image',''))}">
 <meta name="twitter:card" content="summary_large_image">
@@ -372,7 +390,7 @@ def build(ctx, dist, localise=None) -> list:
         # root-relative /assets/ path.
         text = text.replace('property="og:image" content="/',
                             'property="og:image" content="' + ctx["origin"] + '/')
-        out = dist / p["path"].strip("/") / "index.html"
+        out = dist / p["file"] if p.get("file") else dist / p["path"].strip("/") / "index.html"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(text, encoding="utf-8")
         written.append(p["path"])

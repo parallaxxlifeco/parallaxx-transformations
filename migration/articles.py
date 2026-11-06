@@ -383,8 +383,8 @@ PILLARS = {
         offer="/men",
     ),
     "what-the-work-costs": dict(
-        name="What personal development requires",
-        blurb="When you change, some people go, and it gets lonely for a while.",
+        name="What does self development really cost you?",
+        blurb="When you grow, some will leave, and it gets lonely for a while.",
         offer="/women",
     ),
 }

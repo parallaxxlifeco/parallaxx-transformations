@@ -730,6 +730,62 @@ def route_url(path: str) -> str:
     return ORIGIN + p
 
 
+# ── FAQPage FROM THE PAGE'S OWN FAQ ─────────────────────────────────────
+# Added 7 Nov 2026. The Reconnected Man and Woman pages each carry a full
+# Common Questions block, but only the articles emitted FAQPage schema. The
+# questions and answers are lifted from the SAME pre-rendered markup crawlers
+# read (`.faq` > <details><summary>Q</summary><div class="ans">A</div>), so the
+# schema cannot drift from the visible copy -- edit the FAQ on the page and the
+# schema follows on the next build. Google no longer shows FAQ rich results for
+# most sites; the value is AI answer engines lifting question/answer pairs.
+# The build FAILS if a route in FAQ_REQUIRED yields fewer than FAQ_MIN pairs,
+# so a markup change can't silently drop the schema.
+FAQ_REQUIRED = ("/the-reconnected-man", "/the-reconnected-woman")
+FAQ_MIN = 5
+_FAQ_ITEM = re.compile(
+    r"<details\b[^>]*>\s*<summary\b[^>]*>(.*?)</summary>\s*"
+    r"<div\s+class=\"ans\"[^>]*>(.*?)</div>\s*</details>", re.S | re.I)
+
+
+def _plain(fragment: str) -> str:
+    import html as _html
+    # Inline tags vanish without a gap ("the <a>Audit</a>." stays "the Audit.");
+    # anything else becomes a space so words never run together.
+    text = re.sub(r"</?(a|em|strong|b|i|span)\b[^>]*>", "", fragment, flags=re.I)
+    text = re.sub(r"<[^>]+>", " ", text)
+    return re.sub(r"\s+", " ", _html.unescape(text)).strip()
+
+
+def faq_entity(r: dict):
+    """FAQPage node built from the route's own FAQ, or None."""
+    markup = prerender_markup(r["bundle"])
+    # Only <details> inside a .faq block count -- other pages use <details>
+    # for things that are not questions (e.g. testimonials).
+    blocks = re.findall(r'<div\s+class="faq"[^>]*>(.*?)(?=<div\s+class="faq"|</section>)',
+                        markup, re.S | re.I)
+    pairs = []
+    for block in blocks:
+        for q, a in _FAQ_ITEM.findall(block):
+            q, a = _plain(q), _plain(a)
+            if q and a:
+                pairs.append((q, a))
+    if r["path"] in FAQ_REQUIRED and len(pairs) < FAQ_MIN:
+        raise SystemExit("FAQ SCHEMA: %s yielded %d question(s), expected at "
+                         "least %d. Did the FAQ markup change?"
+                         % (r["path"], len(pairs), FAQ_MIN))
+    if not pairs:
+        return None
+    return {
+        "@type": "FAQPage",
+        "@id": route_url(r["path"]) + "#faq",
+        "isPartOf": {"@id": route_url(r["path"]) + "#webpage"},
+        "mainEntity": [{
+            "@type": "Question", "name": q,
+            "acceptedAnswer": {"@type": "Answer", "text": a},
+        } for q, a in pairs],
+    }
+
+
 def jsonld(r: dict) -> str:
     canonical = route_url(r["path"])
     page_type = "WebPage"
@@ -756,6 +812,10 @@ def jsonld(r: dict) -> str:
     extra = page_entity(r)
     if extra:
         graph.append(extra)
+
+    faq = faq_entity(r)
+    if faq:
+        graph.append(faq)
 
     payload = {"@context": "https://schema.org", "@graph": graph}
     return ('<script type="application/ld+json">'

@@ -204,8 +204,13 @@ LEAD_JS = """<script>
 (function(){
   var F = %s, src = '', k = 'px-lead-' + F, done = null;
   try { src = sessionStorage.getItem('px-src') || ''; done = sessionStorage.getItem(k); } catch (e) {}
-  if (!done && typeof gtag === 'function') {
-    gtag('event', 'generate_lead', {form_name: F, source_page: src || '(not set)'});
+  // Count only a visitor who reached this page from the site, i.e. through
+  // the form: every site page records px-src in this tab. Opening a thank-you
+  // page directly (tests, previews, bots, a bookmarked link) has no px-src and
+  // is not a sign-up. Before 9 Nov 2026 those fired too and outnumbered real
+  // sign-ups about 3 to 1.
+  if (src && !done && typeof gtag === 'function') {
+    gtag('event', 'generate_lead', {form_name: F, source_page: src});
     try { sessionStorage.setItem(k, '1'); } catch (e) {}
   }%s
 })();

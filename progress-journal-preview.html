@@ -236,12 +236,124 @@ html{scroll-behavior:smooth}
 #pj-close h2{font-size:clamp(26px,4.2vw,48px)}
 #pj-close .lede{margin-left:auto;margin-right:auto}
 @media(prefers-reduced-motion:reduce){#pj-page *{animation:none!important;transition:none!important}}
+
+/* ══════════════════════════════════════════════════════════════════════
+   v2 · 11 Nov 2026 · CONDENSED, to match the RM / RW rebuilds
+   Seven sections to five. "What is inside" + the three small renders
+   became one section built on the REAL daily spread (rendered from the
+   R4 print PDF, pages 20-21). "What ninety days does" went: four general
+   benefits, two of them the same point. "What you get", the guarantee and
+   the close merged into one offer block, so the guarantee sits next to the
+   price. A two-column FAQ answers what the page never did.
+   .tbc marks every line still waiting on Daniel's confirmed facts. Strip
+   the class (and the badge goes with it) once the copy is confirmed.
+   ══════════════════════════════════════════════════════════════════════ */
+#pj-page .tbc{outline:1.5px dashed var(--coral);outline-offset:3px;position:relative}
+#pj-page .tbc::after{content:"TBC";position:absolute;top:-9px;right:-6px;font:800 9px/1 var(--head);
+  letter-spacing:.12em;background:var(--coral);color:#fff;padding:3px 5px;border-radius:2px}
+
+/* hero promise line, the device RW uses for its four-week promise */
+#pj-page .promise{margin:22px 0 0;padding:12px 0 0 16px;border-left:2px solid var(--gold);
+  font-size:.95rem;line-height:1.55;color:var(--mist);max-width:46ch}
+#pj-page .promise b{color:var(--gold);font-weight:600}
+
+/* ── A DAY ON THE PAGE ── */
+#pj-day .split{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,4vw,60px);align-items:start}
+#pj-day .spread{margin:0;background:#fff;padding:clamp(8px,1vw,12px);
+  box-shadow:0 30px 60px -28px rgba(31,42,61,.45),0 0 0 1px var(--line-cream)}
+#pj-day .spread img{width:100%;height:auto;display:block}
+#pj-day .spread figcaption{margin:10px 2px 2px;font-size:.78rem;color:var(--ink-soft);line-height:1.45}
+#pj-day .tabs{display:flex;gap:6px;margin:20px 0 0}
+#pj-day .tab{font:700 .66rem/1 var(--head);letter-spacing:.16em;text-transform:uppercase;
+  padding:10px 14px;border:1px solid var(--line-cream);background:transparent;color:var(--ink-soft);
+  cursor:pointer;border-radius:2px;transition:all .2s ease}
+#pj-day .tab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--cream)}
+#pj-day .rit{list-style:none;margin:0;padding:0;counter-reset:r}
+#pj-day .rit[hidden]{display:none}
+#pj-day .rit li{counter-increment:r;display:grid;grid-template-columns:30px 1fr;gap:2px 10px;
+  padding:13px 0;border-bottom:1px solid var(--line-cream)}
+#pj-day .rit li::before{content:counter(r);grid-row:span 2;font:700 .78rem/1.9 var(--head);
+  color:var(--bronze)}
+#pj-day .rit[data-set="night"] li::before{content:counter(r,decimal);}
+#pj-day .rit[data-set="night"]{counter-reset:r 4}
+#pj-day .rit b{font-family:var(--head);font-weight:600;color:var(--ink);font-size:1rem}
+#pj-day .rit span{font-size:.92rem;color:var(--ink-soft);line-height:1.5}
+#pj-day .also{margin:22px 0 0;font-size:.9rem;color:var(--ink-soft)}
+#pj-day .also b{color:var(--ink)}
+@media(max-width:900px){#pj-day .split{grid-template-columns:1fr}}
+
+/* ── THE OFFER ── */
+#pj-offer .split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,60px);align-items:start}
+#pj-offer .kit{margin-top:6px}
+#pj-offer .card{background:var(--ink-navy);color:var(--mist);padding:clamp(24px,3vw,36px);
+  position:relative}
+#pj-offer .card::before,#pj-offer .card::after{content:"";position:absolute;width:34px;height:34px;border:2px solid var(--gold)}
+#pj-offer .card::before{top:-1px;left:-1px;border-right:none;border-bottom:none}
+#pj-offer .card::after{bottom:-1px;right:-1px;border-left:none;border-top:none}
+#pj-offer .card .amt{font-family:var(--head);font-size:clamp(40px,4.6vw,56px);font-weight:700;
+  color:var(--cream);line-height:1}
+#pj-offer .card .pnote{display:block;margin:8px 0 20px;font-size:.9rem;color:var(--slate)}
+#pj-offer .card .btn{width:100%;text-align:center}
+#pj-offer .card .gt{margin:22px 0 0;padding:18px 0 0;border-top:1px solid var(--border)}
+#pj-offer .card .gt h3{font-size:1.05rem;color:var(--gold);margin:0 0 8px}
+#pj-offer .card .gt p{font-size:.92rem;margin:0;color:var(--mist)}
+@media(max-width:900px){#pj-offer .split{grid-template-columns:1fr}}
+
+/* ── FAQ, the RM / RW two-column pattern ── */
+#pj-page .faq2{margin-top:26px}
+#pj-page .faq{margin:0}
+#pj-page .faq-k{margin:0;padding:0 0 12px;font-family:var(--head);font-size:.62rem;font-weight:800;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--border)}
+#pj-page .faq + .faq{margin-top:34px}
+#pj-page .faq details{border-bottom:1px solid var(--border)}
+#pj-page .faq summary{list-style:none;cursor:pointer;padding:16px 36px 16px 0;position:relative;
+  font-family:var(--head);font-weight:600;font-size:1rem;color:var(--cream)}
+#pj-page .faq summary::-webkit-details-marker{display:none}
+#pj-page .faq summary:after{content:'+';position:absolute;right:4px;top:50%;transform:translateY(-50%);
+  color:var(--gold);font-size:1.3rem;transition:transform .3s var(--ease)}
+#pj-page .faq details[open] summary:after{transform:translateY(-50%) rotate(45deg)}
+#pj-page .faq .ans{padding:0 36px 18px 0;font-size:.95rem;color:var(--mist)}
+#pj-page .faq .ans p{margin:0}
+@media(min-width:900px){
+  #pj-page .faq2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:clamp(40px,4.5vw,72px);align-items:start}
+  #pj-page .faq + .faq{margin-top:0}
+}
+#pj-page .endcta{margin:44px 0 0;text-align:center}
+#pj-page .endcta p{margin:12px auto 0}
+
+/* mobile: shorter run. Smaller hero book, the heading before the spread,
+   tighter value list. */
+@media(max-width:820px){#pj-hero .shot{max-width:250px}}
+@media(max-width:900px){
+  #pj-day .split > div:first-child{order:2}
+  #pj-offer .kit li{font-size:.92rem;padding:9px 0 9px 24px}
+}
+/* mobile check, 11 Nov: no orphaned word in the price line, and the
+   Morning / Night tabs at a 44px tap height */
+#pj-page .nw{white-space:nowrap}
+#pj-day .tab{min-height:44px;padding:0 18px}
+/* tap to enlarge the daily spread. On a phone the spread is ~340px wide and
+   unreadable; the overlay shows it at 1000px+ and scrolls sideways, which is
+   simpler and more reliable than pinch-zoom inside a page. Esc, the X or a tap
+   on the dark backdrop closes it. */
+#pj-day .zoom{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;position:relative}
+#pj-day .zoom img{width:100%;height:auto;display:block}
+#pj-day .zhint{position:absolute;right:10px;bottom:10px;font:700 .62rem/1 var(--head);letter-spacing:.14em;
+  text-transform:uppercase;background:rgba(31,42,61,.88);color:var(--cream);padding:8px 10px;border-radius:2px}
+#pj-day .zoom:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+@media(min-width:1100px){#pj-day .zhint{display:none}}
+#pj-lb{position:fixed;inset:0;z-index:200;background:rgba(3,12,28,.94);display:flex;flex-direction:column}
+#pj-lb[hidden]{display:none}
+#pj-lb .lbs{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;padding:56px 16px 16px;display:flex;align-items:flex-start}
+#pj-lb .lbs img{width:max(100%,1050px);max-width:1600px;height:auto;display:block;margin:0 auto;background:#fff}
+#pj-lb .lbx{position:absolute;top:10px;right:12px;width:44px;height:44px;border:0;border-radius:50%;
+  background:var(--coral);color:#fff;font-size:28px;line-height:44px;cursor:pointer;z-index:1}
+#pj-lb .lbn{margin:0;padding:10px 16px 16px;text-align:center;font-size:.8rem;color:var(--slate);max-width:none}
+@media(min-width:1100px){#pj-lb .lbn{display:none}}
 </style>
 </head>
 <body style="margin:0;padding:0;background:#04122A">
-
 <div id="pj-rail" aria-hidden="true"><span class="bar"></span></div>
-
 <div id="pj-page">
 <parallaxx-nav></parallaxx-nav>
 
@@ -252,12 +364,12 @@ html{scroll-behavior:smooth}
     <div>
       <p class="ey" data-r="far">The world&rsquo;s most valuable journal</p>
       <h1>
-        <span class="mask"><span>One page a day.</span></span>
-        <span class="mask"><span class="k">Ninety days.</span></span>
+        <span class="mask"><span>Ninety days to</span></span>
+        <span class="mask"><span class="k">accelerated success</span></span>
       </h1>
-      <p class="lede" data-r="mid">The Parallaxx Progress Journal. Eight rituals I reverse engineered out of the years things moved, written down so you can run them too.</p>
+      <p class="lede" data-r="mid">Eight daily rituals I reverse engineered for a proven success strategy.</p>
       <a class="btn" href="https://buy.stripe.com/aEU4i15gC9Yg3UQ6oq" data-r="mid">Buy the journal</a>
-      <p class="fine" data-r="far">&euro;24.99 &nbsp;&middot;&nbsp; Hardcover &nbsp;&middot;&nbsp; Shipped anywhere in the world</p>
+      <p class="fine" data-r="far"><span class="nw">&euro;24.99</span> &nbsp;&middot;&nbsp; <span class="nw">Hardcover</span> &nbsp;&middot;&nbsp; <span class="nw">Shipped anywhere in the world</span></p>
     </div>
     <div class="shot" data-r="near">
       <img src="https://static.wixstatic.com/media/e1784d_0ece67bf674741d0897b382b88472d3d~mv2.png"
@@ -266,16 +378,49 @@ html{scroll-behavior:smooth}
   </div>
 </section>
 
-<!-- ══ 02 · WHERE IT CAME FROM ═════════════════════════════════════ -->
+<!-- ══ 02 · A DAY ON THE PAGE ══════════════════════════════════════ -->
+<section class="sec cream" id="pj-day">
+  <div class="in">
+    <div class="split">
+      <div>
+      <figure class="spread" data-r="near">
+        <button class="zoom" type="button" aria-label="Enlarge the journal spread"><img src="/assets/img/journal-daily-spread.jpg" alt="A blank day in the Progress Journal: the morning page on the left, the night page on the right" width="1600" height="1195" loading="lazy" decoding="async"><span class="zhint" aria-hidden="true">Tap to enlarge</span></button>
+        <figcaption>A real day from the journal. Morning on the left, night on the right.</figcaption>
+      </figure>
+        <p class="also" data-r="far"><b>Also inside:</b> goal pages for up to three goals, a ninety day action plan, a review page at the start of each month, and notes pages at the back.</p>
+      </div>
+      <div>
+        <h2 data-r="mid">Your Structured Practice</h2>
+        <p class="lede" data-r="mid">About ten minutes, four prompts, twice a day. Structure provided to align your focus with what matters most.</p>
+        <div class="tabs" role="tablist" data-r="mid">
+          <button class="tab" role="tab" aria-selected="true" data-show="morning">Morning</button>
+          <button class="tab" role="tab" aria-selected="false" data-show="night">Night</button>
+        </div>
+        <ol class="rit" data-set="morning" data-r="mid">
+          <li><b>Set your focus</b><span>Where attention goes, energy flows. What is driving you forward?</span></li>
+          <li><b>Write what you&rsquo;re grateful for</b><span>And what it means to you.</span></li>
+          <li><b>Choose how you want to feel</b><span>Your personal state that will best support your focus of the day.</span></li>
+          <li><b>Install your habits</b><span>Three routines for the person you&rsquo;re building into, practiced daily until locked in.</span></li>
+        </ol>
+        <ol class="rit" data-set="night" hidden>
+          <li><b>Acknowledge yourself</b><span>The attributes you practiced today that are part of who you&rsquo;re intentionally becoming.</span></li>
+          <li><b>Write your top three wins</b><span>What went well today that you can celebrate.</span></li>
+          <li><b>Rate your day</b><span>Out of ten, and you can&rsquo;t choose seven.</span></li>
+          <li><b>Decide what you&rsquo;ll bring more of</b><span>Fill the gaps from today, or turn up even more of what you loved tomorrow.</span></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 03 · WHERE IT CAME FROM ═════════════════════════════════════ -->
 <section class="sec dark">
   <div class="in narrow">
     <div id="origin-split">
       <div>
-        <p class="ey" data-r="far">Where it came from</p>
-        <h2 data-r="mid">I made the first one as a gift.</h2>
-        <p class="lede" data-r="mid">It was for clients. Twelve focused intentions, the systems I had reverse engineered out of my own best years and kept running because they kept working.</p>
-        <p data-r="mid">As I got sharper with the rituals, people started noticing. They saw a run of wins and accused me of being a serial winner. The name stuck around, and this is the thing underneath it.</p>
-        <p class="hand" data-r="far" style="margin-top:20px">so here it is, properly made</p>
+        <h2 data-r="mid">How it was developed</h2>
+        <p class="lede" data-r="mid">Someone accused me of having become a &lsquo;serial winner&rsquo; during the challenging COVID years. They asked me how I did it. The answer prompted me to reverse engineer the code I had followed.</p>
+        <p data-r="mid">It became the guiding system exclusively for clients to accelerate progress. Now condensed into a self-guided journal to extract your own accelerated results.</p>
       </div>
       <div class="vsl" data-r="near">
         <button class="vfacade" type="button" data-yt="ISVT4hfSP9k"
@@ -283,103 +428,71 @@ html{scroll-behavior:smooth}
           <img src="/assets/img/journal-vsl-poster.jpg" alt="Daniel holding the Progress Journal" width="1600" height="900" loading="lazy" decoding="async">
           <span class="vplay"><svg viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="48" r="46" fill="rgba(6,25,56,0.85)" stroke="#E8C65F" stroke-width="2"/><polygon points="40,30 68,48 40,66" fill="#E8C65F"/></svg></span>
         </button>
-        <p class="vcap">Daniel on the journal &middot; about 4 minutes, if you want it</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ 03 · WHAT IS INSIDE ═════════════════════════════════════════ -->
-<section class="sec cream">
+<!-- ══ 04 · THE OFFER ══════════════════════════════════════════════ -->
+<section class="sec cream-2" id="pj-offer">
   <div class="in narrow">
-    <p class="ey" data-r="far">What is inside</p>
-    <h2 data-r="mid">Ninety days, eight rituals, one page at a time.</h2>
-    <ul class="rows" data-r="mid">
-      <li><h3>Twelve focused intentions</h3><p>One at a time, so you are never running all of them at once.</p></li>
-      <li><h3>Eight daily rituals</h3><p>Intention in the morning, attention at night. Both fit on the page.</p></li>
-      <li><h3>Goal pages</h3><p>What it is, why it matters, when it lands, and how it will feel when it does.</p></li>
-      <li><h3>Milestones and rewards</h3><p>Somewhere to mark the thing you finished, which is the part most of us skip.</p></li>
-    </ul>
-    <div class="plates" data-r="mid">
-      <figure>
-        <div class="box"><img src="https://static.wixstatic.com/media/e1784d_113269a7d1264fcab0d3f1ee4f1c32f2~mv2.png"
-             alt="An open spread showing how the ninety days are laid out" width="979" height="697" loading="lazy" decoding="async"></div>
-        <figcaption>How it works</figcaption>
-      </figure>
-      <figure>
-        <div class="box"><img src="https://static.wixstatic.com/media/e1784d_29dc4af5b6f24a3f907f365cd8855d0d~mv2.png"
-             alt="The hardcover Progress Journal, closed" width="660" height="953" loading="lazy" decoding="async"></div>
-        <figcaption>Hardcover, ninety days</figcaption>
-      </figure>
-      <figure>
-        <div class="box"><img src="https://static.wixstatic.com/media/e1784d_c87a3242e16548dabf09dda3e7d100a0~mv2.png"
-             alt="An open spread showing a goal page" width="978" height="696" loading="lazy" decoding="async"></div>
-        <figcaption>A goal page</figcaption>
-      </figure>
+    <div class="split">
+      <div>
+        <h2 data-r="mid">What you get</h2>
+        <ul class="kit" data-r="mid">
+          <li><b>The hardcover Progress Journal.</b> Ninety days that pull your distant future into your current experience.</li>
+          <li><b>Shipping, anywhere in the world.</b> Included in the price.</li>
+          <li><b>Bonus #1: Transformational Growth.</b> Video module and workbook for setting emotionally connected goals with high personal meaning.</li>
+          <li><b>Bonus #2: Accelerating Progress.</b> Video module and workbook with the secret codes to leverage self-acknowledgements for developing a daily experience of success and accomplishment.</li>
+        </ul>
+      </div>
+      <div class="card" data-r="near">
+        <span class="amt">&euro;24.99</span>
+        <span class="pnote">Shipping included.</span>
+        <a class="btn" href="https://buy.stripe.com/aEU4i15gC9Yg3UQ6oq">Buy the journal</a>
+        <div class="gt">
+          <p>Follow the practice for the ninety days. If you haven&rsquo;t become your version of a &lsquo;serial winner&rsquo;, message me and I&rsquo;ll coach you through the missing piece myself, at no charge.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ══ 04 · WHAT NINETY DAYS DOES ══════════════════════════════════ -->
-<section class="sec black">
+<!-- ══ 05 · COMMON QUESTIONS + CLOSE ═══════════════════════════════ -->
+<section class="sec black" id="pj-faq">
   <div class="in narrow">
-    <p class="ey" data-r="far">What ninety days does</p>
-    <h2 data-r="mid">Small, and it compounds.</h2>
-    <ul class="rows" data-r="mid">
-      <li><h3>More time for what you like</h3><p>Because you stop spending it on what does not count.</p></li>
-      <li><h3>A felt sense of getting somewhere</h3><p>Week in, week out, rather than once a quarter when you look back.</p></li>
-      <li><h3>Results that come easier</h3><p>The page does the remembering, so you are not carrying the system as well as the work.</p></li>
-      <li><h3>Your time back</h3><p>Owned, and spent on purpose.</p></li>
-    </ul>
-  </div>
-</section>
-
-<!-- ══ 05 · WHAT SHIPS ═════════════════════════════════════════════ -->
-<section class="sec cream-2">
-  <div class="in narrow">
-    <p class="ey" data-r="far">What you get</p>
-    <h2 data-r="mid">More than a journal.</h2>
-    <p class="lede" data-r="mid">The book is the thing you hold. These come with it.</p>
-    <ul class="kit" data-r="mid">
-      <li><b>The hardcover Progress Journal.</b> A full ninety day run, with the eight daily rituals on every page.</li>
-      <li><b>Shipping, anywhere in the world.</b> Included in the price, wherever you are.</li>
-      <li><b>Transformational Growth.</b> A video module and workbook on setting goals you are emotionally connected to, rather than goals that look good written down.</li>
-      <li><b>Accelerating Progress.</b> A second module on building a daily sense of accomplishment, so the subconscious starts doing some of the lifting.</li>
-    </ul>
-    <div class="price" data-r="mid">
-      <span class="amt">&euro;24.99</span>
-      <span class="pnote">Shipping included. One payment, no subscription.</span>
+    <h2 data-r="near">Common Questions</h2>
+    <div class="faq2" data-r="mid">
+      <div class="faq">
+        <p class="faq-k">Using it</p>
+        <details><summary>How long does it take each day?</summary><div class="ans"><p>As long as you want. Generally, about a ten minute check-in each morning and again in the evening.</p></div></details>
+        <details><summary>Do I need to complete it twice a day?</summary><div class="ans"><p>No, you can complete it in the way that works for you. In fact, I personally do it once a day. Each morning I complete my reflections from the day before and then set my new day&rsquo;s intentions.</p></div></details>
+        <details><summary>Can I start on any day?</summary><div class="ans"><p>Yes. The pages aren&rsquo;t dated. You write the date and tick the weekday, so day one is whenever you decide it is.</p></div></details>
+        <details><summary>What if I miss a day?</summary><div class="ans"><p>Pick it up again the next morning. You choose your cadence. I skip weekends, for example. What tends to break your system is waiting for a &lsquo;better week&rsquo; to start again.</p></div></details>
+        <details><summary>I&rsquo;ve never stuck with a journal. Why would this be different?</summary><div class="ans"><p>Many journals give you a blank page, putting the pressure on you to figure out where to start and what to write. Here you get the same prompts every morning and every night, which doesn&rsquo;t require your own imagination. Practice them for ninety days and if you don&rsquo;t see progress, message me and we figure out what&rsquo;s missing together.</p></div></details>
+      </div>
+      <div class="faq">
+        <p class="faq-k">The practical side</p>
+        <details><summary>How long does shipping take?</summary><div class="ans"><p>It depends on your location. It&rsquo;s usually dispatched from the UK, Europe and the US, and within these locations delivery is generally 7 to 10 days. Outside of these areas, like Australia and New Zealand, estimated delivery is 21 days.</p></div></details>
+        <details><summary>How do I get the two video modules?</summary><div class="ans"><p>There are QR codes inside the journal. Scan these or enter the web link, and you&rsquo;ll be directed to the free checkout to access the modules.</p></div></details>
+        <details><summary>What size is it?</summary><div class="ans"><p>A standard six by nine inch hardcover (about 15 by 23 cm), around two hundred pages: the daily spreads for all ninety days, plus the goal, planning and review pages.</p></div></details>
+        <details><summary>Can I get a refund?</summary><div class="ans"><p>If something&rsquo;s not right with your journal, let us know and we&rsquo;ll resolve it with you directly. The results you get are personal, based on your inputs, and if you haven&rsquo;t seen progress after ninety days, the coaching guarantee is there for you.</p></div></details>
+      </div>
     </div>
-    <p style="margin-top:24px"><a class="btn" href="https://buy.stripe.com/aEU4i15gC9Yg3UQ6oq" data-r="mid">Buy the journal</a></p>
-  </div>
-</section>
-
-<!-- ══ 06 · THE GUARANTEE ══════════════════════════════════════════ -->
-<section class="sec dark">
-  <div class="in narrow">
-    <p class="ey" data-r="far">The guarantee</p>
-    <div class="panel" data-r="near">
-      <h2>Follow it. If nothing moves, come and tell me.</h2>
-      <p class="lede">I am not a fan of wishing, hoping, waiting or getting lucky. I would rather find what works and do that until I get the outcome I want.</p>
-      <p>So the deal is simple. Run the system for the ninety days. If you do not see it, message me and I will coach you through the missing piece myself, at no charge.</p>
+    <div class="endcta" data-r="mid">
+      <a class="btn" href="https://buy.stripe.com/aEU4i15gC9Yg3UQ6oq">Buy the journal</a>
+      <p class="fine"><span class="nw">&euro;24.99</span> &nbsp;&middot;&nbsp; <span class="nw">Hardcover</span> &nbsp;&middot;&nbsp; <span class="nw">Shipped anywhere in the world</span></p>
     </div>
   </div>
 </section>
 
-<!-- ══ 07 · CLOSE ══════════════════════════════════════════════════ -->
-<section class="sec ink" id="pj-close">
-  <div class="in narrow">
-    <p class="ey" data-r="far">Ready?</p>
-    <h2 class="mask" id="pjClose"><span>One page a day. Ninety days.</span></h2>
-    <p class="lede" data-r="mid">Start the next ninety on purpose.</p>
-    <p><a class="btn" href="https://buy.stripe.com/aEU4i15gC9Yg3UQ6oq" data-r="mid">Buy the journal</a></p>
-    <p class="fine" data-r="far">&euro;24.99 &nbsp;&middot;&nbsp; Hardcover &nbsp;&middot;&nbsp; Shipped anywhere in the world</p>
-  </div>
-</section>
-
+<div id="pj-lb" hidden role="dialog" aria-modal="true" aria-label="The journal spread, enlarged">
+  <button class="lbx" type="button" aria-label="Close">&times;</button>
+  <div class="lbs"><img src="/assets/img/journal-daily-spread.jpg" alt="A blank day in the Progress Journal: the morning page on the left, the night page on the right" width="1600" height="1195" loading="lazy" decoding="async"></div>
+  <p class="lbn">Scroll sideways to see the night page</p>
+</div>
 <parallaxx-footer></parallaxx-footer>
 </div>
-
 <script src="/parallaxx-nav.js"></script>
 <script src="/parallaxx-footer.js"></script>
 <script>
@@ -427,6 +540,31 @@ html{scroll-behavior:smooth}
     });
   });
 
+  /* tap to enlarge the daily spread */
+  var lb = document.getElementById('pj-lb'), zb = document.querySelector('#pj-day .zoom');
+  if(lb && zb){
+    var lastFocus;
+    function openLb(){ lastFocus = document.activeElement; lb.hidden = false;
+      document.documentElement.style.overflow = 'hidden'; lb.querySelector('.lbx').focus(); }
+    function closeLb(){ lb.hidden = true; document.documentElement.style.overflow = '';
+      if(lastFocus) try{ lastFocus.focus(); }catch(e){} }
+    zb.addEventListener('click', openLb);
+    lb.querySelector('.lbx').addEventListener('click', closeLb);
+    lb.addEventListener('click', function(e){ if(e.target === lb || e.target.classList.contains('lbs')) closeLb(); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !lb.hidden) closeLb(); });
+  }
+  /* morning / night toggle on the ritual list */
+  [].slice.call(document.querySelectorAll('#pj-day .tab')).forEach(function(tab){
+    tab.addEventListener('click', function(){
+      var want = tab.getAttribute('data-show');
+      [].slice.call(document.querySelectorAll('#pj-day .tab')).forEach(function(t){
+        t.setAttribute('aria-selected', t === tab ? 'true' : 'false'); });
+      [].slice.call(document.querySelectorAll('#pj-day .rit')).forEach(function(l){
+        var on = l.getAttribute('data-set') === want;
+        l.hidden = !on; if(on){ l.classList.add('seen'); }
+      });
+    });
+  });
   var close = document.getElementById('pjClose');
   if(close){
     if(reduce || noIO){ close.classList.add('seen'); }

@@ -1768,7 +1768,7 @@
   <div class="in">
     <div class="promise-rule" id="promiseRule" aria-hidden="true"></div>
     <p class="promise-line mask"><span>In <b>four weeks</b> you'll know <em>one thing you want</em>,<br>you'll have <em>asked for it</em>,<br>and you'll <em>feel what changes</em> when you do.</span></p>
-    <p class="promise-sub" data-r="far">Without slowing down or doing less.</p>
+    <p class="promise-sub" data-r="far">Better results, with less effort.</p>
 
   </div>
 </section>

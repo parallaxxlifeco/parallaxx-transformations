@@ -1,14 +1,14 @@
 ---
-title: How do I know if it's my responsibility to help?
+title: How do I stop feeling responsible for others?
 slug: is-it-my-responsibility-to-help
 pillar: being-the-capable-one
 intent: the signal is small and gets let through, so the rule is whose outcome it is
-question: How do I know if it's my responsibility to help?
+question: How do I stop feeling responsible for others?
 card: You find out three days later, and by then there's nothing to do with it except resent it.
-answer: Because the signal is small. Something doesn't sit right and you let it blow over, and the anger that would have marked the line shows up three days later, too late to use. So the decision runs on two questions rather than a feeling: whose outcome is this, and who gets the benefit of me doing it?
+answer: It's hard to stop because the signal is small. Something doesn't sit right and you let it blow over, and the anger that would have marked the line shows up three days later, too late to use. So the decision runs on two questions rather than a feeling: whose outcome is this, and who gets the benefit of me doing it?
 description: The signal is small and you let it blow over. Daniel Lawson on the two questions that decide it, and why the anger shows up three days late.
 published: 2026-10-02
-updated: 2026-10-02
+updated: 2026-11-16
 sources: PW-04-003, RW-W1-036, RW-W2-137, PW-04-016, PW-04-040, PW-04-018, PW-04-025, PW-04-029, PW-10-143, PW-09-011, PW-09-012, PW-10-212, PW-06-077, PW-06-075, PW-10-130, RM-S5-079, RW-W3-027, RW-W3-120, PW-10-618, PW-15-053, PM-04-074
 offer: /the-reconnected-man, /the-reconnected-woman
 ---

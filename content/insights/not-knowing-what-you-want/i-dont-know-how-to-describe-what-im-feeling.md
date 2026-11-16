@@ -1,14 +1,14 @@
 ---
-title: I don't know how to describe what I'm feeling
+title: Why can't I put my feelings into words?
 slug: i-dont-know-how-to-describe-what-im-feeling
 pillar: not-knowing-what-you-want
 intent: no vocabulary, not no feeling
-question: What do I do when I don't know how to describe what I'm feeling?
+question: Why can't I put my feelings into words?
 card: I had two words for my entire emotional life and I thought that made me stable.
 answer: Because describing a feeling is a separate skill from having one, and nobody taught you the words. So you reach for good, fine, not too bad, and that is the range you have got to answer with. What changes this is describing where it sits in your body, one plain physical question at a time, and letting the word come later.
 description: Somebody asks how you feel and out comes good. Daniel Lawson on why the words are missing rather than the feeling, and the body question that gets in.
 published: 2026-10-03
-updated: 2026-10-03
+updated: 2026-11-16
 sources: RM-S2-034, RM-S2-031, RM-S2-038, RM-S2-039, RM-S2-040, PM-06-004, PM-06-005, PM-06-006, PM-06-007, PM-06-024, PM-06-045, PM-08-002, PM-08-003, PM-08-004, PM-08-020, PM-08-021, PM-08-022, PM-08-027, PM-08-028, PM-08-041, DL-031, DL-032, DL-033, DL-034, DL-035, DL-036, DL-039, DL-041, DL-044, DL-055, DL-056, DL-057
 offer: /the-reconnected-man, /the-reconnected-woman
 ---

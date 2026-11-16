@@ -1,14 +1,14 @@
 ---
-title: How do I stop managing my partner?
+title: How do I stop nagging my husband?
 slug: how-do-i-stop-managing-my-partner
 pillar: being-the-capable-one
 intent: managing is how you ask without admitting you need anything
-question: How do I stop managing my partner?
+question: How do I stop nagging my husband?
 card: No one is going to offer a woman that has everything all handled already.
 answer: You stop by asking for something instead of directing it. Managing never makes you admit you need him, and a request does, which is why the swap is difficult rather than the wording. So it goes from "I need this" to "can you help me with this", and then you let him do it his way the first few times, which won't be to your standard.
 description: Managing never makes you admit you need him. Daniel Lawson on why the manager job at home is hard to put down, and what swapping it for an ask takes.
 published: 2026-10-16
-updated: 2026-10-16
+updated: 2026-11-16
 sources: PW-01-005, PW-01-015, PW-01-035, PW-01-036, PW-06-024, RW-W1-014, PW-13-012, PW-13-030, PW-13-043, PW-13-051, PW-13-052, PW-13-054, PW-13-057, PW-13-061, PW-13-062, PW-13-063, PW-13-066, PW-13-067, PW-13-068, PW-13-069, PW-13-070, PW-13-071, PW-13-072, PW-13-075, PW-13-076, DL-269, RW-W4-147, RW-W4-149, RW-W4-189, RW-W4-190, PW-15-040, PW-15-042, PM-10-133, PM-10-134, PM-10-175, PM-10-181
 offer: /the-reconnected-man, /the-reconnected-woman
 ---

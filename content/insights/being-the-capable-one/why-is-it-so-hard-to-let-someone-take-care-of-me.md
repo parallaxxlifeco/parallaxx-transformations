@@ -1,14 +1,14 @@
 ---
-title: Why is it so hard to let someone take care of me?
+title: Why is it so hard for me to accept help?
 slug: why-is-it-so-hard-to-let-someone-take-care-of-me
 pillar: being-the-capable-one
 intent: not needing anything was the skill, and receiving is the rep
-question: Why is it so hard to let someone take care of me?
+question: Why is it so hard for me to accept help?
 card: Receiving on your own terms is not receiving.
 answer: Because not needing anything is a skill you developed, and it worked. Being taken care of asks you to put it down, so the first thing you feel is discomfort, and the discomfort reads as proof you were right. It runs in an order. Uncomfortable, then proud of yourself for doing it anyway, then oh, this is kind of nice.
 description: Being cared for feels wrong because not needing anything is the skill you developed. Daniel Lawson on the order it runs in when you take it anyway.
 published: 2026-09-29
-updated: 2026-09-29
+updated: 2026-11-16
 sources: DL-080, DL-081, DL-090, DL-267, PW-15-011, PW-15-009, PW-15-007, PW-15-015, PW-12-004, PW-12-005, PW-12-008, PW-08-019, PW-08-024, PW-08-037, PW-06-011, PW-13-048, PW-13-052, PW-13-053, PW-07-063, PW-11-010, PW-10-311, RW-W2-132
 offer: /the-reconnected-man, /the-reconnected-woman
 ---

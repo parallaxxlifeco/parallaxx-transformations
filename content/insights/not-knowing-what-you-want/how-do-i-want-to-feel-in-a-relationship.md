@@ -1,14 +1,14 @@
 ---
-title: How do I want to feel in a relationship?
+title: How do I know what I want in a relationship?
 slug: how-do-i-want-to-feel-in-a-relationship
 pillar: not-knowing-what-you-want
 intent: the feeling replaces the checklist
-question: How do I want to feel in a relationship?
+question: How do I know what I want in a relationship?
 card: My standards weren't high. I just had huge barriers to letting anyone in.
-answer: It's the question that replaces the list of traits. A list describes a person you're waiting to meet. The feeling describes the experience you want, and an experience you can describe is one you can ask for. Start from moments where you felt what you needed to feel, get underneath trust and respect to what is uniquely yours, then say what somebody would have to do for you to feel it.
+answer: Ask yourself how you want to feel in one. That question replaces the list of traits. A list describes a person you're waiting to meet. The feeling describes the experience you want, and an experience you can describe is one you can ask for. Start from moments where you felt what you needed to feel, get underneath trust and respect to what is uniquely yours, then say what somebody would have to do for you to feel it.
 description: The list of traits describes a person you're waiting for. Daniel Lawson on the question that replaced it for him, and how to answer it properly.
 published: 2026-09-29
-updated: 2026-09-29
+updated: 2026-11-16
 sources: RM-S1-003, RM-S1-004, RM-S1-020, RM-S1-022, RM-S1-023, RM-S1-025, RM-S1-029, RM-S1-030, RM-S1-005, RM-S1-031, RM-S1-043, RM-S1-045, RM-S1-052, RM-S1-060, RM-S1-062, RM-S1-063, RM-S1-064, RM-S1-066, RM-S1-068, RM-S1-069, RM-S1-071, RM-S1-072, RM-S1-073, RM-S1-077, RM-S1-083, RM-S1-089, RM-S1-090, RM-S3-123, RM-S5-116, RM-S5-128, RM-S5-130, RW-W2-126, PW-06-011, PW-06-102, PW-11-010, PW-10-169
 offer: /the-reconnected-man, /the-reconnected-woman
 ---

@@ -1,14 +1,14 @@
 ---
-title: How do I stop waiting for someone who doesn't know I like them?
+title: How do I get over someone I never dated?
 slug: how-do-i-stop-waiting-for-someone
 pillar: knowing-and-not-doing
 intent: the wait ends with an answer, not by letting go
-question: How do I stop waiting for someone who doesn't know I like them?
+question: How do I get over someone I never dated?
 card: A great outcome is an outcome, and three years without one is the worst outcome.
-answer: You stop by getting an answer. Letting go is the advice, and it doesn't work on a wait this long, because it's never been concluded. So shrink what you want down to something that can be answered, a date rather than a relationship, ask for that, and take the answer you receive. A yes or a no both finalise the waiting.
+answer: You get over it by getting an answer. Letting go is the advice, and it doesn't work on a wait this long, because it's never been concluded. So shrink what you want down to something that can be answered, a date rather than a relationship, ask for that, and take the answer you receive. A yes or a no both finalise the waiting.
 description: Nearly three years of waiting and nobody knew. Daniel Lawson on why letting go doesn't end it, and the smallest ask that gets you an answer either way.
 published: 2026-10-09
-updated: 2026-10-09
+updated: 2026-11-16
 sources: PW-11-019, PW-11-021, PW-11-022, PW-11-026, PW-11-027, PW-11-037, PW-11-044, PW-11-045, PW-11-048, PW-11-049, PW-11-050, PW-11-051, PW-11-052, PW-11-053, PW-11-054, PW-11-056, PW-11-057, PW-11-058, PW-11-059, PW-11-060, PW-11-061, PW-11-062, PW-10-230, PW-06-047, DL-410, DL-417, DL-423, DL-428, DL-429, DL-080, DL-082, DL-085, DL-090, DL-092
 offer: /the-reconnected-man, /the-reconnected-woman
 ---

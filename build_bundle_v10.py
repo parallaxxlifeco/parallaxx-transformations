@@ -47,7 +47,7 @@ font_links = re.findall(
 CSS = "\n".join(re.findall(r"<style>([\s\S]*?)</style>", s))
 
 body_start = s.index('<div id="rw-page"')
-body_end = s.index('<script src="https://link.msgsndr.com')
+body_end = s.index('<script src="https://app.parallaxxtransformations.com/forms/embed.js')
 HTML = s[body_start:body_end].strip()
 
 PAGE_JS = "\n;\n".join(re.findall(r"<script>([\s\S]*?)</script>", s))
@@ -64,8 +64,7 @@ for name, blob in (("CSS", CSS), ("HTML", HTML), ("PAGE_JS", PAGE_JS)):
 
 assert "rw-page" in HTML, "page root missing"
 assert "parallaxx-nav" in HTML and "parallaxx-footer" in HTML, "chrome missing from the body"
-assert "0RT5EVaTlGxo6QBjyIPT" in HTML, "the application form is missing"
-assert HTML.count("0RT5EVaTlGxo6QBjyIPT") == 3, "the form id must appear three times"
+assert HTML.count('<form class="px-form" data-px-form="rw-open-session"') == 1, "the application form is missing"
 
 # THE OPEN DATE. Every date on the page is printed at runtime from
 # data-open-at, but the markup still carries the date as text so a reader
@@ -170,7 +169,7 @@ bundle = """/* PARALLAXX TRANSFORMATIONS - The Reconnected Woman. Tag: %(tag)s.
     this.innerHTML = HTML;
     script('/parallaxx-nav.js', 'rw-nav-js');
     script('/parallaxx-footer.js', 'rw-foot-js');
-    script('https://link.msgsndr.com/js/form_embed.js', 'rw-ghl-js');
+    script('https://app.parallaxxtransformations.com/forms/embed.js', 'rw-px-forms');
     try { boot(); } catch (e) { /* the page renders fully visible without it */ }
   };
 

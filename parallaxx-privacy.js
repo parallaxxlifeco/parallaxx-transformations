@@ -815,7 +815,7 @@
         <li><strong>YouTube</strong> for video, on some pages. These embeds use youtube-nocookie.com, which does not set advertising cookies unless you play the video.</li>
         <li><strong>LeadConnector (GoHighLevel)</strong> for the application forms, which load only on The Reconnected Man and The Reconnected Woman.</li>
       </ul>
-      <p>The two self-assessment tools on this site, the Priority Audit and the Archetype Quiz, hold your answers in your browser&rsquo;s memory for as long as the page is open. Nothing is saved, and nothing is sent to us.</p>
+      <p>The two self-assessment tools on this site, the Priority Audit and the Archetype Quiz, hold your answers in your browser&rsquo;s memory for as long as the page is open.</p>
 
       <h2>Information Usage</h2>
       <p>We use the collected information for the following purposes:</p>

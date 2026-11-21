@@ -79,7 +79,7 @@ if (src.count("Last updated 1 September 2026") != 1
              "date genuinely changed, change it in the source AND in this guard --\n"
              "they are pinned together on purpose, so a date can never drift\n"
              "without somebody deciding it should.")
-if src.count("Parallax Life Co Pty LTD") < 3:
+if src.count("Parallaxx Life Co Pty Ltd") < 3:
     sys.exit("FAIL: the governing entity is missing from one of the documents. "
              "Both have to name who the terms are with.")
 for api in ("localStorage", "sessionStorage"):

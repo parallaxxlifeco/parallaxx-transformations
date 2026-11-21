@@ -379,7 +379,7 @@ strong,b{color:var(--px-cream);font-weight:600}
 
 <footer class="px-foot">
   <div class="px-wrap px-foot-in">
-    <small>&copy; <span id="yr"></span> Parallaxx Transformations</small>
+    <small>&copy; <span id="yr"></span> Parallaxx Transformations &middot; &copy; Parallaxx Life Co Pty Ltd</small>
     <nav>
       <a href="https://www.parallaxxtransformations.com/about-daniel-lawson">About</a>
       <a href="https://www.parallaxxtransformations.com/the-reconnected-man">The Reconnected Man</a>

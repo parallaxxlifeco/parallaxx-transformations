@@ -313,7 +313,7 @@
 <footer id="id2-foot">
   <div class="id2-container id2-foot-row">
     <span class="id2-foot-tag">Driving the Human Revolution for Purpose-Driven Impact.</span>
-    <span class="id2-foot-meta">&copy; Parallaxx Transformations</span>
+    <span class="id2-foot-meta">&copy; Parallaxx Transformations &middot; &copy; Parallaxx Life Co Pty Ltd</span>
   </div>
 </footer>
 

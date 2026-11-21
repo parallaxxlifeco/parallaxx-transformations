@@ -658,7 +658,7 @@ ORGANIZATION = {
     "@type": "Organization",
     "@id": ORG_ID,
     "name": "Parallaxx Transformations",
-    "legalName": "Parallax Life Co Pty Ltd",
+    "legalName": "Parallaxx Life Co Pty Ltd",
     "url": ORIGIN + "/",
     "logo": {"@type": "ImageObject", "url": f"{ORIGIN}/favicon.png"},
     "foundingDate": "2019",

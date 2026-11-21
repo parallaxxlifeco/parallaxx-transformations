@@ -813,7 +813,7 @@
         <li><strong>Google Analytics</strong>, on every page, unless you have turned it off as described above.</li>
         <li><strong>Cloudflare cdnjs</strong> and <strong>unpkg</strong> for animation libraries, on most pages.</li>
         <li><strong>YouTube</strong> for video, on some pages. These embeds use youtube-nocookie.com, which does not set advertising cookies unless you play the video.</li>
-        <li><strong>LeadConnector (GoHighLevel)</strong> for the application forms, which load only on The Reconnected Man and The Reconnected Woman.</li>
+        <li><strong>Our own forms system</strong>, hosted on Cloudflare, for the application and sign-up forms, on the pages that carry one.</li>
       </ul>
       <p>The two self-assessment tools on this site, the Priority Audit and the Archetype Quiz, hold your answers in your browser&rsquo;s memory for as long as the page is open.</p>
 
@@ -841,7 +841,7 @@
       <p>Your information may be held or handled by the following providers:</p>
       <ul>
         <li><strong>Cloudflare</strong> &mdash; website hosting and delivery.</li>
-        <li><strong>GoHighLevel (LeadConnector)</strong> &mdash; application forms, enquiry records and marketing email.</li>
+        <li><strong>Our own system, hosted on Cloudflare</strong> &mdash; application forms, enquiry records and marketing email. Email is sent through <strong>Postmark</strong>.</li>
         <li><strong>Stripe</strong> &mdash; payment processing. Card details are given to Stripe and are never held by us.</li>
         <li><strong>Teachable</strong> &mdash; course and programme materials, for people enrolled in them.</li>
         <li><strong>Namecheap PrivateEmail</strong> &mdash; our email.</li>

@@ -66,7 +66,7 @@ if "buy.stripe.com" in HTML or "&euro;" in HTML:
     raise SystemExit("FAIL: a checkout link or a price is back on the free page.")
 TTL_FORM_ID = "TDSyOXeH5838jtA7gx6S"
 n_forms = HTML.count('class="ttl-form"')
-n_embeds = HTML.count("https://api.leadconnectorhq.com/widget/form/%s" % TTL_FORM_ID)
+n_embeds = HTML.count('<form class="px-form" data-px-form="three-toxic-lies"')
 if n_forms != 2 or n_embeds != 2:
     raise SystemExit("FAIL: expected the GHL book form twice (hero, beside the lies), "
                      "found %d form blocks and %d embeds" % (n_forms, n_embeds))
@@ -168,7 +168,7 @@ bundle = """/* PARALLAXX TRANSFORMATIONS - Three Toxic Lies. Tag: %(tag)s.
     // GHL's form_embed.js hands the page's UTM tags to the form, so a sign-up
     // records which channel it came from. Without it GHL logs every one as
     // Direct traffic (tested 15 Oct 26). Same script the RW and RM pages load.
-    script('https://link.msgsndr.com/js/form_embed.js', 'ttl-ghl-js');
+    script('https://app.parallaxxtransformations.com/forms/embed.js', 'ttl-px-forms');
     try { boot(); } catch (e) { /* the page renders fully visible without it */ }
   };
 

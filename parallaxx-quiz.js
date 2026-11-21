@@ -423,8 +423,7 @@ const CONFIG = {
      URL and the form POSTs JSON:
      { firstName, lastName, email, phone, consent, archetype, archetypeKey,
        scores:{...}, answers:[...], flags:{...}, submittedAt }              */
-  leadEndpoint: 'https://services.leadconnectorhq.com/hooks/Nja8qXnwLqNjaNTJVf5T/webhook-trigger/EWUGJmwLhauwNNCtSrdb',
-  shadowEndpoint: 'https://app.parallaxxtransformations.com/forms/archetype-quiz',
+  leadEndpoint: 'https://app.parallaxxtransformations.com/forms/archetype-quiz',
   /* Tells this lead apart from the Priority Audit in GHL. */
   source: 'archetype-quiz',
 
@@ -942,6 +941,7 @@ function leadPayload(first, email){
     out['rank' + n + '_pct']   = Math.round(x.total / x.possible * 100);
     out['rank' + n + '_color'] = i === 0 ? '#FF501F' : '#C9B98F';
   });
+  out._r = answers.map(function (v) { return v || 1; }).join('');
   return out;
 }
 function sendLead(p){
@@ -950,13 +950,6 @@ function sendLead(p){
     fetch(CONFIG.leadEndpoint, { method:'POST', mode:'no-cors', keepalive:true,
                                  body:new URLSearchParams(p) });
   } catch(e){}
-  if (CONFIG.shadowEndpoint) {
-    try {
-      var copy = Object.assign({}, p, { _r: answers.map(function (v) { return v || 1; }).join('') });
-      fetch(CONFIG.shadowEndpoint, { method:'POST', mode:'no-cors', keepalive:true,
-                                     body:new URLSearchParams(copy) });
-    } catch(e){}
-  }
 }
 function gateError(text, field){
   const m = $('g-msg'); m.textContent = text; m.hidden = false;

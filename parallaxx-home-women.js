@@ -4353,8 +4353,7 @@
       advanceDelay: 300,         /* ms after a tap before the next item. 0 disables. */
       /* GHL inbound webhook for the email gate. '' sends nothing and still
          shows the result, so the page never breaks while it is unset. */
-      leadEndpoint: 'https://services.leadconnectorhq.com/hooks/Nja8qXnwLqNjaNTJVf5T/webhook-trigger/b848c7b8-27fe-4682-930c-32a2c8c5fef6',
-      shadowEndpoint: 'https://app.parallaxxtransformations.com/forms/priority-audit',
+      leadEndpoint: 'https://app.parallaxxtransformations.com/forms/priority-audit',
       source: 'women-home'   /* tells the two copies apart in GHL */
     };
 
@@ -4804,6 +4803,7 @@
         out['rank' + n + '_pct']   = Math.round(x.total / 25 * 100);
         out['rank' + n + '_color'] = (i === 0 || (i === 1 && res.tied)) ? '#FF501F' : '#C9B98F';
       });
+      out._r = answers.map(function (v) { return v || 1; }).join('');
       return out;
     }
     function sendLead(p){
@@ -4812,13 +4812,6 @@
         fetch(CONFIG.leadEndpoint, { method:'POST', mode:'no-cors', keepalive:true,
                                      body:new URLSearchParams(p) });
       } catch(e){}
-      if (CONFIG.shadowEndpoint) {
-        try {
-          var copy = Object.assign({}, p, { _r: answers.map(function (v) { return v || 1; }).join('') });
-          fetch(CONFIG.shadowEndpoint, { method:'POST', mode:'no-cors', keepalive:true,
-                                         body:new URLSearchParams(copy) });
-        } catch(e){}
-      }
     }
     function gateError(text, field){
       const m = $('pa-g-msg'); m.textContent = text; m.hidden = false;

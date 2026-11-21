@@ -51,7 +51,7 @@ for name, blob in (("CSS", CSS), ("HTML", HTML), ("PAGE_JS", PAGE_JS)):
 FORM = "UxzzQRv0AbKKQZ0P9bau"
 assert "rm-page" in HTML, "page root missing"
 assert "parallaxx-nav" in HTML and "parallaxx-footer" in HTML, "chrome missing from the body"
-assert HTML.count(FORM) == 3, "the form id must appear three times, got %d" % HTML.count(FORM)
+assert HTML.count('<form class="px-form" data-px-form="rm-open-session"') == 1, "the application form is missing"
 
 # The annotation layer is a build-time thing and must never reach a browser.
 for marker in ('class="note"', 'class="review-only"', 'class="bar-top"',
@@ -124,7 +124,7 @@ bundle = """/* PARALLAXX TRANSFORMATIONS - The Reconnected Man. Tag: %(tag)s.
     this.innerHTML = HTML;
     script('/parallaxx-nav.js', 'rm-nav-js');
     script('/parallaxx-footer.js', 'rm-foot-js');
-    script('https://link.msgsndr.com/js/form_embed.js', 'rm-ghl-js');
+    script('https://app.parallaxxtransformations.com/forms/embed.js', 'rm-px-forms');
     try { boot(); } catch (e) { /* the page renders fully visible without it */ }
   };
 

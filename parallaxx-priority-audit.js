@@ -1527,6 +1527,7 @@
       /* GHL inbound webhook for the email gate. '' sends nothing and still
          shows the result, so the page never breaks while it is unset. */
       leadEndpoint: 'https://services.leadconnectorhq.com/hooks/Nja8qXnwLqNjaNTJVf5T/webhook-trigger/b848c7b8-27fe-4682-930c-32a2c8c5fef6',
+      shadowEndpoint: 'https://app.parallaxxtransformations.com/forms/priority-audit',
       source: 'priority-audit'   /* tells the two copies apart in GHL */
     };
 
@@ -2006,6 +2007,13 @@
         fetch(CONFIG.leadEndpoint, { method:'POST', mode:'no-cors', keepalive:true,
                                      body:new URLSearchParams(p) });
       } catch(e){}
+      if (CONFIG.shadowEndpoint) {
+        try {
+          var copy = Object.assign({}, p, { _r: answers.map(function (v) { return v || 1; }).join('') });
+          fetch(CONFIG.shadowEndpoint, { method:'POST', mode:'no-cors', keepalive:true,
+                                         body:new URLSearchParams(copy) });
+        } catch(e){}
+      }
     }
     function gateError(text, field){
       const m = $('pa-g-msg'); m.textContent = text; m.hidden = false;

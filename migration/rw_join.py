@@ -35,6 +35,14 @@ PRICES = [
     ("ZAR", "R",        2299,   1699,  "PLACEHOLDER_STRIPE_LINK_ZAR"),
 ]
 
+# ── THE FIRST-MONTH PROMOTION CODE ──────────────────────────────────────
+# The first-month price is one Stripe promotion code. The Join button adds
+# it to whichever currency's Payment Link is chosen, as
+# ?prefilled_promo_code=FIRSTMONTH, so Stripe opens with it already applied.
+# Leave it empty ("") to add nothing. The code must exist in Stripe and the
+# Payment Link must allow promotion codes, or Stripe ignores it.
+PROMO_CODE = "FIRSTMONTH"
+
 # Which currency a browser's country gets by default. Anywhere not listed,
 # and any currency whose link is not set yet, gets EUR.
 COUNTRY_CURRENCY = {
@@ -43,7 +51,7 @@ COUNTRY_CURRENCY = {
 }
 
 # ── WORDING ─────────────────────────────────────────────────────────────
-# All of it is Daniel's, as he gave it on 23 Nov 2026 (the quote and the two
+# All of it is Daniel's, as he gave it on 23 Nov 2026 (the top line and the two
 # questions are from the Reconnected Woman page). Two spellings were his
 # typing put right, and he can reverse either: "monthly membership" (he typed
 # "month membership") and "accountability" (he typed "accountably").
@@ -55,7 +63,10 @@ WORDS = dict(
     eyebrow="The Reconnected Woman",
     # Across the top, above both columns, set as a quotation: the reminder of
     # why she is joining.
-    quote="Figure out what you want, ask for it, and get better results with less effort.",
+    # (Variable names still say "quote"; since 23 Nov it carries no quotation
+    # marks. The second part is the part set in gold.)
+    quote="Figure out what you want, ask for it, and get ",
+    quote_gold="better results with less effort.",
     # The page's one h1, above the payment column.
     heading="Join Us",
     included_heading="Included in your monthly membership",
@@ -89,12 +100,24 @@ PLACEHOLDERS = dict()
 LABEL_FIRST = "First month"
 LABEL_THEN = "Then"
 LABEL_MONTH = "a month"
-LABEL_PICKER = "Pay in"
+LABEL_PICKER = "Select your currency"
 BUTTON = "Join"
 
 
 def _has_link(row) -> bool:
     return row[4].startswith("https://")
+
+
+def join_url(link: str) -> str:
+    """The Payment Link with the promotion code added. Copes with a link that
+    already has a ?query or a #fragment, and never adds the code twice."""
+    if not PROMO_CODE:
+        return link
+    from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
+    u = urlsplit(link)
+    q = [(k, v) for k, v in parse_qsl(u.query, keep_blank_values=True) if k != "prefilled_promo_code"]
+    q.append(("prefilled_promo_code", PROMO_CODE))
+    return urlunsplit((u.scheme, u.netloc, u.path, urlencode(q), u.fragment))
 
 
 def offered() -> list:
@@ -124,7 +147,7 @@ def _amount(written, n):
 
 
 CSS = """
-/* LAYOUT. Across the top, full width: the eyebrow and the quote. On a phone
+/* LAYOUT. Across the top, full width: the eyebrow and the opening line. On a phone
    everything then stacks: Join Us and the payment block, the bonus, then what
    is included. From 900px it is two columns: payment and bonus on the LEFT
    (they stay in view while the right side scrolls), the details on the RIGHT. */
@@ -142,7 +165,7 @@ CSS = """
 .jn .quote{margin:0;padding:2px 0 2px 20px;border-left:2px solid var(--gold);
  font:italic 500 clamp(1.15rem,4.6vw,1.6rem)/1.45 'Montserrat',system-ui,sans-serif;color:var(--cream);
  text-wrap:balance;max-width:34em}
-.jn .quote:before{content:'\\201C'}.jn .quote:after{content:'\\201D'}
+.jn .quote .g{color:var(--gold)}
 .jn h1,.jn .h2{margin:0 0 16px;font:600 clamp(1.35rem,4.8vw,1.7rem)/1.25 'Poppins',system-ui,sans-serif;
  letter-spacing:-.01em;color:var(--cream);text-wrap:balance}
 .jn .bonus{margin:18px 0 0;padding:18px 22px 20px;border:1px solid var(--border);border-left:2px solid var(--coral);
@@ -165,7 +188,7 @@ CSS = """
 .jn .price .then{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--border);
  font-size:1rem;color:var(--cream)}
 .jn .price .then b{font-weight:600;color:var(--cream)}
-.jn .pick{display:flex;align-items:center;gap:10px;margin:16px 0 0;font-size:.88rem;color:var(--slate)}
+.jn .pick{display:flex;flex-direction:column;align-items:flex-start;gap:7px;margin:16px 0 0;font-size:.82rem;color:var(--mist)}
 .jn .pick select{appearance:auto;background:var(--bg);color:var(--cream);border:1px solid var(--border);
  border-radius:2px;padding:9px 10px;font:600 .9rem/1 'Montserrat',system-ui,sans-serif;min-height:40px}
 .jn .pick select:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
@@ -225,7 +248,7 @@ def inner(e) -> str:
                       f'<p>{e(WORDS["bonus"])}</p></div>')
     ph_html = "".join(f'<p class="ph">{e(v)}</p>' for v in PLACEHOLDERS.values() if v)
     if ready:
-        btn = f'<a class="join" id="jn-join" href="{e(link0)}" rel="noopener">{e(BUTTON)}</a>'
+        btn = f'<a class="join" id="jn-join" href="{e(join_url(link0))}" rel="noopener">{e(BUTTON)}</a>'
         btn_note = ""
     else:
         btn = f'<a class="join" id="jn-join" aria-disabled="true">{e(BUTTON)}</a>'
@@ -234,7 +257,7 @@ def inner(e) -> str:
     return f"""  <div class="jn">
     <div class="jn-head">
       <p class="ey">{e(WORDS['eyebrow'])}</p>
-      <blockquote class="quote">{e(WORDS['quote'])}</blockquote>
+      <p class="quote">{e(WORDS['quote'])}<span class="g">{e(WORDS['quote_gold'])}</span></p>
     </div>
     <div class="jn-pay">
       <h1>{e(WORDS['heading'])}</h1>
@@ -266,6 +289,6 @@ def inner(e) -> str:
 
 def script() -> str:
     import json
-    prices = {r[0]: [r[1], r[2], r[3], r[4] if _has_link(r) else ""] for r in offered()}
+    prices = {r[0]: [r[1], r[2], r[3], join_url(r[4]) if _has_link(r) else ""] for r in offered()}
     return JS % dict(prices=json.dumps(prices, ensure_ascii=False),
                      countries=json.dumps(COUNTRY_CURRENCY))

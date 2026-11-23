@@ -1304,8 +1304,13 @@
      the next month: "November", "Registrations open now", and that month's theme
      from The Months Ahead. It takes the month after data-open-at. Add
      data-next-month="YYYY-MM" to name a different month, or data-next-month=""
-     to fall back to "date to be announced". -->
-<div id="rw-open" hidden
+     to fall back to "date to be announced".
+     CLOSED (added 23 Nov 2026). data-closed puts the page into the between-sessions
+     state before the date has passed: registrations for that session are closed,
+     the page names data-next-month (with its year), the buttons read "Get Notified"
+     and the "Registrations open now" lines go. Remove data-closed when the next
+     date is set. -->
+<div id="rw-open" hidden data-closed data-next-month="2027-01"
      data-open-at="2026-11-24T08:30:00+01:00"
      data-open-tz="08:30 CET"
      data-open-times="08:30 CET / 15:30 GMT+8"
@@ -1324,7 +1329,7 @@
     <p class="sub" data-r="near"><span>For the woman everyone comes to, at work and at home,</span><b>who finds it easier to keep going</b><b>than to ask for anything for herself.</b></p>
     <button class="btn" type="button" data-trw-modal data-r="mid">Come To The Open Session</button>
     <p class="theme js-theme-block" data-r="far"><span class="theme-lab js-theme-lab" style="display:none">This month</span><span class="js-open-theme">Personal Needs for Giving to Yourself First</span></p>
-    <div class="next" data-r="far">Next open session<span class="sep">&nbsp;&middot;&nbsp;</span><span class="nd"><span class="js-open-date">Tuesday 24 November</span><span class="js-open-tz"> &nbsp;&middot;&nbsp; 08:30 CET</span></span><span class="cnt js-open-count"></span></div>
+    <div class="next" data-r="far">Next open session<span class="sep">&nbsp;&middot;&nbsp;</span><span class="nd"><span class="js-open-date">January 2027</span><span class="js-open-tz"> &nbsp;&middot;&nbsp; 08:30 CET</span></span><span class="cnt js-open-count"></span></div>
 </div>
   <div class="cue">&darr;</div>
 </section>
@@ -1549,7 +1554,7 @@
     <div class="pricegrid" data-r="mid">
     <div class="opencard">
       <div class="free">Free</div>
-      <div class="when"><span class="js-open-date">Tuesday 24 November</span><span class="js-open-times">08:30 CET / 15:30 GMT+8</span></div>
+      <div class="when"><span class="js-open-date">January 2027</span><span class="js-open-times">08:30 CET / 15:30 GMT+8</span></div>
       <div class="where">Online, wherever you are</div>
       <p class="cnt js-open-count">Registrations open now</p>
       <p class="lede">Come, sit in it, and decide from the session rather than from this page.</p>
@@ -1609,7 +1614,7 @@
   <div class="in">
     <p class="ey" data-r="far">Ready?</p>
     <h2 data-r="near" class="twoline">Figure out what you want,<span>and ask for it in four weeks.</span></h2>
-    <p class="when" data-r="mid">Next open session <span class="js-open-date" data-fallback="is being confirmed" data-pending="is in {month}. Registrations are open now">Tuesday 24 November</span>. Free to attend, short application form first.</p>
+    <p class="when" data-r="mid">Next open session <span class="js-open-date" data-fallback="is being confirmed" data-pending="is in {month}">is in January 2027</span>. Free to attend, short application form first.</p>
     <button class="btn" type="button" data-trw-modal data-r="mid">Register For The Open Session</button>
   </div>
 </section>
@@ -2025,7 +2030,7 @@
     var now = new Date();
     var todayUTC = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
     var days = Math.round((evUTC - todayUTC) / 86400000);
-    var past = days < 0;
+    var past = days < 0 || src.hasAttribute('data-closed');
 
     var pretty = new Date(evUTC + 43200000).toLocaleDateString('en-GB', {
       weekday:'long', day:'numeric', month:'long', timeZone:'UTC'
@@ -2048,7 +2053,7 @@
       var nowKey = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2);
       if(pm && nk > m[1] + '-' + m[2] && nk >= nowKey){
         pend = { key: nk, name: new Date(Date.UTC(+pm[1], +pm[2] - 1, 15))
-                   .toLocaleDateString('en-GB', { month:'long', timeZone:'UTC' }) };
+                   .toLocaleDateString('en-GB', { month:'long', year:'numeric', timeZone:'UTC' }) };
       }
     }
 
@@ -2070,8 +2075,13 @@
     set('.js-open-tz', ' \u00a0\u00b7\u00a0 ' + (src.getAttribute('data-open-tz') || ''), true);
     set('.js-open-times', src.getAttribute('data-open-times') || '', true);
     if(pend){
+      /* Between sessions: no "Registrations open now", and the buttons ask her
+         to be told when the date is set. The form still opens and GHL holds
+         her on the waitlist. */
       var cnts = document.querySelectorAll('.js-open-count');
-      for(var c = 0; c < cnts.length; c++){ cnts[c].textContent = 'Registrations open now'; }
+      for(var c = 0; c < cnts.length; c++){ cnts[c].textContent = ''; cnts[c].style.display = 'none'; }
+      var btns = document.querySelectorAll('button[data-trw-modal]');
+      for(var b = 0; b < btns.length; b++){ btns[b].textContent = 'Get Notified'; }
     } else {
       set('.js-open-count',
           days > 1 ? 'In ' + days + ' days' : days === 1 ? 'Tomorrow' : days === 0 ? 'Today' : '',

@@ -85,13 +85,12 @@ WORDS = dict(
 
 PLACEHOLDERS = dict()
 
-# Plain labels and the one line about Stripe. Not sales copy.
+# Plain labels. Not sales copy.
 LABEL_FIRST = "First month"
 LABEL_THEN = "Then"
 LABEL_MONTH = "a month"
 LABEL_PICKER = "Pay in"
 BUTTON = "Join"
-BILLED_LINE = "You are billed in the currency you choose, the same amount every month."
 
 
 def _has_link(row) -> bool:
@@ -176,7 +175,6 @@ CSS = """
 .jn .join:hover,.jn .join:focus-visible{background:var(--coral-lift);transform:translateY(-2px)}
 .jn .join:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .jn .join[aria-disabled=true]{background:#3A4660;color:#B1BFD7;pointer-events:none;transform:none}
-.jn .billed{margin:10px 0 0;font-size:.88rem;line-height:1.55;color:var(--slate)}
 .jn .terms{margin:22px 0 0;font-size:.95rem;line-height:1.65;color:var(--slate)}
 .jn .ph{margin:18px 0 0;padding:12px 14px;border:1px dashed var(--gold);color:var(--gold);
  font-size:.9rem;line-height:1.5}
@@ -244,7 +242,6 @@ def inner(e) -> str:
         <div class="row"><span class="lab">{e(LABEL_FIRST)}</span><span class="first" id="jn-first">{e(_amount(written0, first0))}</span></div>
         <p class="then">{e(LABEL_THEN)} <b id="jn-month">{e(_amount(written0, month0))}</b> {e(LABEL_MONTH)}</p>
         <label class="pick"><span>{e(LABEL_PICKER)}</span><select id="jn-cur" aria-label="{e(LABEL_PICKER)}">{opts}</select></label>
-        <p class="billed">{e(BILLED_LINE)}</p>
         <!-- THE CHECKOUT SLOT. Today it holds the Join button, a plain link to
              the chosen currency's Payment Link. An embedded Stripe form would
              go in this div in place of the button (it needs a checkout session

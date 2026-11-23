@@ -16,9 +16,12 @@ asset map lists them, so a --local build serves our own copies -- or as
 """
 
 import html
+import os
 import pathlib
 import re
 from datetime import date
+
+import rw_join
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
 
@@ -198,7 +201,17 @@ NOT_FOUND = dict(
     primary=("Go to the home page", "/"),
 )
 
-PAGES = [TESTIMONIAL_BRIAN, TTL_THANKS, RW_THANKS, RM_THANKS, SUB_THANKS, NOT_FOUND]
+# JOINING THE RECONNECTED WOMAN (23 Nov 2026). The page Daniel drops in the
+# session chat. Prices, the Stripe link and the wording all live in
+# rw_join.py; this only gives the page its address and its <head>.
+RW_JOIN = dict(
+    path="/the-reconnected-woman/join",
+    title="Join | The Reconnected Woman",
+    desc="Join The Reconnected Woman.",
+    custom=rw_join,
+)
+
+PAGES = [TESTIMONIAL_BRIAN, TTL_THANKS, RW_THANKS, RM_THANKS, SUB_THANKS, NOT_FOUND, RW_JOIN]
 
 LEAD_JS = """<script>
 (function(){
@@ -289,6 +302,8 @@ main{flex:1;display:flex;align-items:center;justify-content:center;
 
 def _inner(p, e) -> str:
     """A video page (the testimonial) or a message page (a thank-you)."""
+    if p.get("custom"):
+        return p["custom"].inner(e)
     if p.get("video"):
         return f"""  <div class="tm">
     <h1>{e(p['heading'])}</h1>
@@ -334,6 +349,8 @@ def _inner(p, e) -> str:
 
 
 def _lead_js(p) -> str:
+    if p.get("custom"):
+        return p["custom"].script()
     if not p.get("lead"):
         return ""
     extra = (DATE_JS if p.get("open_session") else "") + (BACK_JS if p.get("back_to_article") else "")
@@ -366,7 +383,7 @@ def render(ctx, p) -> str:
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
-<style>{CSS}</style>
+<style>{CSS}{p['custom'].CSS if p.get('custom') else ''}</style>
 {ctx['analytics_head']}
 </head>
 <body>
@@ -387,6 +404,15 @@ def render(ctx, p) -> str:
 def build(ctx, dist, localise=None) -> list:
     """Write every page in PAGES. Returns the paths written."""
     written = []
+    # A page with placeholders left in it must never reach the live site.
+    # Cloudflare Pages sets CF_PAGES_BRANCH; on any other branch (a preview)
+    # and on a local build these are warnings, so the page can be looked at.
+    live = os.environ.get("CF_PAGES_BRANCH") == "main"
+    for p in PAGES:
+        for problem in (p["custom"].check(live) if p.get("custom") else []):
+            if live:
+                raise SystemExit("ERROR: " + problem + ". Nothing was published.")
+            print("WARNING  " + problem)
     for p in PAGES:
         text = render(ctx, p)
         if localise:

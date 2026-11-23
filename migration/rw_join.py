@@ -29,6 +29,7 @@ PRICES = [
     ("USD", "US$",       139,     99,  "https://buy.stripe.com/cNicN4fni2JFbHVgZ6dIA0A"),
     ("AUD", "A$",        199,    149,  "https://buy.stripe.com/3cIbJ03EA0Bxh2f108dIA0B"),
     ("ZAR", "R",        2299,   1699,  "https://buy.stripe.com/28EeVc2Awac76nB38gdIA0C"),
+    ("DKK", "DKK ",      899,    669,  "https://buy.stripe.com/7sY8wOgrmdoj5jxbEMdIA0D"),
     # Not offered until each has its own link:
     ("CAD", "CA$",       189,    139,  "PLACEHOLDER_STRIPE_LINK_CAD"),
     ("NZD", "NZ$",       239,    179,  "PLACEHOLDER_STRIPE_LINK_NZD"),
@@ -48,7 +49,7 @@ PROMO_CODE = "FIRSTMONTH"
 # and any currency whose link is not set yet, gets EUR.
 COUNTRY_CURRENCY = {
     "AU": "AUD", "US": "USD", "GB": "GBP", "CA": "CAD",
-    "NZ": "NZD", "SG": "SGD", "CH": "CHF", "LI": "CHF", "ZA": "ZAR",
+    "NZ": "NZD", "SG": "SGD", "CH": "CHF", "LI": "CHF", "ZA": "ZAR", "DK": "DKK",
 }
 
 # ── WORDING ─────────────────────────────────────────────────────────────

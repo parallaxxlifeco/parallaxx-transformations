@@ -209,6 +209,9 @@ RW_JOIN = dict(
     title="Join | The Reconnected Woman",
     desc="Join The Reconnected Woman.",
     custom=rw_join,
+    # No site menu and no site footer (Daniel, 23 Nov 2026): nothing on this
+    # page leads away except Join. The analytics notice stays, as on every page.
+    bare=True,
 )
 
 PAGES = [TESTIMONIAL_BRIAN, TTL_THANKS, RW_THANKS, RM_THANKS, SUB_THANKS, NOT_FOUND, RW_JOIN]
@@ -364,6 +367,11 @@ def render(ctx, p) -> str:
     # A page written to a fixed file (the 404) has no address of its own.
     canon = "" if p.get("file") else f'<link rel="canonical" href="{canonical}">\n'
     ogurl = "" if p.get("file") else f'<meta property="og:url" content="{canonical}">\n'
+    bare = bool(p.get("bare"))
+    nav = "" if bare else "<parallaxx-nav></parallaxx-nav>\n"
+    foot = "" if bare else ('<parallaxx-footer></parallaxx-footer>\n'
+                            '<script src="/parallaxx-nav.js"></script>\n'
+                            '<script src="/parallaxx-footer.js"></script>\n')
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -386,15 +394,11 @@ def render(ctx, p) -> str:
 <style>{CSS}{p['custom'].CSS if p.get('custom') else ''}</style>
 {ctx['analytics_head']}
 </head>
-<body>
-<parallaxx-nav></parallaxx-nav>
-<main>
+<body{' class="bare"' if bare else ''}>
+{nav}<main>
 {_inner(p, e)}
 </main>
-<parallaxx-footer></parallaxx-footer>
-<script src="/parallaxx-nav.js"></script>
-<script src="/parallaxx-footer.js"></script>
-{ctx['analytics_body']}
+{foot}{ctx['analytics_body']}
 {_lead_js(p)}
 </body>
 </html>

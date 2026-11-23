@@ -2,8 +2,8 @@
 rw_join.py -- The Reconnected Woman: the page a woman joins from.
 
 One job: she picks her currency, sees the price in it, and goes to Stripe.
-Built by landing.py (so it is noindex, out of the sitemap, and carries the
-site's own nav, footer and analytics and nothing else). No form, and nothing
+Built by landing.py (so it is noindex and out of the sitemap). It carries no
+site menu and no site footer, only the site's own analytics. No form, and nothing
 is sent anywhere from this page: the button is a plain link to Stripe.
 
 EDIT THE ONE TABLE BELOW AND NOTHING ELSE FOR A PRICE OR LINK CHANGE.
@@ -158,8 +158,19 @@ CSS = """
  main{align-items:flex-start}
  .jn{max-width:1040px;column-gap:clamp(36px,5vw,72px);row-gap:clamp(34px,5vh,52px);
   grid-template-columns:minmax(0,380px) minmax(0,1fr);grid-template-areas:"head head" "pay det"}
- .jn-pay{align-self:start;position:sticky;top:104px}
+ .jn-pay{align-self:start;position:sticky;top:36px}
 }
+/* NO MENU AND NO FOOTER on this page, so the top padding that cleared the
+   fixed menu comes down. */
+body.bare main{padding-top:clamp(36px,7vh,72px)}
+/* THE ANALYTICS NOTICE, kept as on every page but quieter here: smaller
+   type, less padding, plainer buttons. Same words, same two choices. */
+body.bare #px-consent{font-size:12px;line-height:1.45;padding:9px 14px;gap:6px 12px;
+ background:#04122A;color:#B1BFD7;box-shadow:none;border-top:1px solid #1B2C46}
+body.bare #px-consent a{color:#B1BFD7}
+body.bare #px-consent button{padding:5px 12px;border-color:#7C89A3;color:#B1BFD7}
+body.bare #px-consent button.px-yes{background:transparent;color:#F1ECE1;border-color:#B1BFD7}
+
 .jn .ey{margin:0 0 14px;font:800 .62rem/1.4 'Poppins',system-ui,sans-serif;letter-spacing:.24em;
  text-transform:uppercase;color:var(--gold)}
 .jn .quote{margin:0;padding:2px 0 2px 20px;border-left:2px solid var(--gold);

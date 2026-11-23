@@ -24,15 +24,16 @@ EDIT THE ONE TABLE BELOW AND NOTHING ELSE FOR A PRICE OR LINK CHANGE.
 # have a link before the page can go live: it is the fallback.
 PRICES = [
     # code   written   monthly  first month  Stripe Payment Link
-    ("EUR", "€",         119,     89,  "PLACEHOLDER_STRIPE_LINK_EUR"),
-    ("AUD", "A$",        199,    149,  "PLACEHOLDER_STRIPE_LINK_AUD"),
-    ("USD", "US$",       139,     99,  "PLACEHOLDER_STRIPE_LINK_USD"),
-    ("GBP", "£",          99,     75,  "PLACEHOLDER_STRIPE_LINK_GBP"),
+    ("EUR", "€",         119,     89,  "https://buy.stripe.com/7sY7sKfniesn4ft24cdIA0y"),
+    ("GBP", "£",          99,     75,  "https://buy.stripe.com/aFaeVcdfabgbcLZ24cdIA0z"),
+    ("USD", "US$",       139,     99,  "https://buy.stripe.com/cNicN4fni2JFbHVgZ6dIA0A"),
+    ("AUD", "A$",        199,    149,  "https://buy.stripe.com/3cIbJ03EA0Bxh2f108dIA0B"),
+    ("ZAR", "R",        2299,   1699,  "https://buy.stripe.com/28EeVc2Awac76nB38gdIA0C"),
+    # Not offered until each has its own link:
     ("CAD", "CA$",       189,    139,  "PLACEHOLDER_STRIPE_LINK_CAD"),
     ("NZD", "NZ$",       239,    179,  "PLACEHOLDER_STRIPE_LINK_NZD"),
     ("SGD", "S$",        175,    129,  "PLACEHOLDER_STRIPE_LINK_SGD"),
     ("CHF", "CHF ",      109,     85,  "PLACEHOLDER_STRIPE_LINK_CHF"),
-    ("ZAR", "R",        2299,   1699,  "PLACEHOLDER_STRIPE_LINK_ZAR"),
 ]
 
 # ── THE FIRST-MONTH PROMOTION CODE ──────────────────────────────────────

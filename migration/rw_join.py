@@ -119,18 +119,30 @@ def _amount(written, n):
 
 
 CSS = """
-.jn{width:100%;max-width:560px;text-align:left}
+/* LAYOUT. On a phone it stacks: heading and its one line, the payment block,
+   then the details. From 900px it is two columns: payment on the LEFT (it
+   stays in view while the right side scrolls), everything else on the RIGHT. */
+.jn{width:100%;max-width:560px;text-align:left;display:grid;gap:26px;
+ grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "pay" "det"}
+.jn-head{grid-area:head}.jn-pay{grid-area:pay}.jn-det{grid-area:det}
+@media(min-width:900px){
+ main{align-items:flex-start}
+ .jn{max-width:1040px;column-gap:clamp(36px,5vw,72px);row-gap:0;
+  grid-template-columns:minmax(0,380px) minmax(0,1fr);grid-template-areas:"pay head" "pay det"}
+ .jn-pay{align-self:start;position:sticky;top:112px}
+ .jn-det{margin-top:22px}
+}
 .jn .ey{margin:0 0 13px;font:800 .62rem/1.4 'Poppins',system-ui,sans-serif;letter-spacing:.24em;
  text-transform:uppercase;color:var(--gold)}
 .jn h1{margin:0 0 10px;font:600 clamp(1.5rem,5.4vw,2rem)/1.22 'Poppins',system-ui,sans-serif;
  letter-spacing:-.01em;color:var(--cream);text-wrap:balance}
 .jn .lede{margin:0;color:var(--mist);font-size:1rem;line-height:1.68}
-.jn .inc{list-style:none;margin:22px 0 0;padding:0}
+.jn .inc{list-style:none;margin:0;padding:0}
 .jn .inc li{position:relative;padding:9px 0 9px 26px;border-top:1px solid var(--border);
  font-size:1rem;color:var(--mist)}
 .jn .inc li:last-child{border-bottom:1px solid var(--border)}
 .jn .inc li:before{content:'';position:absolute;left:0;top:1.35em;width:11px;height:1px;background:var(--gold)}
-.jn .price{margin:28px 0 0;padding:22px 22px 24px;background:#0A1D3C;border:1px solid var(--border);
+.jn .price{margin:0;padding:22px 22px 24px;background:#0A1D3C;border:1px solid var(--border);
  border-top:2px solid var(--gold)}
 .jn .price .row{display:flex;align-items:baseline;justify-content:space-between;gap:14px}
 .jn .price .lab{font:700 .68rem/1.4 'Poppins',system-ui,sans-serif;letter-spacing:.16em;
@@ -157,7 +169,6 @@ CSS = """
 .jn .faq{margin:30px 0 0;border-top:1px solid var(--border)}
 .jn .faq h2{margin:16px 0 4px;font:600 1rem/1.35 'Poppins',system-ui,sans-serif;color:var(--cream)}
 .jn .faq p{margin:0 0 14px;font-size:.97rem;line-height:1.6;color:var(--mist)}
-@media(min-width:700px){.jn .join{font-size:.86rem}}
 """
 
 # Picks the currency from the browser's language list (the first entry that
@@ -209,21 +220,34 @@ def inner(e) -> str:
         btn_note = ('<p class="ph">PLACEHOLDER: no Stripe Payment Link is set yet, so this button is '
                     'switched off. Once links are in, only the currencies that have one are offered.</p>')
     return f"""  <div class="jn">
-    <p class="ey">{e(WORDS['eyebrow'])}</p>
-    <h1>{e(WORDS['heading'])}</h1>
-    <p class="lede">{e(WORDS['lede'])}</p>
-    <ul class="inc">{inc}</ul>
-    <div class="price">
-      <div class="row"><span class="lab">{e(LABEL_FIRST)}</span><span class="first" id="jn-first">{e(_amount(written0, first0))}</span></div>
-      <p class="then">{e(LABEL_THEN)} <b id="jn-month">{e(_amount(written0, month0))}</b> {e(LABEL_MONTH)}</p>
-      <label class="pick"><span>{e(LABEL_PICKER)}</span><select id="jn-cur" aria-label="{e(LABEL_PICKER)}">{opts}</select></label>
-      <p class="billed">{e(BILLED_LINE)}</p>
-      {btn}
-      {btn_note}
+    <div class="jn-head">
+      <p class="ey">{e(WORDS['eyebrow'])}</p>
+      <h1>{e(WORDS['heading'])}</h1>
+      <p class="lede">{e(WORDS['lede'])}</p>
     </div>
-    {bonus_html}
-    <p class="terms">{e(WORDS['terms'])}</p>
-    <div class="faq">{faq}</div>
+    <div class="jn-pay">
+      <div class="price">
+        <div class="row"><span class="lab">{e(LABEL_FIRST)}</span><span class="first" id="jn-first">{e(_amount(written0, first0))}</span></div>
+        <p class="then">{e(LABEL_THEN)} <b id="jn-month">{e(_amount(written0, month0))}</b> {e(LABEL_MONTH)}</p>
+        <label class="pick"><span>{e(LABEL_PICKER)}</span><select id="jn-cur" aria-label="{e(LABEL_PICKER)}">{opts}</select></label>
+        <p class="billed">{e(BILLED_LINE)}</p>
+        <!-- THE CHECKOUT SLOT. Today it holds the Join button, a plain link to
+             the chosen currency's Payment Link. An embedded Stripe form would
+             go in this div in place of the button (it needs a checkout session
+             made by a server, so it is not here yet). The column is 380px wide
+             on a desktop and the full width on a phone. -->
+        <div class="jn-checkout" id="jn-checkout">
+          {btn}
+          {btn_note}
+        </div>
+      </div>
+    </div>
+    <div class="jn-det">
+      <ul class="inc">{inc}</ul>
+      <p class="terms">{e(WORDS['terms'])}</p>
+      {bonus_html}
+      <div class="faq">{faq}</div>
+    </div>
   </div>"""
 
 

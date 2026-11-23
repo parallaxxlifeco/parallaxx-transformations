@@ -32,37 +32,47 @@ PRICES = [
     ("NZD", "NZ$",       239,    179,  "PLACEHOLDER_STRIPE_LINK_NZD"),
     ("SGD", "S$",        175,    129,  "PLACEHOLDER_STRIPE_LINK_SGD"),
     ("CHF", "CHF ",      109,     85,  "PLACEHOLDER_STRIPE_LINK_CHF"),
+    ("ZAR", "R",        2299,   1699,  "PLACEHOLDER_STRIPE_LINK_ZAR"),
 ]
 
 # Which currency a browser's country gets by default. Anywhere not listed,
 # and any currency whose link is not set yet, gets EUR.
 COUNTRY_CURRENCY = {
     "AU": "AUD", "US": "USD", "GB": "GBP", "CA": "CAD",
-    "NZ": "NZD", "SG": "SGD", "CH": "CHF", "LI": "CHF",
+    "NZ": "NZD", "SG": "SGD", "CH": "CHF", "LI": "CHF", "ZA": "ZAR",
 }
 
 # ── WORDING ─────────────────────────────────────────────────────────────
-# Everything in WORDS is Daniel's, lifted word for word from the Reconnected
-# Woman page (reconnected-woman-v10-preview.html). Anything he has not
-# written is in PLACEHOLDERS, shown on the page inside a dashed box, and the
-# live site refuses to build while one is left. Set a placeholder to "" to
-# drop that line from the page.
+# All of it is Daniel's, as he gave it on 23 Nov 2026 (the quote and the two
+# questions are from the Reconnected Woman page). Two spellings were his
+# typing put right, and he can reverse either: "monthly membership" (he typed
+# "month membership") and "accountability" (he typed "accountably").
+#
+# Anything he has NOT written goes in PLACEHOLDERS, is shown on the page in a
+# dashed box, and stops the live site building while it is left. There are
+# none at the moment.
 WORDS = dict(
     eyebrow="The Reconnected Woman",
-    heading="Stay, and the four weeks run like this.",
-    lede="Figure out what you want, ask for it, and get better results with less effort.",
+    # Across the top, above both columns, set as a quotation: the reminder of
+    # why she is joining.
+    quote="Figure out what you want, ask for it, and get better results with less effort.",
+    # The page's one h1, above the payment column.
+    heading="Join Us",
+    included_heading="Included in your monthly membership",
     includes=[
-        "Four sessions a month, each month a new theme with its own workbook",
-        "An intention for your week, every week, and we keep you to it",
-        "Live facilitation and hot seat work",
-        "The WhatsApp group with the other women between sessions",
+        "Four unique weekly sessions together",
+        "Intention and accountability to ensure your progress sticks",
+        "Live facilitation and hot seat coaching opportunities",
+        "Whatsapp community support between sessions",
         "Complimentary 1:1 call on week 6",
     ],
-    # His sentence on the page opens "€119 a month, and your membership price
-    # is grandfathered." The amount is in the price block here, so it starts
-    # at "Your membership price".
-    terms="Your membership price is grandfathered. It never increases as long as you "
+    terms="Your joining membership price is saved and never increases as long as you "
           "stay. Memberships roll over monthly. Cancel anytime.",
+    # Under the payment column. Set bonus_heading to "" to drop the whole box.
+    bonus_heading="ACTION TAKER BONUS",
+    bonus="The first 3 registrations in will be gifted a personalised accelerator 1:1 "
+          "with Daniel designed to fast track your first month results. ACT NOW - "
+          "limited to 3 spots only.",
     faq=[
         ("Can I cancel?",
          "Yes, any time. It’s month to month, and your membership runs to the end of "
@@ -73,11 +83,7 @@ WORDS = dict(
     ],
 )
 
-PLACEHOLDERS = dict(
-    # The bonus for joining straight after the open session.
-    bonus="PLACEHOLDER: Daniel’s line about the bonus personal 1:1 with him for "
-          "joining right away.",
-)
+PLACEHOLDERS = dict()
 
 # Plain labels and the one line about Stripe. Not sales copy.
 LABEL_FIRST = "First month"
@@ -119,24 +125,32 @@ def _amount(written, n):
 
 
 CSS = """
-/* LAYOUT. On a phone it stacks: heading and its one line, the payment block,
-   then the details. From 900px it is two columns: payment on the LEFT (it
-   stays in view while the right side scrolls), everything else on the RIGHT. */
-.jn{width:100%;max-width:560px;text-align:left;display:grid;gap:26px;
+/* LAYOUT. Across the top, full width: the eyebrow and the quote. On a phone
+   everything then stacks: Join Us and the payment block, the bonus, then what
+   is included. From 900px it is two columns: payment and bonus on the LEFT
+   (they stay in view while the right side scrolls), the details on the RIGHT. */
+.jn{width:100%;max-width:560px;text-align:left;display:grid;gap:28px;
  grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "pay" "det"}
 .jn-head{grid-area:head}.jn-pay{grid-area:pay}.jn-det{grid-area:det}
 @media(min-width:900px){
  main{align-items:flex-start}
- .jn{max-width:1040px;column-gap:clamp(36px,5vw,72px);row-gap:0;
-  grid-template-columns:minmax(0,380px) minmax(0,1fr);grid-template-areas:"pay head" "pay det"}
- .jn-pay{align-self:start;position:sticky;top:112px}
- .jn-det{margin-top:22px}
+ .jn{max-width:1040px;column-gap:clamp(36px,5vw,72px);row-gap:clamp(34px,5vh,52px);
+  grid-template-columns:minmax(0,380px) minmax(0,1fr);grid-template-areas:"head head" "pay det"}
+ .jn-pay{align-self:start;position:sticky;top:104px}
 }
-.jn .ey{margin:0 0 13px;font:800 .62rem/1.4 'Poppins',system-ui,sans-serif;letter-spacing:.24em;
+.jn .ey{margin:0 0 14px;font:800 .62rem/1.4 'Poppins',system-ui,sans-serif;letter-spacing:.24em;
  text-transform:uppercase;color:var(--gold)}
-.jn h1{margin:0 0 10px;font:600 clamp(1.5rem,5.4vw,2rem)/1.22 'Poppins',system-ui,sans-serif;
+.jn .quote{margin:0;padding:2px 0 2px 20px;border-left:2px solid var(--gold);
+ font:italic 500 clamp(1.15rem,4.6vw,1.6rem)/1.45 'Montserrat',system-ui,sans-serif;color:var(--cream);
+ text-wrap:balance;max-width:34em}
+.jn .quote:before{content:'\\201C'}.jn .quote:after{content:'\\201D'}
+.jn h1,.jn .h2{margin:0 0 16px;font:600 clamp(1.35rem,4.8vw,1.7rem)/1.25 'Poppins',system-ui,sans-serif;
  letter-spacing:-.01em;color:var(--cream);text-wrap:balance}
-.jn .lede{margin:0;color:var(--mist);font-size:1rem;line-height:1.68}
+.jn .bonus{margin:18px 0 0;padding:18px 22px 20px;border:1px solid var(--border);border-left:2px solid var(--coral);
+ background:rgba(10,29,60,.65)}
+.jn .bonus h2{margin:0 0 8px;font:800 .68rem/1.4 'Poppins',system-ui,sans-serif;letter-spacing:.2em;
+ text-transform:uppercase;color:var(--gold)}
+.jn .bonus p{margin:0;font-size:.95rem;line-height:1.6;color:var(--mist)}
 .jn .inc{list-style:none;margin:0;padding:0}
 .jn .inc li{position:relative;padding:9px 0 9px 26px;border-top:1px solid var(--border);
  font-size:1rem;color:var(--mist)}
@@ -207,11 +221,11 @@ def inner(e) -> str:
     inc = "".join(f"<li>{e(x)}</li>" for x in WORDS["includes"])
     opts = "".join(f'<option value="{e(r[0])}">{e(r[0])}</option>' for r in rows)
     faq = "".join(f"<h2>{e(q)}</h2><p>{e(a)}</p>" for q, a in WORDS["faq"])
-    bonus = PLACEHOLDERS.get("bonus", "")
     bonus_html = ""
-    if bonus:
-        cls = "ph" if "PLACEHOLDER" in bonus else "terms"
-        bonus_html = f'<p class="{cls}">{e(bonus)}</p>'
+    if WORDS.get("bonus_heading"):
+        bonus_html = (f'<div class="bonus"><h2>{e(WORDS["bonus_heading"])}</h2>'
+                      f'<p>{e(WORDS["bonus"])}</p></div>')
+    ph_html = "".join(f'<p class="ph">{e(v)}</p>' for v in PLACEHOLDERS.values() if v)
     if ready:
         btn = f'<a class="join" id="jn-join" href="{e(link0)}" rel="noopener">{e(BUTTON)}</a>'
         btn_note = ""
@@ -222,10 +236,10 @@ def inner(e) -> str:
     return f"""  <div class="jn">
     <div class="jn-head">
       <p class="ey">{e(WORDS['eyebrow'])}</p>
-      <h1>{e(WORDS['heading'])}</h1>
-      <p class="lede">{e(WORDS['lede'])}</p>
+      <blockquote class="quote">{e(WORDS['quote'])}</blockquote>
     </div>
     <div class="jn-pay">
+      <h1>{e(WORDS['heading'])}</h1>
       <div class="price">
         <div class="row"><span class="lab">{e(LABEL_FIRST)}</span><span class="first" id="jn-first">{e(_amount(written0, first0))}</span></div>
         <p class="then">{e(LABEL_THEN)} <b id="jn-month">{e(_amount(written0, month0))}</b> {e(LABEL_MONTH)}</p>
@@ -241,11 +255,13 @@ def inner(e) -> str:
           {btn_note}
         </div>
       </div>
+      {bonus_html}
     </div>
     <div class="jn-det">
+      <h2 class="h2">{e(WORDS['included_heading'])}</h2>
       <ul class="inc">{inc}</ul>
       <p class="terms">{e(WORDS['terms'])}</p>
-      {bonus_html}
+      {ph_html}
       <div class="faq">{faq}</div>
     </div>
   </div>"""

@@ -81,7 +81,8 @@ if _m:
     _texts = re.findall(r'class="js-open-date"[^>]*>([^<]*)<', HTML)
     if len(_texts) != 3:
         raise SystemExit("FAIL: expected 3 .js-open-date elements, found %d" % len(_texts))
-    if _d >= datetime.date.today():
+    _closed = 'data-closed' in re.search(r'<div id="rw-open"[^>]*>', HTML).group(0)
+    if _d >= datetime.date.today() and not _closed:
         # A live date: every fallback must name it.
         if any(t != _want for t in _texts):
             raise SystemExit(

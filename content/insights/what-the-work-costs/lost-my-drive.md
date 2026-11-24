@@ -105,4 +105,4 @@ If you've spent years being the one who delivers, you already know how to show u
 
 And it goes better with a few others around you who'll ask what you did with your week, even when the answer is not much, and who are interested in what you're passionate about.
 
-The Reconnected Man and The Reconnected Woman are our groups where we have these conversations together.
+[The Reconnected Man](/the-reconnected-man) and [The Reconnected Woman](/the-reconnected-woman) are our groups where we have these conversations together.

@@ -8,7 +8,7 @@ card: Being healed doesn't mean you don't cry anymore.
 answer: Because crying isn't the sign of whether you healed. It means the feeling is still moving, and it often comes weeks after the breakup rather than on the day. Healed is knowing how to respond when it comes, and being alright with yourself as you are. Trying to make the crying stop is what keeps it running.
 description: Daniel Lawson on why the tears keep coming weeks after a breakup, what being healed means in practice, and what to do the week it hits.
 published: 2026-11-06
-updated: 2026-11-06
+updated: 2026-11-24
 sources: RM-S6-040, RM-S6-041, RM-S6-042, RM-S6-055, RM-S6-058, RM-S6-106, RM-S7-030, RM-S7-118, RM-S7-119, DL-351, RW-W10-233, RW-W10-234, RW-W10-236, RW-W10-237, RW-W10-238, RW-W10-239, RW-W10-240, PW-10-112, PW-10-113, PW-11-017, PW-11-018, PW-11-028, PW-11-029, PW-11-031, PW-11-035, PW-12-004, PW-12-005, PW-12-006, PW-06-113
 offer: /the-reconnected-man, /the-reconnected-woman
 ---
@@ -20,7 +20,7 @@ Week three came and they were sad, borderline depressed, and shocked by it. Sitt
 > Because I feel like the first week after I broke up, I was like surfing a wave. I was on a real high. I felt motivated and inspired. And naively I thought that was it. I've grieved, I've moved on, time for the next chapter.
 > — a participant in a group I run, three weeks after the breakup
 
-They hadn't gone backwards. They had taken the good first week as the finish, so when the grief came they read it as having failed at the grieving.
+They hadn't gone backwards. They had taken the good first week as the finish, so when the grief came they interpreted it as having failed at the grieving.
 
 A lot of us think about healing that way. It means the crying stops. So the week you notice you're still crying over someone, the conclusion is already written, and it's about you.
 
@@ -28,10 +28,7 @@ A lot of us think about healing that way. It means the crying stops. So the week
 
 No. Healed is knowing how to respond when the feeling comes, and being alright with yourself while it does. The tears show up for a while either way, and what changes is what you do when they come.
 
-A woman in one of my groups had expected the reverse and said so. She thought healing would mean letting him go and not crying for him any more, and she found it ran the other way round.
-
-> I was thinking: when I heal, it means I'm going to let go of him and I'm not going to cry for him anymore. But what I realise now is the opposite. Being healed doesn't mean you don't cry anymore. It doesn't mean you don't get hurt anymore. It doesn't mean you're not going to get any disappointment by someone else. Heal is: you know how to respond, and acknowledge yourself being you, authentically.
-> — a woman in one of my groups
+A woman in one of my groups had expected the reverse and said so. She thought healing would mean letting him go and not crying for him any more, and she found it ran the other way round: "I was thinking: when I heal, it means I'm going to let go of him and I'm not going to cry for him anymore. But what I realise now is the opposite. Being healed doesn't mean you don't cry anymore. It doesn't mean you don't get hurt anymore. It doesn't mean you're not going to get any disappointment by someone else. Heal is: you know how to respond, and acknowledge yourself being you, authentically."
 
 Two things sit in that. You know how to respond. And you acknowledge yourself as you are, right then, while you're still in it. Both of those are available to you on a day you cry.
 
@@ -41,15 +38,9 @@ Two signals, and the crying is neither of them. The first is what the grief is a
 
 In my experience, the hardest thing about breakups was this. It wasn't grieving what was had, it's grieving what will never be. That grief is honest and it finishes. The delusion of how things could have been is the one that keeps going.
 
-The second signal came from the same woman, still in the middle of it.
+The second signal came from the same woman, still in the middle of it: "Even I really want someone, for now I still choose myself. This is so much improvement for myself."
 
-> Even I really want someone, for now I still choose myself. This is so much improvement for myself.
-> — a woman in one of my groups
-
-And she was clear about why that counted.
-
-> Having someone is not guaranteed that will fulfil me and make me happy, because the fulfilment and happiness is my responsibility.
-> — the same woman
+And she was clear about why that counted: "Having someone is not guaranteed that will fulfil me and make me happy, because the fulfilment and happiness is my responsibility."
 
 She cried through most of that call. Both of those were true on the same day.
 
@@ -88,10 +79,7 @@ That's the question I ask myself when a strong emotion comes. Not whether I shou
 
 Once it gets out, the reaction starts to go. It's been heard, it's been released, it's been expressed. The sequence underneath that is name it, own it, feel it, release it. The body already knows how to do it, and some of us are more disconnected from it than others.
 
-One more participant described how it runs.
-
-> First recognizing the emotion, and then just allowing it in without trying to limit the intensity of the feeling. And when you just allow it to come in and allow yourself to feel it fully, then it kind of goes away automatically.
-> — a group member
+A woman I worked with privately described how it runs: "First recognizing the emotion, and then just allowing it in without trying to limit the intensity of the feeling. And when you just allow it to come in and allow yourself to feel it fully, then it kind of goes away automatically."
 
 Through my own breakup I went at it from the other end. Every time the grief came I asked what I could do to turn it up to ten out of ten. It sounds wrong, and the more I turned it up the harder it got, and the more of it came out and was done with.
 
@@ -104,7 +92,7 @@ I said to a group member crying through a call once that I could see them doing 
 
 ### Is it normal to still be crying over my ex?
 
-Yes, and for longer than the timeline most of us have in our heads. It comes in waves rather than in a line. What's worth looking at is whether anybody else knows you're in it this week.
+Yes, and for longer than the timeline many of us have in our heads. It comes in waves rather than in a line. What's worth looking at is whether anybody else knows you're in it this week.
 
 ### Does crying mean you're healing?
 
@@ -126,4 +114,4 @@ What comes next is saying where you're at while you're still in it, rather than 
 
 And it goes better with somebody who asks how this week has been, and who isn't expecting you to be through it yet.
 
-The Reconnected Man and The Reconnected Woman are our groups where we have these conversations together.
+[The Reconnected Man](/the-reconnected-man) and [The Reconnected Woman](/the-reconnected-woman) are our groups where we have these conversations together.

@@ -19,7 +19,7 @@ import html
 import os
 import pathlib
 import re
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 
 import rw_join
 
@@ -105,14 +105,17 @@ TTL_THANKS = dict(
 # reconnected-woman-v10-preview.html, #rm-open in reconnected-man-v2-preview.html.
 #   data-open-at          the open-session date
 #   data-closed           registrations for that date are shut (waiting list)
-#   data-close-at         the one moment, the same for every visitor, at which
-#                         the page closes itself (e.g. 11 am Bali on the day)
+#   (the close time)      the page closes itself 2 HOURS BEFORE the session
+#                         starts, one moment for every visitor, worked out from
+#                         data-open-at. Nothing to set. Only on a page whose own
+#                         script does this (the men's, since 24 Nov 2026).
+#   data-close-at         optional: another close moment for this one date
 # The circle page, its buttons and its dates are built from it, and so is the
 # thank-you page here. There is nothing to edit on the thank-you page, ever:
 #
 #   OPEN       data-open-at is today or later, and no data-closed
 #              -> "You're registered", the date, "Check your inbox"
-#   WAITLIST   data-closed is there, OR data-close-at has been reached,
+#   WAITLIST   data-closed is there, OR the close time has been reached,
 #              OR the date has passed
 #              -> "You're on the list", "Date to be confirmed", "Watch your inbox"
 #
@@ -155,16 +158,37 @@ def _open_session(src, el_id):
     return dd.isoformat(), f"{dd:%A} {dd.day} {dd:%B}", (t[1] if t else ""), waitlist
 
 
+# The rule. The circle page's own script holds the same number.
+CLOSE_HOURS_BEFORE = 2
+_FULL_TIME = r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}"
+
+
+def _page_closes_itself(src) -> bool:
+    """Whether the circle page's own script closes the page at a close time."""
+    return "getAttribute('data-close-at')" in (REPO / src).read_text(encoding="utf-8")
+
+
 def _close_at(src, el_id) -> str:
-    """The switch's data-close-at, checked: a full time WITH its offset, or ''."""
+    """The moment the page closes itself, as a full time with its offset, or ''
+    for a page that only closes when its date has passed.
+
+    data-close-at if the switch has one; otherwise CLOSE_HOURS_BEFORE hours
+    before data-open-at, on a page whose script does the same."""
     a = _switch_tag((REPO / src).read_text(encoding="utf-8"), el_id, src)
     c = re.search(r'data-close-at="([^"]*)"', a)
-    if not c or not c[1]:
+    if c and c[1]:
+        if not re.fullmatch(_FULL_TIME, c[1]):
+            raise SystemExit(f"ERROR: data-close-at on #{el_id} in {src} must be a full time with "
+                             f"its offset, like 2026-12-02T11:00:00+08:00. It reads {c[1]!r}.")
+        return c[1]
+    if not _page_closes_itself(src):
         return ""
-    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}", c[1]):
-        raise SystemExit(f"ERROR: data-close-at on #{el_id} in {src} must be a full time with "
-                         f"its offset, like 2026-12-02T11:00:00+08:00. It reads {c[1]!r}.")
-    return c[1]
+    o = re.search(r'data-open-at="([^"]*)"', a)
+    if not o or not re.fullmatch(_FULL_TIME, o[1]):
+        raise SystemExit(f"ERROR: data-open-at on #{el_id} in {src} must be a full time with its "
+                         f"offset, like 2026-12-02T08:30:00+01:00, so the page can close "
+                         f"{CLOSE_HOURS_BEFORE} hours before it. It reads {o[1] if o else None!r}.")
+    return (datetime.fromisoformat(o[1]) - timedelta(hours=CLOSE_HOURS_BEFORE)).isoformat()
 
 
 def check_sessions(p, text) -> list:
@@ -184,9 +208,13 @@ def check_sessions(p, text) -> list:
             problems.append(f"#{el_id} in {src} and in {bundle} differ: rebuild the bundle "
                             f"so the page and its thank-you page agree")
     # 1b. A close time only works if the circle page's own script reads it.
-    if _close_at(src, el_id) and "getAttribute('data-close-at')" not in (REPO / src).read_text(encoding="utf-8"):
+    text_src = (REPO / src).read_text(encoding="utf-8")
+    if _close_at(src, el_id) and not _page_closes_itself(src):
         problems.append(f"#{el_id} in {src} has data-close-at but that page's script does not "
                         f"read it, so the page would not close itself")
+    if _page_closes_itself(src) and ("openAt - %d * 3600000" % CLOSE_HOURS_BEFORE) not in text_src:
+        problems.append(f"{src} and landing.py disagree on how many hours before the session "
+                        f"the page closes (landing.py says {CLOSE_HOURS_BEFORE})")
     # 2. The thank-you page itself.
     iso, pretty, times, waitlist = _open_session(src, el_id)
     body = html.unescape(re.sub(r"<[^>]+>", " ", text[text.index("<main>"):text.index("</main>")]))

@@ -231,12 +231,13 @@ are built by `migration/landing.py` from the one element on each circle page,
 | `data-open-at` today or later, no `data-closed` | the date, "Register" | "You're registered", the date, "Check your inbox" |
 | `data-closed`, or `data-close-at` reached, or the date has passed | next month, "Get Notified" | "You're on the list", "Date to be confirmed", "Watch your inbox" |
 
-`data-close-at` (24 Nov 2026) is the one moment, the same for every visitor
-wherever they are, at which the page closes itself ahead of the session, e.g.
-`data-close-at="2026-12-02T11:00:00+08:00"` for 11 am Bali on the day. Set a
-new one with each new date. The men's page reads it; the women's page script
-does not yet (one line to port, and the build fails if the attribute is put
-on `#rw-open` before that is done).
+**The close time (24 Nov 2026).** The men's page closes itself **2 hours
+before the session starts**, worked out from `data-open-at`, at one moment that
+is the same for every visitor wherever they are. Nothing to set: a new date
+carries its own close time. `data-close-at="2026-12-02T11:00:00+08:00"` (a full
+time with its offset) on the switch overrides the rule for that one date. The
+women's page does not do this yet: it needs two script lines ported to it, and
+the build fails if `data-close-at` is put on `#rw-open` before that is done.
 
 So the checklist for any date change, closing or reopening is:
 

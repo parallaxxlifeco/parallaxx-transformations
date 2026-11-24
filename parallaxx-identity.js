@@ -244,7 +244,7 @@
     <a class="id2-brand" href="https://www.parallaxxtransformations.com">PARALLAXX <span>//</span> TRANSFORMATIONS
       <small>by Daniel Lawson</small>
     </a>
-    <span class="id2-tag">Free 7-Day Challenge</span>
+    <span class="id2-tag">Free Challenge</span>
   </div>
 </header>
 
@@ -253,7 +253,7 @@
     <div class="id2-hero-inner id2-reveal">
       <p class="id2-hero-eyebrow">
         <span class="dash" aria-hidden="true"></span>
-        <span class="id2-eyebrow">A Free 7-Day Challenge</span>
+        <span class="id2-eyebrow">A Free Challenge</span>
       </p>
       <h1>Identity <span class="accent">2.0</span><br>Challenge</h1>
       <p class="id2-lede">Because the version of you that got you here is not yet the one to lead you to your <strong>meaning-driven impact.</strong></p>
@@ -295,8 +295,13 @@
     <div class="id2-quick id2-reveal">
       <div class="id2-quick-item">
         <span class="id2-quick-num">i.</span>
-        <span class="id2-quick-text">Daily Protocol
-          <small>A short, guided practice delivered each day for 7 days.</small></span>
+        <!-- 24 Nov 2026, Daniel: nothing is sent daily any more ("delivered each
+             day for 7 days - this isn't available anymore"); the course is ten
+             videos worked through at her own pace. The line under the heading is
+             his approved wording. THE HEADING IS A PLACEHOLDER CHOICE: he asked
+             for "Daily Protocol" to change and has not yet picked its words. -->
+        <span class="id2-quick-text">Identity Protocol
+          <small>Short, guided practices to work through at your own pace.</small></span>
       </div>
       <div class="id2-quick-item">
         <span class="id2-quick-num">ii.</span>
@@ -305,14 +310,9 @@
       </div>
     </div>
 
-    <div class="id2-bonus id2-reveal">
-      <span class="id2-bonus-label">Bonus</span>
-      <span class="id2-bonus-mark" aria-hidden="true">+</span>
-      <div>
-        <h3>1:1 Personal Identity Accelerator Call <span class="with">&mdash; with Daniel</span></h3>
-        <p>A private session to map your next-level identity blueprint and clear what&rsquo;s holding it offline. Included free when you enrol.</p>
-      </div>
-    </div>
+    <!-- The bonus 1:1 call block was here. Removed 24 Nov 2026: Daniel, asked
+         whether the call is still on offer, "No". Its styles (.id2-bonus) are
+         left in the stylesheet, unused, in case a bonus returns. -->
 
     <!-- THE BUTTON OPENS THE REGISTRATION FORM (24 Nov 2026, Daniel: "the
          registration button opens a simple form"). Until then it was a link to

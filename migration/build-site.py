@@ -472,13 +472,12 @@ ROUTES = [
         # Built here rather than at /identity-2-0 because this is the URL the
         # footer already links and the one any old inbound link points at.
         # Nothing to redirect and nothing to repoint.
-        title="Identity 2.0 Challenge | Free 7-Day Challenge | Parallaxx",
-        desc="A free seven day challenge with Daniel Lawson. A short guided practice "
-             "each day, action worksheets, and a one to one identity accelerator call "
-             "included when you enrol.",
+        title="Identity 2.0 Challenge | Free Challenge | Parallaxx",
+        desc="A free challenge with Daniel Lawson. Short guided practices at your own "
+             "pace, and action worksheets.",
         og_title="Identity 2.0 Challenge",
         og_desc="Because the version of you that got you here is not yet the one to "
-                "lead you to your meaning-driven impact. A free 7-day challenge.",
+                "lead you to your meaning-driven impact. A free challenge.",
         # [OPEN] Borrowing the home card. This page wants one of its own before
         # it is used in an ad or shared deliberately.
         og_img="img/og-home.jpg",

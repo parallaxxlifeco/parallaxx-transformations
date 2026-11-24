@@ -107,8 +107,8 @@ TTL_THANKS = dict(
 #   data-closed           registrations for that date are shut (waiting list)
 #   (the close time)      the page closes itself 2 HOURS BEFORE the session
 #                         starts, one moment for every visitor, worked out from
-#                         data-open-at. Nothing to set. Only on a page whose own
-#                         script does this (the men's, since 24 Nov 2026).
+#                         data-open-at. Nothing to set. Both circle pages do
+#                         this since 24 Nov 2026.
 #   data-close-at         optional: another close moment for this one date
 # The circle page, its buttons and its dates are built from it, and so is the
 # thank-you page here. There is nothing to edit on the thank-you page, ever:

@@ -2035,7 +2035,14 @@
     var now = new Date();
     var todayUTC = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
     var days = Math.round((evUTC - todayUTC) / 86400000);
-    var past = days < 0 || src.hasAttribute('data-closed');
+    /* CLOSE TIME (24 Nov 2026, same as the men's page). The page closes itself
+       2 hours before the session starts, worked out from data-open-at, at one
+       moment for every visitor. data-close-at (a full time with its offset)
+       overrides it for one date. CLOSE_HOURS_BEFORE in migration/landing.py
+       must say the same number. */
+    var closeAt = Date.parse(src.getAttribute('data-close-at') || '');
+    if(!closeAt){ var openAt = Date.parse(at); if(openAt) closeAt = openAt - 2 * 3600000; }
+    var past = days < 0 || src.hasAttribute('data-closed') || (closeAt && Date.now() >= closeAt);
 
     var pretty = new Date(evUTC + 43200000).toLocaleDateString('en-GB', {
       weekday:'long', day:'numeric', month:'long', timeZone:'UTC'

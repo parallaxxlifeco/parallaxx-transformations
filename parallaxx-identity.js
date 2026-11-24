@@ -187,6 +187,23 @@
     padding:22px 40px;background:var(--coral);color:#fff;border:1px solid var(--coral);
     transition:background .3s cubic-bezier(.2,.7,.2,1),transform .3s cubic-bezier(.2,.7,.2,1);
     position:relative}
+  button.id2-btn{cursor:pointer;-webkit-appearance:none;appearance:none}
+  /* THE REGISTRATION WINDOW (24 Nov 2026). Same construction as the window on
+     The Reconnected Man: a dark card with a gold top edge, the form inside. */
+  #id2-reg{position:fixed;inset:0;z-index:9999;display:flex;align-items:flex-start;justify-content:center;
+    padding:16px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  #id2-reg[hidden]{display:none}
+  .id2-reg-back{position:fixed;inset:0;background:rgba(2,8,20,.82)}
+  .id2-reg-box{position:relative;z-index:1;width:100%;max-width:560px;margin:auto;background:#0A1D3C;
+    border:1px solid #1B2C46;border-top:2px solid var(--gold);box-shadow:0 30px 80px rgba(0,0,0,.55)}
+  .id2-reg-head{display:flex;justify-content:space-between;align-items:center;padding:16px 22px;
+    border-bottom:1px solid #1B2C46}
+  .id2-reg-title{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;letter-spacing:.22em;
+    text-transform:uppercase;color:#F1ECE1}
+  .id2-reg-x{background:none;border:1px solid #1B2C46;color:#B1BFD7;width:34px;height:34px;font-size:20px;
+    line-height:1;cursor:pointer;transition:color .2s,border-color .2s}
+  .id2-reg-x:hover,.id2-reg-x:focus-visible{color:#F1ECE1;border-color:var(--gold);outline:none}
+  .id2-reg-body .px-form{padding:24px 22px 28px}
   .id2-btn:hover{background:var(--coral-lift);border-color:var(--coral-lift);transform:translateY(-2px)}
   .id2-btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
   .id2-btn svg{width:18px;height:10px;transition:transform .3s ease}
@@ -297,14 +314,17 @@
       </div>
     </div>
 
-    <!-- Enrol link: the GHL client portal on login.giveitallevent.com (same
-         offer ID as the old members.* address, which no longer resolves).
-         Confirmed by Daniel and checked live 22 Oct 2026. -->
+    <!-- THE BUTTON OPENS THE REGISTRATION FORM (24 Nov 2026, Daniel: "the
+         registration button opens a simple form"). Until then it was a link to
+         the GoHighLevel portal on login.giveitallevent.com, which is gone since
+         cutover. The form is the new system's own (identity-registration): on
+         submit it gives the course, emails the link, and sends the visitor to
+         /thanks/identity/. -->
     <div class="id2-cta-row id2-reveal">
-      <a class="id2-btn" href="https://login.giveitallevent.com/courses/offers/5976d5b4-1966-480b-af8e-d34fd095f865">
+      <button class="id2-btn" type="button" id="id2-open" aria-haspopup="dialog" aria-controls="id2-reg">
         <span>Begin the Challenge</span>
         <svg viewBox="0 0 18 10" fill="none" aria-hidden="true"><path d="M0 5h16M12 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"></path></svg>
-      </a>
+      </button>
       <span class="id2-cta-meta">Free &nbsp;&middot;&nbsp; Instant Access</span>
     </div>
   </div>
@@ -316,6 +336,39 @@
     <span class="id2-foot-meta">&copy; Parallaxx Transformations &middot; &copy; Parallaxx Life Co Pty Ltd</span>
   </div>
 </footer>
+
+<!-- THE REGISTRATION WINDOW. The form between the two markers is the new
+     system's snippet, pasted whole from the engine repo
+     (packages/forms/snippets/identity-registration.html). To change a field
+     or a word, change the form there, rebuild the snippet and paste it again;
+     do not edit it here. Its own script tag does not run inside the built
+     page, so the startup code below loads that script and connects the form. -->
+<div id="id2-reg" role="dialog" aria-modal="true" aria-label="Registration" hidden>
+  <div class="id2-reg-back" data-id2-close></div>
+  <div class="id2-reg-box">
+    <div class="id2-reg-head">
+      <span class="id2-reg-title">Registration</span>
+      <button class="id2-reg-x" type="button" aria-label="Close form" data-id2-close>&times;</button>
+    </div>
+    <div class="id2-reg-body">
+<!-- ENGINE SNIPPET START -->
+<!-- Parallaxx engine form: Your Identity 2.0 -->
+<style>.px-form[data-px-form="identity-registration"]{--bg:#061938;--bg-deep:#061938;--surface:#FFFFFF;--surface-raised:#FFFFFF;--surface-tint:#FFFFFF;--surface-radius:6px;--surface-pad:32px;--surface-shadow:none;--text:#F4F6FB;--text-body:#C4CEE0;--text-muted:#B1BFD7;--on-surface:#1E2A3D;--on-surface-muted:#5E6B85;--on-surface-faint:#6E7B94;--action:#FF501F;--on-action:#FFFFFF;--action-radius:5px;--badge-radius:4px;--action-pad:10px 20px;--action-font:Montserrat, system-ui, -apple-system, "Segoe UI", sans-serif;--action-weight:700;--action-size:14px;--accent:#E8C65F;--font-heading:Poppins, Montserrat, system-ui, -apple-system, "Segoe UI", sans-serif;--heading-weight:300;--heading-tracking:-0.02em;--font-body:Montserrat, system-ui, -apple-system, "Segoe UI", sans-serif;--body-weight:400;--body-size:16.5px;--line-height:1.65;--font-script:"Lumios Marker", "Permanent Marker", "Comic Sans MS", cursive;--script-weight:400;--label-font:Montserrat, system-ui, -apple-system, "Segoe UI", sans-serif;--label-weight:600;--label-size:14px;--label-color:#B1BFD7;--label-tracking:0.06em;--admin-page:#F4F6FB}.px-form[data-px-form="identity-registration"]{position:relative;display:flex;flex-direction:column;gap:18px;text-align:left;color:var(--text-body);font-family:var(--font-body);font-size:var(--body-size);line-height:var(--line-height)}.px-form[data-px-form="identity-registration"] *,.px-form[data-px-form="identity-registration"] *::before,.px-form[data-px-form="identity-registration"] *::after{box-sizing:border-box}.px-form[data-px-form="identity-registration"] [hidden]{display:none!important}.px-form[data-px-form="identity-registration"] .px-title{margin:0;font-family:var(--font-heading);font-weight:var(--heading-weight);letter-spacing:var(--heading-tracking);font-size:clamp(24px,6vw,30px);line-height:1.2;color:var(--text)}.px-form[data-px-form="identity-registration"] .px-intro p,.px-form[data-px-form="identity-registration"] .px-note p{margin:0 0 10px}.px-form[data-px-form="identity-registration"] .px-intro p:last-child,.px-form[data-px-form="identity-registration"] .px-note p:last-child{margin:0}.px-form[data-px-form="identity-registration"] .px-note{padding:14px 0 0;border-top:1px solid color-mix(in srgb,var(--text-muted) 35%,transparent)}.px-form[data-px-form="identity-registration"] .px-field{margin:0;padding:0;border:0;min-width:0}.px-form[data-px-form="identity-registration"] .px-field>label,.px-form[data-px-form="identity-registration"] legend{display:block;margin:0 0 6px;padding:0;font-family:var(--label-font);font-weight:var(--label-weight);font-size:15px;line-height:1.4;color:var(--text)}.px-form[data-px-form="identity-registration"] .px-required{color:var(--text-muted)}.px-form[data-px-form="identity-registration"] .px-help{display:block;margin:-2px 0 8px;color:var(--text-muted);font-size:14px;line-height:1.45}.px-form[data-px-form="identity-registration"] input[type=text],.px-form[data-px-form="identity-registration"] input[type=email],.px-form[data-px-form="identity-registration"] input[type=tel],.px-form[data-px-form="identity-registration"] input[type=file],.px-form[data-px-form="identity-registration"] select,.px-form[data-px-form="identity-registration"] textarea{display:block;width:100%;min-height:48px;margin:0;padding:11px 14px;background:transparent;color:var(--text);border:1px solid color-mix(in srgb,var(--text-muted) 70%,transparent);border-radius:var(--surface-radius);font:inherit;font-size:16px;box-shadow:none}.px-form[data-px-form="identity-registration"] input[type=file]{padding:10px}.px-form[data-px-form="identity-registration"] select{appearance:auto}.px-form[data-px-form="identity-registration"] textarea{min-height:132px;resize:vertical}.px-form[data-px-form="identity-registration"] input::placeholder,.px-form[data-px-form="identity-registration"] textarea::placeholder{color:var(--text-muted);opacity:1}.px-form[data-px-form="identity-registration"] input:focus,.px-form[data-px-form="identity-registration"] select:focus,.px-form[data-px-form="identity-registration"] textarea:focus{outline:2px solid var(--action);outline-offset:1px;border-color:var(--action)}.px-form[data-px-form="identity-registration"] input[type=checkbox],.px-form[data-px-form="identity-registration"] input[type=radio]{width:20px;height:20px;margin:2px 0 0;flex:0 0 auto;accent-color:var(--action)}.px-form[data-px-form="identity-registration"] .px-field>.px-option,.px-form[data-px-form="identity-registration"] .px-field-checkbox>label{display:flex;gap:12px;align-items:flex-start;min-height:44px;padding:4px 0;font-family:var(--font-body);font-weight:var(--body-weight);font-size:16px;color:var(--text-body)}.px-form[data-px-form="identity-registration"] .px-error,.px-form[data-px-form="identity-registration"] .px-form-error{display:block;margin:8px 0 0;padding-left:10px;border-left:3px solid var(--action);color:var(--text);font-weight:600;font-size:14px}.px-form[data-px-form="identity-registration"] .px-consent{order:2;margin:0;font-size:14px;color:var(--text-muted)}.px-form[data-px-form="identity-registration"] .px-consent a{color:var(--text)}.px-form[data-px-form="identity-registration"] .px-submit{order:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;align-self:flex-start;min-height:48px;padding:var(--action-pad);padding-left:26px;padding-right:26px;border:0;border-radius:var(--action-radius);background:var(--action);color:var(--on-action);font-family:var(--action-font);font-weight:var(--action-weight);font-size:var(--action-size);line-height:1.2;cursor:pointer}.px-form[data-px-form="identity-registration"] .px-submit::after{content:"→"}.px-form[data-px-form="identity-registration"] .px-submit:disabled{opacity:.6;cursor:wait}.px-form[data-px-form="identity-registration"] .px-submit:focus-visible{outline:2px solid var(--text);outline-offset:3px}.px-form[data-px-form="identity-registration"] .px-form-done{color:var(--text-body)}@media (max-width:480px){.px-form[data-px-form="identity-registration"] .px-submit{align-self:stretch}}.px-form[data-px-form="identity-registration"] .px-phone{display:flex;gap:8px}.px-form[data-px-form="identity-registration"] .px-phone select{flex:0 1 46%;min-width:0;width:auto}.px-form[data-px-form="identity-registration"] .px-phone input{flex:1 1 54%;min-width:0;width:auto}</style>
+<form class="px-form" data-px-form="identity-registration" action="https://app.parallaxxtransformations.com/forms/identity-registration" method="post" accept-charset="utf-8" novalidate>
+<p class="px-title">Your Identity 2.0</p>
+<div class="px-field px-field-text"><label for="px-identity-registration-first_name">First Name <span class="px-required" aria-hidden="true">*</span></label><input type="text" id="px-identity-registration-first_name" name="first_name" value="" maxlength="300" required placeholder="First Name" autocomplete="given-name"><small class="px-error" id="px-identity-registration-first_name-error" data-for="first_name" hidden></small></div>
+<div class="px-field px-field-text"><label for="px-identity-registration-last_name">Last Name <span class="px-required" aria-hidden="true">*</span></label><input type="text" id="px-identity-registration-last_name" name="last_name" value="" maxlength="300" required placeholder="Last Name" autocomplete="family-name"><small class="px-error" id="px-identity-registration-last_name-error" data-for="last_name" hidden></small></div>
+<div class="px-field px-field-email"><label for="px-identity-registration-email">Email <span class="px-required" aria-hidden="true">*</span></label><input type="email" id="px-identity-registration-email" name="email" value="" maxlength="300" required placeholder="Email" autocomplete="email"><small class="px-error" id="px-identity-registration-email-error" data-for="email" hidden></small></div>
+<div class="px-field px-field-phone"><label for="px-identity-registration-phone">WhatsApp <span class="px-required" aria-hidden="true">*</span></label><small class="px-help" id="px-identity-registration-phone-help">We may send you confirmations on WhatsApp.</small><span class="px-phone"><select name="phone_country" aria-label="Country" autocomplete="country-name"><option value="">Country</option><option value="Afghanistan">Afghanistan (+93)</option><option value="Albania">Albania (+355)</option><option value="Algeria">Algeria (+213)</option><option value="Andorra">Andorra (+376)</option><option value="Angola">Angola (+244)</option><option value="Argentina">Argentina (+54)</option><option value="Armenia">Armenia (+374)</option><option value="Australia">Australia (+61)</option><option value="Austria">Austria (+43)</option><option value="Azerbaijan">Azerbaijan (+994)</option><option value="Bahamas">Bahamas (+1)</option><option value="Bahrain">Bahrain (+973)</option><option value="Bangladesh">Bangladesh (+880)</option><option value="Barbados">Barbados (+1)</option><option value="Belarus">Belarus (+375)</option><option value="Belgium">Belgium (+32)</option><option value="Belize">Belize (+501)</option><option value="Benin">Benin (+229)</option><option value="Bhutan">Bhutan (+975)</option><option value="Bolivia">Bolivia (+591)</option><option value="Bosnia and Herzegovina">Bosnia and Herzegovina (+387)</option><option value="Botswana">Botswana (+267)</option><option value="Brazil">Brazil (+55)</option><option value="Brunei">Brunei (+673)</option><option value="Bulgaria">Bulgaria (+359)</option><option value="Burkina Faso">Burkina Faso (+226)</option><option value="Burundi">Burundi (+257)</option><option value="Cambodia">Cambodia (+855)</option><option value="Cameroon">Cameroon (+237)</option><option value="Canada">Canada (+1)</option><option value="Cape Verde">Cape Verde (+238)</option><option value="Chad">Chad (+235)</option><option value="Chile">Chile (+56)</option><option value="China">China (+86)</option><option value="Colombia">Colombia (+57)</option><option value="Costa Rica">Costa Rica (+506)</option><option value="Croatia">Croatia (+385)</option><option value="Cuba">Cuba (+53)</option><option value="Cyprus">Cyprus (+357)</option><option value="Czech Republic">Czech Republic (+420)</option><option value="Democratic Republic of the Congo">Democratic Republic of the Congo (+243)</option><option value="Denmark">Denmark (+45)</option><option value="Dominican Republic">Dominican Republic (+1)</option><option value="Ecuador">Ecuador (+593)</option><option value="Egypt">Egypt (+20)</option><option value="El Salvador">El Salvador (+503)</option><option value="Estonia">Estonia (+372)</option><option value="Eswatini">Eswatini (+268)</option><option value="Ethiopia">Ethiopia (+251)</option><option value="Fiji">Fiji (+679)</option><option value="Finland">Finland (+358)</option><option value="France">France (+33)</option><option value="Gabon">Gabon (+241)</option><option value="Gambia">Gambia (+220)</option><option value="Georgia">Georgia (+995)</option><option value="Germany">Germany (+49)</option><option value="Ghana">Ghana (+233)</option><option value="Greece">Greece (+30)</option><option value="Guatemala">Guatemala (+502)</option><option value="Guinea">Guinea (+224)</option><option value="Guyana">Guyana (+592)</option><option value="Haiti">Haiti (+509)</option><option value="Honduras">Honduras (+504)</option><option value="Hong Kong">Hong Kong (+852)</option><option value="Hungary">Hungary (+36)</option><option value="Iceland">Iceland (+354)</option><option value="India">India (+91)</option><option value="Indonesia">Indonesia (+62)</option><option value="Iran">Iran (+98)</option><option value="Iraq">Iraq (+964)</option><option value="Ireland">Ireland (+353)</option><option value="Israel">Israel (+972)</option><option value="Italy">Italy (+39)</option><option value="Ivory Coast">Ivory Coast (+225)</option><option value="Jamaica">Jamaica (+1)</option><option value="Japan">Japan (+81)</option><option value="Jordan">Jordan (+962)</option><option value="Kazakhstan">Kazakhstan (+7)</option><option value="Kenya">Kenya (+254)</option><option value="Kuwait">Kuwait (+965)</option><option value="Kyrgyzstan">Kyrgyzstan (+996)</option><option value="Laos">Laos (+856)</option><option value="Latvia">Latvia (+371)</option><option value="Lebanon">Lebanon (+961)</option><option value="Lesotho">Lesotho (+266)</option><option value="Liberia">Liberia (+231)</option><option value="Libya">Libya (+218)</option><option value="Liechtenstein">Liechtenstein (+423)</option><option value="Lithuania">Lithuania (+370)</option><option value="Luxembourg">Luxembourg (+352)</option><option value="Macau">Macau (+853)</option><option value="Madagascar">Madagascar (+261)</option><option value="Malawi">Malawi (+265)</option><option value="Malaysia">Malaysia (+60)</option><option value="Maldives">Maldives (+960)</option><option value="Mali">Mali (+223)</option><option value="Malta">Malta (+356)</option><option value="Mauritius">Mauritius (+230)</option><option value="Mexico">Mexico (+52)</option><option value="Moldova">Moldova (+373)</option><option value="Monaco">Monaco (+377)</option><option value="Mongolia">Mongolia (+976)</option><option value="Montenegro">Montenegro (+382)</option><option value="Morocco">Morocco (+212)</option><option value="Mozambique">Mozambique (+258)</option><option value="Myanmar">Myanmar (+95)</option><option value="Namibia">Namibia (+264)</option><option value="Nepal">Nepal (+977)</option><option value="Netherlands">Netherlands (+31)</option><option value="New Zealand">New Zealand (+64)</option><option value="Nicaragua">Nicaragua (+505)</option><option value="Niger">Niger (+227)</option><option value="Nigeria">Nigeria (+234)</option><option value="North Macedonia">North Macedonia (+389)</option><option value="Norway">Norway (+47)</option><option value="Oman">Oman (+968)</option><option value="Pakistan">Pakistan (+92)</option><option value="Palestine">Palestine (+970)</option><option value="Panama">Panama (+507)</option><option value="Papua New Guinea">Papua New Guinea (+675)</option><option value="Paraguay">Paraguay (+595)</option><option value="Peru">Peru (+51)</option><option value="Philippines">Philippines (+63)</option><option value="Poland">Poland (+48)</option><option value="Portugal">Portugal (+351)</option><option value="Puerto Rico">Puerto Rico (+1)</option><option value="Qatar">Qatar (+974)</option><option value="Romania">Romania (+40)</option><option value="Russia">Russia (+7)</option><option value="Rwanda">Rwanda (+250)</option><option value="Saudi Arabia">Saudi Arabia (+966)</option><option value="Senegal">Senegal (+221)</option><option value="Serbia">Serbia (+381)</option><option value="Seychelles">Seychelles (+248)</option><option value="Sierra Leone">Sierra Leone (+232)</option><option value="Singapore">Singapore (+65)</option><option value="Slovakia">Slovakia (+421)</option><option value="Slovenia">Slovenia (+386)</option><option value="Somalia">Somalia (+252)</option><option value="South Africa">South Africa (+27)</option><option value="South Korea">South Korea (+82)</option><option value="South Sudan">South Sudan (+211)</option><option value="Spain">Spain (+34)</option><option value="Sri Lanka">Sri Lanka (+94)</option><option value="Sudan">Sudan (+249)</option><option value="Suriname">Suriname (+597)</option><option value="Sweden">Sweden (+46)</option><option value="Switzerland">Switzerland (+41)</option><option value="Syria">Syria (+963)</option><option value="Taiwan">Taiwan (+886)</option><option value="Tajikistan">Tajikistan (+992)</option><option value="Tanzania">Tanzania (+255)</option><option value="Thailand">Thailand (+66)</option><option value="Timor-Leste">Timor-Leste (+670)</option><option value="Togo">Togo (+228)</option><option value="Trinidad and Tobago">Trinidad and Tobago (+1)</option><option value="Tunisia">Tunisia (+216)</option><option value="Turkey">Turkey (+90)</option><option value="Turkmenistan">Turkmenistan (+993)</option><option value="Uganda">Uganda (+256)</option><option value="Ukraine">Ukraine (+380)</option><option value="United Arab Emirates">United Arab Emirates (+971)</option><option value="United Kingdom">United Kingdom (+44)</option><option value="United States">United States (+1)</option><option value="Uruguay">Uruguay (+598)</option><option value="Uzbekistan">Uzbekistan (+998)</option><option value="Vanuatu">Vanuatu (+678)</option><option value="Venezuela">Venezuela (+58)</option><option value="Vietnam">Vietnam (+84)</option><option value="Yemen">Yemen (+967)</option><option value="Zambia">Zambia (+260)</option><option value="Zimbabwe">Zimbabwe (+263)</option></select><input type="tel" id="px-identity-registration-phone" name="phone" value="" maxlength="300" required autocomplete="tel" aria-describedby="px-identity-registration-phone-help"></span><small class="px-error" id="px-identity-registration-phone-error" data-for="phone" hidden></small></div>
+<div class="px-field px-field-textarea"><label for="px-identity-registration-what_you_would_love">What would you love to get from this course? <span class="px-required" aria-hidden="true">*</span></label><textarea id="px-identity-registration-what_you_would_love" name="what_you_would_love" maxlength="2000" required></textarea><small class="px-error" id="px-identity-registration-what_you_would_love-error" data-for="what_you_would_love" hidden></small></div>
+<input type="hidden" name="utm_source" value=""><input type="hidden" name="utm_medium" value=""><input type="hidden" name="utm_campaign" value=""><input type="hidden" name="utm_term" value=""><input type="hidden" name="utm_content" value=""><input type="hidden" name="page_url" value=""><input type="hidden" name="referrer" value=""><div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden"><label>Leave this empty<input type="text" name="company_website" tabindex="-1" autocomplete="off" value=""></label></div><p class="px-form-error" role="alert" hidden></p>
+<button type="submit" class="px-submit">Begin the Challenge</button>
+</form>
+<script src="https://app.parallaxxtransformations.com/forms/embed.js" defer></script>
+<!-- ENGINE SNIPPET END -->
+    </div>
+  </div>
+</div>
 
 </div><!-- /id2-root -->`;
 
@@ -376,6 +429,34 @@
         video.muted = false;
         video.play().catch(() => { video.muted = true; video.play().catch(()=>{}); });
       });
+    }
+
+    /* THE REGISTRATION WINDOW (24 Nov 2026). The button opens it; the cross,
+       the dark surround and Escape close it. root.querySelector, never the
+       document's: deployed, this all sits inside a shadow root. */
+    const reg = root.querySelector('#id2-reg');
+    const opener = root.querySelector('#id2-open');
+    if (reg && opener) {
+      const shut = () => { reg.hidden = true; opener.focus(); };
+      opener.addEventListener('click', () => {
+        reg.hidden = false;
+        const first = reg.querySelector('input:not([type=hidden])');
+        if (first) first.focus();
+      });
+      [].forEach.call(reg.querySelectorAll('[data-id2-close]'), el => el.addEventListener('click', shut));
+      reg.addEventListener('keydown', e => { if (e.key === 'Escape') shut(); });
+
+      /* Connect the form to the new system: load its script once, then hand it
+         this component's root, which is how it finds a form inside a shadow
+         root. Without the script the form still sends, as a plain post. */
+      (function (scope) {
+        var src = 'https://app.parallaxxtransformations.com/forms/embed.js';
+        function go() { if (window.ParallaxxForms) window.ParallaxxForms.mount(scope); }
+        if (window.ParallaxxForms) { go(); return; }
+        var s = document.head.querySelector('script[src="' + src + '"]');
+        if (!s) { s = document.createElement('script'); s.src = src; s.async = true; document.head.appendChild(s); }
+        s.addEventListener('load', go);
+      })(root);
     }
   }
 

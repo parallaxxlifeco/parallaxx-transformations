@@ -69,8 +69,19 @@ if "members.parallaxxtransformations.com" in src and "UNCONFIRMED" not in src:
              "and the comment explaining that it is unconfirmed has been removed. "
              "Either the URL is fixed, or the warning stays. That CNAME was dropped "
              "in the migration and no browser will connect to it.")
-if not re.search(r'<a class="id2-btn" href="https?://', src):
-    sys.exit("FAIL: no enrol link. The page has one job.")
+# THE BUTTON OPENS THE REGISTRATION FORM (24 Nov 2026). It used to be a link
+# to the GoHighLevel portal; that address is gone since cutover, so it must
+# never come back, and the page must never ship with a button and no form.
+if re.search(r'(href|action|src)="https?://login\.giveitallevent\.com', src):
+    sys.exit("FAIL: the page links to login.giveitallevent.com, the old GoHighLevel "
+             "portal. It no longer exists.")
+if not re.search(r'<button class="id2-btn" type="button" id="id2-open"', src):
+    sys.exit("FAIL: no registration button. The page has one job.")
+if src.count('<form class="px-form" data-px-form="identity-registration"') != 1:
+    sys.exit("FAIL: the registration form is missing (or there are two). Paste the "
+             "engine's snippet between the ENGINE SNIPPET markers.")
+if "https://app.parallaxxtransformations.com/forms/identity-registration" not in src:
+    sys.exit("FAIL: the registration form does not send to the new system.")
 for api in ("localStorage", "sessionStorage"):
     if re.search(r"\b%s\s*[.\[]" % api, src):
         sys.exit(f"FAIL: {api} used in source.")

@@ -303,6 +303,29 @@ SUB_THANKS = dict(
     lead="insights_subscribe",
 )
 
+# AFTER REGISTERING FOR YOUR IDENTITY 2.0 (24 Nov 2026). The form in the window
+# on /your-identity-challenge/ sends the browser here. Daniel's brief: "a thank
+# you page letting them know its there". The new system has already given her
+# the course and emailed the link.
+# WORDING: the step is his, from the Three Toxic Lies thank-you page. The top
+# line, the heading and the button are PROPOSALS and wait for his approval.
+IDENTITY_THANKS = dict(
+    path="/thanks/identity",
+    title="You’re in | Your Identity 2.0",
+    desc="Your Identity 2.0 is in your library.",
+    eyebrow="You’re in",
+    heading="Your Identity 2.0 is in your library.",
+    steps=[
+        ("Check your inbox",
+         "I’ve sent you the link to open it. Sign in with the email address you registered with."),
+        ("Give it a few minutes",
+         "If it’s not there, check your Promotions tab or spam folder, and move it to "
+         "your inbox so the next ones arrive there too."),
+    ],
+    primary=("Open my library", "https://learn.parallaxxtransformations.com/courses/c/your-identity-2-0"),
+    lead="identity_registration",
+)
+
 # NOT FOUND (2 Nov 2026). Cloudflare Pages serves dist/404.html, with a real
 # 404 status, for any address that matches no page. Without it Pages treats
 # the site as a single-page app and answers every made-up address (bots hit
@@ -333,7 +356,7 @@ RW_JOIN = dict(
     bare=True,
 )
 
-PAGES = [TESTIMONIAL_BRIAN, TTL_THANKS, RW_THANKS, RM_THANKS, SUB_THANKS, NOT_FOUND, RW_JOIN]
+PAGES = [TESTIMONIAL_BRIAN, TTL_THANKS, RW_THANKS, RM_THANKS, SUB_THANKS, IDENTITY_THANKS, NOT_FOUND, RW_JOIN]
 
 LEAD_JS = """<script>
 (function(){

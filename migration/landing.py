@@ -101,7 +101,14 @@ TTL_THANKS = dict(
 # and drops the times rather than naming a gone day.
 
 def _open_session(src, el_id):
-    """(ISO date, 'Tuesday 24 November', '08:30 CET / 15:30 GMT+8')."""
+    """(ISO date, 'Tuesday 24 November', '08:30 CET / 15:30 GMT+8', closed).
+
+    closed is True when the circle page's element carries data-closed (added
+    to the Reconnected Woman page on 23 Nov 2026): registrations for that date
+    are shut and the buttons read "Get Notified". The thank-you page is then
+    BUILT as the waiting-list version, the same wording it switches to by
+    itself once the date has passed, so nobody who asks to be notified is
+    told she is registered for a session that is closed."""
     s = (REPO / src).read_text(encoding="utf-8")
     m = re.search(r'id="%s"(.*?)></div>' % el_id, s, re.S)
     if not m:
@@ -112,7 +119,7 @@ def _open_session(src, el_id):
     if not d:
         raise SystemExit(f"landing.py: no data-open-at on #{el_id} in {src}")
     dd = date(int(d[1]), int(d[2]), int(d[3]))
-    return dd.isoformat(), f"{dd:%A} {dd.day} {dd:%B}", (t[1] if t else "")
+    return dd.isoformat(), f"{dd:%A} {dd.day} {dd:%B}", (t[1] if t else ""), ("data-closed" in a)
 
 
 _LIST_EYEBROW = "You’re on the list"
@@ -320,19 +327,26 @@ def _inner(p, e) -> str:
   </div>"""
     img = f'<img class="cover" src="{e(p["image"])}" alt="">' if p.get("image") else ""
     card = ""
+    closed = False
     if p.get("open_session"):
-        iso, pretty, times = _open_session(*p["open_session"])
+        iso, pretty, times, closed = _open_session(*p["open_session"])
+        if closed:
+            # the same two lines DATE_JS writes once the date has passed
+            pretty, times = "Next open session", "Date to be confirmed"
         card = (f'<div class="card"><span class="d js-open-when" data-at="{iso}">{e(pretty)}</span>'
                 f'<span class="t js-open-times">{e(times)}</span>'
                 f'<span class="w">Online, wherever you are</span></div>')
     dated = bool(p.get("open_session"))
+    step_list = list(p.get("steps", []))
+    if closed and step_list:
+        step_list[0] = _LIST_STEP
     def _past(i, k):
         # the waiting-list wording, swapped in by DATE_JS once the date has gone
         if not dated or i != 0:
             return ""
         return f' data-past="{e(_LIST_STEP[k])}"'
     steps = "".join(f'<li><div><h2{_past(i, 0)}>{e(h)}</h2><p{_past(i, 1)}>{e(t)}</p></div></li>'
-                    for i, (h, t) in enumerate(p.get("steps", [])))
+                    for i, (h, t) in enumerate(step_list))
     steps = f'<ol class="steps">{steps}</ol>' if steps else ""
     prim = ""
     if p.get("primary"):
@@ -340,7 +354,8 @@ def _inner(p, e) -> str:
         prim = (f'<a class="btn"{bid} href="{e(p["primary"][1])}">'
                 f'{e(p["primary"][0])} <span aria-hidden="true">&rarr;</span></a>')
     eyp = f' data-past="{e(_LIST_EYEBROW)}"' if dated else ""
-    ey = f'<p class="ey"{eyp}>{e(p["eyebrow"])}</p>' if p.get("eyebrow") else ""
+    ey = (f'<p class="ey"{eyp}>{e(_LIST_EYEBROW if closed else p["eyebrow"])}</p>'
+          if p.get("eyebrow") else "")
     return f"""  <div class="ty">
     {img}
     {ey}
@@ -363,6 +378,9 @@ def _lead_js(p) -> str:
 def render(ctx, p) -> str:
     # Trailing slash: Pages 301s the slashless form, so the canonical must be the final URL.
     canonical = ctx["origin"] + "/" + p["path"].strip("/") + "/"
+    if p.get("open_session") and _open_session(*p["open_session"])[3]:
+        # closed: the browser tab must not say "You're registered" either
+        p = dict(p, title=p["title"].replace(p["eyebrow"], _LIST_EYEBROW))
     e = lambda s: html.escape(s, quote=True)
     # A page written to a fixed file (the 404) has no address of its own.
     canon = "" if p.get("file") else f'<link rel="canonical" href="{canonical}">\n'

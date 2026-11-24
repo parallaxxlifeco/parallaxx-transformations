@@ -117,9 +117,7 @@ TTL_THANKS = dict(
 # went on saying "You're registered ... Tuesday 24 November". check_sessions()
 # below now stops the build if the two ever disagree again.
 #
-# (The men's page has no data-closed behaviour of its own yet. If data-closed
-# is ever put on #rm-open this page follows it, but the men's page itself
-# would still show the date: build that there first.)
+# Both circle pages have the data-closed mode (the men's since 24 Nov 2026).
 _BUNDLES = {
     "reconnected-woman-v10-preview.html": "parallaxx-reconnected-woman.js",
     "reconnected-man-v2-preview.html": "parallaxx-reconnected-man.js",

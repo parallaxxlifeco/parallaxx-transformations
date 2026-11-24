@@ -246,7 +246,7 @@ thank-you page went on saying "You're registered ... Tuesday 24 November".
 published, if the bundle's switch differs from the source's (edited but not
 rebuilt), or if the thank-you page shows a date, "You're registered" or
 "Your confirmation has the time" while the page is closed or its date has
-passed. The men's page has no `data-closed` behaviour of its own yet.
+passed. The men's page has the same `data-closed` mode as the women's since 24 Nov 2026.
 
 **The apply CTAs open a LeadConnector form in a modal, not a new tab.** All
 four of them — the hero, both pricing cards and the closing block — carry

@@ -307,22 +307,24 @@ SUB_THANKS = dict(
 # on /your-identity-challenge/ sends the browser here. Daniel's brief: "a thank
 # you page letting them know its there". The new system has already given her
 # the course and emailed the link.
-# WORDING: the step is his, from the Three Toxic Lies thank-you page. The top
-# line, the heading and the button are PROPOSALS and wait for his approval.
+# NO BUTTON, ON PURPOSE (Daniel, 24 Nov: "I want them to access though their
+# email / confirm their email for data quality"). The only way in is the link
+# in the email, so this page only says where to look.
+# WORDING: step 2 is his, from the Three Toxic Lies thank-you page. The top
+# line, the heading and step 1 are PROPOSALS and wait for his approval.
 IDENTITY_THANKS = dict(
     path="/thanks/identity",
     title="You’re in | Your Identity 2.0",
-    desc="Your Identity 2.0 is in your library.",
+    desc="Your link to Your Identity 2.0 is in your inbox.",
     eyebrow="You’re in",
-    heading="Your Identity 2.0 is in your library.",
+    heading="Your Identity 2.0 is in your inbox.",
     steps=[
         ("Check your inbox",
-         "I’ve sent you the link to open it. Sign in with the email address you registered with."),
+         "I’ve sent you your link. One click and you’re in."),
         ("Give it a few minutes",
          "If it’s not there, check your Promotions tab or spam folder, and move it to "
          "your inbox so the next ones arrive there too."),
     ],
-    primary=("Open my library", "https://learn.parallaxxtransformations.com/courses/c/your-identity-2-0"),
     lead="identity_registration",
 )
 

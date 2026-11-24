@@ -229,7 +229,14 @@ are built by `migration/landing.py` from the one element on each circle page,
 | The switch says | Circle page | Thank-you page |
 |---|---|---|
 | `data-open-at` today or later, no `data-closed` | the date, "Register" | "You're registered", the date, "Check your inbox" |
-| `data-closed`, or the date has passed | next month, "Get Notified" | "You're on the list", "Date to be confirmed", "Watch your inbox" |
+| `data-closed`, or `data-close-at` reached, or the date has passed | next month, "Get Notified" | "You're on the list", "Date to be confirmed", "Watch your inbox" |
+
+`data-close-at` (24 Nov 2026) is the one moment, the same for every visitor
+wherever they are, at which the page closes itself ahead of the session, e.g.
+`data-close-at="2026-12-02T11:00:00+08:00"` for 11 am Bali on the day. Set a
+new one with each new date. The men's page reads it; the women's page script
+does not yet (one line to port, and the build fails if the attribute is put
+on `#rw-open` before that is done).
 
 So the checklist for any date change, closing or reopening is:
 

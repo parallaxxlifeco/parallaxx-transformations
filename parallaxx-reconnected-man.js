@@ -1739,9 +1739,17 @@
      the page names the next month (data-next-month="YYYY-MM", or the month
      after data-open-at), the buttons read "Get Notified" and the
      "Registrations open now" lines go. The thank-you page follows by itself.
-     Remove data-closed when the next date is set. -->
+     Remove data-closed when the next date is set.
+     CLOSE TIME (added 24 Nov 2026). data-close-at is the one moment, the same
+     for every visitor wherever they are, at which the page closes ITSELF and
+     goes into that same between-sessions state: registrations shut ahead of
+     the session so Daniel knows who is coming. Write it as a full time with
+     its offset, e.g. 11 am Bali on the session day is
+     data-close-at="2026-12-02T11:00:00+08:00". Leave it out and the page
+     closes when the date has passed, as before. Set a new one with each date. -->
 <div id="rm-open" hidden
      data-open-at="2026-12-02T08:30:00+01:00"
+     data-close-at="2026-12-02T11:00:00+08:00"
      data-open-tz="08:30 CET"
      data-open-times="08:30 CET / 15:30 Bali"
      data-theme="Your Needs for Running on Full"></div>
@@ -2135,7 +2143,8 @@
     var now = new Date();
     var todayUTC = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
     var days = Math.round((evUTC - todayUTC) / 86400000);
-    var past = days < 0 || src.hasAttribute('data-closed');
+    var closeAt = Date.parse(src.getAttribute('data-close-at') || '');
+    var past = days < 0 || src.hasAttribute('data-closed') || (closeAt && Date.now() >= closeAt);
 
     var pretty = new Date(evUTC + 43200000).toLocaleDateString('en-GB', {
       weekday:'long', day:'numeric', month:'long', timeZone:'UTC'

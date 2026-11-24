@@ -19,7 +19,7 @@ import html
 import os
 import pathlib
 import re
-from datetime import date
+from datetime import date, datetime, timezone
 
 import rw_join
 
@@ -105,12 +105,15 @@ TTL_THANKS = dict(
 # reconnected-woman-v10-preview.html, #rm-open in reconnected-man-v2-preview.html.
 #   data-open-at          the open-session date
 #   data-closed           registrations for that date are shut (waiting list)
+#   data-close-at         the one moment, the same for every visitor, at which
+#                         the page closes itself (e.g. 11 am Bali on the day)
 # The circle page, its buttons and its dates are built from it, and so is the
 # thank-you page here. There is nothing to edit on the thank-you page, ever:
 #
 #   OPEN       data-open-at is today or later, and no data-closed
 #              -> "You're registered", the date, "Check your inbox"
-#   WAITLIST   data-closed is there, OR the date has passed
+#   WAITLIST   data-closed is there, OR data-close-at has been reached,
+#              OR the date has passed
 #              -> "You're on the list", "Date to be confirmed", "Watch your inbox"
 #
 # It was missed once: on 23 Nov 2026 the women's page was closed and this page
@@ -146,7 +149,22 @@ def _open_session(src, el_id):
         raise SystemExit(f"landing.py: no data-open-at on #{el_id} in {src}")
     dd = date(int(d[1]), int(d[2]), int(d[3]))
     waitlist = bool(re.search(r'\bdata-closed\b', a)) or dd < date.today()
+    close = _close_at(src, el_id)
+    if close and datetime.now(timezone.utc) >= datetime.fromisoformat(close):
+        waitlist = True
     return dd.isoformat(), f"{dd:%A} {dd.day} {dd:%B}", (t[1] if t else ""), waitlist
+
+
+def _close_at(src, el_id) -> str:
+    """The switch's data-close-at, checked: a full time WITH its offset, or ''."""
+    a = _switch_tag((REPO / src).read_text(encoding="utf-8"), el_id, src)
+    c = re.search(r'data-close-at="([^"]*)"', a)
+    if not c or not c[1]:
+        return ""
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}", c[1]):
+        raise SystemExit(f"ERROR: data-close-at on #{el_id} in {src} must be a full time with "
+                         f"its offset, like 2026-12-02T11:00:00+08:00. It reads {c[1]!r}.")
+    return c[1]
 
 
 def check_sessions(p, text) -> list:
@@ -165,6 +183,10 @@ def check_sessions(p, text) -> list:
         if want != got:
             problems.append(f"#{el_id} in {src} and in {bundle} differ: rebuild the bundle "
                             f"so the page and its thank-you page agree")
+    # 1b. A close time only works if the circle page's own script reads it.
+    if _close_at(src, el_id) and "getAttribute('data-close-at')" not in (REPO / src).read_text(encoding="utf-8"):
+        problems.append(f"#{el_id} in {src} has data-close-at but that page's script does not "
+                        f"read it, so the page would not close itself")
     # 2. The thank-you page itself.
     iso, pretty, times, waitlist = _open_session(src, el_id)
     body = html.unescape(re.sub(r"<[^>]+>", " ", text[text.index("<main>"):text.index("</main>")]))
@@ -305,7 +327,8 @@ DATE_JS = """
   var w = document.querySelector('.js-open-when');
   if (w) {
     var t = new Date(), today = t.getFullYear() + '-' + ('0' + (t.getMonth() + 1)).slice(-2) + '-' + ('0' + t.getDate()).slice(-2);
-    if (w.getAttribute('data-at') < today) {
+    var c = Date.parse(w.getAttribute('data-close') || '');
+    if (w.getAttribute('data-at') < today || (c && Date.now() >= c)) {
       w.textContent = 'Next open session';
       var tm = document.querySelector('.js-open-times'); if (tm) tm.textContent = 'Date to be confirmed';
       var ps = document.querySelectorAll('[data-past]');
@@ -395,7 +418,9 @@ def _inner(p, e) -> str:
         if closed:
             # the same two lines DATE_JS writes once the date has passed
             pretty, times = "Next open session", "Date to be confirmed"
-        card = (f'<div class="card"><span class="d js-open-when" data-at="{iso}">{e(pretty)}</span>'
+        close = _close_at(*p["open_session"])
+        cl = f' data-close="{close}"' if close else ""
+        card = (f'<div class="card"><span class="d js-open-when" data-at="{iso}"{cl}>{e(pretty)}</span>'
                 f'<span class="t js-open-times">{e(times)}</span>'
                 f'<span class="w">Online, wherever you are</span></div>')
     dated = bool(p.get("open_session"))

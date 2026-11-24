@@ -221,6 +221,33 @@ waitlist release and the push as one checklist. The background is in
 `Avatar + Personal Awareness/Women/GHL — Reconnected Woman WF/05 — BUILD SHEET — waitlist split.md`.
 GHL goes first and the push goes last. Do not ship the page date on its own.
 
+**The thank-you page follows the same switch, and is never edited by hand
+(24 Nov 2026).** `/thanks/reconnected-woman/` and `/thanks/reconnected-man/`
+are built by `migration/landing.py` from the one element on each circle page,
+`#rw-open` and `#rm-open`:
+
+| The switch says | Circle page | Thank-you page |
+|---|---|---|
+| `data-open-at` today or later, no `data-closed` | the date, "Register" | "You're registered", the date, "Check your inbox" |
+| `data-closed`, or the date has passed | next month, "Get Notified" | "You're on the list", "Date to be confirmed", "Watch your inbox" |
+
+So the checklist for any date change, closing or reopening is:
+
+1. Edit the switch in the page's source (`reconnected-woman-v10-preview.html`
+   or `reconnected-man-v2-preview.html`): set `data-open-at` and remove
+   `data-closed` to open; add `data-closed` to close.
+2. Rebuild that page's bundle (`build_bundle_v10.py` or `build_bundle_man_v2.py`).
+3. Push. The thank-you page is rebuilt from the same switch on every push.
+4. Open the thank-you page once and read it. It is in the list on purpose.
+
+It was missed once: on 23 Nov 2026 the women's page was closed and its
+thank-you page went on saying "You're registered ... Tuesday 24 November".
+`check_sessions()` in `landing.py` now fails the build, and nothing is
+published, if the bundle's switch differs from the source's (edited but not
+rebuilt), or if the thank-you page shows a date, "You're registered" or
+"Your confirmation has the time" while the page is closed or its date has
+passed. The men's page has no `data-closed` behaviour of its own yet.
+
 **The apply CTAs open a LeadConnector form in a modal, not a new tab.** All
 four of them — the hero, both pricing cards and the closing block — carry
 `data-trw-modal` and open the same dialog. The form ID appears three times in

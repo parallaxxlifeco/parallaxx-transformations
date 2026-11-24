@@ -100,26 +100,90 @@ TTL_THANKS = dict(
 # (Old note:) Once the date has passed the card says "Next open session"
 # and drops the times rather than naming a gone day.
 
-def _open_session(src, el_id):
-    """(ISO date, 'Tuesday 24 November', '08:30 CET / 15:30 GMT+8', closed).
+# ── THE ONE SWITCH (24 Nov 2026) ────────────────────────────────────────
+# Each circle page has ONE element that sets its state: #rw-open in
+# reconnected-woman-v10-preview.html, #rm-open in reconnected-man-v2-preview.html.
+#   data-open-at          the open-session date
+#   data-closed           registrations for that date are shut (waiting list)
+# The circle page, its buttons and its dates are built from it, and so is the
+# thank-you page here. There is nothing to edit on the thank-you page, ever:
+#
+#   OPEN       data-open-at is today or later, and no data-closed
+#              -> "You're registered", the date, "Check your inbox"
+#   WAITLIST   data-closed is there, OR the date has passed
+#              -> "You're on the list", "Date to be confirmed", "Watch your inbox"
+#
+# It was missed once: on 23 Nov 2026 the women's page was closed and this page
+# went on saying "You're registered ... Tuesday 24 November". check_sessions()
+# below now stops the build if the two ever disagree again.
+#
+# (The men's page has no data-closed behaviour of its own yet. If data-closed
+# is ever put on #rm-open this page follows it, but the men's page itself
+# would still show the date: build that there first.)
+_BUNDLES = {
+    "reconnected-woman-v10-preview.html": "parallaxx-reconnected-woman.js",
+    "reconnected-man-v2-preview.html": "parallaxx-reconnected-man.js",
+}
 
-    closed is True when the circle page's element carries data-closed (added
-    to the Reconnected Woman page on 23 Nov 2026): registrations for that date
-    are shut and the buttons read "Get Notified". The thank-you page is then
-    BUILT as the waiting-list version, the same wording it switches to by
-    itself once the date has passed, so nobody who asks to be notified is
-    told she is registered for a session that is closed."""
-    s = (REPO / src).read_text(encoding="utf-8")
-    m = re.search(r'id="%s"(.*?)></div>' % el_id, s, re.S)
+
+def _switch_tag(text, el_id, where):
+    m = re.search(r'<div id="%s"([^>]*)>' % el_id, text)
     if not m:
-        raise SystemExit(f"landing.py: no #{el_id} in {src}")
-    a = m.group(1)
+        raise SystemExit(f"landing.py: no #{el_id} in {where}")
+    return m.group(1)
+
+
+def _open_session(src, el_id):
+    """(ISO date, 'Tuesday 24 November', '08:30 CET / 15:30 GMT+8', waitlist).
+
+    waitlist is True when the circle page's switch carries data-closed, or its
+    date has passed on the day of the build. The thank-you page is then BUILT
+    as the waiting-list version. (The page also switches itself in the
+    visitor's browser the moment the date passes, for the days between
+    builds.)"""
+    a = _switch_tag((REPO / src).read_text(encoding="utf-8"), el_id, src)
     d = re.search(r'data-open-at="(\d{4})-(\d{2})-(\d{2})', a)
     t = re.search(r'data-open-times="([^"]*)"', a)
     if not d:
         raise SystemExit(f"landing.py: no data-open-at on #{el_id} in {src}")
     dd = date(int(d[1]), int(d[2]), int(d[3]))
-    return dd.isoformat(), f"{dd:%A} {dd.day} {dd:%B}", (t[1] if t else ""), ("data-closed" in a)
+    waitlist = bool(re.search(r'\bdata-closed\b', a)) or dd < date.today()
+    return dd.isoformat(), f"{dd:%A} {dd.day} {dd:%B}", (t[1] if t else ""), waitlist
+
+
+def check_sessions(p, text) -> list:
+    """What must never be published: a thank-you page that disagrees with its
+    circle page. `text` is the built thank-you page."""
+    src, el_id = p["open_session"]
+    problems = []
+    # 1. The circle page that is actually served is the BUNDLE. If its switch
+    #    differs from the source's, the source was edited and not rebuilt, and
+    #    the circle page and this page would say different things.
+    norm = lambda a: " ".join(a.replace("\\", "").split())
+    bundle = _BUNDLES.get(src)
+    if bundle:
+        want = norm(_switch_tag((REPO / src).read_text(encoding="utf-8"), el_id, src))
+        got = norm(_switch_tag((REPO / bundle).read_text(encoding="utf-8"), el_id, bundle))
+        if want != got:
+            problems.append(f"#{el_id} in {src} and in {bundle} differ: rebuild the bundle "
+                            f"so the page and its thank-you page agree")
+    # 2. The thank-you page itself.
+    iso, pretty, times, waitlist = _open_session(src, el_id)
+    body = html.unescape(re.sub(r"<[^>]+>", " ", text[text.index("<main>"):text.index("</main>")]))
+    if waitlist:
+        for bad in (pretty, p["eyebrow"], _INBOX_STEP[0], "Your confirmation has"):
+            if bad in body:
+                problems.append(f"{p['path']} is in the waiting-list state but still shows "
+                                f"{bad!r}")
+        if _LIST_EYEBROW not in body:
+            problems.append(f"{p['path']} is in the waiting-list state but does not say "
+                            f"{_LIST_EYEBROW!r}")
+    else:
+        if pretty not in body:
+            problems.append(f"{p['path']} is open for {pretty} but does not show that date")
+        if _LIST_EYEBROW in body:
+            problems.append(f"{p['path']} is open for {pretty} but says {_LIST_EYEBROW!r}")
+    return problems
 
 
 _LIST_EYEBROW = "You’re on the list"
@@ -437,6 +501,11 @@ def build(ctx, dist, localise=None) -> list:
             print("WARNING  " + problem)
     for p in PAGES:
         text = render(ctx, p)
+        if p.get("open_session"):
+            # Not only on the live branch: a preview that disagrees is wrong too.
+            problems = check_sessions(p, text)
+            if problems:
+                raise SystemExit("ERROR: " + "; ".join(problems) + ". Nothing was published.")
         if localise:
             text = localise(text)
         # og:image has to be absolute for the scrapers, and the poster is a

@@ -8,7 +8,7 @@ card: You can't hold yourself to something you still think you shouldn't be doin
 answer: Because the commitment is to something you still think you shouldn't be doing. Accountability to a client or a boss is attached to serving someone else, and a plan that only serves you isn't, so it gets dropped the moment anyone else needs something. What changes this is deciding the thing is allowed, then letting someone see you do it.
 description: You keep your word to everybody else and break it to yourself. Daniel Lawson on why accountability fails on a commitment you think is selfish.
 published: 2026-10-13
-updated: 2026-10-13
+updated: 2026-11-24
 sources: PM-10-057, PM-10-059, PM-10-060, PM-10-061, PM-10-062, PM-10-063, PM-10-065, PM-10-089, PM-10-090, PM-10-102, PM-10-103, PM-10-104, PM-10-105, PM-10-106, PM-10-107, PM-10-108, PM-02-040, PM-02-071, PM-04-061, PM-04-062, PW-06-058, PW-06-092, PW-06-093, PW-10-057, PW-10-314, DL-458, DL-460
 offer: /the-reconnected-man, /the-reconnected-woman
 ---
@@ -64,7 +64,7 @@ Three things change this, and none of them is more force. The commitment has to 
 | To be told to someone else, with a time in the calendar | It gets forgotten inside the hour, and nothing was broken because nothing was ever said |
 | To be uncomfortable enough to count, and small enough to finish | Too easy and it proves nothing, too hard and the stopping becomes evidence against you |
 
-**One. Make it yours.** A routine a mentor or a programme hands you will carry you while they are there. I said to a client about the daily hour he had run for months, well, that was somebody else's structure, it wasn't your structure. Same hour, different owner.
+**One. Make it yours.** A routine a mentor or a programme gives you will keep you going while they are there. I said to a client about the daily hour he had run for months, well, that was somebody else's structure, it wasn't your structure. Same hour, different owner.
 
 **Two. Tell someone else, with a time in the calendar.** A man in one of my groups forgot his action item inside an hour of committing to it. But I was there for him. Trying harder to remember doesn't fix that. He needs it written down rather than spoken, and sent to someone.
 
@@ -92,15 +92,15 @@ What changes this is repetition, which is the dull answer and the true one. He u
 
 ### Why do I struggle to hold myself accountable for my actions?
 
-Because accountability needs the thing to be allowed before it needs a system. Many of the people who ask me this keep commitments to other people all day, and what falls over is the commitment they have privately decided is indulgent. Settle whether you are allowed to do it first.
+Because accountability needs the thing to be allowed before it needs a system. Many of the people who ask me this keep commitments to other people all day, and what fails is the commitment they have privately decided is indulgent. Decide whether you are allowed to do it first.
 
 ### Do I need an accountability partner, or will an app do?
 
-An app gives you a reminder, and a reminder is not somebody noticing. A participant told me they had tried that already and the notification arrived and got ignored. What they wanted was a person on the phone. Start with the person and let the app do the admin.
+An app gives you a reminder, and a reminder is different from somebody noticing. A participant shared with me that they had tried that already, and the notification came and got ignored. What they wanted was a person on the phone. Start with the person and let the app do the admin.
 
 ### What if I already do everything I say and still feel like I am failing?
 
-Then it is a different problem, and worth knowing which of the two you have. A man in one of my groups keeps his routine going regardless of what is happening in his life, the showers, the meditation, the prayers, the gym, the jiu-jitsu, and none of it registers as something he did. His reason: "I just expect myself to follow through on what I do." Doing the thing and getting something back from doing it are two separate skills, and the both are learnable.
+Then it is a different problem, and worth knowing which of the two you have. A man in one of my groups keeps his routine going regardless of what is happening in his life, the showers, the meditation, the prayers, the gym, the jiu-jitsu, and he doesn't register any of it as something he did. His reason: "I just expect myself to follow through on what I do." Doing the thing and getting something back from doing it are two separate skills, and both are learnable.
 
 ### How big should the first commitment be?
 
@@ -110,4 +110,4 @@ Small enough that you finish it this week, and uncomfortable enough that finishi
 
 If you've been the person everybody counts on for years, you already know how to keep your word. What comes next is giving that same word to a commitment that is only for you, one that has never had anybody else in on it, where you have been the only person voting on whether it was allowed. Somebody else knowing about it, and asking you about it next week, is what turns it from selfish into regular. And then the people around you get somebody who is into something, rather than somebody getting through another week.
 
-The Reconnected Man and The Reconnected Woman are the group where we have these conversations together.
+[The Reconnected Man](/the-reconnected-man) and [The Reconnected Woman](/the-reconnected-woman) are our groups where we have these conversations together.

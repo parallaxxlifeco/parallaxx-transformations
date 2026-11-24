@@ -8,7 +8,7 @@ card: You can't learn from something you can't bear to look at.
 answer: Because the review never happens. Getting something wrong brings up shame, and the shame makes you look away from the failure and start the next attempt instead. Going back over what happened is where the learning sits, and that is the step being skipped. When the shame comes down you can review with curiosity, and a lot of those failures turn out to be the same mistake repeating.
 description: You repeat the mistake because the shame of getting it wrong stops you going back to look. Daniel Lawson on what reviewing with curiosity shows.
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-24
 sources: PW-10-010, PW-10-079, PW-10-080, PW-10-082, PW-10-215, PW-10-216, PW-10-218, PW-10-220, PW-10-221, PW-10-257, PW-10-305, PW-10-310, PW-10-322, PW-10-372, PW-10-373, PW-10-374, PW-10-375, PW-10-376, PW-10-384, PW-10-588, PW-10-620, PW-05-019, PW-05-061, PM-02-280, PM-02-348, PM-02-353, RM-S10-103, RM-S10-105, DL-527, DL-528, DL-529
 offer: /the-reconnected-man, /the-reconnected-woman
 ---
@@ -17,8 +17,7 @@ A woman I coach described thirty seconds on a train.
 
 She got on, went to her seat, and somebody was sitting in it. So she said it to him. "Excuse me, this is my seat." A few seconds later she noticed her seat was the next row along.
 
-> I just noticed how painful and how much shame I just felt in that situation. Even if my logical mind was telling me, come on, it's not a big deal, it's normal, it happens to everyone — what my body was signaling to me was something totally different. It's huge.
-> — a woman I coach, on getting something wrong in front of a stranger
+She shared, "I just noticed how painful and how much shame I just felt in that situation. Even if my logical mind was telling me, come on, it's not a big deal, it's normal, it happens to everyone, what my body was signaling to me was something totally different. It's huge."
 
 There was nothing at stake. No money, no outcome, and a stranger she will never see again. Her mind had the mistake in proportion and her body treated it as huge.
 
@@ -53,28 +52,22 @@ There are three things people say to themselves after it goes wrong, and only th
 
 The first two feel very different from the inside and they do the same job.
 
-A man I work with arrived with the second one after a week that went badly, and he had three explanations ready for why it had gone badly, all of them about other people being around him. What I said to him was this.
+A man I work with came in with the second one after a week that went badly, and he had three explanations ready for why it had gone badly, all of them about other people being around him. What I said to him was this.
 
 > you're giving a reason for why you failed, rather than owning the way that you showed up.
 > — Daniel Lawson
 
-A group member had the first, over a decision that was not a failure at all. He read it as having messed up, "almost like a punishment", and he knew as he said it that it was his ego talking. A few sessions later the thought he used to shut down before it finished forming had been allowed to finish, and it was an empty thought.
+A group member had the first, over a decision that was not a failure at all. He interpreted it as having messed up, "almost like a punishment", and he knew as he said it that it was his ego talking. A few sessions later the thought he used to shut down before it finished forming had been allowed to finish, and it was an empty thought.
 
-And a woman in a group I run did it to her progress. In her first week the reaction ran the show and she could not see it. The week after, she saw it as it happened and still could not change what she did. That is the step working, and she experienced it as failure. *Should have* is the phrase she uses most, always pointed at herself, while she gives everybody else in the room real encouragement.
+And a woman in a group I run did it to her progress. In her first week the reaction ran the show and she could not see it. The week after, she saw it as it happened and still could not change what she did. That is the step working, and she experienced it as failure. *Should have* is the phrase she uses most, always pointed at herself, while she gives everybody else in the group real encouragement.
 
 ## What do you see when you go back and look?
 
 Repetition. From outside the review it looks like a run of separate disasters, each with a different reason. From inside it, the same few things keep showing up. That is what the shame has been covering, and it is also the good news, because something repeating is something you can interrupt.
 
-She went back through hers. All of them, as a project, once they were finished and there was nothing live to rescue.
+The woman from the train went back through hers, all of them, as a project, once they were finished and there was nothing left to rescue: "I'm just reviewing them like, I don't know, like a scientist, with a lot of curiosity and open mind."
 
-> I'm just reviewing them like — I don't know — like a scientist, with a lot of curiosity and open mind.
-> — the same woman, on going back through her failures
-
-At least seventy per cent of them were the same mistake repeating. Her reason for not having seen it before: "I was totally unable to see it before, because I was so obsessed — oh my god, I'm failing, it's so shameful." The information had been sitting there for three years underneath the feeling.
-
-> When I have released most part of this emotional burden, it feels like my eyes have opened in a totally different way.
-> — the same woman, on what changed
+At least seventy per cent of them were the same mistake repeating. Her reason for not having seen it before: "I was totally unable to see it before, because I was so obsessed, oh my god, I'm failing, it's so shameful." The information had been sitting there for three years underneath the feeling. Once she'd looked, she shared, "When I have released most part of this emotional burden, it feels like my eyes have opened in a totally different way."
 
 Three things made that possible, and more method was not among them. Many of the people I work with are excellent at methods already, and that is what they go to when something hurts.
 
@@ -86,7 +79,7 @@ Three things made that possible, and more method was not among them. Many of the
 
 I also give people the other direction, which is to get it wrong on purpose where it is cheap.
 
-> Set yourself up to fail. And then be in the position of going — well actually, that's a win, I just failed and I feel okay.
+> Set yourself up to fail. And then be in the position of going, well actually, that's a win, I just failed and I feel okay.
 > — Daniel Lawson
 
 Because the mistakes do not stop. When my partner started filming she kept getting things wrong and said it was dumb, and what I said to her was, "well, it's not going to be the last time you make that mistake." Camera goes flat, memory card is full, you forget to put the memory card in at all. After years of doing it, we're still figuring out these bits.
@@ -113,4 +106,4 @@ Far enough to see more than a single instance. Three years of them is what made 
 
 If you have failed at something and gone again, and then again, you already have what most of this needs, which is that you keep going. What comes next is slower, and it is the step that has never been taken: the failures you have already paid for are sitting there with the information still in them, and going back through them with curiosity is where the next attempt stops starting from scratch. Saying what you found to somebody else is what takes the shame off it, because once you have heard another person describe their version, it stops feeling like it is only yours. And then you get a next attempt that starts from what you know rather than from what you are trying not to feel.
 
-The Reconnected Man and The Reconnected Woman are the group where we have these conversations together.
+[The Reconnected Man](/the-reconnected-man) and [The Reconnected Woman](/the-reconnected-woman) are our groups where we have these conversations together.

@@ -8,19 +8,13 @@ card: You got rewarded for being easy to be around, and talking is the easiest w
 answer: Because being easy to be around is what you got rewarded for, and talking is how you fill a silence in a conversation without having to want anything from the person in front of you. That silence is also their turn, and it is where somebody might ask you what you want. It is shorter than it feels. So ask, and then stop talking.
 description: Daniel Lawson on why you fill a silence with noise or with work talk, what the pause is doing for the other person, and what you find out when you stop.
 published: 2026-11-13
-updated: 2026-11-13
+updated: 2026-11-24
 sources: PM-02-182, PM-02-183, PM-02-185, PM-02-186, PM-02-187, PM-02-190, PM-02-195, PM-02-203, PM-02-204, PM-02-205, PM-02-206, PM-02-207, PM-02-208, PM-02-209, PM-02-210, PM-02-211, PM-02-217, PM-02-218, PM-02-223, PM-02-407, PM-02-488, PM-02-489, PM-02-490, PM-02-498, PM-02-499, PM-03-003, PM-04-094, PM-07-020, PM-07-101, PM-08-040, DL-444, DL-445, DL-522, DL-523, DL-525, DL-672, DL-755, DL-757, DL-758, DL-759, DL-837, DL-838, DL-839, DL-840, RW-W1-030, RW-W2-039
 offer: /the-reconnected-man, /the-reconnected-woman
 ---
-A man in one of my groups came back from a date and described the moment it got hard. The date was going fine. Then there was a silence.
+A man in one of my groups came back from a date and described the moment it got hard. The date was going fine. Then there was a silence, and he shared, "When you're sitting across from a complete stranger and you feel that you've run out of something to say, you just feel that you have to fill the space with noise. Which I don't like doing anyway, it also takes energy from me."
 
-> When you're sitting across from a complete stranger and you feel that you've run out of something to say, you just feel that you have to fill the space with noise. Which I don't like doing anyway, it also takes energy from me.
-> — a man in one of my groups
-
-He does the same thing with us. He gets five minutes for him, and about forty seconds in he starts heading back to the subject he can talk about without thinking about it, which for him is work. Ten years in the same job, he feels nothing for it, and it is still the only thing he easily turns to over drinks and during our calls.
-
-> I don't feel any emotion towards it or feelings towards it. It's just something that I have to do.
-> — the same man
+He does the same thing with us. He gets five minutes for him, and about forty seconds in he starts heading back to the subject he can talk about without thinking about it, which for him is work. Ten years in the same job, he feels nothing for it, and it is still the only thing he easily turns to over drinks and during our calls. He shared, "I don't feel any emotion towards it or feelings towards it. It's just something that I have to do."
 
 So he is not short of things to say. He has a subject on standby for any silence you leave him, and using it takes from him every time.
 
@@ -33,15 +27,9 @@ I did it for about thirty years, and I got rewarded for it, which is why I never
 > I became just like an easygoing guy. When asked what I wanted, it always seemed like, nothing, whatever, I'm fine, I don't have a preference. Because having a preference would mean wanting something, and if you want something you've got to communicate it and you ask for it. And society rewards you for being an easygoing guy. So you never change it, right? But if you're easygoing, you don't want anything. You don't ask for anything. You don't get really much of what it is that you want.
 > — Daniel Lawson
 
-The man from the date heard that and put it on himself, unprompted, for the first time since I had known him.
+The man from the date heard that and put it on himself, unprompted, for the first time since I had known him: "I don't really ask for much myself either. I like to be this easygoing guy, because it's easier."
 
-> I don't really ask for much myself either. I like to be this easygoing guy, because it's easier.
-> — a man in one of my groups
-
-Then he said what it takes from him, using the same word he had used about the noise on the date.
-
-> It traps a fair amount of my energy, which causes its own resistance.
-> — the same man
+Then he said what it takes from him, using the same word he had used about the noise on the date: "It traps a fair amount of my energy, which causes its own resistance."
 
 So the noise is the easygoing habit, showing up in the two or three seconds where there is nothing yet to be easygoing about.
 
@@ -74,7 +62,7 @@ And *I don't know* needs space rather than another question. Twice I have handed
 
 | What the silence feels like | What is happening | What changes the habit |
 |---|---|---|
-| You've run out and they can tell | It is way shorter than it feels, and they are still on your last sentence | Pausing on purpose instead of reaching for an um |
+| You've run out and they can tell | It is way shorter than it feels, and they are still on your last sentence | Pausing on purpose instead of filling it with an um |
 | Going back to work talk is safer ground | It is the subject you can do without thinking, and it takes from you every time | Choosing the subject you want to get better at rather than the subject you have already mastered |
 | The space is yours to cover | It is their moment to contribute, and filling it takes that moment | Asking, and then stopping talking |
 
@@ -129,4 +117,4 @@ What comes next is leaving the next silence where it is, to find out what you sa
 
 And it goes better with a few others who will ask you next week what came out of it, and who are going after what they want in their conversations as well.
 
-The Reconnected Man and The Reconnected Woman are our groups where we have these conversations together.
+[The Reconnected Man](/the-reconnected-man) and [The Reconnected Woman](/the-reconnected-woman) are our groups where we have these conversations together.

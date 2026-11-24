@@ -5,10 +5,10 @@ pillar: being-the-capable-one
 intent: achieving is the evidence against not being enough, and only what you are already good at supplies it
 question: Why is my self-worth tied to my achievements?
 card: We all suck at something we've never done before.
-answer: Because succeeding is how you have been proving to yourself that you are enough, and the evidence only comes from what you are already good at. So the thing you would be a beginner at gets postponed, often for years. What changes this being okay with sucking at something new, and acknowledging your inputs rather than your outcomes right away.
+answer: Because succeeding is how you have been proving to yourself that you are enough, and the evidence only comes from what you are already good at. So the thing you would be a beginner at gets postponed, often for years. What changes this is being okay with sucking at something new, and acknowledging your inputs rather than your outcomes right away.
 description: Succeeding is the evidence that you are enough, and only what you are already good at supplies it. Daniel Lawson on why the new thing gets postponed.
 published: 2026-10-23
-updated: 2026-10-23
+updated: 2026-11-24
 sources: DL-007, DL-010, DL-016, DL-020, DL-175, DL-447, DL-460, RM-S5-061, RM-S5-143, RM-S2-018, RM-S7-051, RM-S7-052, RM-S7-055, RM-S7-056, RM-S7-057, RM-S7-058, RM-S7-059, RM-S7-062, RM-S7-063, RM-S7-064, PM-06-029, PM-06-047, PM-02-276, PM-02-377, PM-10-057, PM-11-012, PM-11-021, PM-11-024, PM-11-026, PM-11-037, PM-11-040, PW-06-046, PW-10-006, PW-10-008
 offer: /the-reconnected-man, /the-reconnected-woman
 ---
@@ -21,7 +21,7 @@ But it didn't matter how much I made. Even when I was making more than I knew wh
 
 ## Why is my self-worth attached to achievements?
 
-Because succeeding has been answering an unconscious question for you, and its so reliable, there's not need to check back on it. A group member put that question into one sentence.
+Because succeeding has been answering an unconscious question for you, and it's so reliable, there's no need to check back on it. A group member put that question into one sentence.
 
 "So I think it gives me evidence that I am enough, which contradicts the underlying belief that I'm not enough. Does that make sense?"
 
@@ -29,7 +29,7 @@ He said it more directly later in the session. "When I succeed, I validate that 
 
 Asked what that feels like, he went to the buzz. "You know when you close a high-ticket sales call, and you're absolutely buzzing? That sort of buzz is probably the closest thing I can see of that." That was his read on it too: the extrinsic validation links back into that internal feeling of, oh, I'm enough.
 
-> Can you ever really feel a sense of accomplishment, a sense of validation, a sense of receiving that from other people — if you can't see it within yourself?
+> Can you ever really feel a sense of accomplishment, a sense of validation, a sense of receiving that from other people, if you can't see it within yourself?
 > — Daniel Lawson
 
 ## Why is my self-worth tied to my job?
@@ -49,7 +49,7 @@ A group member described what that did to a sport he had picked up. "That's prob
 
 A group member shared what the second column feels like from inside it, talking about what he had invested in himself.
 
-"It still feels to me like — yeah, selfish is the word that keeps coming back. It feels like I'm just doing this for me. And I've invested a fuck ton of money to get to this point, and I'm still not generating an income. I know it's coming, but it kind of makes me feel guilty too."
+"It still feels to me like, yeah, selfish is the word that keeps coming back. It feels like I'm just doing this for me. And I've invested a fuck ton of money to get to this point, and I'm still not generating an income. I know it's coming, but it kind of makes me feel guilty too."
 
 He has decades of discipline behind him. What he hasn't had back yet is the time and the money he put in, and while that is still outstanding, investing in himself reads to him as selfish.
 
@@ -68,15 +68,15 @@ I have been asking people that for years, and many of us have never had to answe
 
 And the validation doesn't leave with the business. It goes looking for the next thing that makes you someone, which might be the next business or the next title. The risk is that whatever comes next gets picked for the same reason as the last thing.
 
-## What do you experience while you are still no good at it?
+## What do you experience while you're still not good at it?
 
-Not much at first, and that is worth knowing before you start. The buzz you get from closing something you are good at is not going to show up here. One participant realised he had been going into new things expecting the exact same stimulus his work gave him, so each one got, ah, this is not it, let's move on.
+Not much at first, and it helps to know that before you start. The buzz you get from closing something you're good at won't show up here. One participant realised he had been going into new things expecting the exact same stimulus his work gave him, so each one got, ah, this is not it, let's move on.
 
 Another described the same thing from the other end, about something he had been meaning to start for a long time. "And the feeling of, yet I'm not good enough. So maybe I should wait a little bit and just do the work on myself first, and then start. So postponing the starting."
 
 A third said, "I'm afraid to be a beginner."
 
-The achieving does arrive, and it still doesn't settle anything. One participant could list, accurately, how far their skills had come, and went straight back to not good enough. The evidence and the belief sit side by side without touching, which is why more achieving doesn't fix this. And it's also why telling yourself you are enough bounces off: your brain answers an affirmation with, where's the evidence, and it answers a demonstration with, ha, you caught me.
+The achieving does come, and you still don't feel like you're enough. One participant could list, accurately, how far their skills had come, and went straight back to not good enough. The evidence and the belief sit side by side without touching, which is why more achieving doesn't fix this. And it's also why telling yourself you are enough bounces off: your brain answers an affirmation with, where's the evidence, and it answers a demonstration with, ha, you caught me.
 
 > We all start in the same place. We all suck at starting something new. We all suck at something we've never done before.
 > — Daniel Lawson
@@ -107,4 +107,4 @@ Then look at what you expected it to give you. A lot of the time a new thing get
 
 If achieving is where your worth has come from, then you already know how to commit to something and see it all the way through, and plenty of people are where they are because you did that. What comes next is pointing that at something you won't be good at for a while, where there is nothing to show anybody at the end of it. Other people around you doing the same thing is what makes that stage go. Somebody asks how it's going before you have anything to report, and being asked is the other kind of evidence. And then you've got something you're into, rather than another line on the list of what you've delivered.
 
-The Reconnected Man and The Reconnected Woman are the group where we have these conversations together.
+[The Reconnected Man](/the-reconnected-man) and [The Reconnected Woman](/the-reconnected-woman) are our groups where we have these conversations together.

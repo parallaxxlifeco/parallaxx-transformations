@@ -5,31 +5,31 @@ pillar: being-the-capable-one
 intent: the signal is small and gets let through, so the rule is whose outcome it is
 question: How do I stop feeling responsible for others?
 card: You find out three days later, and by then there's nothing to do with it except resent it.
-answer: It's hard to stop because the signal is small. Something doesn't sit right and you let it blow over, and the anger that would have marked the line shows up three days later, too late to use. So the decision runs on two questions rather than a feeling: whose outcome is this, and who gets the benefit of me doing it?
+answer: It's hard to stop because the signal is small. Something doesn't sit right and you let it blow over, and the anger that would have marked the line shows up three days later, too late to use. So decide with two questions rather than a feeling: whose outcome is this, and who gets the benefit of me doing it?
 description: The signal is small and you let it blow over. Daniel Lawson on the two questions that decide it, and why the anger shows up three days late.
 published: 2026-10-02
-updated: 2026-11-16
+updated: 2026-11-24
 sources: PW-04-003, RW-W1-036, RW-W2-137, PW-04-016, PW-04-040, PW-04-018, PW-04-025, PW-04-029, PW-10-143, PW-09-011, PW-09-012, PW-10-212, PW-06-077, PW-06-075, PW-10-130, RM-S5-079, RW-W3-027, RW-W3-120, PW-10-618, PW-15-053, PM-04-074
 offer: /the-reconnected-man, /the-reconnected-woman
 ---
 
 A group member described her pattern like this: "I'm in a loop of hyper taking care of people. They don't even ask, but I jump into taking care of things."
 
-Nobody asked her. She was already moving. And by the time you're wondering whether something is yours, you're usually already doing it. Then two or three days later the thought arrives. Hang on. Why is that mine?
+No-one asked her, and she was already moving. By the time you're wondering whether a task is yours, you're usually already doing it. Then two or three days later the thought comes. Hang on. Why is that mine?
 
-The giving is not the problem here. The same woman said this about her caretaking: "This is what I can, this is what I know, this is what I'm very good at, and super good at. I'm really proud of that, to be honest. But it also makes me forget myself more and more." She's right to be proud of it. It's a lot of why people trust her, and giving it up would mean giving up being the one everybody comes to.
+Her giving is a strength. The same woman said this about her caretaking: "This is what I can, this is what I know, this is what I'm very good at, and super good at. I'm really proud of that, to be honest. But it also makes me forget myself more and more." She's right to be proud of it. It's a lot of why people trust her, and giving it up would mean giving up being the one everybody comes to.
 
 ## Is this my responsibility right now?
 
-The question is not how much they need you, because the answer to that one is usually yes. It's whose outcome this is, and who gets the benefit of it getting done. If the outcome belongs to them and you carry it anyway, you've taken away the thing they were about to figure out for themselves.
+How much they need you is the wrong question, because the answer to that is usually yes. The question is whose outcome this is, and who gets the benefit of it getting done. If the outcome belongs to them and you carry it anyway, you've taken away the thing they were about to figure out for themselves.
 
 She asked it in a session in her own words: "is this my part? Is this my responsibility right now? Do I now want to help and support? Or is it me going overboard with giving and supporting?"
 
-She isn't asking permission to stop giving. She's asking how to feel the moment while it's still happening.
+She's asking how to feel the moment while it's still happening, so she can choose what to give.
 
 ## So why can't I feel it at the time?
 
-Because the signal is small. Something doesn't sit right, and you let it blow over the way you've let it blow over before. Frustration, maybe disappointment, and it's small enough to carry. You've got a lot on, so you carry it.
+Because the signal is small. Something doesn't sit right, and you let it blow over the way you've let it blow over before. Frustration, maybe disappointment, and it's small enough to let go. You've got a lot on, so you let it go.
 
 Over time this can build into a more felt anger. Every emotion has a function.
 
@@ -42,7 +42,7 @@ So the line gets crossed. You find out three days later, and by then there's not
 
 ## What's the rule, then?
 
-One participant already had a version of it and said so: "What is my business, what is yours, and what is God's. It's about what you get the benefits from. I get the benefits of promoting my offers because people work with me. But I don't get the benefits of somebody implementing my work."
+One participant already had a rule like this and shared it: "What is my business, what is yours, and what is God's. It's about what you get the benefits from. I get the benefits of promoting my offers because people work with me. But I don't get the benefits of somebody implementing my work."
 
 She works with that framework and the guilt still fires.
 
@@ -66,14 +66,14 @@ The other question that opens this up is one many of us never ask. We ask what c
 
 Because there are two settings and nothing in between. You absorb it, or you blow up. And since the second one damages people you love, the first wins every time and looks like maturity from the outside, and from the inside too.
 
-Another put it in five words: "It goes from compliance to fight." The only alternative to going along with it that she could picture was the version that hurts somebody, so compliance was never really a choice. That's why capable people don't set boundaries. The setting they'd need doesn't exist yet, right?
+Another shared, "It goes from compliance to fight." The only alternative to going along with it that she could picture was a reaction that hurts somebody, so compliance was never really a choice. That's why capable people don't set boundaries. The setting they'd need doesn't exist yet, right?
 
 The middle setting is smaller than the one you're imagining.
 
 > Expectations are the baby sister of boundaries. The subtle yeses, the small accommodations, the way people speak to you or expect things of you that don't sit right and that you let blow over.
 > — Daniel Lawson
 
-Said early, as a preference, it stays a preference. Left to collect, it comes out later as drama, resentment, anger or frustration, and by then it does need the big version, which is the one you were avoiding in the first place.
+Said early, as a preference, it stays a preference. Left to collect, it comes out later as drama, resentment, anger or frustration, and by then it does need the big conversation, which is the one you were avoiding in the first place.
 
 ## What do I do when it's already happening?
 
@@ -89,11 +89,11 @@ So the two questions, while you're already three steps into it. Whose outcome is
 
 ### What if they really do need me?
 
-They probably do, and that's real. Whether the need is genuine is a separate question from whose outcome it is. Something can be badly needed and still not be yours, and the test is what happens next: if you carry it, they lean on you and don't grow, and the same thing comes back round to you next month.
+They probably do, and that's real. Whether the need is genuine is a separate question from whose outcome it is. A task can be badly needed and still not be yours, and the test is what happens next: if you take it on, they lean on you and don't grow, and the same thing comes back round to you next month.
 
 ### What if I feel guilty afterwards?
 
-Guilt shows up and it is not evidence you got it wrong. One of the women shared this after she put a boundary around her wellbeing and could feel that it wasn't welcome: she felt guilty, and a friend pointed it out to her. "It's not the case of what they did or what you did. It's about you put a boundary and you are trying to justify that boundary to me."
+Guilt shows up, and it's evidence that you did something unfamiliar. One of the women shared this after she put a boundary around her wellbeing and could feel that it wasn't welcome: she felt guilty, and a friend pointed it out to her. "It's not the case of what they did or what you did. It's about you put a boundary and you are trying to justify that boundary to me."
 
 ### How do I tell over-giving apart from being kind?
 
@@ -101,16 +101,16 @@ Follow the benefit. Kindness has a clean edge on it, you do the thing and it's f
 
 ### Isn't this just being selfish?
 
-It's the opposite of what it feels like. Carrying what belongs to someone else means they never get to do it, and you end up running a version of their life and resenting them for letting you. Giving it back is harder than keeping it.
+It's the opposite of what it feels like. Taking on what belongs to someone else means they never get to do it, and you end up running their life for them and resenting them for letting you. Giving it back is harder than keeping it.
 
 ### How long before I can feel it in real time?
 
-The first ones arrive late, three days after the moment they were for, and that still counts. The small accommodations are the easiest place to start, because the stakes are low enough that getting it wrong shows you how it works instead of confirming you can't.
+The first ones come late, three days after the moment they were for, and that still counts. The small accommodations are the easiest place to start, because the stakes are low enough that getting it wrong shows you how it works instead of confirming you can't.
 
 ## If this is you
 
-The difficulty is the timing. The signal that would tell you this one isn't yours either never got developed or shows up days after the moment it was for, and you can't fix the timing from inside your head while you're already doing it. Someone else in the conversation sees it a few seconds before you do, and says so, and then it's in front of you while it's still happening rather than on Sunday.
+If you're the one people trust to take care of things, you already know how to read what a situation needs. What comes next is reading it a little earlier, and asking whose outcome it is while you're still in it. That goes faster with others around you. Someone else in the conversation sees it a few seconds before you do, and says so, and then it's in front of you while it's still happening rather than on Sunday.
 
 And then it goes faster than you'd think. One of the women wrote down, in her last workbook, that she'd said no to a responsibility that was not aligned, and my answer to her was that no is the easy one for someone who doesn't have many boundaries. "I want this" is the next challenge, and it's the better one.
 
-The Reconnected Man and The Reconnected Woman are the group where we have these conversations together.
+[The Reconnected Man](/the-reconnected-man) and [The Reconnected Woman](/the-reconnected-woman) are our groups where we have these conversations together.

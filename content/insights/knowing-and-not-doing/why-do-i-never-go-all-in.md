@@ -5,20 +5,17 @@ pillar: knowing-and-not-doing
 intent: holding back keeps a failure from counting, so the full attempt never happens
 question: Why do I hesitate on the things I want most?
 card: At a hundred per cent, a failure is about you.
-answer: Because at a hundred per cent, a failure is about you. Keep something back and the result can be excused by how much you put in, so you never find out what you're capable of. The things you want most are the ones that would say something about you, so those are the ones you hesitate on. What changes this is becoming the person who does it before the results arrive, on evidence from smaller commitments that still expose you.
+answer: Because at a hundred per cent, a failure is about you. Hold back and the result can be excused by how much you put in, so you never find out what you're capable of. The things you want most are the ones that would say something about you, so those are the ones you hesitate on. What changes this is becoming the person who does it before the results come, on evidence from smaller commitments that still expose you.
 description: You hesitate on what you want most because at full commitment a failure would be about you. Daniel Lawson on the order that changes it, and the evidence.
 published: 2026-10-30
-updated: 2026-10-30
+updated: 2026-11-24
 sources: PW-10-086, PW-10-087, PW-10-221, PW-10-511, PW-10-512, PW-10-513, PW-10-514, PW-10-518, PW-10-519, PW-10-520, PW-10-536, PM-06-012, PM-06-018, PM-06-020, PM-06-026, PM-06-037, PM-06-038, PM-06-043, PM-06-047, RM-S2-014, RM-S2-018, RM-S3-039, RM-S6-018, RM-S10-062, RM-S12-133, RM-S12-136, RW-W3-023, RW-W3-028, RW-W3-091, DL-173, DL-175, DL-780
 offer: /the-reconnected-man, /the-reconnected-woman
 ---
 
 A woman I coach wanted something badly enough to give it four years. Every curriculum in it, and every method tested separately until she had narrowed it down to the three she trusted. Four years of that, no results, and no explanation she believed.
 
-Asked what was stopping her, she didn't say fear, or discipline, or that she needed a better method. She said "hesitation", and she called it the most dominating feeling she had. Then she got underneath it.
-
-> I was fearing failure, because if you go all in, if you give 100% to something, then you become more vulnerable.
-> — a woman I coach, on four years of learning and never going all in
+Asked what was stopping her, she didn't say fear, or discipline, or that she needed a better method. She said "hesitation", and she called it the most dominating feeling she had. Then she got underneath it: "I was fearing failure, because if you go all in, if you give 100% to something, then you become more vulnerable."
 
 She had the skill after putting in the time. But what she hadn't done was shown up in a way that really counts.
 
@@ -34,7 +31,7 @@ At a hundred per cent, a failure is about you.
 | Most of it | You'd have got there with a little more time |
 | All of it | This is what you can do, and it wasn't enough |
 
-The third row is the purpose of the holding back mechanism. And it works, which is why it survives for years.
+The third row is the purpose of the holding back mechanism. And it works, which is why it lasts for years.
 
 I did this with money and with the business for years and I'd have called it being sensible. What changed it was a visualisation, five years ahead: getting the news that for whatever reason we couldn't have kids, and standing in front of my partner saying I'm so sorry, we put off having a family because I couldn't afford it, because I was playing a small game. I came out of that on the floor in a puddle of tears.
 
@@ -43,12 +40,9 @@ I did this with money and with the business for years and I'd have called it bei
 
 ## Why do I never fully commit to anything?
 
-Often it can be that you're committing to the preparation instead. Learning is the most respectable way to not start. It looks like progress and some of it is progress, and you can keep at it for years without ever being tested on what you've learned.
+Often it can be that you're committing to the preparation instead. Learning is one of the most respectable ways to not start. It looks like progress and some of it is progress, and you can keep at it for years without ever being tested on what you've learned.
 
-A man in a group I run described the mechanism in his opening minutes.
-
-> The feeling of, yet I'm not good enough. So maybe I should wait a little bit and just do the work on myself first, and then start. So postponing the starting.
-> — a man in a group I run, on why his business hadn't begun
+A man in a group I run described it in his opening minutes: "The feeling of, yet I'm not good enough. So maybe I should wait a little bit and just do the work on myself first, and then start. So postponing the starting."
 
 He shared the rest himself: "I'm always spending time on learning. Learning about myself, about business. But I'm not putting in action." He said it in the first breath of the session and the learning carried on. Giving him another framework would have fed it.
 
@@ -88,28 +82,19 @@ So the hundred per cent belongs in the commitment, and seventy or eighty per cen
 
 ## What evidence do you already have?
 
-More than you're using. The order many of us have is backwards, which is get the result and then believe it about yourself. The woman who'd given it four years found the other order, and she put it among the biggest realisations she'd had.
+More than you're using. The order many of us have is backwards, which is get the result and then believe it about yourself. The woman who'd given it four years found the other order, and she put it among the biggest realisations she'd had: "I really have to become it first, before I can see it in the physical reality. And that order I didn't understand before."
 
-> I really have to become it first, before I can see it in the physical reality. And that order I didn't understand before.
-> — a woman I coach, on what changed after four years
+Becoming it first isn't affirmations. They don't work on me. Say something flattering to my brain and it goes straight to "where's the evidence?", but say something I've done and it goes, "ha, you caught me". Hers ran the same way: "You find the real-life evidence, instead of just repeating some self-affirmations."
 
-Becoming it first isn't affirmations. They don't work on me. Say something flattering to my brain and it goes straight to "where's the evidence?", but say something I've done and it goes, "ha, you caught me". Hers ran the same way.
+So what I'm curious about with my clients is what it is that they need to go and do, see or believe, to give themselves the evidence. And the evidence stacks. Intuition isn't magic, it's your body pulling on millions of data points, so a long run of small wins sitting close together is what gives it something to pull on. When the chance that exposes you comes, the intuition goes: hang on, you've won all these times, you can win at this.
 
-> You find the real-life evidence, instead of just repeating some self-affirmations.
-> — the same woman, on how the identity work ran
-
-So what I'm curious about with my clients is what it is that they need to go and do, see or believe, to give themselves the evidence. And the evidence stacks. Intuition isn't magic, it's your body pulling on millions of data points, so a long run of small wins sitting close together is what gives it something to pull on. When the exposing chance arrives, the intuition goes: hang on, you've won all these times, you can win at this.
-
-A woman in a group I run had been working on something in the background for six years without ever giving it a proper go, and then she did it, terrified: "I'm ready to give it the all in another way, just for the chance to give it a go and see what happens." Afterwards she described what the six years had been.
-
-> holding back and not actually just going in and doing the thing
-> — a woman in a group I run, on six years of keeping it in the background
+A woman in a group I run had been working on something in the background for six years without ever giving it a proper go, and then she did it, terrified: "I'm ready to give it the all in another way, just for the chance to give it a go and see what happens." Afterwards she described what the six years had been: "holding back and not actually just going in and doing the thing."
 
 ## Common questions
 
 ### Isn't holding back just being sensible?
 
-Sometimes it is. The test is whether you'll be able to tell when the thing you're waiting for has happened. Waiting until you've saved six months of living costs before you leave your job is a plan, because you can look at your bank account and see the day you get there. Waiting until you feel good enough to start has no day like that, so it never arrives.
+Sometimes it is. The test is whether you'll be able to tell when the thing you're waiting for has happened. Waiting until you've saved six months of living costs before you leave your job is a plan, because you can look at your bank account and see the day you get there. Waiting until you feel good enough to start has no day like that, so it never comes.
 
 ### What if I commit fully and it fails?
 
@@ -127,4 +112,4 @@ Procrastination stops you starting. This lets you start and keeps the effort und
 
 If you've put years into something and you're still at it, you already know how to keep going with no reward coming back, which is harder than starting. What comes next is a version of it defined tightly enough that it could be failed, small enough to do this month, exposing enough that you'd rather not, and then given everything you have. Describing it to other people is what takes the hedge off, because once somebody is going to ask you how it went there's no vague version left to retreat into. And what you get back is the evidence that you're someone who goes all in on what they want, whichever way the attempt goes.
 
-The Reconnected Man and The Reconnected Woman are the group where we have these conversations together.
+[The Reconnected Man](/the-reconnected-man) and [The Reconnected Woman](/the-reconnected-woman) are our groups where we have these conversations together.

@@ -19,6 +19,7 @@
    system script by accident. */
 @font-face{font-family:'Lumios Marker';font-display:swap;
   src:url('LUMIOS_MARKER_WOFF2_URL') format('woff2');}
+
 </style>
 <style>
 /* ═══════════════════════════════════════════════════════════════════
@@ -947,6 +948,38 @@
     #px-count span{font-size:.62rem;letter-spacing:.01em}
     #px-count{gap:8px}
   }
+
+  /* ══ CONDENSE PASS, 27 Nov 2026 ══
+     Daniel: "a lot of scrolling and too much space for too little value".
+     1. The pattern section is now a strip in the hero (same three
+        fragments, same rule: they must match their cards).
+     2. Cards lead with NOW, the result. Before and What changed sit
+        behind one "Read their story" disclosure. Roughly halves every card.
+     3. The four conversations: narrower on desktop, a swipe row on phones. */
+  #px-hero #px-frags{text-align:left;max-width:900px;margin:clamp(30px,3.6vw,44px) auto 0}
+  #px-hero #px-frags > *:nth-child(2){margin-top:0}
+  #px-hero .px-frag .key{font-size:clamp(20px,2vw,26px)}
+  .px-card .px-outcome{margin-bottom:16px}
+  .px-card details .px-beat{margin-top:12px}
+  .px-card details .px-before{margin:0 0 6px}
+  #px-more-vids{max-width:820px}
+  @media(max-width:700px){
+    #px-more-vids{display:flex;grid-template-columns:none;max-width:none;overflow-x:auto;
+      scroll-snap-type:x mandatory;gap:14px;margin-inline:0;padding:0 0 8px;-webkit-overflow-scrolling:touch}
+    #px-more-vids > div{flex:0 0 78%;scroll-snap-align:start}
+    #px-hero #px-frags{grid-template-columns:repeat(3,1fr);gap:10px}
+    #px-hero .px-frag{padding-left:9px}
+    #px-hero .px-frag .lead{font-size:11.5px;line-height:1.35}
+    #px-hero .px-frag .key{font-size:17px}
+    #px-hero .px-frag cite{font-size:.56rem;letter-spacing:.06em}
+  }
+  /* phones: the wall becomes a swipe row, filter still works on it */
+  @media(max-width:900px){
+    #px-wall{display:flex!important;grid-template-columns:none;max-width:none;overflow-x:auto;
+      scroll-snap-type:x mandatory;gap:14px;margin-inline:0;padding:0 0 10px;-webkit-overflow-scrolling:touch;align-items:flex-start}
+    #px-wall > .px-card{flex:0 0 86%;scroll-snap-align:start}
+    #px-wall-hint{display:block!important}
+  }
 </style>
 <style>
 /* ═══════════════════════════════════════════════════════════════════
@@ -1541,7 +1574,22 @@
   <div class="px-wrap" style="max-width:900px">
     <h1 class="px-serif px-fade">They all tried to do&nbsp;it <em>on their&nbsp;own</em> first.</h1>
     <p class="lede px-fade">Men and women, from Europe to the US to Australia. Different lives,
-      different circumstance. <b>They all say the same thing.</b></p>
+      different circumstances. <b>They all say the same thing.</b></p>
+
+    <div id="px-frags">
+    <figure class="px-frag px-fade">
+      <blockquote><span class="lead">I was trying to figure it out</span><span class="key">by myself.</span></blockquote>
+      <figcaption class="who"><cite>Gena K &middot; Bulgaria</cite></figcaption>
+    </figure>
+    <figure class="px-frag px-fade">
+      <blockquote><span class="lead">I couldn't break through them</span><span class="key">alone.</span></blockquote>
+      <figcaption class="who"><cite>Ana R &middot; United Kingdom</cite></figcaption>
+    </figure>
+    <figure class="px-frag px-fade">
+      <blockquote><span class="lead">I couldn't shift my thinking</span><span class="key">on my own.</span></blockquote>
+      <figcaption class="who"><cite>Katherine J &middot; Australia</cite></figcaption>
+    </figure>
+    </div>
 
     <div id="px-count" class="px-fade">
       <div><b>1000+</b><span>lives changed</span></div>
@@ -1560,41 +1608,7 @@
      If any quote in the wall is ever edited, edit it here too or delete
      it from here. A fragment that no longer matches its card turns the
      strongest section on the page into the weakest.  ══════════════ -->
-<section class="px-sec" id="px-pattern">
-  <div class="px-wrap">
-
-    <div id="px-pattern-head">
-      <div>
-        <div class="px-fade" style="display:flex;align-items:center;gap:16px;margin-bottom:12px">
-          <hr class="px-rule">
-          <p class="px-label">What they keep saying</p>
-        </div>
-        <h2 class="px-serif px-fade" style="font-size:clamp(25px,2.9vw,40px);line-height:1.16;color:#F1ECE1">
-          Different lives.<br>Almost the same words.
-        </h2>
-      </div>
-      <p class="px-hand px-fade" style="color:#E8C65F;font-size:1.35rem;white-space:nowrap">
-        the pattern is clear
-      </p>
-    </div>
-
-    <div id="px-frags">
-      <figure class="px-frag px-fade">
-        <blockquote><span class="lead">I was trying to figure it out</span><span class="key">by myself.</span></blockquote>
-        <figcaption class="who"><cite>Gena K &middot; Bulgaria</cite></figcaption>
-      </figure>
-      <figure class="px-frag px-fade">
-        <blockquote><span class="lead">I couldn't break through them</span><span class="key">alone.</span></blockquote>
-        <figcaption class="who"><cite>Ana R &middot; United Kingdom</cite></figcaption>
-      </figure>
-      <figure class="px-frag px-fade">
-        <blockquote><span class="lead">I couldn't shift my thinking</span><span class="key">on my own.</span></blockquote>
-        <figcaption class="who"><cite>Katherine J &middot; Australia</cite></figcaption>
-      </figure>
-    </div>
-
-  </div>
-</section>
+<!-- 02 · THE PATTERN moved into the hero, 27 Nov 2026 (condense pass). -->
 
 <!-- ══════════════ 03 · HEAR ONE ══════════════
      A written quote can be written by anyone. A face saying it cannot.
@@ -1628,7 +1642,7 @@
         Hear them <span style="font-style:italic;color:#B1BFD7">say it themselves.</span>
       </h2>
       <p style="max-width:46ch;margin:16px auto 0;font-size:.95rem;line-height:1.7;color:#6E6960">
-        Sat down with each of them after the work was done. These run long because that is how long it takes.
+        I sat down with each of them once we&rsquo;d finished working together. They&rsquo;re long, because that&rsquo;s how long it takes.
       </p>
     </div>
 
@@ -1718,7 +1732,7 @@
           <span class="shade" aria-hidden="true"></span>
           <span class="play" aria-hidden="true"></span>
         </button>
-        <p class="px-vidcap"><span class="nm">Gary M<i>United Kingdom</i></span><span class="line">Fear ran his life for as long as he can remember.</span></p>
+        <p class="px-vidcap"><span class="nm">Gary M<i>United Kingdom</i></span><span class="line">Fear had been making his decisions for as long as he can remember.</span></p>
       </div>
       <div class="px-fade">
         <button class="px-vid px-vid-yt" data-yt="FK-QjyTK6r8" aria-label="Play the client story of Benjamin W">
@@ -1790,6 +1804,7 @@
       </div>
     </div>
 
+    <p id="px-wall-hint" style="display:none;margin:0 0 12px;font-size:.78rem;color:#8FA0BC">Swipe to see all of them &rarr;</p>
     <div id="px-wall">
 
       <!-- ── 01 · GENA K ─────────────────────────────────────────── -->
@@ -1799,16 +1814,17 @@
                src="https://static.wixstatic.com/media/111174_b98cf690891f444587d740029b22c892~mv2.jpg">
           <div class="n">Gena K<span>Bulgaria</span></div>
         </div>
-        <p class="px-beat">Before</p>
-        <p class="px-before">&ldquo;I was stuck in self-sabotaging patterns I couldn't understand. Procrastination and emotional overload were draining my energy. I was trying to figure it out by myself, but I couldn't see where the actual problem was coming from.&rdquo;</p>
-        <details>
-          <summary><span class="cx" aria-hidden="true">&rsaquo;</span><span class="lbl-c">What changed</span><span class="lbl-o">Close</span></summary>
-          <p>&ldquo;Daniel helped me scan my subconscious. He showed me that everything we do or don't do comes from our belief system. Sometimes those beliefs are hidden, especially when you're trying to solve it alone.&rdquo;</p>
-        </details>
         <div class="px-outcome">
           <p class="px-beat">Now</p>
           <p class="px-now">&ldquo;Now I've found ways to overcome the procrastination and emotional drain. The sessions were a game-changer. I can only highly recommend his coaching to everyone who wants to reach their ideal life.&rdquo;</p>
           </div>
+        <details>
+          <summary><span class="cx" aria-hidden="true">&rsaquo;</span><span class="lbl-c">Read their story</span><span class="lbl-o">Close</span></summary>
+          <p class="px-beat">Before</p>
+          <p class="px-before">&ldquo;I was stuck in self-sabotaging patterns I couldn't understand. Procrastination and emotional overload were draining my energy. I was trying to figure it out by myself, but I couldn't see where the actual problem was coming from.&rdquo;</p>
+          <p class="px-beat">What changed</p>
+          <p>&ldquo;Daniel helped me scan my subconscious. He showed me that everything we do or don't do comes from our belief system. Sometimes those beliefs are hidden, especially when you're trying to solve it alone.&rdquo;</p>
+        </details>
       </article>
 
       <!-- ── 02 · BRANDON L ──────────────────────────────────────── -->
@@ -1824,16 +1840,17 @@
                src="https://static.wixstatic.com/media/111174_3db56c0e87c84875a9f6d059a2a768eb~mv2.png/v1/crop/x_370,y_10,w_260,h_260,q_90,enc_auto/f.png">
           <div class="n">Brandon L<span>United States &middot; US Navy</span></div>
         </div>
-        <p class="px-beat">Before</p>
-        <p class="px-before">&ldquo;I struggled with addiction, depression, an overbearing ego, and PTSD while navigating military to civilian life. I was down a path to death. I didn't love myself, constantly compared myself to others, and couldn't live in the moment.&rdquo;</p>
-        <details>
-          <summary><span class="cx" aria-hidden="true">&rsaquo;</span><span class="lbl-c">What changed</span><span class="lbl-o">Close</span></summary>
-          <p>&ldquo;Reconnect showed me that even the smallest changes could lead to significant outcomes. I learned to love myself, stop comparing, and live in the moment.&rdquo;</p>
-        </details>
         <div class="px-outcome">
           <p class="px-beat">Now</p>
           <p class="px-now">&ldquo;Now I feel reborn with goals and satisfaction. I appreciate my achievements while learning from experiences. If you're contemplating your own journey, ask yourself if you're truly content. Embracing change might be the key to discovering happiness.&rdquo;</p>
           </div>
+        <details>
+          <summary><span class="cx" aria-hidden="true">&rsaquo;</span><span class="lbl-c">Read their story</span><span class="lbl-o">Close</span></summary>
+          <p class="px-beat">Before</p>
+          <p class="px-before">&ldquo;I struggled with addiction, depression, an overbearing ego, and PTSD while navigating military to civilian life. I was down a path to death. I didn't love myself, constantly compared myself to others, and couldn't live in the moment.&rdquo;</p>
+          <p class="px-beat">What changed</p>
+          <p>&ldquo;Reconnect showed me that even the smallest changes could lead to significant outcomes. I learned to love myself, stop comparing, and live in the moment.&rdquo;</p>
+        </details>
       </article>
 
       <!-- ── 03 · SILJA T ────────────────────────────────────────── -->
@@ -1843,16 +1860,17 @@
                src="https://static.wixstatic.com/media/111174_ab54167a61fe4c188544389f7f4e9d1f~mv2.jpg">
           <div class="n">Silja T<span>Sweden &middot; trader</span></div>
         </div>
-        <p class="px-beat">Before</p>
-        <p class="px-before">&ldquo;I was trapped by shame. I couldn't see that 70% of my losing trades were the same pattern. The emotional burden blinded me. I'd think &lsquo;I'm never gonna understand this&rsquo; and my mind would block immediately.&rdquo;</p>
-        <details>
-          <summary><span class="cx" aria-hidden="true">&rsaquo;</span><span class="lbl-c">What changed</span><span class="lbl-o">Close</span></summary>
-          <p>&ldquo;Daniel didn't focus on my problems. We shifted to what I wanted more of, and the problems stopped existing.&rdquo;</p>
-        </details>
         <div class="px-outcome">
           <p class="px-beat">Now</p>
           <p class="px-now">&ldquo;Now everything comes from curiosity instead of fear. I feel calm and expanded instead of heavy. The shame and guilt have evaporated. Concepts that seemed impossible now make total sense. In less than two months, my eyes have opened in a way I couldn't have imagined.&rdquo;</p>
           </div>
+        <details>
+          <summary><span class="cx" aria-hidden="true">&rsaquo;</span><span class="lbl-c">Read their story</span><span class="lbl-o">Close</span></summary>
+          <p class="px-beat">Before</p>
+          <p class="px-before">&ldquo;I was trapped by shame. I couldn't see that 70% of my losing trades were the same pattern. The emotional burden blinded me. I'd think &lsquo;I'm never gonna understand this&rsquo; and my mind would block immediately.&rdquo;</p>
+          <p class="px-beat">What changed</p>
+          <p>&ldquo;Daniel didn't focus on my problems. We shifted to what I wanted more of, and the problems stopped existing.&rdquo;</p>
+        </details>
       </article>
 
       <!-- ── 04 · TOBIAS M ───────────────────────────────────────── -->
@@ -1862,16 +1880,17 @@
                src="https://static.wixstatic.com/media/111174_392b733e816548dcbfadab2fe214e05c~mv2.png/v1/crop/x_300,y_555,w_290,h_290,q_90,enc_auto/f.png">
           <div class="n">Tobias M<span>Sweden</span></div>
         </div>
-        <p class="px-beat">Before</p>
-        <p class="px-before">&ldquo;I was feeling stuck. I had a good self-development practice, but I couldn't pivot to the next level on my own. My perspective was limited and I wasn't creating the results I wanted.&rdquo;</p>
-        <details>
-          <summary><span class="cx" aria-hidden="true">&rsaquo;</span><span class="lbl-c">What changed</span><span class="lbl-o">Close</span></summary>
-          <p>&ldquo;Daniel helped me see what I couldn't see myself. Just a few coaching sessions shifted everything. My perspective changed and the results started coming.&rdquo;</p>
-        </details>
         <div class="px-outcome">
           <p class="px-beat">Now</p>
           <p class="px-now">&ldquo;Now I'm amazed at how quickly things have moved. If you take your journey seriously and you're ready to pivot to the next level, Daniel can definitely help you get there. He's an absolute star. Highly recommend.&rdquo;</p>
           </div>
+        <details>
+          <summary><span class="cx" aria-hidden="true">&rsaquo;</span><span class="lbl-c">Read their story</span><span class="lbl-o">Close</span></summary>
+          <p class="px-beat">Before</p>
+          <p class="px-before">&ldquo;I was feeling stuck. I had a good self-development practice, but I couldn't pivot to the next level on my own. My perspective was limited and I wasn't creating the results I wanted.&rdquo;</p>
+          <p class="px-beat">What changed</p>
+          <p>&ldquo;Daniel helped me see what I couldn't see myself. Just a few coaching sessions shifted everything. My perspective changed and the results started coming.&rdquo;</p>
+        </details>
       </article>
 
       <!-- ── 05 · KATHERINE J ────────────────────────────────────── -->
@@ -1881,16 +1900,17 @@
                src="https://static.wixstatic.com/media/111174_87a6895c57c24b39a19c1272352e7e85~mv2.png/v1/crop/x_205,y_70,w_380,h_380,q_90,enc_auto/f.png">
           <div class="n">Katherine J<span>Australia &middot; business owner</span></div>
         </div>
-        <p class="px-beat">Before</p>
-        <p class="px-before">&ldquo;I was scattered and unfocused. My business, relationships, and emotions all felt overwhelming. My mindset was holding me back, but I couldn't shift my thinking on my own. I wasn't experiencing life the way I wanted to.&rdquo;</p>
-        <details>
-          <summary><span class="cx" aria-hidden="true">&rsaquo;</span><span class="lbl-c">What changed</span><span class="lbl-o">Close</span></summary>
-          <p>&ldquo;Daniel supported and challenged me across all these areas. He helped me shift my mindset and refocus my thinking. Working with him for a few months has totally changed my life.&rdquo;</p>
-        </details>
         <div class="px-outcome">
           <p class="px-beat">Now</p>
           <p class="px-now">&ldquo;Now I feel more centred and present. The results are undeniable. I'm reaping the rewards in how I'm experiencing my life. Everything has shifted. Highly recommended. You need to work with this man!&rdquo;</p>
           </div>
+        <details>
+          <summary><span class="cx" aria-hidden="true">&rsaquo;</span><span class="lbl-c">Read their story</span><span class="lbl-o">Close</span></summary>
+          <p class="px-beat">Before</p>
+          <p class="px-before">&ldquo;I was scattered and unfocused. My business, relationships, and emotions all felt overwhelming. My mindset was holding me back, but I couldn't shift my thinking on my own. I wasn't experiencing life the way I wanted to.&rdquo;</p>
+          <p class="px-beat">What changed</p>
+          <p>&ldquo;Daniel supported and challenged me across all these areas. He helped me shift my mindset and refocus my thinking. Working with him for a few months has totally changed my life.&rdquo;</p>
+        </details>
       </article>
 
       <!-- ── 06 · DAVE M ─────────────────────────────────────────── -->
@@ -1900,16 +1920,17 @@
                src="https://static.wixstatic.com/media/111174_5cda9ea93a0040a091beb7caebdde4b7~mv2.png/v1/crop/x_60,y_30,w_600,h_420,q_90,enc_auto/f.png">
           <div class="n">Dave M<span>United Kingdom</span></div>
         </div>
-        <p class="px-beat">Before</p>
-        <p class="px-before">&ldquo;I felt lost, suppressing my true feelings out of fear and shame. I was chasing instant gratification instead of meaningful change. I lacked profound life awareness and wasn't pursuing passions that enriched my life. I thought I had to settle.&rdquo;</p>
-        <details>
-          <summary><span class="cx" aria-hidden="true">&rsaquo;</span><span class="lbl-c">What changed</span><span class="lbl-o">Close</span></summary>
-          <p>&ldquo;Daniel's approach to vulnerability offered me a lifeline. Reconnect taught me to confront my quest for instant gratification and embrace meaningful changes instead.&rdquo;</p>
-        </details>
         <div class="px-outcome">
           <p class="px-beat">Now</p>
           <p class="px-now">&ldquo;Now I cherish incredible friendships, possess profound life awareness, and pursue passions that enrich my life. I don't have to settle. I can live a life filled with joy and excitement. This could be the bridge to discovering what you truly seek in life.&rdquo;</p>
           </div>
+        <details>
+          <summary><span class="cx" aria-hidden="true">&rsaquo;</span><span class="lbl-c">Read their story</span><span class="lbl-o">Close</span></summary>
+          <p class="px-beat">Before</p>
+          <p class="px-before">&ldquo;I felt lost, suppressing my true feelings out of fear and shame. I was chasing instant gratification instead of meaningful change. I lacked profound life awareness and wasn't pursuing passions that enriched my life. I thought I had to settle.&rdquo;</p>
+          <p class="px-beat">What changed</p>
+          <p>&ldquo;Daniel's approach to vulnerability offered me a lifeline. Reconnect taught me to confront my quest for instant gratification and embrace meaningful changes instead.&rdquo;</p>
+        </details>
       </article>
 
       <!-- ── 07 · ANA R ──────────────────────────────────────────── -->
@@ -1922,16 +1943,17 @@
                src="https://static.wixstatic.com/media/111174_abf2f5363f7e4262ba1812cb7844c6d3~mv2.jpg">
           <div class="n">Ana R<span>United Kingdom &middot; business owner</span></div>
         </div>
-        <p class="px-beat">Before</p>
-        <p class="px-before">&ldquo;I had resistance I wasn't sure how to get through. My business wasn't moving forward. I knew what I wanted in my mind, but I found it hard to articulate. There were barriers stopping me, and I couldn't break through them alone.&rdquo;</p>
-        <details>
-          <summary><span class="cx" aria-hidden="true">&rsaquo;</span><span class="lbl-c">What changed</span><span class="lbl-o">Close</span></summary>
-          <p>&ldquo;Daniel dug deep into my psyche. We strategized moving through my fears and discovered what my ideal business actually looked like. The tools and time he gives you are invaluable.&rdquo;</p>
-        </details>
         <div class="px-outcome">
           <p class="px-beat">Now</p>
           <p class="px-now">&ldquo;Now I have confidence, clarity, and flow. We broke through the barriers that were holding me back. My business is moving forward. It has been incredible and truly transformative. He is your man if you're ready to break through.&rdquo;</p>
           </div>
+        <details>
+          <summary><span class="cx" aria-hidden="true">&rsaquo;</span><span class="lbl-c">Read their story</span><span class="lbl-o">Close</span></summary>
+          <p class="px-beat">Before</p>
+          <p class="px-before">&ldquo;I had resistance I wasn't sure how to get through. My business wasn't moving forward. I knew what I wanted in my mind, but I found it hard to articulate. There were barriers stopping me, and I couldn't break through them alone.&rdquo;</p>
+          <p class="px-beat">What changed</p>
+          <p>&ldquo;Daniel dug deep into my psyche. We strategized moving through my fears and discovered what my ideal business actually looked like. The tools and time he gives you are invaluable.&rdquo;</p>
+        </details>
       </article>
 
       <!-- ── 08 · ALEX H ─────────────────────────────────────────── -->
@@ -1945,16 +1967,17 @@
                src="https://static.wixstatic.com/media/111174_7a60aa68544a411783b1bffd0d38cbaa~mv2.png/v1/crop/x_70,y_455,w_600,h_420,q_90,enc_auto/f.png">
           <div class="n">Alex H<span>Denmark &middot; three sessions in</span></div>
         </div>
-        <p class="px-beat">Before</p>
-        <p class="px-before">&ldquo;I had gone astray, prioritising things that didn't really matter. I wanted to reconnect with myself and better myself, but I wasn't sure what I actually wanted to improve.&rdquo;</p>
-        <details>
-          <summary><span class="cx" aria-hidden="true">&rsaquo;</span><span class="lbl-c">What changed</span><span class="lbl-o">Close</span></summary>
-          <p>&ldquo;The biggest breakthrough has been connecting with my emotions again, not just in my mind. I operate a lot from my mind, but getting in touch with the essence of myself has been amazing.&rdquo;</p>
-        </details>
         <div class="px-outcome">
           <p class="px-beat">Now</p>
           <p class="px-now">&ldquo;In just three sessions, I've gotten more than I was expecting. I'm becoming aware of what I want to focus on and what's important to me. Having this container keeps me going in the right direction. That's an amazing feeling.&rdquo;</p>
           </div>
+        <details>
+          <summary><span class="cx" aria-hidden="true">&rsaquo;</span><span class="lbl-c">Read their story</span><span class="lbl-o">Close</span></summary>
+          <p class="px-beat">Before</p>
+          <p class="px-before">&ldquo;I had gone astray, prioritising things that didn't really matter. I wanted to reconnect with myself and better myself, but I wasn't sure what I actually wanted to improve.&rdquo;</p>
+          <p class="px-beat">What changed</p>
+          <p>&ldquo;The biggest breakthrough has been connecting with my emotions again, not just in my mind. I operate a lot from my mind, but getting in touch with the essence of myself has been amazing.&rdquo;</p>
+        </details>
       </article>
 
       <!-- ── 09 · LAURA B ────────────────────────────────────────── -->
@@ -1964,16 +1987,17 @@
                src="https://static.wixstatic.com/media/111174_e59465cb13ff4fb4beb4bc538c525fe3~mv2.png/v1/crop/x_215,y_35,w_370,h_370,q_90,enc_auto/f.png">
           <div class="n">Laura B<span>Latvia</span></div>
         </div>
-        <p class="px-beat">Before</p>
-        <p class="px-before">&ldquo;I wasn't taking full responsibility for my own life. I didn't understand my values or have a clear vision. Facing my shadows and vulnerabilities felt overwhelming. I needed someone to guide me to find my path.&rdquo;</p>
-        <details>
-          <summary><span class="cx" aria-hidden="true">&rsaquo;</span><span class="lbl-c">What changed</span><span class="lbl-o">Close</span></summary>
-          <p>&ldquo;Daniel explains things in a way that leads you to find the answers yourself. He does it with such ease and calmness that trusting him comes naturally. Somehow he makes facing your shadows and vulnerabilities exciting rather than overwhelming.&rdquo;</p>
-        </details>
         <div class="px-outcome">
           <p class="px-beat">Now</p>
           <p class="px-now">&ldquo;Now I feel the shift in my mindset. I'm on the way to becoming the best version of myself. It has been an incredible journey of self-development. I cannot recommend Daniel highly enough.&rdquo;</p>
           </div>
+        <details>
+          <summary><span class="cx" aria-hidden="true">&rsaquo;</span><span class="lbl-c">Read their story</span><span class="lbl-o">Close</span></summary>
+          <p class="px-beat">Before</p>
+          <p class="px-before">&ldquo;I wasn't taking full responsibility for my own life. I didn't understand my values or have a clear vision. Facing my shadows and vulnerabilities felt overwhelming. I needed someone to guide me to find my path.&rdquo;</p>
+          <p class="px-beat">What changed</p>
+          <p>&ldquo;Daniel explains things in a way that leads you to find the answers yourself. He does it with such ease and calmness that trusting him comes naturally. Somehow he makes facing your shadows and vulnerabilities exciting rather than overwhelming.&rdquo;</p>
+        </details>
       </article>
 
       <!-- ── SASA (Serbia) WAS HERE AND WAS CUT, 4 AUG ──────────────
@@ -2078,13 +2102,13 @@
       <a class="px-door px-fade" href="https://www.parallaxxtransformations.com/men">
         <span class="tag">For men</span>
         <h3>You handle it. You always handle it.</h3>
-        <p>So nobody thinks to ask how you're doing. You never brought it up, and you don't ask anyone for anything.</p>
+        <p>So when someone asks how you're doing, you tell them you're good. You never brought it up, and you don't ask anyone for anything.</p>
         <span class="go">This is me <span aria-hidden="true">&rarr;</span></span>
       </a>
       <a class="px-door px-fade" href="https://www.parallaxxtransformations.com/women">
         <span class="tag">For women</span>
-        <h3>Everyone leans on you. You don't think about what you need.</h3>
-        <p>You got good at not needing much. It stopped being a question you asked yourself.</p>
+        <h3>You don't think about what you need.</h3>
+        <p>Everyone leans on you, and you got so good at not needing much that what you want stopped being a question you ask yourself.</p>
         <span class="go">This is me <span aria-hidden="true">&rarr;</span></span>
       </a>
     </div>
